@@ -34,6 +34,8 @@ gem 'hamlit'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-azure-activedirectory-v2'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 gem 'dotenv-rails'
 
 group :development, :test do
