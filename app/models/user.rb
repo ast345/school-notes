@@ -28,6 +28,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:azure_activedirectory_v2, :google_oauth2]
 
+  before_create :generate_uid, unless: :uid_present?
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
@@ -37,6 +39,16 @@ class User < ApplicationRecord
       user.name = auth.info.name
     # user.image = auth.info.image
     end
+  end
+
+  private
+  def generate_uid
+    binding.pry
+    self.uid = SecureRandom.uuid
+  end
+
+  def uid_present?
+    uid.present?
   end
 
 end
