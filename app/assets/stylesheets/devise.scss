@@ -1,0 +1,56 @@
+.devise-box{
+    display: inline-box;
+    text-align: center;
+
+    &-subtitle{
+
+        font-family: 'BIZ UDPGothic';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        
+        color: #AAAAAA;
+        
+    }
+
+    &-title{
+        margin-bottom: 10px;
+        font-family: 'BIZ UDPGothic';
+    }
+
+    .field{
+        height: 55px;
+
+        .email-box label, .password-box label, .username-box label{
+            // position: absolute;
+            // height: 25px;
+            // margin-top: 33px;
+            // margin-bottom:33px;
+
+            font-family: 'BIZ UDPGothic';
+            font-size: 15px;
+            line-height: 13px;
+            
+            color: #979797;
+        }
+
+        .email-box, .password-box, .username-box{
+            position: relative;
+            margin-top: 33px;
+        }
+        .email-box input[type="email"], .password-box input[type="password"], .username-box input[type="text"] {
+            border: 1px solid black;
+            position: relative;
+            margin-top: 7px;
+            width: 292px;
+            height: 36px;
+
+            background-color: #FAF9F9;
+            border-radius: 10px;
+            // border-bottom: 1px solid #9E9E9E;
+
+        }
+
+
+        }
+    }
