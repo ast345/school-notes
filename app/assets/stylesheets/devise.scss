@@ -53,4 +53,37 @@
 
 
         }
+
+    .actions input[type="submit"]{
+        border: 0px;
+        position: relative;
+        width: 230px;
+        height: 36px;
+        margin-top: 40px;
+        border-radius: 10px;
+
+        background: #F4C57D;
+
+        font-family: 'BIZ UDPGothic';
+        font-size: 18px;
+        line-height: 18px;
+        text-align: center;
+        color: #ffffff;
     }
+
+
+
+}
+
+.devise-option{
+    &-box{
+        position: relative;
+        margin-top: 10px;
+    }
+
+    &-button{
+
+    color: #aaaaaa;
+    text-decoration: none;
+    }
+}
