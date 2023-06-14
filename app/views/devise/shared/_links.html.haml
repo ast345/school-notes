@@ -16,7 +16,15 @@
 - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
   = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name)
   %br/
+-# - if devise_mapping.omniauthable?
+-#   - resource_class.omniauth_providers.each do |provider|
+-#     = button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }
+-#     %br/
+
 - if devise_mapping.omniauthable?
+  .devise-option-sso-box
   - resource_class.omniauth_providers.each do |provider|
-    = button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }
+    = link_to omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: false } do
+      = image_tag "#{provider}_ssobtn.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}"
+    %br/
     %br/
