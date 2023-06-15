@@ -30,6 +30,14 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'hamlit'
 
+# authorization
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-azure-activedirectory-v2'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
+gem 'dotenv-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

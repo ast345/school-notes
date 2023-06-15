@@ -1,0 +1,30 @@
+- if controller_name != 'sessions'
+  .devise-option-box
+    = link_to "登録済みの方はこちら", new_session_path(resource_name), class: "devise-option-button"
+    %br/
+- if devise_mapping.registerable? && controller_name != 'registrations'
+  .devise-option-box
+    = link_to "School Notesに登録する", new_registration_path(resource_name), class: "devise-option-button"
+    %br/
+- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+  .devise-option-box
+    = link_to "パスワードを忘れた方はこちら", new_password_path(resource_name), class: "devise-option-button"
+    %br/
+- if devise_mapping.confirmable? && controller_name != 'confirmations'
+  = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)
+  %br/
+- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
+  = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name)
+  %br/
+-# - if devise_mapping.omniauthable?
+-#   - resource_class.omniauth_providers.each do |provider|
+-#     = button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }
+-#     %br/
+
+- if devise_mapping.omniauthable?
+  .devise-option-sso-box
+  - resource_class.omniauth_providers.each do |provider|
+    = link_to omniauth_authorize_path(resource_name, provider), method: :post, data: { turbo: false } do
+      = image_tag "#{provider}_ssobtn.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}"
+    %br/
+    %br/
