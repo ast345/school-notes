@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# db/seeds.rb
+
+school_type = ['小学校', '中学校', '高校']
+
+school_type.each do |type_name|
+    SchoolType.create(type_name: type_name)
+end
