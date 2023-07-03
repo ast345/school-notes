@@ -12,3 +12,6 @@ school_type = ['小学校', '中学校', '高校']
 school_type.each do |type_name|
     SchoolType.create(type_name: type_name)
 end
+
+
+grades
