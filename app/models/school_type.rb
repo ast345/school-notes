@@ -8,4 +8,5 @@
 #  updated_at :datetime         not null
 #
 class SchoolType < ApplicationRecord
+    has_many :grades, foreign_key: 'school_types_id'
 end

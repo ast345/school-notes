@@ -17,4 +17,5 @@
 #  fk_rails_...  (school_types_id => school_types.id)
 #
 class Grade < ApplicationRecord
+    belongs_to :school_type, foreign_key: 'school_types_id'
 end
