@@ -7,11 +7,25 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 # db/seeds.rb
 
-school_type = ['小学校', '中学校', '高校']
+#Grade事前設定データベース
 
-school_type.each do |type_name|
-    SchoolType.create(type_name: type_name)
-end
+# school_type = ['小学校', '中学校', '高校']
+
+# school_type.each do |type_name|
+#     SchoolType.create(type_name: type_name)
+# end
 
 
-grades
+# seeds.rb
+# Grade.create(grade_name: '1年生', school_types_id: 1)  # 小学校1年生
+# Grade.create(grade_name: '2年生', school_types_id: 1)
+# Grade.create(grade_name: '3年生', school_types_id: 1)
+# Grade.create(grade_name: '4年生', school_types_id: 1)
+# Grade.create(grade_name: '5年生', school_types_id: 1)
+# Grade.create(grade_name: '6年生', school_types_id: 1)
+# Grade.create(grade_name: '1年生', school_types_id: 2)
+# Grade.create(grade_name: '2年生', school_types_id: 2)
+# Grade.create(grade_name: '3年生', school_types_id: 2)
+# Grade.create(grade_name: '1年生', school_types_id: 3)
+# Grade.create(grade_name: '2年生', school_types_id: 3)
+# Grade.create(grade_name: '3年生', school_types_id: 3)
