@@ -18,4 +18,5 @@
 #
 class Grade < ApplicationRecord
     belongs_to :school_type, foreign_key: 'school_types_id'
+    has_many :grade_subjects, foreign_key: 'grades_id'
 end

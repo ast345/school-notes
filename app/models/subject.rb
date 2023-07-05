@@ -8,4 +8,5 @@
 #  updated_at   :datetime         not null
 #
 class Subject < ApplicationRecord
+    has_many :grade_subjects, foreign_key: 'subjects_id'
 end
