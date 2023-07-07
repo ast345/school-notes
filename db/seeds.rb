@@ -82,3 +82,25 @@
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 6, subjects_id: subject_id)
 # end
+
+# # 中学１年生
+# subject_for7 =   ['国語', '社会', '数学', '理科', '音楽', '美術', '保健体育', '技術・家庭', '外国語', '道徳', '総合', '特別活動']
+# subject_for7.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 7, subjects_id: subject_id)
+# end
+
+# # # 中学2年生
+# subject_for8 =   ['国語', '社会', '数学', '理科', '音楽', '美術', '保健体育', '技術・家庭', '外国語', '道徳', '総合', '特別活動']
+# subject_for8.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 8, subjects_id: subject_id)
+# end
+
+# # # 中学3年生
+# subject_for9 =   ['国語', '社会', '数学', '理科', '音楽', '美術', '保健体育', '技術・家庭', '外国語', '道徳', '総合', '特別活動']
+# subject_for9.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 9, subjects_id: subject_id)
+# end
+
