@@ -38,3 +38,47 @@
 # subjects.each do |subject|
 #     Subject.create(subject_name: subject)
 # end
+
+## grade_sbujectデータベース
+
+#小学1年生
+# subject_for1 =  ['国語', '算数', '音楽', '図工', '体育', '生活', '道徳', '図画工作', '特別活動']
+# subject_for1.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 1, subjects_id: subject_id)
+# end
+
+# # 小学2年生
+# subject_for2 =  ['国語', '算数', '音楽', '図工', '体育', '生活', '道徳', '図画工作', '特別活動']
+# subject_for2.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 2, subjects_id: subject_id)
+# end
+
+# # 小学3年生
+# subject_for3 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '体育', '道徳', '総合', '特別活動']
+# subject_for3.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 3, subjects_id: subject_id)
+# end
+
+# # 小学4年生
+# subject_for4 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '体育', '道徳', '総合', '特別活動']
+# subject_for4.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 4, subjects_id: subject_id)
+# end
+
+# # 小学5年生
+# subject_for5 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '家庭', '体育', '道徳', '外国語活動', '総合', '特別活動']
+# subject_for5.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 5, subjects_id: subject_id)
+# end
+
+# # 小学6年生
+# subject_for6 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '家庭', '体育', '道徳', '外国語活動', '総合', '特別活動']
+# subject_for6.each do |subject|
+#     subject_id = Subject.where(subject_name: subject).first.id
+#     GradeSubject.create(grades_id: 6, subjects_id: subject_id)
+# end
