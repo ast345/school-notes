@@ -133,3 +133,8 @@
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 12, subjects_id: subject_id)
 # end
+
+# user_type= ['教職員', '生徒', '保護者']
+# user_type.each do |user_type|
+#     UserType.create(type_name: user_type)
+# end
