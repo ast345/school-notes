@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_11_222125) do
+ActiveRecord::Schema.define(version: 2023_07_12_220314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 2023_07_11_222125) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_to_types", force: :cascade do |t|
+    t.bigint "user_types_id"
+    t.bigint "users_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_types_id"], name: "index_user_to_types_on_user_types_id"
+    t.index ["users_id"], name: "index_user_to_types_on_users_id"
+  end
+
   create_table "user_types", force: :cascade do |t|
     t.string "type_name"
     t.datetime "created_at", precision: 6, null: false
@@ -70,4 +79,6 @@ ActiveRecord::Schema.define(version: 2023_07_11_222125) do
   add_foreign_key "grade_subjects", "grades", column: "grades_id"
   add_foreign_key "grade_subjects", "subjects", column: "subjects_id"
   add_foreign_key "grades", "school_types", column: "school_types_id"
+  add_foreign_key "user_to_types", "user_types", column: "user_types_id"
+  add_foreign_key "user_to_types", "users", column: "users_id"
 end

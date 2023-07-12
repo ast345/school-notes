@@ -8,4 +8,5 @@
 #  updated_at :datetime         not null
 #
 class UserType < ApplicationRecord
+    has_many :user_to_types, foreign_key: 'user_types_id'
 end
