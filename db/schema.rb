@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_12_220314) do
+ActiveRecord::Schema.define(version: 2023_07_15_141702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,14 @@ ActiveRecord::Schema.define(version: 2023_07_12_220314) do
     t.string "subject_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "teachers", force: :cascade do |t|
+    t.bigint "users_id"
+    t.string "display_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["users_id"], name: "index_teachers_on_users_id"
   end
 
   create_table "user_to_types", force: :cascade do |t|
@@ -79,6 +87,7 @@ ActiveRecord::Schema.define(version: 2023_07_12_220314) do
   add_foreign_key "grade_subjects", "grades", column: "grades_id"
   add_foreign_key "grade_subjects", "subjects", column: "subjects_id"
   add_foreign_key "grades", "school_types", column: "school_types_id"
+  add_foreign_key "teachers", "users", column: "users_id"
   add_foreign_key "user_to_types", "user_types", column: "user_types_id"
   add_foreign_key "user_to_types", "users", column: "users_id"
 end
