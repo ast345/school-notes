@@ -14,4 +14,5 @@
 #
 class SchoolClass < ApplicationRecord
     belongs_to :grade
+    has_many :school_class_teachers
 end
