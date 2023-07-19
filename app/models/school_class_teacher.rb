@@ -15,6 +15,6 @@
 #  index_school_class_teachers_on_teachers_id        (teachers_id)
 #
 class SchoolClassTeacher < ApplicationRecord
-    belongs_to :teacher
-    belongs_to :school_class
+    belongs_to :teacher, foreign_key: 'teachers_id'
+    belongs_to :school_class, foreign_key: 'school_classes_id'
 end
