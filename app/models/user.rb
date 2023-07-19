@@ -46,7 +46,6 @@ class User < ApplicationRecord
 
   private
   def generate_uid
-    binding.pry
     self.uid = SecureRandom.uuid
   end
 
