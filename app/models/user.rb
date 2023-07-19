@@ -26,6 +26,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_many :user_to_types, foreign_key: 'users_id'
   has_one :teacher, foreign_key: 'users_id'
+  after_create :create_user_to_type
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -53,4 +54,7 @@ class User < ApplicationRecord
     uid.present?
   end
 
+  def create_user_to_type
+    self.user_to_types.create(users_id: self.id, user_types_id: 1)
+  end
 end
