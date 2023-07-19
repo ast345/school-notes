@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   enable_extension "plpgsql"
 
   create_table "grade_subjects", force: :cascade do |t|
-    t.bigint "grades_id"
-    t.bigint "subjects_id"
+    t.bigint "grades_id", null: false
+    t.bigint "subjects_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grades_id"], name: "index_grade_subjects_on_grades_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   end
 
   create_table "grades", force: :cascade do |t|
-    t.string "grade_name"
+    t.string "grade_name", null: false
     t.bigint "school_types_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -51,19 +51,19 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   end
 
   create_table "school_types", force: :cascade do |t|
-    t.string "type_name"
+    t.string "type_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "subjects", force: :cascade do |t|
-    t.string "subject_name"
+    t.string "subject_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.bigint "users_id"
+    t.bigint "users_id", null: false
     t.string "display_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   end
 
   create_table "user_to_types", force: :cascade do |t|
-    t.bigint "user_types_id"
-    t.bigint "users_id"
+    t.bigint "user_types_id", null: false
+    t.bigint "users_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_types_id"], name: "index_user_to_types_on_user_types_id"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   end
 
   create_table "user_types", force: :cascade do |t|
-    t.string "type_name"
+    t.string "type_name", null:false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
