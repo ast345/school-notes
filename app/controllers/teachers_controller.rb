@@ -5,6 +5,10 @@ class TeachersController < ApplicationController
         @teacher = current_user.build_teacher
     end
     
+    def index
+        @display_name = current_user.teacher.display_name
+    end
+
     def create
         @user = current_user
         @teacher = current_user.build_teacher(teacher_params)

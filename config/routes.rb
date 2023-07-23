@@ -5,5 +5,5 @@ Rails.application.routes.draw do
 
   root to: "home#index"
 
-  resources :teachers, only: [:show, :new, :edit, :create]
+  resources :teachers, only: [:index, :show, :new, :edit, :create]
 end
