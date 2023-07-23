@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_16_132703) do
+ActiveRecord::Schema.define(version: 2023_07_23_043701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "grade_subjects", force: :cascade do |t|
-    t.bigint "grades_id", null: false
-    t.bigint "subjects_id", null: false
+    t.bigint "grades_id"
+    t.bigint "subjects_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grades_id"], name: "index_grade_subjects_on_grades_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   end
 
   create_table "grades", force: :cascade do |t|
-    t.string "grade_name", null: false
+    t.string "grade_name"
     t.bigint "school_types_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -51,28 +51,28 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   end
 
   create_table "school_types", force: :cascade do |t|
-    t.string "type_name", null: false
+    t.string "type_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "subjects", force: :cascade do |t|
-    t.string "subject_name", null: false
+    t.string "subject_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.bigint "users_id", null: false
+    t.bigint "user_id"
     t.string "display_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["users_id"], name: "index_teachers_on_users_id"
+    t.index ["user_id"], name: "index_teachers_on_user_id"
   end
 
   create_table "user_to_types", force: :cascade do |t|
-    t.bigint "user_types_id", null: false
-    t.bigint "users_id", null: false
+    t.bigint "user_types_id"
+    t.bigint "users_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_types_id"], name: "index_user_to_types_on_user_types_id"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   end
 
   create_table "user_types", force: :cascade do |t|
-    t.string "type_name", null:false
+    t.string "type_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 2023_07_16_132703) do
   add_foreign_key "grade_subjects", "grades", column: "grades_id"
   add_foreign_key "grade_subjects", "subjects", column: "subjects_id"
   add_foreign_key "grades", "school_types", column: "school_types_id"
-  add_foreign_key "teachers", "users", column: "users_id"
+  add_foreign_key "teachers", "users"
   add_foreign_key "user_to_types", "user_types", column: "user_types_id"
   add_foreign_key "user_to_types", "users", column: "users_id"
 end
