@@ -25,6 +25,11 @@ class TeachersController < ApplicationController
         end
     end
 
+    def update
+        @teacher = Teacher.find(params[:id])
+        @teacher.update(teacher_params)
+    end
+
     private
     def teacher_params
         params.require(:teacher).permit(:display_name, :user_id)

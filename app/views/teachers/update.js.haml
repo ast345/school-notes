@@ -1,0 +1,4 @@
+id = "#{@teacher.id}";
+target = document.querySelector(`#display_name`);
+html = "#{j(render partial: 'display_name', locals: { teacher: @teacher })}";
+target.innerHTML = html;
