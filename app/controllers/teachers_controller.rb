@@ -7,6 +7,11 @@ class TeachersController < ApplicationController
     
     def index
         @display_name = current_user.teacher.display_name
+        @teacher_id = current_user.teacher.id
+    end
+
+    def edit
+        @teacher = Teacher.find(params[:id])
     end
 
     def create
