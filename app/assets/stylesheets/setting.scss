@@ -1,0 +1,37 @@
+.setting{
+    &_header{
+        text-align: center;
+    }
+
+    &_items{
+        text-align: center;
+    }
+}
+
+.edit{
+    &_setting{
+        text-align: center;
+        
+    }
+
+    &_link{
+        margin-left: 20px;
+        display: inline-block;
+    }
+}
+
+#display_name{
+    display: inline-block;
+}
+
+
+.new{
+    &_setting{
+        text-align: center;
+    }
+    
+    &_link{
+        margin-left: 20px;
+        display: inline-block;
+    }
+}
