@@ -1,6 +1,0 @@
-%h1 先生の設定ページ
-
-= form_with(model: @teacher, url: teachers_path, method: 'post', local: true) do |f|
-    = f.label :display_name, '表示名'
-    = f.text_field :display_name, class: 'text'
-    = f.submit '保存'

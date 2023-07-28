@@ -6,8 +6,11 @@ class TeachersController < ApplicationController
     end
     
     def index
-        @display_name = current_user.teacher.display_name
-        @teacher_id = current_user.teacher.id
+        @display_name = current_user.teacher ? current_user.teacher.display_name : "まだ設定されていません"
+        if current_user.teacher
+            @teacher_id = current_user.teacher.id
+        else
+        end
     end
 
     def edit
@@ -18,10 +21,9 @@ class TeachersController < ApplicationController
         @user = current_user
         @teacher = current_user.build_teacher(teacher_params)
         if @teacher.save
-            redirect_to root_path, notice: '保存できたよ'
+            redirect_to teachers_path, notice: '保存できたよ'
         else
-            flash.now[:erron] = '保存に失敗しました'
-            render :new
+            redirect_to teachers_path, notice: '保存で来ませんでした'
         end
     end
 
