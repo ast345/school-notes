@@ -1,11 +1,11 @@
 %h1 教員設定
-%p#display_name #{@display_name}
-
 - if @teacher_id
   .edit_setting
+    %p#display_name #{@display_name}
     = link_to edit_teacher_path(@teacher_id), remote: true do
       = image_tag 'Edit.png'
 - else
   .new_setting
+    %p#display_name #{@display_name}
     = link_to new_teacher_path, remote: true do
       = image_tag 'Edit.png'
