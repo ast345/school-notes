@@ -19,5 +19,5 @@
 class Teacher < ApplicationRecord
     belongs_to :user
     has_many :school_class_teachers, foreign_key: 'teachers_id'
-
+    has_many :school_classes, through: :school_class_teachers
 end

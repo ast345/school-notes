@@ -15,4 +15,10 @@
 class SchoolClass < ApplicationRecord
     belongs_to :grade
     has_many :school_class_teachers, foreign_key: 'school_classes_id'
+    has_many :teachers, through: :school_class_teachers
+
+    accepts_nested_attributes_for :school_class_teachers
+
+    validates :grade_id, presence: true
+    validates :class_name, presence: true
 end
