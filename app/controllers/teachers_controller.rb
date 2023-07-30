@@ -8,7 +8,9 @@ class TeachersController < ApplicationController
     def index
         @display_name = current_user.teacher ? current_user.teacher.display_name : "まだ設定されていません"
         if current_user.teacher
-            @teacher_id = current_user.teacher.id
+            @teacher = current_user.teacher
+            @classes = @teacher.school_classes
+            binding.pry
         else
         end
     end

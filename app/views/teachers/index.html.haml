@@ -1,14 +1,25 @@
 %h1.setting_header 教員設定
 %h3.setting_items 表示名
-- if @teacher_id
+- if @teacher.id
   .edit_setting
-    %p#display_name #{@display_name}
+    %p#display_name= @display_name
     .edit_link
-      = link_to edit_teacher_path(@teacher_id), remote: true do
+      = link_to edit_teacher_path(@teacher.id), remote: true do
         = image_tag 'Edit.png'
+  - @classes.each do |school_class|
+    .class_name
+      - grade = school_class.grade.grade_name.gsub('生', '')
+      %p= grade + school_class.class_name
+    .teacher_role
+      %p= school_class.school_class_teachers.find_by(teachers_id: current_user.teacher.id)&.teacher_type
+    .all_teacher
+      - teachers = school_class.school_class_teachers
+      - teachers.each do |class_teacher|
+        %p= class_teacher.teacher.display_name
+
 - else
   .new_setting
-    %p#display_name #{@display_name}
+    %p#display_name= @display_name
     .new_link
       = link_to new_teacher_path, remote: true do
         = image_tag 'Edit.png'
