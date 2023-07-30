@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_23_043701) do
+ActiveRecord::Schema.define(version: 2023_07_30_021537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assigned_subjects", force: :cascade do |t|
+    t.bigint "school_class_teachers_id", null: false
+    t.bigint "grade_subjects_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_subjects_id"], name: "index_assigned_subjects_on_grade_subjects_id"
+    t.index ["school_class_teachers_id"], name: "index_assigned_subjects_on_school_class_teachers_id"
+  end
 
   create_table "grade_subjects", force: :cascade do |t|
     t.bigint "grades_id"

@@ -10,7 +10,6 @@ class TeachersController < ApplicationController
         if current_user.teacher
             @teacher = current_user.teacher
             @classes = @teacher.school_classes
-            binding.pry
         else
         end
     end

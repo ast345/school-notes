@@ -17,4 +17,5 @@
 class SchoolClassTeacher < ApplicationRecord
     belongs_to :teacher, foreign_key: 'teachers_id'
     belongs_to :school_class, foreign_key: 'school_classes_id'
+    has_many :assigned_subjects, foreign_key: 'school_class_teachers_id'
 end

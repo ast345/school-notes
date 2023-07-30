@@ -12,6 +12,10 @@
       %p= grade + school_class.class_name
     .teacher_role
       %p= school_class.school_class_teachers.find_by(teachers_id: current_user.teacher.id)&.teacher_type
+    .assigned_subject_display
+      %p 担当教科
+      = link_to new_assigned_subject_path(school_class_id: school_class.id) do
+        = image_tag 'Edit.png'
     .all_teacher
       - teachers = school_class.school_class_teachers
       - teachers.each do |class_teacher|
