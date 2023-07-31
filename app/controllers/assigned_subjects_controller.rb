@@ -3,8 +3,12 @@ class AssignedSubjectsController < ApplicationController
 
     def new
         school_class_id = params[:school_class_id]
+        current_class_teacher_id = params[:current_class_teacher_id]
         @school_class = SchoolClass.find(school_class_id)
-        @grade_subjects = GradeSubject.where(grades_id: @school_class.grade_id)
+        all_grade_subjects = GradeSubject.where(grades_id: @school_class.grade_id)
+        current_subject_ids = AssignedSubject.where(school_class_teachers_id: current_class_teacher_id).pluck(:grade_subjects_id)
+        # @all_grade_subjectsからassigned_grade_subject_idsに含まれるIDを除外して、新たに@grade_subjectsに代入
+        @grade_subjects = all_grade_subjects.where.not(id: current_subject_ids)
     end
 
     def create
@@ -16,5 +20,12 @@ class AssignedSubjectsController < ApplicationController
         end
     
         redirect_to teachers_path, notice: "担当教科が登録できました"
+    end
+
+    def destroy
+        assigned_subject = AssignedSubject.find(params[:id])
+        assigned_subject_name = assigned_subject.grade_subject.subject.subject_name
+        assigned_subject.destroy!
+        redirect_to teachers_path, notice: "#{assigned_subject_name}の担当を外しました"
     end
 end

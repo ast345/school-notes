@@ -7,6 +7,6 @@ Rails.application.routes.draw do
 
   resources :teachers, only: [:index, :show, :new, :edit, :create, :update]
   resources :school_classes, only: [:new, :create]
-  resources :assigned_subjects, only: [:new, :create]
-  
+  resources :assigned_subjects, only: [:new, :create, :destroy]
+
 end

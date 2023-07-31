@@ -6,6 +6,9 @@
     .edit_link
       = link_to edit_teacher_path(@teacher.id), remote: true do
         = image_tag 'Edit.png'
+  .current_teacher_class
+    = link_to new_school_class_path do
+      = image_tag 'Add.png'
   - @classes.each do |school_class|
     .class_name
       - grade = school_class.grade.grade_name.gsub('生', '')
@@ -14,7 +17,14 @@
       %p= school_class.school_class_teachers.find_by(teachers_id: current_user.teacher.id)&.teacher_type
     .assigned_subject_display
       %p 担当教科
-      = link_to new_assigned_subject_path(school_class_id: school_class.id) do
+      - current_class_teacher_id = SchoolClassTeacher.where(teachers_id: @teacher.id, school_classes_id: school_class.id).first.id
+      - current_assigned_subjects = AssignedSubject.where(school_class_teachers_id: current_class_teacher_id)
+      - current_assigned_subjects.each do |assigned_subject|
+        - if assigned_subject.grade_subject.grades_id === school_class.id
+          %p #{assigned_subject.grade_subject.subject.subject_name}
+          = link_to '外れる', assigned_subject_path(assigned_subject), data: {method: 'delete', confirm: '本当に担当を外れますか？' }
+        - else
+      = link_to new_assigned_subject_path(school_class_id: school_class.id, current_class_teacher_id: current_class_teacher_id) do
         = image_tag 'Edit.png'
     .all_teacher
       - teachers = school_class.school_class_teachers
