@@ -9,7 +9,8 @@ class SchoolClassesController < ApplicationController
     def create
         @school_class = SchoolClass.new(school_class_params)
         if @school_class.save
-            @school_class.school_class_teachers.build(teacher: current_user.teacher, teacher_type: "担任")
+            school_class_teacher = @school_class.school_class_teachers.build(teacher: current_user.teacher, teacher_type: "担任")
+            school_class_teacher.save
           # 保存成功時の処理
         else
           render :new
