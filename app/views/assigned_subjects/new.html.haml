@@ -1,10 +1,11 @@
-%h1 担当教科の登録
+.container
+  %h1 担当教科の登録
 
-= form_with(url: assigned_subjects_path, method: :post) do |form|
-  = form.hidden_field :school_class_id, value: @school_class.id
-  - @grade_subjects.each do |grade_subject|
-    .field
-      = check_box_tag "school_class[grade_subject_ids][]", grade_subject.id, false, id: "grade_subject_#{grade_subject.id}"
-      = label_tag "grade_subject_#{grade_subject.id}", "#{grade_subject.subject.subject_name} "
-  .actions
-    = form.submit "登録"
+  = form_with(url: assigned_subjects_path, method: :post) do |form|
+    = form.hidden_field :school_class_id, value: @school_class.id
+    - @grade_subjects.each do |grade_subject|
+      .field
+        = check_box_tag "school_class[grade_subject_ids][]", grade_subject.id, false, id: "grade_subject_#{grade_subject.id}"
+        = label_tag "grade_subject_#{grade_subject.id}", "#{grade_subject.subject.subject_name} "
+    .actions
+      = form.submit "登録"
