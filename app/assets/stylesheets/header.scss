@@ -1,0 +1,10 @@
+.header {
+    display: block;
+    height: 60px;
+    border-bottom: solid 2px #ddd;
+    .header_logo{
+        position: absolute;
+        padding-top: 13px;
+        padding-left: 40px;
+    }
+}
