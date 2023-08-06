@@ -13,6 +13,7 @@
     .class_name
       - grade = school_class.grade.grade_name.gsub('生', '')
       %p= grade + school_class.class_name
+      = link_to "編集", edit_school_class_path(school_class)
     .teacher_role
       %p= school_class.school_class_teachers.find_by(teachers_id: current_user.teacher.id)&.teacher_type
     .assigned_subject_display
