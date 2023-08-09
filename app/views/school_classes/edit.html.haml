@@ -1,5 +1,5 @@
 .container
-  %h1 クラス編集
+  %h1.page_header クラス編集
 
   = form_with(model: @school_class, url: school_class_path, method: 'put') do |form|
     = form.label :grade_id, '学年'

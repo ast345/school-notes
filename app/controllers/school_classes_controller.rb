@@ -12,6 +12,7 @@ class SchoolClassesController < ApplicationController
             school_class_teacher = @school_class.school_class_teachers.build(teacher: current_user.teacher, teacher_type: "担任")
             school_class_teacher.save
           # 保存成功時の処理
+            redirect_to teachers_path, notice: 'クラスを作成できました'
         else
           render :new
         end

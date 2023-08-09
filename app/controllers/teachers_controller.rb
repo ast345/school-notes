@@ -9,7 +9,10 @@ class TeachersController < ApplicationController
         @display_name = current_user.teacher ? current_user.teacher.display_name : "まだ設定されていません"
         if current_user.teacher
             @teacher = current_user.teacher
-            @classes = @teacher.school_classes
+            if @teacher.school_classes
+                @classes = @teacher.school_classes
+            else
+            end
         else
         end
     end
