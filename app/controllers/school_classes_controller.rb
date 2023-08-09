@@ -38,6 +38,11 @@ class SchoolClassesController < ApplicationController
         end
     end
     
+    def destroy
+        school_class = SchoolClass.find(params[:id])
+        school_class.destroy!
+        redirect_to teachers_path, alert: "クラスを削除しました"
+    end
     private
     
     def school_class_params
