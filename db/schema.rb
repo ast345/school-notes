@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_30_021537) do
+ActiveRecord::Schema.define(version: 2023_08_09_092313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,23 @@ ActiveRecord::Schema.define(version: 2023_07_30_021537) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["school_types_id"], name: "index_grades_on_school_types_id"
+  end
+
+  create_table "lesson_classes", force: :cascade do |t|
+    t.bigint "school_class_id", null: false
+    t.bigint "lesson_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lesson_id"], name: "index_lesson_classes_on_lesson_id"
+    t.index ["school_class_id"], name: "index_lesson_classes_on_school_class_id"
+  end
+
+  create_table "lessons", force: :cascade do |t|
+    t.date "date"
+    t.integer "day_of_week"
+    t.integer "period"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "school_class_teachers", force: :cascade do |t|
