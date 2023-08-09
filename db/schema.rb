@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_09_092313) do
+ActiveRecord::Schema.define(version: 2023_08_09_105714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 2023_08_09_092313) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grade_subjects_id"], name: "index_assigned_subjects_on_grade_subjects_id"
     t.index ["school_class_teachers_id"], name: "index_assigned_subjects_on_school_class_teachers_id"
+  end
+
+  create_table "grade_subject_units", force: :cascade do |t|
+    t.string "unit_name", null: false
+    t.bigint "grade_subject_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_subject_id"], name: "index_grade_subject_units_on_grade_subject_id"
   end
 
   create_table "grade_subjects", force: :cascade do |t|
@@ -56,6 +64,8 @@ ActiveRecord::Schema.define(version: 2023_08_09_092313) do
     t.integer "period"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "grade_subject_unit_id"
+    t.index ["grade_subject_unit_id"], name: "index_lessons_on_grade_subject_unit_id"
   end
 
   create_table "school_class_teachers", force: :cascade do |t|

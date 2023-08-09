@@ -2,12 +2,17 @@
 #
 # Table name: lessons
 #
-#  id          :bigint           not null, primary key
-#  date        :date
-#  day_of_week :integer
-#  period      :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                    :bigint           not null, primary key
+#  date                  :date
+#  day_of_week           :integer
+#  period                :integer
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  grade_subject_unit_id :bigint
+#
+# Indexes
+#
+#  index_lessons_on_grade_subject_unit_id  (grade_subject_unit_id)
 #
 
 # This model initially had no columns defined. If you add columns to the
