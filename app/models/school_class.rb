@@ -18,6 +18,7 @@ class SchoolClass < ApplicationRecord
     has_many :teachers, through: :school_class_teachers
     has_many :lesson_classes, dependent: :destroy
     has_many :lessons, through: :lesson_classes
+    has_many :events
 
     accepts_nested_attributes_for :school_class_teachers
 
