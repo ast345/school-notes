@@ -22,6 +22,7 @@
               - grade = school_class.grade.grade_name.gsub('生', '')
               %p.class_name_display= grade + school_class.class_name
             = link_to "編集", edit_school_class_path(school_class)
+            = link_to "削除", school_class_path(school_class), data: {method: 'delete', confirm: 'このクラスを削除しますか'}
           .class_box_content
             %p.class_box_content_title 役割
             %p.teacher_role= school_class.school_class_teachers.find_by(teachers_id: current_user.teacher.id)&.teacher_type
