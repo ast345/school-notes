@@ -19,4 +19,9 @@
 class Grade < ApplicationRecord
     belongs_to :school_type, foreign_key: 'school_types_id'
     has_many :grade_subjects, foreign_key: 'grades_id'
+    has_many :school_classes
+
+    def full_grade_name
+        "#{school_type.type_name}#{grade_name}"
+    end
 end

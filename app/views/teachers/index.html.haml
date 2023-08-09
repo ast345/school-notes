@@ -1,0 +1,51 @@
+.page_header
+  %h1.page_header_title Setting
+.container
+  .setting
+    %p.setting_title 表示名
+  - if @teacher.id
+    .edit_setting
+      %p#display_name= @display_name
+      .edit_link
+        = link_to edit_teacher_path(@teacher.id), remote: true, class: 'edit_link_a' do
+          = image_tag 'Edit.png', class: 'edit_link_img'
+    .setting
+      %p.setting_title 担当クラス
+    .edit_link
+      = link_to new_school_class_path do
+        = image_tag 'Add.png', class: 'edit_link_img'
+    - if @classes
+      - @classes.each do |school_class|
+        .class_box
+          .class_box_header
+            .class_name
+              - grade = school_class.grade.grade_name.gsub('生', '')
+              %p.class_name_display= grade + school_class.class_name
+            = link_to "編集", edit_school_class_path(school_class)
+          .class_box_content
+            %p.class_box_content_title 役割
+            %p.teacher_role= school_class.school_class_teachers.find_by(teachers_id: current_user.teacher.id)&.teacher_type
+          .class_box_content
+            %p.class_box_content_title 担当教科
+            - current_class_teacher_id = SchoolClassTeacher.where(teachers_id: @teacher.id, school_classes_id: school_class.id).first.id
+            = link_to "追加", new_assigned_subject_path(school_class_id: school_class.id, current_class_teacher_id: current_class_teacher_id), class: "add_subject"
+            .class_subject
+              - current_assigned_subjects = AssignedSubject.where(school_class_teachers_id: current_class_teacher_id)
+              - current_assigned_subjects.each do |assigned_subject|
+                .class_subject_box
+                  %p.class_subject_name #{assigned_subject.grade_subject.subject.subject_name}
+                  = link_to assigned_subject_path(assigned_subject), data: {method: 'delete', confirm: '担当を外れますか？' } do
+                    = image_tag 'Trash.png', class: "class_subject_trash"
+          .class_box_content
+            %p.class_box_content_title 全担当教員
+            - teachers = school_class.school_class_teachers
+            - teachers.each do |class_teacher|
+              .class_subject
+                %p.class_teacher_names= class_teacher.teacher.display_name
+
+  - else
+    .new_setting
+      %p#display_name= @display_name
+      .new_link
+        = link_to new_teacher_path, remote: true do
+          = image_tag 'Edit.png'

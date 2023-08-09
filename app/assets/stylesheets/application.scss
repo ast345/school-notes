@@ -15,3 +15,60 @@
  */
 
  @import 'devise';
+ @import 'setting';
+ @import 'header';
+
+ html {
+    word-spacing: 1px;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    height: 100%;
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+    margin: 0;
+  }
+  
+  body {
+    height: 100%;
+    // background-color: $base-bg-color;
+    font-size: 1em;
+    // color: $text-base-color;
+    
+  }
+  
+  .container {
+    position: relative;
+    padding: 60px 32px;
+    width: 100%;
+    
+ 
+    .title{
+      position: relative;
+      width: 183px;
+      height: 36px;
+      top: 33px;
+      margin-bottom: 80px;
+ 
+      font-family: 'Avenir';
+      font-style: normal;
+      font-weight: 800;
+      font-size: 26px;
+      line-height: 36px;
+       /* identical to box height */
+ 
+ 
+      color: #000000;
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+

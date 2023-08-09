@@ -1,0 +1,27 @@
+.header {
+    display: block;
+    height: 60px;
+    border-bottom: solid 2px #ddd;
+    .header_logo{
+        position: absolute;
+        padding-top: 13px;
+        padding-left: 40px;
+    }
+}
+
+.page_header{
+    &_title{
+        display: block;
+        position: relative;
+        margin-top: -60px;
+        text-align: center;
+        
+
+        color: #000;
+        font-family: BIZ UDPGothic;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+  }

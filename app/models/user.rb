@@ -24,6 +24,10 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_many :user_to_types, foreign_key: 'users_id'
+  has_one :teacher
+  after_create :create_user_to_type
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:azure_activedirectory_v2, :google_oauth2]
@@ -43,7 +47,6 @@ class User < ApplicationRecord
 
   private
   def generate_uid
-    binding.pry
     self.uid = SecureRandom.uuid
   end
 
@@ -51,4 +54,7 @@ class User < ApplicationRecord
     uid.present?
   end
 
+  def create_user_to_type
+    self.user_to_types.create(users_id: self.id, user_types_id: 1)
+  end
 end

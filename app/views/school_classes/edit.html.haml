@@ -1,0 +1,11 @@
+.container
+  %h1.page_header クラス編集
+
+  = form_with(model: @school_class, url: school_class_path, method: 'put') do |form|
+    = form.label :grade_id, '学年'
+    = form.select :grade_id, options_for_select(@grades)
+
+    = form.label :class_name, '組'
+    = form.text_field :class_name
+
+    = form.submit '作成'
