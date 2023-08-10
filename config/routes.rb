@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :teachers, only: [:index, :show, :new, :edit, :create, :update]
-  resources :school_classes, only: [:new, :create, :edit, :update, :destroy]
+  resources :school_classes, only: [:show, :new, :create, :edit, :update, :destroy] do
+    resources :lessons, only: [:new, :create, :edit, :update, :destroy]
+    resources :events, only: [:new, :create, :edit, :update, :destroy]
+    resources :date_items, only: [:new, :create, :edit, :update, :destroy]
+  end
+
   resources :assigned_subjects, only: [:new, :create, :destroy]
 
 end
