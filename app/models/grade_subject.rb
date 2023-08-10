@@ -23,4 +23,5 @@ class GradeSubject < ApplicationRecord
     belongs_to :subject, foreign_key: 'subjects_id'
     has_many :assigned_subjects, foreign_key: 'grade_subjects_id'
     has_many :grade_subject_units, dependent: :destroy
+    has_many :lessons
 end
