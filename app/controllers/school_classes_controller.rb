@@ -43,6 +43,11 @@ class SchoolClassesController < ApplicationController
         school_class.destroy!
         redirect_to teachers_path, alert: "クラスを削除しました"
     end
+
+    def show
+        @school_class = SchoolClass.find(params[:id])
+        @this_week_lessons = @school_class.lessons.where(date: "2023-08-10")
+    end
     private
     
     def school_class_params
