@@ -37,6 +37,19 @@
     &_text_area{
         height: 40px;
     }
+
+    &_submit-btn{
+        display: inline-block;
+        padding: 5px 15px;
+        margin-left: 15px;
+        background-color: rgb(95, 163, 241);
+        border-radius: 10px;
+        color: white;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.6;
+        }
+    }
 }
 
 .display_name{
@@ -60,6 +73,31 @@
     &_link{
         margin-left: 20px;
         display: inline-block;
+    }
+
+    &_text_area{
+        height: 40px;
+    }
+
+    &_display_name{
+        text-decoration: underline;
+        color: blue;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &_submit-btn{
+        display: inline-block;
+        padding: 5px 15px;
+        margin-left: 15px;
+        background-color: rgb(95, 163, 241);
+        border-radius: 10px;
+        color: white;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.6;
+        }
     }
 }
 
@@ -147,16 +185,11 @@
     resize: none;
 }
 
-.submit-btn{
-    display: inline-block;
-    padding: 5px 15px;
-    margin-left: 15px;
-    background-color: rgb(95, 163, 241);
-    border-radius: 10px;
-    color: white;
-    &:hover {
-        cursor: pointer;
-        opacity: 0.6;
-    }
-}
 
+
+.new_setting{
+    display: inline-block;
+    height: 40px;
+    width: 69%;
+    text-align: center;
+}

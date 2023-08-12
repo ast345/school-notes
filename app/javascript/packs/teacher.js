@@ -8,14 +8,15 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 document.addEventListener('turbolinks:load', () =>{
     const dataset = $('#teacher-show').data()
-    const teacherId = dataset.teacherId
+    
 
     $('.edit_link_img').on('click', () => {
         $('.display_name_box').addClass('hidden')
         $('.edit-text-area').removeClass('hidden')
     });
 
-    $('.submit-btn').on('click', () => {
+    $('.edit_submit-btn').on('click', () => {
+        const teacherId = dataset.teacherId
         const new_display_name = $('#edit_display_name').val()
         if (!new_display_name) {
             window.alert('表示名を入力してください')
@@ -31,6 +32,26 @@ document.addEventListener('turbolinks:load', () =>{
                 $('.display_name').text(teacher.display_name)
               })
         }
+    })
+
+    $('.new_display_name').on('click', () => {
+        $('.new_setting').addClass('hidden')
+        $('.new_text_area').removeClass('hidden')
+    });
+
+    $('.new_submit-btn').on('click', () => {
+        const new_display_name = $('#new_display_name').val()
+        if (!new_display_name) {
+            window.alert('表示名を入力してください')
+        } else {
+            axios.post(`/teachers`, {
+                teacher: {display_name: new_display_name}
+            })
+            .then((res) => {
+                location.reload();
+            })
+        }
+            
     })
 
 });

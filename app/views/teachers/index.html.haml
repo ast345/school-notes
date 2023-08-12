@@ -3,7 +3,7 @@
 .container
   .setting
     %p.setting_title 表示名
-  - if @teacher.id
+  - if @teacher
     .edit_setting#teacher-show{data: {teacher_id: @teacher.id}}
       .display_name_box
         %p.display_name= @display_name
@@ -11,10 +11,10 @@
           = image_tag 'Edit.png', class: 'edit_link_img'
       .edit-text-area.hidden
         = text_area_tag :edit_display_name, @display_name, class: 'sm'
-        .submit-btn
+        .edit_submit-btn
           更新
 
-    = javascript_pack_tag 'teacher'
+
 
     .setting
       %p.setting_title 担当クラス
@@ -52,8 +52,16 @@
                 %p.class_teacher_names= class_teacher.teacher.display_name
 
   - else
-    .new_setting
-      %p#display_name= @display_name
-      .new_link
-        = link_to new_teacher_path, remote: true do
-          = image_tag 'Edit.png'
+    .edit_setting
+      .new_setting
+        %p.new_display_name #{@display_name}
+      .new_text_area.hidden
+        = text_area_tag :new_display_name, '', class: 'sm'
+        .new_submit-btn
+          決定
+      .display_name_box_new.hidden
+        %p.display_name
+        .edit_link
+          = image_tag 'Edit.png', class: 'edit_link_img'
+
+= javascript_pack_tag 'teacher'
