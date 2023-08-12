@@ -34,6 +34,7 @@ class TeachersController < ApplicationController
     def update
         @teacher = Teacher.find(params[:id])
         @teacher.update(teacher_params)
+        render json: @teacher
     end
 
     private
