@@ -6,7 +6,7 @@ class TeachersController < ApplicationController
     end
     
     def index
-        @display_name = current_user.teacher ? current_user.teacher.display_name : "まだ設定されていません"
+        @display_name = current_user.teacher ? current_user.teacher.display_name : "表示名から設定をはじめる"
         if current_user.teacher
             @teacher = current_user.teacher
             if @teacher.school_classes
@@ -29,6 +29,7 @@ class TeachersController < ApplicationController
         else
             redirect_to teachers_path, notice: '保存で来ませんでした'
         end
+
     end
 
     def update
