@@ -7,6 +7,8 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require("jquery-ui")
+require('jquery-ui/ui/widgets/draggable')
 
 import { csrfToken } from 'rails-ujs'
 
@@ -18,14 +20,5 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import $ from 'jquery'
-import axios from 'axios'
-
-document.addEventListener('turbolinks:load', () =>{
-    $('.class_name_display').on('click', () => {
-        axios.get('/')
-       .then((response) => {
-            console.log(response)
-       })
-    })
-})
+import $ from 'jquery';
+import axios from 'axios';
