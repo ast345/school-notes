@@ -42,6 +42,8 @@ gem 'rails-i18n'
 
 gem 'active_model_serializers'
 
+gem 'gon'
+
 # yarnで処理するので以下は多分不要
 # gem 'jquery-rails'
 # gem 'jquery-ui-rails'
