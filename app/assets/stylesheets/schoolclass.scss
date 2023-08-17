@@ -7,3 +7,38 @@
         background-color: rgb(238, 238, 238);
     }
 }
+
+.class{
+    &_weekly{
+        display: inline-block;
+    }
+
+
+}
+
+.new{
+    &_lesson_box{
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    &_unit{
+        &_btn{
+            display: inline-block;
+            background-color: rgb(95, 163, 241);
+            color: white;
+            border-radius: 7px;
+            margin-left: 10px;
+        }
+
+        &_text{
+            height: 20px;
+            width: 100px;
+            vertical-align: middle;
+
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            resize: none;
+        }
+    }
+}
