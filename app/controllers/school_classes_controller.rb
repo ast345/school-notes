@@ -67,7 +67,6 @@ class SchoolClassesController < ApplicationController
     end
     
     private
-    
     def school_class_params
         params.require(:school_class).permit(:grade_id, :class_name)
     end

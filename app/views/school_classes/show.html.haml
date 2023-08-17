@@ -27,13 +27,14 @@
                                 - else
                                     %p &nbsp;
                             - else
-                                .new_lesson_btn{id: "#{period}#{date}", data: {id: "#{period}#{date}"}}
+                                .new_lesson_btn{id: "#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
                                     %p 新規作成
                                 .new_lesson_box.hidden{id: "#{period}#{date}"}
                                     = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{date}", include_blank: true
                                 .unit_select_box{id: "grade_subject_units#{period}#{date}"}
                                 .new_unit_box.hidden{id: "#{period}#{date}"}
                                     = text_area_tag :new_grade_subject, '', class: 'new_unit_text'
+                                .created_lesson_box{id: "created_lesson_box#{period}#{date}"}
 
 
 = javascript_pack_tag 'school_class'

@@ -7,7 +7,7 @@ import 'jquery-ui/ui/widgets/droppable';
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 document.addEventListener('turbolinks:load', () =>{
-    
+    const schoolClassId = gon.school_class_id;
 
     $(function() {
         $('.lesson_box').draggable({
@@ -51,7 +51,11 @@ document.addEventListener('turbolinks:load', () =>{
     $('.new_lesson_btn').each(function(index, element){
         const dataset = $(element).data()
         const Id = dataset.id
-        const selectSubject = document.getElementById(`select_subject${Id}`);
+        const period = dataset.period
+        const date = dataset.date
+        const dayOfWeek = dataset.dayOfWeek
+        const selectSubject = document.getElementById(`select_subject${Id}`)
+        
         
         $(`#${Id}`+'.new_lesson_btn').on('click', () => {
             $(`#${Id}`+'.new_lesson_box').removeClass('hidden')
@@ -72,7 +76,7 @@ document.addEventListener('turbolinks:load', () =>{
                     .then((res) => {
                         const unitSet = res.data
                         const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
-                        gradeSubjectUnits.innerHTML = `<select>${options}</select><p class="new_unit_btn">新規</p>`
+                        gradeSubjectUnits.innerHTML = `<select id="unit${Id}">${options}</select><p class="new_unit_btn">新規</p>`
                     
                         $('.new_unit_btn').on('click', () =>{
                             $(`#${Id}`+'.new_unit_box').removeClass('hidden')
@@ -92,16 +96,32 @@ document.addEventListener('turbolinks:load', () =>{
             document.addEventListener('click', function(event) {
                 var clickedElement = event.target;
                 var creatingElement = $('.lesson_box'+`#${Id}`);
-                const schoolClassId = gon.school_class_id;
-                
+
                 if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
                     //$(`#${Id}`+'.new_unit_box')がhiddenクラスを持つかどうかで条件分岐
+                    const selectedSubjectIndex = selectSubject.selectedIndex;
+                    const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
+    
+                    const selectUnit = document.getElementById(`unit${Id}`)
+                    const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
+                    const selectedUnitName = selectedOption.textContent;
+                    const selectedUnitId = Number(selectUnit.value)
+
                     if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
                         if(selectSubject.value === ""){
                             $(`#${Id}`+'.new_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_lesson_btn').removeClass('hidden')
                         } else {
-                            // axios.post(`/school_classes/${schoolClassId}/lessons`)
+                            axios.post(`/school_classes/${schoolClassId}/lessons`, {
+                                lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
+                            })
+                            .then((res) => {
+                                $(`#${Id}`+'.new_lesson_box').addClass('hidden')
+                                $(`#grade_subject_units${Id}`).addClass('hidden')
+                                const createdLessonBox = document.getElementById(`created_lesson_box${Id}`)
+                                createdLessonBox.innerHTML = `<p class="lesson_subject">${selectSubject.value}</p><p>${selectedUnitName}</p>`
+
+                            })
                         }
                     } else {
                         window.alert("単元名を新規作成しています")
