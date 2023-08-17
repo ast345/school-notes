@@ -104,10 +104,11 @@ document.addEventListener('turbolinks:load', () =>{
     
                     const selectUnit = document.getElementById(`unit${Id}`)
                     const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
-                    const selectedUnitName = selectedOption.textContent;
-                    const selectedUnitId = Number(selectUnit.value)
+                    const createdLessonBox = document.getElementById(`created_lesson_box${Id}`)
 
                     if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
+                        const selectedUnitName = selectedOption.textContent;
+                        const selectedUnitId = Number(selectUnit.value)
                         if(selectSubject.value === ""){
                             $(`#${Id}`+'.new_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_lesson_btn').removeClass('hidden')
@@ -118,13 +119,33 @@ document.addEventListener('turbolinks:load', () =>{
                             .then((res) => {
                                 $(`#${Id}`+'.new_lesson_box').addClass('hidden')
                                 $(`#grade_subject_units${Id}`).addClass('hidden')
-                                const createdLessonBox = document.getElementById(`created_lesson_box${Id}`)
+                                
                                 createdLessonBox.innerHTML = `<p class="lesson_subject">${selectSubject.value}</p><p>${selectedUnitName}</p>`
 
                             })
                         }
                     } else {
-                        window.alert("単元名を新規作成しています")
+                        const newUnitName = $(`#new_unit_name${Id}`).val()
+                        if (!newUnitName) {
+                            window.alert('新しい単元名を入力してください')
+                        } else {
+                            axios.post(`/grade_subject_units`, {
+                                grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId}
+                            })
+                            .then((res) => {
+                                const createdUnitId = res.data.id
+                                axios.post(`/school_classes/${schoolClassId}/lessons`, {
+                                    lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: createdUnitId, grade_subject_id: selectedGradeSubjectId}
+                                })
+                                .then((res) => {
+                                    $(`#${Id}`+'.new_lesson_box').addClass('hidden')
+                                    $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                                    
+                                    createdLessonBox.innerHTML = `<p class="lesson_subject">${selectSubject.value}</p><p>${newUnitName}</p>`
+    
+                                })
+                            })
+                        }
                     };
                 };
             

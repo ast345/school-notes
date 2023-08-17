@@ -33,7 +33,7 @@
                                     = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{date}", include_blank: true
                                 .unit_select_box{id: "grade_subject_units#{period}#{date}"}
                                 .new_unit_box.hidden{id: "#{period}#{date}"}
-                                    = text_area_tag :new_grade_subject, '', class: 'new_unit_text'
+                                    = text_area_tag :new_unit, '', class: 'new_unit_text', id: "new_unit_name#{period}#{date}"
                                 .created_lesson_box{id: "created_lesson_box#{period}#{date}"}
 
 
