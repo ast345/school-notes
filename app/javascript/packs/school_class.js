@@ -83,6 +83,11 @@ document.addEventListener('turbolinks:load', () =>{
                             $('.unit_select_box').addClass('hidden')
                         });
 
+                        $(`#${Id}`+'.cancel_btn').on('click', () => {
+                            $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                            $('.unit_select_box').removeClass('hidden')
+                        });
+
                 
 
                         
