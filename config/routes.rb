@@ -14,4 +14,6 @@ Rails.application.routes.draw do
 
   resources :assigned_subjects, only: [:new, :create, :destroy]
 
+  get '/get_grade_subject_units', to: 'grade_subject_unit#get_grade_subject_units'
+
 end

@@ -1,11 +1,12 @@
 .page_header
     %h1.page_header_title 時間割
 .container
-    .class_name
-        - grade = @school_class.grade.grade_name.gsub('生', '')
-        %p.class_name_display= grade + @school_class.class_name
+    .class_page_top
+        .class_name
+            - grade = @school_class.grade.grade_name.gsub('生', '')
+            %p.class_name_display= grade + @school_class.class_name
 
-    %table
+    %table.class_weekly
         %tr
             %th
             - (Date.today.beginning_of_week..Date.today.end_of_week).each do |date|
@@ -17,7 +18,7 @@
                 - (Date.today.beginning_of_week..Date.today.end_of_week).each do |date|
                     - next unless (1..5).include?(date.wday)
                     %td
-                        .lesson_box
+                        .lesson_box{id: "#{period}#{date}"}
                             - lesson = @this_week_lessons.find_by(date: date, period: period)
                             - if lesson
                                 %p.lesson_subject #{lesson.grade_subject.subject.subject_name}
@@ -26,6 +27,13 @@
                                 - else
                                     %p &nbsp;
                             - else
-                                %p 作成リンク
+                                .new_lesson_btn{id: "#{period}#{date}", data: {id: "#{period}#{date}"}}
+                                    %p 新規作成
+                                .new_lesson_box.hidden{id: "#{period}#{date}"}
+                                    = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{date}", include_blank: true
+                                .unit_select_box{id: "grade_subject_units#{period}#{date}"}
+                                .new_unit_box.hidden{id: "#{period}#{date}"}
+                                    = text_area_tag :new_grade_subject, '', class: 'new_unit_text'
+
 
 = javascript_pack_tag 'school_class'

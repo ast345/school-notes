@@ -7,6 +7,8 @@ import 'jquery-ui/ui/widgets/droppable';
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 document.addEventListener('turbolinks:load', () =>{
+    
+
     $(function() {
         $('.lesson_box').draggable({
             revert: 'invalid',
@@ -45,4 +47,114 @@ document.addEventListener('turbolinks:load', () =>{
             }
           });
     });
+
+    $('.new_lesson_btn').each(function(index, element){
+        const dataset = $(element).data()
+        const Id = dataset.id
+        const selectSubject = document.getElementById(`select_subject${Id}`);
+        
+        $(`#${Id}`+'.new_lesson_btn').on('click', () => {
+            $(`#${Id}`+'.new_lesson_box').removeClass('hidden')
+            $(`#${Id}`+'.new_lesson_btn').addClass('hidden')
+
+            
+            selectSubject.addEventListener('change', function() {
+                const selectedSubject = selectSubject.value;
+                const gradeSubjectUnits = document.getElementById(`grade_subject_units${Id}`);
+                const selectedSubjectIndex = selectSubject.selectedIndex;
+                const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
+                // ここに選択された科目に基づくアクションを追加
+                // 例: 選択された科目に応じてメッセージを表示する
+                if (selectedSubject) {
+                    axios.get(`/get_grade_subject_units`, {
+                        params: {grade_subject_id: selectedGradeSubjectId}
+                    })
+                    .then((res) => {
+                        const unitSet = res.data
+                        const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
+                        gradeSubjectUnits.innerHTML = `<select>${options}</select><p class="new_unit_btn">新規</p>`
+                    
+                        $('.new_unit_btn').on('click', () =>{
+                            $(`#${Id}`+'.new_unit_box').removeClass('hidden')
+                            $('.unit_select_box').addClass('hidden')
+                        });
+
+                
+
+                        
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+                };
+            });
+
+            document.addEventListener('click', function(event) {
+                var clickedElement = event.target;
+                var creatingElement = $('.lesson_box'+`#${Id}`);
+                const schoolClassId = gon.school_class_id;
+                
+                if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
+                    //$(`#${Id}`+'.new_unit_box')がhiddenクラスを持つかどうかで条件分岐
+                    if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
+                        if(selectSubject.value === ""){
+                            $(`#${Id}`+'.new_lesson_box').addClass('hidden')
+                            $(`#${Id}`+'.new_lesson_btn').removeClass('hidden')
+                        } else {
+                            // axios.post(`/school_classes/${schoolClassId}/lessons`)
+                        }
+                    } else {
+                        window.alert("単元名を新規作成しています")
+                    };
+                };
+            
+            });
+        });
+
+        
+
+    });
+
+
+    // const selectSubject = document.getElementById('select_subject');
+    
+
+    // selectSubject.addEventListener('change', function() {
+    //     const selectedSubject = selectSubject.value;
+    //     const Id = selectSubject.getAttribute('data-id')
+    //     const gradeSubjectUnits = document.getElementById('grade_subject_units');
+    //     const selectedSubjectIndex = selectSubject.selectedIndex;
+    //     const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex];
+    //     // ここに選択された科目に基づくアクションを追加
+    //     // 例: 選択された科目に応じてメッセージを表示する
+    //     if (selectedSubject) {
+    //         axios.get(`/get_grade_subject_units`, {
+    //             params: {grade_subject_id: selectedGradeSubjectId}
+    //         })
+    //         .then((res) => {
+    //             const unitSet = res.data
+    //             const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
+    //             gradeSubjectUnits.innerHTML = `<select>${options}</select><p class="new_unit_btn">新規</p>`
+                
+    //             $('.new_unit_btn').on('click', () =>{
+    //                 $(`#${Id}`+'.new_unit_box').removeClass('hidden')
+    //                 $('.unit_select_box').addClass('hidden')
+    //             });
+
+             
+
+    //             document.addEventListener('click', function(event) {
+    //                 var clickedElement = event.target;
+    //                 var specificElement = $('.lesson_box'+`#${Id}`);
+    //                 debugger
+                    
+    //             })
+    //         })
+    //         .catch(error => {
+    //           console.error('Error fetching data:', error);
+    //         });
+    //     };
+
+        
+    // });
 });
