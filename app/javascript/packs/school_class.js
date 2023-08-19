@@ -84,9 +84,6 @@ document.addEventListener('turbolinks:load', () =>{
                             $('.unit_select_box').removeClass('hidden')
                         });
 
-                
-
-                        
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
@@ -153,8 +150,92 @@ document.addEventListener('turbolinks:load', () =>{
             });
         });
 
-        
+        $(`#${Id}`+'.lesson_subject').on('click', () =>{
+            debugger
+            window.alert("検知しました")
+        });
 
+    });
+
+    $('.got_lesson').each(function(index, element){
+        const dataset = $(element).data()
+        const Id = dataset.id
+        const SubjectName = dataset.subjectName
+        const GradeSubjectId = dataset.gradeSubjectId
+        const GotUnitId = dataset.gotUnitId
+        const LessonId = dataset.lessonId
+        const selectSubject = document.getElementById(`select_subject${Id}`)
+        const gradeSubjectUnits = document.getElementById(`grade_subject_units${Id}`)
+        
+        $(`#${Id}.lesson_subject, #${Id}.lesson_unit`).on('click', () =>{
+            $(`#${Id}.got_lesson`).addClass('hidden')
+            $(`#${Id}.edit_lesson_box`).removeClass('hidden')
+
+            $(`#select_subject${Id} option`).each(function() {
+                const optionValue = $(this).val();
+                
+                // value と SubjectName を比較して一致する場合、選択状態にする
+                if (optionValue === SubjectName) {
+                    $(this).prop('selected', true);
+                }
+            });
+
+            axios.get(`/get_grade_subject_units`, {
+                params: {grade_subject_id: GradeSubjectId}
+            })
+            .then((res) => {
+                const unitSet = res.data
+                const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
+                gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn">新規</p>`
+                $(`#unit${Id} option`).each(function() {
+                    const optionValue = Number($(this).val());
+                    // value と SubjectName を比較して一致する場合、選択状態にする
+                    if (optionValue === GotUnitId) {
+                        $(this).prop('selected', true);
+                    }
+                });
+
+                $('.new_unit_btn').on('click', () =>{
+                    $(`#${Id}`+'.new_unit_box').removeClass('hidden')
+                    $('.unit_select_box').addClass('hidden')
+                });
+
+                $(`#${Id}`+'.cancel_btn').on('click', () => {
+                    $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                    $('.unit_select_box').removeClass('hidden')
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                var clickedElement = event.target;
+                var creatingElement = $('.lesson_box'+`#${Id}`);
+
+                const selectedSubjectIndex = selectSubject.selectedIndex;
+                const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex];
+                
+                if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
+                    const selectUnit = document.getElementById(`unit${Id}`)
+                    const selectedOption = selectUnit.querySelector("option:checked");
+                    if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
+                        // 単元名が新規作成されていない時の処理
+                        const selectedUnitName = selectedOption.textContent;
+                        const selectedUnitId = Number(selectUnit.value)
+
+                        // updateできるか検証
+
+                        axios.put(`/school_classes/${schoolClassId}/lessons/${LessonId}`, {
+                            lesson: {grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
+                        })
+                        .then((res) =>{
+                            debugger
+                        });
+                    } else {
+                        // 単元名が新規作成されている時の処理
+                    };
+                };
+            });
+
+        });
     });
 
 

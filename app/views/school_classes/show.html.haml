@@ -21,11 +21,21 @@
                         .lesson_box{id: "#{period}#{date}"}
                             - lesson = @this_week_lessons.find_by(date: date, period: period)
                             - if lesson
-                                %p.lesson_subject #{lesson.grade_subject.subject.subject_name}
                                 - if lesson.grade_subject_unit
-                                    %p #{lesson.grade_subject_unit.unit_name}
+                                    - unit_name = lesson.grade_subject_unit.unit_name
+                                    - got_unit_id = lesson.grade_subject_unit.id
                                 - else
-                                    %p &nbsp;
+                                    - unit_name = "\b"
+                                    - got_unit_id
+                                .got_lesson{id: "#{period}#{date}", data: {id: "#{period}#{date}", lesson_id: lesson.id,date: date, period: period, day_of_week: date.wday, subject_name: lesson.grade_subject.subject.subject_name, grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
+                                    %p.lesson_subject{id: "#{period}#{date}"} #{lesson.grade_subject.subject.subject_name}
+                                    %p.lesson_unit{id: "#{period}#{date}"} #{unit_name}
+                                .edit_lesson_box.hidden{id: "#{period}#{date}"}
+                                    = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{date}"
+                                .unit_select_box{id: "grade_subject_units#{period}#{date}"}
+                                .new_unit_box.hidden{id: "#{period}#{date}"}
+                                    = text_area_tag :new_unit, '', class: 'new_unit_text', id: "new_unit_name#{period}#{date}"
+                                    %p.cancel_btn{id: "#{period}#{date}"} ×
                             - else
                                 .new_lesson_btn{id: "#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
                                     %p 新規作成

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :teachers, only: [:index, :show, :new, :edit, :create, :update]
   resources :school_classes, only: [:show, :new, :create, :edit, :update, :destroy] do
-    resources :lessons, only: [:new, :create, :edit, :update, :destroy]
+    resources :lessons, only: [:new, :create, :update, :destroy]
     resources :events, only: [:new, :create, :edit, :update, :destroy]
     resources :date_items, only: [:new, :create, :edit, :update, :destroy]
   end
