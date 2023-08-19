@@ -76,12 +76,12 @@ document.addEventListener('turbolinks:load', () =>{
                     
                         $('.new_unit_btn').on('click', () =>{
                             $(`#${Id}`+'.new_unit_box').removeClass('hidden')
-                            $('.unit_select_box').addClass('hidden')
+                            $(`#grade_subject_units${Id}`).addClass('hidden')
                         });
 
                         $(`#${Id}`+'.cancel_btn').on('click', () => {
                             $(`#${Id}`+'.new_unit_box').addClass('hidden')
-                            $('.unit_select_box').removeClass('hidden')
+                            $(`#grade_subject_units${Id}`).removeClass('hidden')
                         });
 
                     })
@@ -91,7 +91,7 @@ document.addEventListener('turbolinks:load', () =>{
                 };
             });
 
-            document.addEventListener('click', function(event) {
+            function createEndHandler(event) {
                 var clickedElement = event.target;
                 var creatingElement = $('.lesson_box'+`#${Id}`);
 
@@ -117,11 +117,11 @@ document.addEventListener('turbolinks:load', () =>{
                             .then((res) => {
                                 $(`#${Id}`+'.new_lesson_box').addClass('hidden')
                                 $(`#grade_subject_units${Id}`).addClass('hidden')
-                                
                                 createdLessonBox.innerHTML = `<p class="lesson_subject">${selectSubject.value}</p><p>${selectedUnitName}</p>`
 
                             })
                         }
+                        document.removeEventListener('click', createEndHandler);
                     } else {
                         const newUnitName = $(`#new_unit_name${Id}`).val()
                         if (!newUnitName) {
@@ -143,11 +143,15 @@ document.addEventListener('turbolinks:load', () =>{
     
                                 })
                             })
+
+                            document.removeEventListener('click', createEndHandler);
                         }
                     };
                 };
-            
-            });
+            }
+
+
+            document.addEventListener('click', createEndHandler);
         });
 
         $(`#${Id}`+'.lesson_subject').on('click', () =>{
@@ -164,11 +168,11 @@ document.addEventListener('turbolinks:load', () =>{
         const GradeSubjectId = dataset.gradeSubjectId
         const GotUnitId = dataset.gotUnitId
         const LessonId = dataset.lessonId
-        const selectSubject = document.getElementById(`select_subject${Id}`)
+        
         const gradeSubjectUnits = document.getElementById(`grade_subject_units${Id}`)
         
         $(`#${Id}.lesson_subject, #${Id}.lesson_unit`).on('click', () =>{
-            $(`#${Id}.got_lesson`).addClass('hidden')
+            $(`#got_lesson${Id}`).addClass('hidden')
             $(`#${Id}.edit_lesson_box`).removeClass('hidden')
 
             $(`#select_subject${Id} option`).each(function() {
@@ -206,12 +210,15 @@ document.addEventListener('turbolinks:load', () =>{
                 });
             });
 
-            document.addEventListener('click', function(event) {
+            function editEndHandler(event) {
                 var clickedElement = event.target;
                 var creatingElement = $('.lesson_box'+`#${Id}`);
 
+                const selectSubject = document.getElementById(`select_subject${Id}`)
                 const selectedSubjectIndex = selectSubject.selectedIndex;
                 const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex];
+
+                const gotLessonBox = document.getElementById(`got_lesson${Id}`)
                 
                 if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
                     const selectUnit = document.getElementById(`unit${Id}`)
@@ -221,19 +228,24 @@ document.addEventListener('turbolinks:load', () =>{
                         const selectedUnitName = selectedOption.textContent;
                         const selectedUnitId = Number(selectUnit.value)
 
-                        // updateできるか検証
-
                         axios.put(`/school_classes/${schoolClassId}/lessons/${LessonId}`, {
                             lesson: {grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                         })
                         .then((res) =>{
-                            debugger
+                            $(`#grade_subject_units${Id}`).addClass('hidden')
+                            $(`#${Id}.edit_lesson_box`).addClass('hidden')
+                            $(`#got_lesson${Id}`).removeClass('hidden')
+                            // 中身を差し替え
+                            gotLessonBox.innerHTML = `<p class="lesson_subject" id=${Id}>${selectSubject.value}</p><p class="lesson_unit" id=${Id}>${selectedUnitName}</p>`
                         });
+                        document.removeEventListener('click', editEndHandler)
                     } else {
                         // 単元名が新規作成されている時の処理
                     };
                 };
-            });
+            }
+
+            document.addEventListener('click', editEndHandler);
 
         });
     });

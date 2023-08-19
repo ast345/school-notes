@@ -27,7 +27,7 @@
                                 - else
                                     - unit_name = "\b"
                                     - got_unit_id
-                                .got_lesson{id: "#{period}#{date}", data: {id: "#{period}#{date}", lesson_id: lesson.id,date: date, period: period, day_of_week: date.wday, subject_name: lesson.grade_subject.subject.subject_name, grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
+                                .got_lesson{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", lesson_id: lesson.id,date: date, period: period, day_of_week: date.wday, subject_name: lesson.grade_subject.subject.subject_name, grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
                                     %p.lesson_subject{id: "#{period}#{date}"} #{lesson.grade_subject.subject.subject_name}
                                     %p.lesson_unit{id: "#{period}#{date}"} #{unit_name}
                                 .edit_lesson_box.hidden{id: "#{period}#{date}"}
