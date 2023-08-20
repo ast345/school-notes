@@ -161,6 +161,7 @@ document.addEventListener('turbolinks:load', () =>{
 
     });
 
+    // 既存のlessonに対する処理
     $('.got_lesson').each(function(index, element){
         const dataset = $(element).data()
         const Id = dataset.id
@@ -191,7 +192,7 @@ document.addEventListener('turbolinks:load', () =>{
                 const unitSet = res.data
                 const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
                 $(`#grade_subject_units${Id}`).removeClass('hidden')
-                gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn">新規</p>`
+                gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id="${Id}">新規</p>`
                 $(`#unit${Id} option`).each(function() {
                     const optionValue = Number($(this).val());
                     // value と SubjectName を比較して一致する場合、選択状態にする
@@ -214,7 +215,7 @@ document.addEventListener('turbolinks:load', () =>{
                         .then((res) => {
                             const unitSet = res.data
                             const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
-                            gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn">新規</p>`
+                            gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id="${Id}">新規</p>`
     
                         })
                         .catch(error => {
@@ -223,7 +224,7 @@ document.addEventListener('turbolinks:load', () =>{
                     };
                 });
 
-                $('.new_unit_btn').on('click', () =>{
+                $(`#${Id}`+'.new_unit_btn').on('click', () =>{
                     $(`#${Id}`+'.new_unit_box').removeClass('hidden')
                     $('.unit_select_box').addClass('hidden')
                 });
@@ -278,6 +279,34 @@ document.addEventListener('turbolinks:load', () =>{
                     document.removeEventListener('click', editEndHandler)
                 } else {
                     // 単元名が新規作成されている時の処理
+                    const newUnitName = $(`#new_unit_name${Id}`).val()
+                    if (!newUnitName) {
+                        window.alert('新しい単元名を入力してください')
+                    } else {
+                        axios.post(`/grade_subject_units`, {
+                            grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId}
+                        })
+                        .then((res) => {
+                            const createdUnitId = res.data.id
+                            axios.put(`/school_classes/${schoolClassId}/lessons/${LessonId}`, {
+                                lesson: {grade_subject_unit_id: createdUnitId, grade_subject_id: selectedGradeSubjectId}
+                            })
+                            .then((res) => {
+                                $(`#${Id}.edit_lesson_box`).addClass('hidden')
+                                $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                                $(`#got_lesson${Id}`).removeClass('hidden')
+
+                                displayLessonSubject.innerHTML = `${selectSubject.value}`
+                                displayLessonUnit.innerHTML = `${newUnitName}`
+
+                                SubjectName = `${selectSubject.value}`
+                                GotUnitId = res.data.grade_subject_unit_id
+                                GradeSubjectId = res.data.grade_subject_id
+                            })
+                        })
+
+                        document.removeEventListener('click', editEndHandler);
+                    }
                 };
             };
         }
