@@ -44,6 +44,7 @@ document.addEventListener('turbolinks:load', () =>{
           });
     });
 
+    // 新規作成に対する処理
     $('.new_lesson_btn').each(function(index, element){
         const dataset = $(element).data()
         const Id = dataset.id
@@ -51,10 +52,12 @@ document.addEventListener('turbolinks:load', () =>{
         const date = dataset.date
         const dayOfWeek = dataset.dayOfWeek
         const selectSubject = document.getElementById(`select_subject${Id}`)
+        const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
+        const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
         
         
         $(`#${Id}`+'.new_lesson_btn').on('click', () => {
-            $(`#${Id}`+'.new_lesson_box').removeClass('hidden')
+            $(`#${Id}`+'.edit_lesson_box').removeClass('hidden')
             $(`#${Id}`+'.new_lesson_btn').addClass('hidden')
 
             
@@ -72,9 +75,9 @@ document.addEventListener('turbolinks:load', () =>{
                     .then((res) => {
                         const unitSet = res.data
                         const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
-                        gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn">新規</p>`
+                        gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id= "${Id}">新規</p>`
                     
-                        $('.new_unit_btn').on('click', () =>{
+                        $(`#${Id}`+'.new_unit_btn').on('click', () =>{
                             $(`#${Id}`+'.new_unit_box').removeClass('hidden')
                             $(`#grade_subject_units${Id}`).addClass('hidden')
                         });
@@ -102,23 +105,31 @@ document.addEventListener('turbolinks:load', () =>{
     
                     const selectUnit = document.getElementById(`unit${Id}`)
                     const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
-                    const createdLessonBox = document.getElementById(`created_lesson_box${Id}`)
+
 
                     if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
                         const selectedUnitName = selectedOption.textContent;
                         const selectedUnitId = Number(selectUnit.value)
                         if(selectSubject.value === ""){
-                            $(`#${Id}`+'.new_lesson_box').addClass('hidden')
+                            $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_lesson_btn').removeClass('hidden')
                         } else {
                             axios.post(`/school_classes/${schoolClassId}/lessons`, {
                                 lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                             })
                             .then((res) => {
-                                $(`#${Id}`+'.new_lesson_box').addClass('hidden')
+                                $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                                 $(`#grade_subject_units${Id}`).addClass('hidden')
-                                createdLessonBox.innerHTML = `<p class="lesson_subject">${selectSubject.value}</p><p>${selectedUnitName}</p>`
+                                $(`#got_lesson${Id}`).removeClass('hidden')
+                                displayLessonSubject.innerHTML = `${selectSubject.value}`
+                                displayLessonUnit.innerHTML = `${selectedUnitName}`
 
+                                // editに対応させるためデータセットをattribute
+                                var gotLesson = document.getElementById(`got_lesson${Id}`)
+                                gotLesson.setAttribute('data-subject-name', `${selectSubject.value}`)
+                                gotLesson.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
+                                gotLesson.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
+                                gotLesson.setAttribute('data-lesson-id', `${res.data.id}`)
                             })
                         }
                         document.removeEventListener('click', createEndHandler);
@@ -136,11 +147,11 @@ document.addEventListener('turbolinks:load', () =>{
                                     lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: createdUnitId, grade_subject_id: selectedGradeSubjectId}
                                 })
                                 .then((res) => {
-                                    $(`#${Id}`+'.new_lesson_box').addClass('hidden')
+                                    $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                                     $(`#${Id}`+'.new_unit_box').addClass('hidden')
-                                    
-                                    createdLessonBox.innerHTML = `<p class="lesson_subject">${selectSubject.value}</p><p>${newUnitName}</p>`
-    
+                                    $(`#got_lesson${Id}`).removeClass('hidden')
+                                    displayLessonSubject.innerHTML = `${selectSubject.value}`
+                                    displayLessonUnit.innerHTML = `${newUnitName}`
                                 })
                             })
 
@@ -154,11 +165,6 @@ document.addEventListener('turbolinks:load', () =>{
             document.addEventListener('click', createEndHandler);
         });
 
-        $(`#${Id}`+'.lesson_subject').on('click', () =>{
-            debugger
-            window.alert("検知しました")
-        });
-
     });
 
     // 既存のlessonに対する処理
@@ -168,9 +174,29 @@ document.addEventListener('turbolinks:load', () =>{
         var SubjectName = dataset.subjectName
         var GradeSubjectId = dataset.gradeSubjectId
         var GotUnitId = dataset.gotUnitId
-        const LessonId = dataset.lessonId
+        var LessonId = dataset.lessonId
+
         const gradeSubjectUnits = document.getElementById(`grade_subject_units${Id}`)
         const selectSubject = document.getElementById(`select_subject${Id}`)
+
+        //datasetが追加されたことを検知して再定義
+        const gotLesson = document.getElementById(`got_lesson${Id}`)
+
+        // MutationObserverのコールバック関数
+        // 要素の属性変更を検知するObserverを作成
+        var observer = new MutationObserver(function(mutationsList) {
+            for (var mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-lesson-id') {
+                    SubjectName = gotLesson.getAttribute('data-subject-name')
+                    GradeSubjectId= Number(gotLesson.getAttribute('data-grade-subject-id'))
+                    GotUnitId = Number(gotLesson.getAttribute('data-got-unit-id'))
+                    LessonId = Number(gotLesson.getAttribute('data-lesson-id'))
+                    debugger
+                }
+            }
+        });
+
+        observer.observe(gotLesson, { attributes: true})
         
         $(`#lesson_subject${Id}, #lesson_unit${Id}`).on('click', () =>{
             $(`#got_lesson${Id}`).addClass('hidden')
@@ -205,7 +231,7 @@ document.addEventListener('turbolinks:load', () =>{
                     const selectedSubject = selectSubject.value;
                     const gradeSubjectUnits = document.getElementById(`grade_subject_units${Id}`);
                     const selectedSubjectIndex = selectSubject.selectedIndex;
-                    const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex];
+                    const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
                     // ここに選択された科目に基づくアクションを追加
                     // 例: 選択された科目に応じてメッセージを表示する
                     if (selectedSubject) {
@@ -247,8 +273,7 @@ document.addEventListener('turbolinks:load', () =>{
 
             const selectSubject = document.getElementById(`select_subject${Id}`)
             const selectedSubjectIndex = selectSubject.selectedIndex;
-            const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex];
-
+            const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
             const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
             const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
             
@@ -259,6 +284,7 @@ document.addEventListener('turbolinks:load', () =>{
                     // 単元名が新規作成されていない時の処理
                     const selectedUnitName = selectedOption.textContent;
                     const selectedUnitId = Number(selectUnit.value)
+                    debugger
                     axios.put(`/school_classes/${schoolClassId}/lessons/${LessonId}`, {
                         lesson: {grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                     })
