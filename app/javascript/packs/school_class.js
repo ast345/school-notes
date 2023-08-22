@@ -152,6 +152,14 @@ document.addEventListener('turbolinks:load', () =>{
                                     $(`#got_lesson${Id}`).removeClass('hidden')
                                     displayLessonSubject.innerHTML = `${selectSubject.value}`
                                     displayLessonUnit.innerHTML = `${newUnitName}`
+
+
+                                    // editに対応させるためデータセットをattribute
+                                    var gotLesson = document.getElementById(`got_lesson${Id}`)
+                                    gotLesson.setAttribute('data-subject-name', `${selectSubject.value}`)
+                                    gotLesson.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
+                                    gotLesson.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
+                                    gotLesson.setAttribute('data-lesson-id', `${res.data.id}`)
                                 })
                             })
 
@@ -191,7 +199,6 @@ document.addEventListener('turbolinks:load', () =>{
                     GradeSubjectId= Number(gotLesson.getAttribute('data-grade-subject-id'))
                     GotUnitId = Number(gotLesson.getAttribute('data-got-unit-id'))
                     LessonId = Number(gotLesson.getAttribute('data-lesson-id'))
-                    debugger
                 }
             }
         });
@@ -284,7 +291,6 @@ document.addEventListener('turbolinks:load', () =>{
                     // 単元名が新規作成されていない時の処理
                     const selectedUnitName = selectedOption.textContent;
                     const selectedUnitId = Number(selectUnit.value)
-                    debugger
                     axios.put(`/school_classes/${schoolClassId}/lessons/${LessonId}`, {
                         lesson: {grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                     })
