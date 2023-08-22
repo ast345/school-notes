@@ -29,19 +29,20 @@ document.addEventListener('turbolinks:load', () =>{
               var targetHasLesson = !targetGotLesson.hasClass('hidden');
               var sourceHasLesson = !sourceGotLesson.hasClass('hidden');
 
-              if (targetHasLesson && sourceHasLesson) {
-                // どちらもLessonを持っている場合の処理
-                var targetDataSet = targetGotLesson.data();
-                var targetLessonId = targetDataSet.lessonId
-                var targetLessonDate = targetDataSet.date
-                var targetLessonDayOfWeek = targetDataSet.dayOfWeek
-                var targetLessonPeriod = targetDataSet.period
+              // updateリクエストのためのデータセット
+              var targetDataSet = targetGotLesson.data();
+              var targetLessonId = targetDataSet.lessonId
+              var targetLessonDate = targetDataSet.date
+              var targetLessonDayOfWeek = targetDataSet.dayOfWeek
+              var targetLessonPeriod = targetDataSet.period
 
-                var sourceDataSet = sourceGotLesson.data();
-                var sourceLessonId = sourceDataSet.lessonId
-                var sourceLessonDate = sourceDataSet.date
-                var sourceLessonDayOfWeek = sourceDataSet.dayOfWeek
-                var sourceLessonPeriod = sourceDataSet.period
+              var sourceDataSet = sourceGotLesson.data();
+              var sourceLessonId = sourceDataSet.lessonId
+              var sourceLessonDate = sourceDataSet.date
+              var sourceLessonDayOfWeek = sourceDataSet.dayOfWeek
+              var sourceLessonPeriod = sourceDataSet.period
+
+              if (targetHasLesson && sourceHasLesson) {
 
                 // targetLessonのEdit
                 axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
@@ -55,9 +56,15 @@ document.addEventListener('turbolinks:load', () =>{
               }
               else if (targetHasLesson && !sourceHasLesson) {
                 // ドロップ先だけLessonを持っています
+                axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
+                    lesson: {date: sourceLessonDate, day_of_week: sourceLessonDayOfWeek, period: sourceLessonPeriod}
+                })
               }
               else if (!targetHasLesson && sourceHasLesson) {
                 // ドラッグ元だけLesssonを持っています
+                axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
+                    lesson: {date: targetLessonDate, day_of_week: targetLessonDayOfWeek, period: targetLessonPeriod}
+                })
               }
 
               //入れ替え

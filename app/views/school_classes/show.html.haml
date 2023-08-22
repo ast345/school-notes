@@ -45,7 +45,7 @@
                                 .new_unit_box.hidden{id: "#{period}#{date}"}
                                     = text_area_tag :new_unit, '', class: 'new_unit_text', id: "new_unit_name#{period}#{date}"
                                     %p.cancel_btn{id: "#{period}#{date}"} ×
-                                .got_lesson.hidden{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}"}}
+                                .got_lesson.hidden{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", date: date, day_of_week: date.wday, period: period}}
                                     %p.lesson_subject{id: "lesson_subject#{period}#{date}"}
                                     %p.lesson_unit{id: "lesson_unit#{period}#{date}"}
 
