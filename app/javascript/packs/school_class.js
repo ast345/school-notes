@@ -21,25 +21,51 @@ document.addEventListener('turbolinks:load', () =>{
             drop: function(event, ui) {
               var sourceBox = $(ui.draggable);
               var targetBox = $(this);
-              
-              // Swap the contents of the source and target boxes
+
+              // sourceBoxとtargetBoxの中身が新規作成なのか、既存のlessonがあるのかを判別
+              var targetGotLesson = targetBox.find('.got_lesson');
+              var sourceGotLesson = sourceBox.find('.got_lesson');
+
+              var targetHasLesson = !targetGotLesson.hasClass('hidden');
+              var sourceHasLesson = !sourceGotLesson.hasClass('hidden');
+
+              if (targetHasLesson && sourceHasLesson) {
+                // どちらもLessonを持っている場合の処理
+                var targetDataSet = targetGotLesson.data();
+                var targetLessonId = targetDataSet.lessonId
+                var targetLessonDate = targetDataSet.date
+                var targetLessonDayOfWeek = targetDataSet.dayOfWeek
+                var targetLessonPeriod = targetDataSet.period
+
+                var sourceDataSet = sourceGotLesson.data();
+                var sourceLessonId = sourceDataSet.lessonId
+                var sourceLessonDate = sourceDataSet.date
+                var sourceLessonDayOfWeek = sourceDataSet.dayOfWeek
+                var sourceLessonPeriod = sourceDataSet.period
+
+                // targetLessonのEdit
+                axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
+                    lesson: {date: sourceLessonDate, day_of_week: sourceLessonDayOfWeek, period: sourceLessonPeriod}
+                })
+
+                // sourceLessonのEdit
+                axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
+                    lesson: {date: targetLessonDate, day_of_week: targetLessonDayOfWeek, period: targetLessonPeriod}
+                })
+              }
+              else if (targetHasLesson && !sourceHasLesson) {
+                // ドロップ先だけLessonを持っています
+              }
+              else if (!targetHasLesson && sourceHasLesson) {
+                // ドラッグ元だけLesssonを持っています
+              }
+
+              //入れ替え
               var sourceContent = sourceBox.html();
               var targetContent = targetBox.html();
               
               sourceBox.html(targetContent);
               targetBox.html(sourceContent);
-              
-              // $.ajax({
-              //   url: '/update_lesson_order', // Change this to the appropriate route
-              //   method: 'POST',
-              //   data: { sourceIndex: sourceIndex, targetIndex: targetIndex },
-              //   success: function(response) {
-              //     // Handle success if needed
-              //   },
-              //   error: function(error) {
-              //     // Handle error if needed
-              //   }
-              // });
             }
           });
     });
