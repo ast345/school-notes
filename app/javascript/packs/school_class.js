@@ -22,10 +22,12 @@ document.addEventListener('turbolinks:load', () =>{
               var sourceBox = $(ui.draggable);
               var targetBox = $(this);
 
-              // sourceBoxとtargetBoxの中身が新規作成なのか、既存のlessonがあるのかを判別
               var targetGotLesson = targetBox.find('.got_lesson');
               var sourceGotLesson = sourceBox.find('.got_lesson');
-
+              var targetGotLessonDom = targetGotLesson[0];
+              var sourceGotLessonDom = sourceGotLesson[0];
+              
+              // sourceBoxとtargetBoxの中身が新規作成なのか、既存のlessonがあるのかを判別
               var targetHasLesson = !targetGotLesson.hasClass('hidden');
               var sourceHasLesson = !sourceGotLesson.hasClass('hidden');
 
@@ -53,6 +55,28 @@ document.addEventListener('turbolinks:load', () =>{
                 axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
                     lesson: {date: targetLessonDate, day_of_week: targetLessonDayOfWeek, period: targetLessonPeriod}
                 })
+                // 入れ替え後のlesson_subjectのテキスト内容を取得
+                var sourceLessonSubjectText = sourceBox.find('.lesson_subject').text();
+                var targetLessonSubjectText = targetBox.find('.lesson_subject').text();
+                var sourceLessonUnitText = sourceBox.find('.lesson_unit').text();
+                var targetLessonUnitText = targetBox.find('.lesson_unit').text();
+
+                // lesson_subjectのテキスト内容を交換
+                sourceBox.find('.lesson_subject').text(targetLessonSubjectText);
+                targetBox.find('.lesson_subject').text(sourceLessonSubjectText);
+                sourceBox.find('.lesson_unit').text(targetLessonUnitText);
+                targetBox.find('.lesson_unit').text(sourceLessonUnitText);
+
+                //datasetの入れ替え
+                sourceGotLessonDom.setAttribute('data-subject-name', targetDataSet.subjectName);
+                sourceGotLessonDom.setAttribute('data-grade-subject-id', targetDataSet.gradeSubjectId);
+                sourceGotLessonDom.setAttribute('data-got-unit-id', targetDataSet.gotUnitId);
+                sourceGotLessonDom.setAttribute('data-lesson-id', targetDataSet.lessonId);
+
+                targetGotLessonDom.setAttribute('data-subject-name', sourceDataSet.subjectName);
+                targetGotLessonDom.setAttribute('data-grade-subject-id', sourceDataSet.gradeSubjectId);
+                targetGotLessonDom.setAttribute('data-got-unit-id', sourceDataSet.gotUnitId);
+                targetGotLessonDom.setAttribute('data-lesson-id', sourceDataSet.lessonId);
               }
               else if (targetHasLesson && !sourceHasLesson) {
                 // ドロップ先だけLessonを持っています
@@ -66,13 +90,6 @@ document.addEventListener('turbolinks:load', () =>{
                     lesson: {date: targetLessonDate, day_of_week: targetLessonDayOfWeek, period: targetLessonPeriod}
                 })
               }
-
-              //入れ替え
-              var sourceContent = sourceBox.html();
-              var targetContent = targetBox.html();
-              
-              sourceBox.html(targetContent);
-              targetBox.html(sourceContent);
             }
           });
     });
@@ -137,16 +154,15 @@ document.addEventListener('turbolinks:load', () =>{
                     const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
     
                     const selectUnit = document.getElementById(`unit${Id}`)
-                    const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
-
-
+                    
                     if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
-                        const selectedUnitName = selectedOption.textContent;
-                        const selectedUnitId = Number(selectUnit.value)
                         if(selectSubject.value === ""){
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_lesson_btn').removeClass('hidden')
                         } else {
+                            const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
+                            const selectedUnitName = selectedOption.textContent;
+                            const selectedUnitId = Number(selectUnit.value)
                             axios.post(`/school_classes/${schoolClassId}/lessons`, {
                                 lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                             })
@@ -159,6 +175,7 @@ document.addEventListener('turbolinks:load', () =>{
 
                                 // editに対応させるためデータセットをattribute
                                 var gotLesson = document.getElementById(`got_lesson${Id}`)
+                                debugger
                                 gotLesson.setAttribute('data-subject-name', `${selectSubject.value}`)
                                 gotLesson.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
                                 gotLesson.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
