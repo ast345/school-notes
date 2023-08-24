@@ -44,6 +44,13 @@ document.addEventListener('turbolinks:load', () =>{
               var sourceLessonDayOfWeek = sourceDataSet.dayOfWeek
               var sourceLessonPeriod = sourceDataSet.period
 
+              // 教科名、単元名を取得
+              var sourceLessonSubjectText = sourceBox.find('.lesson_subject').text();
+              var targetLessonSubjectText = targetBox.find('.lesson_subject').text();
+              var sourceLessonUnitText = sourceBox.find('.lesson_unit').text();
+              var targetLessonUnitText = targetBox.find('.lesson_unit').text();
+
+
               if (targetHasLesson && sourceHasLesson) {
 
                 // targetLessonのEdit
@@ -55,11 +62,6 @@ document.addEventListener('turbolinks:load', () =>{
                 axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
                     lesson: {date: targetLessonDate, day_of_week: targetLessonDayOfWeek, period: targetLessonPeriod}
                 })
-                // 入れ替え後のlesson_subjectのテキスト内容を取得
-                var sourceLessonSubjectText = sourceBox.find('.lesson_subject').text();
-                var targetLessonSubjectText = targetBox.find('.lesson_subject').text();
-                var sourceLessonUnitText = sourceBox.find('.lesson_unit').text();
-                var targetLessonUnitText = targetBox.find('.lesson_unit').text();
 
                 // lesson_subjectのテキスト内容を交換
                 sourceBox.find('.lesson_subject').text(targetLessonSubjectText);
@@ -83,12 +85,50 @@ document.addEventListener('turbolinks:load', () =>{
                 axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
                     lesson: {date: sourceLessonDate, day_of_week: sourceLessonDayOfWeek, period: sourceLessonPeriod}
                 })
+
+                // drop先を新規作成ボタンに変更
+                targetBox.find('.got_lesson').addClass('hidden');
+                targetBox.find('.new_lesson_btn').removeClass('hidden');
+
+                // drag要素でlessonを表示
+                sourceBox.find('.got_lesson').removeClass('hidden');
+                sourceBox.find('.new_lesson_btn').addClass('hidden');
+
+                sourceBox.find('.lesson_subject').text(targetLessonSubjectText);
+                sourceBox.find('.lesson_unit').text(targetLessonUnitText);
+
+                sourceGotLessonDom.setAttribute('data-subject-name', targetDataSet.subjectName);
+                sourceGotLessonDom.setAttribute('data-grade-subject-id', targetDataSet.gradeSubjectId);
+                sourceGotLessonDom.setAttribute('data-got-unit-id', targetDataSet.gotUnitId);
+                sourceGotLessonDom.setAttribute('data-lesson-id', targetDataSet.lessonId);
+                // var sourceContent = sourceBox.html();
+                // var targetContent = targetBox.html();
+                
+                // sourceBox.html(targetContent);
+                // targetBox.html(sourceContent);
               }
               else if (!targetHasLesson && sourceHasLesson) {
                 // ドラッグ元だけLesssonを持っています
                 axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
                     lesson: {date: targetLessonDate, day_of_week: targetLessonDayOfWeek, period: targetLessonPeriod}
                 })
+
+                // ドラッグ元を新規作成ボタンに変更
+                sourceBox.find('.got_lesson').addClass('hidden');
+                sourceBox.find('.new_lesson_btn').removeClass('hidden');
+
+                // drop先でlessonを表示
+                targetBox.find('.got_lesson').removeClass('hidden');
+                targetBox.find('.new_lesson_btn').addClass('hidden');
+
+                targetBox.find('.lesson_subject').text(sourceLessonSubjectText);
+                targetBox.find('.lesson_unit').text(sourceLessonUnitText);
+
+                targetGotLessonDom.setAttribute('data-subject-name', sourceDataSet.subjectName);
+                targetGotLessonDom.setAttribute('data-grade-subject-id', sourceDataSet.gradeSubjectId);
+                targetGotLessonDom.setAttribute('data-got-unit-id', sourceDataSet.gotUnitId);
+                targetGotLessonDom.setAttribute('data-lesson-id', sourceDataSet.lessonId);
+
               }
             }
           });
@@ -126,6 +166,7 @@ document.addEventListener('turbolinks:load', () =>{
                         const unitSet = res.data
                         const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
                         gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id= "${Id}">新規</p>`
+                        $(`#grade_subject_units${Id}`).removeClass('hidden')
                     
                         $(`#${Id}`+'.new_unit_btn').on('click', () =>{
                             $(`#${Id}`+'.new_unit_box').removeClass('hidden')
