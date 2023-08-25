@@ -22,52 +22,33 @@ document.addEventListener('turbolinks:load', () =>{
               var sourceBox = $(ui.draggable);
               var targetBox = $(this);
 
+              // 中身を入れ替えるためのGotLessonクラスを取得
               var targetGotLesson = targetBox.find('.got_lesson');
               var sourceGotLesson = sourceBox.find('.got_lesson');
               var targetGotLessonDom = targetGotLesson[0];
               var sourceGotLessonDom = sourceGotLesson[0];
-              
               // sourceBoxとtargetBoxの中身が新規作成なのか、既存のlessonがあるのかを判別
               var targetHasLesson = !targetGotLesson.hasClass('hidden');
               var sourceHasLesson = !sourceGotLesson.hasClass('hidden');
 
               // updateリクエストのためのデータセット
-              var targetDataSet = targetGotLesson.data();
+              // 要素のデータ属性を data() メソッドを使用して取得
+              const targetDataSet = $(targetGotLesson).data();
+              const sourceDataSet = $(sourceGotLesson).data();
+
+              // lessonのid取得
               var targetLessonId = targetDataSet.lessonId
-              var targetLessonDate = targetDataSet.date
-              var targetLessonDayOfWeek = targetDataSet.dayOfWeek
-              var targetLessonPeriod = targetDataSet.period
-
-              var sourceDataSet = sourceGotLesson.data();
               var sourceLessonId = sourceDataSet.lessonId
-              var sourceLessonDate = sourceDataSet.date
-              var sourceLessonDayOfWeek = sourceDataSet.dayOfWeek
-              var sourceLessonPeriod = sourceDataSet.period
-
               // 教科名、単元名を取得
               var sourceLessonSubjectText = sourceBox.find('.lesson_subject').text();
               var targetLessonSubjectText = targetBox.find('.lesson_subject').text();
               var sourceLessonUnitText = sourceBox.find('.lesson_unit').text();
               var targetLessonUnitText = targetBox.find('.lesson_unit').text();
 
-
-              if (targetHasLesson && sourceHasLesson) {
-
-                // targetLessonのEdit
-                axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
-                    lesson: {date: sourceLessonDate, day_of_week: sourceLessonDayOfWeek, period: sourceLessonPeriod}
-                })
-
-                // sourceLessonのEdit
-                axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
-                    lesson: {date: targetLessonDate, day_of_week: targetLessonDayOfWeek, period: targetLessonPeriod}
-                })
-
+              const changeSourceBoxContent = () => {
                 // lesson_subjectのテキスト内容を交換
                 sourceBox.find('.lesson_subject').text(targetLessonSubjectText);
-                targetBox.find('.lesson_subject').text(sourceLessonSubjectText);
                 sourceBox.find('.lesson_unit').text(targetLessonUnitText);
-                targetBox.find('.lesson_unit').text(sourceLessonUnitText);
 
                 //datasetの入れ替え
                 sourceGotLessonDom.setAttribute('data-subject-name', targetDataSet.subjectName);
@@ -75,60 +56,90 @@ document.addEventListener('turbolinks:load', () =>{
                 sourceGotLessonDom.setAttribute('data-got-unit-id', targetDataSet.gotUnitId);
                 sourceGotLessonDom.setAttribute('data-lesson-id', targetDataSet.lessonId);
 
+                // データ属性を更新
+                $(sourceGotLesson).data('subjectName', targetDataSet.subjectName);
+                $(sourceGotLesson).data('gradeSubjectId', targetDataSet.gradeSubjectId);
+                $(sourceGotLesson).data('gotUnitId', targetDataSet.gotUnitId);
+                $(sourceGotLesson).data('lessonId', targetDataSet.lessonId);
+              };
+
+              const changeTargetBoxContent = () => {
+                // lesson_subjectのテキスト内容を交換
+                targetBox.find('.lesson_subject').text(sourceLessonSubjectText);
+                targetBox.find('.lesson_unit').text(sourceLessonUnitText);
+
+                //datasetの入れ替え
                 targetGotLessonDom.setAttribute('data-subject-name', sourceDataSet.subjectName);
                 targetGotLessonDom.setAttribute('data-grade-subject-id', sourceDataSet.gradeSubjectId);
                 targetGotLessonDom.setAttribute('data-got-unit-id', sourceDataSet.gotUnitId);
                 targetGotLessonDom.setAttribute('data-lesson-id', sourceDataSet.lessonId);
+
+                // データ属性を更新
+                $(targetGotLesson).data('subjectName', sourceDataSet.subjectName);
+                $(targetGotLesson).data('gradeSubjectId', sourceDataSet.gradeSubjectId);
+                $(targetGotLesson).data('gotUnitId', sourceDataSet.gotUnitId);
+                $(targetGotLesson).data('lessonId', sourceDataSet.lessonId);
+              };
+
+              if (targetHasLesson && sourceHasLesson) {
+
+                // targetLessonのEdit
+                axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
+                    lesson: {date: sourceDataSet.date, day_of_week: sourceDataSet.dayOfWeek, period: sourceDataSet.period}
+                })
+                .then((res) => {
+                    if(res.status === 200){
+                        changeTargetBoxContent();
+                    };
+                });
+
+                // sourceLessonのEdit
+                axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
+                    lesson: {date: targetDataSet.date, day_of_week: targetDataSet.dayOfWeek, period: targetDataSet.period}
+                })
+                .then((res) => {
+                    if(res.status === 200){
+                        changeSourceBoxContent();
+                    };
+                });
+
               }
               else if (targetHasLesson && !sourceHasLesson) {
                 // ドロップ先だけLessonを持っています
                 axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
-                    lesson: {date: sourceLessonDate, day_of_week: sourceLessonDayOfWeek, period: sourceLessonPeriod}
+                    lesson: {date: sourceDataSet.date, day_of_week: sourceDataSet.dayOfWeek, period: sourceDataSet.period}
                 })
+                .then((res) =>{
+                    if(res.status === 200){
+                        // drop先を新規作成ボタンに変更
+                        targetBox.find('.got_lesson').addClass('hidden');
+                        targetBox.find('.new_lesson_btn').removeClass('hidden');
 
-                // drop先を新規作成ボタンに変更
-                targetBox.find('.got_lesson').addClass('hidden');
-                targetBox.find('.new_lesson_btn').removeClass('hidden');
+                        // drag要素でlessonを表示
+                        sourceBox.find('.got_lesson').removeClass('hidden');
+                        sourceBox.find('.new_lesson_btn').addClass('hidden');
 
-                // drag要素でlessonを表示
-                sourceBox.find('.got_lesson').removeClass('hidden');
-                sourceBox.find('.new_lesson_btn').addClass('hidden');
-
-                sourceBox.find('.lesson_subject').text(targetLessonSubjectText);
-                sourceBox.find('.lesson_unit').text(targetLessonUnitText);
-
-                sourceGotLessonDom.setAttribute('data-subject-name', targetDataSet.subjectName);
-                sourceGotLessonDom.setAttribute('data-grade-subject-id', targetDataSet.gradeSubjectId);
-                sourceGotLessonDom.setAttribute('data-got-unit-id', targetDataSet.gotUnitId);
-                sourceGotLessonDom.setAttribute('data-lesson-id', targetDataSet.lessonId);
-                // var sourceContent = sourceBox.html();
-                // var targetContent = targetBox.html();
-                
-                // sourceBox.html(targetContent);
-                // targetBox.html(sourceContent);
+                        changeSourceBoxContent();
+                    };
+                });
               }
               else if (!targetHasLesson && sourceHasLesson) {
                 // ドラッグ元だけLesssonを持っています
                 axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
-                    lesson: {date: targetLessonDate, day_of_week: targetLessonDayOfWeek, period: targetLessonPeriod}
+                    lesson: {date: targetDataSet.date, day_of_week: targetDataSet.dayOfWeek, period: targetDataSet.period}
                 })
+                .then((res) =>{
+                    if(res.status === 200){
+                        // ドラッグ元を新規作成ボタンに変更
+                        sourceBox.find('.got_lesson').addClass('hidden');
+                        sourceBox.find('.new_lesson_btn').removeClass('hidden');
 
-                // ドラッグ元を新規作成ボタンに変更
-                sourceBox.find('.got_lesson').addClass('hidden');
-                sourceBox.find('.new_lesson_btn').removeClass('hidden');
+                        // drop先でlessonを表示
+                        targetBox.find('.got_lesson').removeClass('hidden');
+                        targetBox.find('.new_lesson_btn').addClass('hidden');
 
-                // drop先でlessonを表示
-                targetBox.find('.got_lesson').removeClass('hidden');
-                targetBox.find('.new_lesson_btn').addClass('hidden');
-
-                targetBox.find('.lesson_subject').text(sourceLessonSubjectText);
-                targetBox.find('.lesson_unit').text(sourceLessonUnitText);
-
-                targetGotLessonDom.setAttribute('data-subject-name', sourceDataSet.subjectName);
-                targetGotLessonDom.setAttribute('data-grade-subject-id', sourceDataSet.gradeSubjectId);
-                targetGotLessonDom.setAttribute('data-got-unit-id', sourceDataSet.gotUnitId);
-                targetGotLessonDom.setAttribute('data-lesson-id', sourceDataSet.lessonId);
-
+                        changeTargetBoxContent();
+                    }});
               }
             }
           });
