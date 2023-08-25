@@ -35,10 +35,18 @@ document.addEventListener('turbolinks:load', () =>{
               // 要素のデータ属性を data() メソッドを使用して取得
               const targetDataSet = $(targetGotLesson).data();
               const sourceDataSet = $(sourceGotLesson).data();
+            
+              // 変更前のtargetDataSetの内容
+              const targetSubjectName = targetDataSet.subjectName;
+              const targetGradeSubjectId = targetDataSet.gradeSubjectId;
+              const targetGotUnitId = targetDataSet.gotUnitId;
+              const targetLessonId = targetDataSet.lessonId;
+              // 変更前のsourceDataSetの内容
+              const sourceSubjectName = sourceDataSet.subjectName;
+              const sourceGradeSubjectId = sourceDataSet.gradeSubjectId;
+              const sourceGotUnitId = sourceDataSet.gotUnitId;
+              const sourceLessonId = sourceDataSet.lessonId;
 
-              // lessonのid取得
-              var targetLessonId = targetDataSet.lessonId
-              var sourceLessonId = sourceDataSet.lessonId
               // 教科名、単元名を取得
               var sourceLessonSubjectText = sourceBox.find('.lesson_subject').text();
               var targetLessonSubjectText = targetBox.find('.lesson_subject').text();
@@ -51,16 +59,16 @@ document.addEventListener('turbolinks:load', () =>{
                 sourceBox.find('.lesson_unit').text(targetLessonUnitText);
 
                 //datasetの入れ替え
-                sourceGotLessonDom.setAttribute('data-subject-name', targetDataSet.subjectName);
-                sourceGotLessonDom.setAttribute('data-grade-subject-id', targetDataSet.gradeSubjectId);
-                sourceGotLessonDom.setAttribute('data-got-unit-id', targetDataSet.gotUnitId);
-                sourceGotLessonDom.setAttribute('data-lesson-id', targetDataSet.lessonId);
+                sourceGotLessonDom.setAttribute('data-subject-name', targetSubjectName);
+                sourceGotLessonDom.setAttribute('data-grade-subject-id', targetGradeSubjectId);
+                sourceGotLessonDom.setAttribute('data-got-unit-id', targetGotUnitId);
+                sourceGotLessonDom.setAttribute('data-lesson-id', targetLessonId);
 
                 // データ属性を更新
-                $(sourceGotLesson).data('subjectName', targetDataSet.subjectName);
-                $(sourceGotLesson).data('gradeSubjectId', targetDataSet.gradeSubjectId);
-                $(sourceGotLesson).data('gotUnitId', targetDataSet.gotUnitId);
-                $(sourceGotLesson).data('lessonId', targetDataSet.lessonId);
+                $(sourceGotLesson).data('subjectName', targetSubjectName);
+                $(sourceGotLesson).data('gradeSubjectId', targetGradeSubjectId);
+                $(sourceGotLesson).data('gotUnitId', targetGotUnitId);
+                $(sourceGotLesson).data('lessonId', targetLessonId);
               };
 
               const changeTargetBoxContent = () => {
@@ -69,16 +77,16 @@ document.addEventListener('turbolinks:load', () =>{
                 targetBox.find('.lesson_unit').text(sourceLessonUnitText);
 
                 //datasetの入れ替え
-                targetGotLessonDom.setAttribute('data-subject-name', sourceDataSet.subjectName);
-                targetGotLessonDom.setAttribute('data-grade-subject-id', sourceDataSet.gradeSubjectId);
-                targetGotLessonDom.setAttribute('data-got-unit-id', sourceDataSet.gotUnitId);
-                targetGotLessonDom.setAttribute('data-lesson-id', sourceDataSet.lessonId);
+                targetGotLessonDom.setAttribute('data-subject-name', sourceSubjectName);
+                targetGotLessonDom.setAttribute('data-grade-subject-id', sourceGradeSubjectId);
+                targetGotLessonDom.setAttribute('data-got-unit-id', sourceGotUnitId);
+                targetGotLessonDom.setAttribute('data-lesson-id', sourceLessonId);
 
                 // データ属性を更新
-                $(targetGotLesson).data('subjectName', sourceDataSet.subjectName);
-                $(targetGotLesson).data('gradeSubjectId', sourceDataSet.gradeSubjectId);
-                $(targetGotLesson).data('gotUnitId', sourceDataSet.gotUnitId);
-                $(targetGotLesson).data('lessonId', sourceDataSet.lessonId);
+                $(targetGotLesson).data('subjectName', sourceSubjectName);
+                $(targetGotLesson).data('gradeSubjectId', sourceGradeSubjectId);
+                $(targetGotLesson).data('gotUnitId', sourceGotUnitId);
+                $(targetGotLesson).data('lessonId', sourceLessonId);
               };
 
               if (targetHasLesson && sourceHasLesson) {
@@ -102,7 +110,6 @@ document.addEventListener('turbolinks:load', () =>{
                         changeSourceBoxContent();
                     };
                 });
-
               }
               else if (targetHasLesson && !sourceHasLesson) {
                 // ドロップ先だけLessonを持っています
