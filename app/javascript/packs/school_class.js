@@ -45,6 +45,8 @@ document.addEventListener('turbolinks:load', () =>{
                     if(res.status === 204){
                         $(`#got_lesson${Id}`).addClass('hidden')
                         $(`#${Id}.new_lesson_menu`).removeClass('hidden')
+                        $(`#copy_lesson_btn${Id}`).addClass('hidden')
+                        $(`#delete_lesson_btn${Id}`).addClass('hidden')
                     };
                 });
             }

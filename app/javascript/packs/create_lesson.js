@@ -84,6 +84,11 @@ export function createLesson(schoolClassId) {
                                     copyLessonBtn.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
                     };
 
+                    const lessonBtnDisplay = () => {
+                        $(`#copy_lesson_btn${Id}`).removeClass('hidden');
+                        $(`#delete_lesson_btn${Id}`).removeClass('hidden')
+                    };
+
                     //$(`#${Id}`+'.new_unit_box')がhiddenクラスを持つかどうかで条件分岐
                     if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
                         if(selectSubject.value === ""){
@@ -104,6 +109,7 @@ export function createLesson(schoolClassId) {
                                     displayLessonSubject.innerHTML = `${selectSubject.value}`
                                     displayLessonUnit.innerHTML = `${selectedUnitName}`
                                     
+                                    lessonBtnDisplay();
                                     createDataSet(res);
                                 };
                             })
@@ -129,6 +135,7 @@ export function createLesson(schoolClassId) {
                                         $(`#got_lesson${Id}`).removeClass('hidden')
                                         displayLessonSubject.innerHTML = `${selectSubject.value}`
                                         displayLessonUnit.innerHTML = `${newUnitName}`
+                                        lessonBtnDisplay();
                                         createDataSet(res);
                                     }
                                 })

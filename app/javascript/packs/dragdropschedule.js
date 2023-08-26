@@ -140,11 +140,17 @@ export function dragDropLesson (schoolClassId) {
                 if(res.status === 200){
                     // drop先を新規作成ボタンに変更
                     targetBox.find('.got_lesson').addClass('hidden');
-                    targetBox.find('.new_lesson_btn').removeClass('hidden');
+                    targetBox.find('.new_lesson_menu').removeClass('hidden');
+                    targetBox.find('.copy_lesson_btn').addClass('hidden');
+                    targetBox.find('.delete_lesson_btn').addClass('hidden');
+
 
                     // drag要素でlessonを表示
                     sourceBox.find('.got_lesson').removeClass('hidden');
-                    sourceBox.find('.new_lesson_btn').addClass('hidden');
+                    sourceBox.find('.new_lesson_menu').addClass('hidden');
+                    sourceBox.find('.copy_lesson_btn').removeClass('hidden');
+                    sourceBox.find('.delete_lesson_btn').removeClass('hidden');
+
 
                     changeSourceBoxContent();
                 };
@@ -159,11 +165,14 @@ export function dragDropLesson (schoolClassId) {
                 if(res.status === 200){
                     // ドラッグ元を新規作成ボタンに変更
                     sourceBox.find('.got_lesson').addClass('hidden');
-                    sourceBox.find('.new_lesson_btn').removeClass('hidden');
-
+                    sourceBox.find('.new_lesson_menu').removeClass('hidden');
+                    sourceBox.find('.copy_lesson_btn').addClass('hidden');
+                    sourceBox.find('.delete_lesson_btn').addClass('hidden');
                     // drop先でlessonを表示
                     targetBox.find('.got_lesson').removeClass('hidden');
-                    targetBox.find('.new_lesson_btn').addClass('hidden');
+                    targetBox.find('.new_lesson_menu').addClass('hidden');
+                    targetBox.find('.copy_lesson_btn').removeClass('hidden');
+                    targetBox.find('.delete_lesson_btn').removeClass('hidden');
 
                     changeTargetBoxContent();
                 }});

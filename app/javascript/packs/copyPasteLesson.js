@@ -73,7 +73,6 @@ export function copyPasteLesson (schoolClassId) {
         };
 
         $(`#paste_lesson_btn${Id}`).on('click', () =>{
-
             // GotLessonがhiddenを持っているか持っていないか判定
             var hasLesson = !$(`#got_lesson${Id}`).hasClass('hidden')
             if(copiedGradeSubjectId){
@@ -106,6 +105,8 @@ export function copyPasteLesson (schoolClassId) {
                             var resData = res.data
                             $(`#${Id}.new_lesson_menu`).addClass('hidden')
                             $(`#got_lesson${Id}`).removeClass('hidden')
+                            $(`#copy_lesson_btn${Id}`).removeClass('hidden')
+                            $(`#delete_lesson_btn${Id}`).removeClass('hidden')
                             editLessonDisplay(resData);
                             // displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
                             // if(resData.unit_name !== null){
