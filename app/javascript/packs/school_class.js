@@ -43,13 +43,16 @@ document.addEventListener('turbolinks:load', () =>{
         observer.observe(deleteLessonBtn, { attributes: true})
         
         $(`#delete_lesson_btn${Id}`).on('click', () =>{
-            axios.delete(`/school_classes/${schoolClassId}/lessons/${lessonId}`)
-            .then((res) =>{
-                if(res.status === 204){
-                    $(`#got_lesson${Id}`).addClass('hidden')
-                    $(`#${Id}.new_lesson_btn`).removeClass('hidden')
-                };
-            });
+            var result =window.confirm('本当に削除しますか');
+            if(result === true){
+                axios.delete(`/school_classes/${schoolClassId}/lessons/${lessonId}`)
+                .then((res) =>{
+                    if(res.status === 204){
+                        $(`#got_lesson${Id}`).addClass('hidden')
+                        $(`#${Id}.new_lesson_btn`).removeClass('hidden')
+                    };
+                });
+            }
         })
 
     });

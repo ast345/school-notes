@@ -15,11 +15,25 @@
 
 
 }
+.got_lesson_btn{
+    text-align: right;
+    height: 16px;
+}
 .delete_lesson_btn{
     display: inline-block;
-    float: right;
     cursor: pointer;
     background-color: #fff;
+    border-radius: 5px;
+    font-size: 10px;
+    color: rgb(243, 134, 134);
+}
+.copy_lesson_btn{
+    display:inline-block;
+    cursor: pointer;
+    color: rgb(156, 202, 255);
+    background-color: #fff;
+    border-radius: 5px;
+    font-size: 10px;
 }
 .new{
     &_lesson_box{

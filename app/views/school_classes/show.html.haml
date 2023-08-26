@@ -28,7 +28,9 @@
                                     - unit_name = "\b"
                                     - got_unit_id
                                 .got_lesson{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", date: date, day_of_week: date.wday, period: period, lesson_id: lesson.id, subject_name: lesson.grade_subject.subject.subject_name, grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
-                                    %p.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}", lesson_id: lesson.id}} ×
+                                    .got_lesson_btn
+                                        %p.copy_lesson_btn{id: "copy_lesson_btn", data: {id: "#{period}#{date}",grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}} コピー
+                                        %p.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}", lesson_id: lesson.id}} 削除
                                     %p.lesson_subject{id: "lesson_subject#{period}#{date}"} #{lesson.grade_subject.subject.subject_name}
                                     %p.lesson_unit{id: "lesson_unit#{period}#{date}"} #{unit_name}
                                 .edit_lesson_box.hidden{id: "#{period}#{date}"}
