@@ -35,6 +35,15 @@
     border-radius: 5px;
     font-size: 10px;
 }
+
+.paste_lesson_btn{
+    display: inline-block;
+    background-color: #fff;
+    color:rgb(156, 202, 255);
+    border-radius: 10px;
+    font-size: 10px;
+    cursor: pointer;
+}
 .new{
     &_lesson_box{
         display: inline-block;

@@ -22,4 +22,12 @@ class Lesson < ApplicationRecord
     has_many :school_classes, through: :lesson_classes
     belongs_to :grade_subject
     belongs_to :grade_subject_unit, optional: true
+
+    def grade_subject_name
+        grade_subject.subject.subject_name
+    end
+
+    def unit_name
+        grade_subject_unit.unit_name
+    end
 end

@@ -20,6 +20,46 @@ document.addEventListener('turbolinks:load', () =>{
     editLesson(schoolClassId);
 
     //複製機能を作成
+    var copiedGradeSubjectId
+    var copiedGradeSubjectUnitId
+    $('.copy_lesson_btn').each(function(index, element){
+        const dataSet = $(element).data();
+        const Id =dataSet.id;
+
+        $(`#copy_lesson_btn${Id}`).on('click', () =>{
+            copiedGradeSubjectId = dataSet.gradeSubjectId
+            copiedGradeSubjectUnitId = dataSet.gotUnitId
+        });
+
+    });
+
+    $('.paste_lesson_btn').each(function(index, element){
+        const dataSet = $(element).data()
+        const Id =dataSet.id
+        var date =dataSet.date
+        var period = dataSet.period
+        var dayOfWeek = dataSet.dayOfWeek
+        const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
+        const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
+
+        $(`#paste_lesson_btn${Id}`).on('click', () =>{
+            if(copiedGradeSubjectId){
+                axios.post(`/school_classes/${schoolClassId}/lessons`, {
+                    lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: copiedGradeSubjectUnitId, grade_subject_id: copiedGradeSubjectId}
+                })
+                .then((res) =>{
+                    if(res.status === 200){
+                        $(`#${Id}.new_lesson_menu`).addClass('hidden')
+                        $(`#got_lesson${Id}`).removeClass('hidden')
+                        displayLessonSubject.innerHTML = `${res.data.grade_subject_name}`
+                        displayLessonUnit.innerHTML = `${res.data.unit_name}`
+                    };
+                });
+            } else {
+                window.alert('何もコピーされていません')
+            }
+        });
+    });
 
     //destroy機能
     $('.delete_lesson_btn').each(function(index, element){
