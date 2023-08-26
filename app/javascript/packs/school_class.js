@@ -89,7 +89,7 @@ document.addEventListener('turbolinks:load', () =>{
                         $(`#${Id}.new_lesson_menu`).addClass('hidden')
                         $(`#got_lesson${Id}`).removeClass('hidden')
                         displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
-                        if(!resData.unit_name === "null"){
+                        if(resData.unit_name !== null){
                             displayLessonUnit.innerHTML = `${resData.unit_name}`
                         } else {
                             displayLessonUnit.innerHTML = "&nbsp;"
