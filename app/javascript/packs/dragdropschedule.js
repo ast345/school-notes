@@ -38,6 +38,13 @@ export function dragDropSchedule (schoolClassId) {
           var sourceDeleteLessonBtn = sourceBox.find('.delete_lesson_btn');
           var targetDeleteLessonBtnDom = targetDeleteLessonBtn[0];
           var sourceDeleteLessonBtnDom = sourceDeleteLessonBtn[0];
+
+          // copyアクションに対応させるためのcopy_lesson_btnを取得
+          //まだ
+          var targetCopyLessonBtn = targetBox.find('.copy_lesson_btn');
+          var sourceCopyLessonBtn = sourceBox.find('.copy_lesson_btn');
+          var targetCopyLessonBtnDom = targetCopyLessonBtn[0];
+          var sourceCopyLessonBtnDom = sourceCopyLessonBtn[0];
         
           // 変更前のtargetDataSetの内容
           const targetSubjectName = targetDataSet.subjectName;
@@ -66,7 +73,11 @@ export function dragDropSchedule (schoolClassId) {
             sourceGotLessonDom.setAttribute('data-grade-subject-id', targetGradeSubjectId);
             sourceGotLessonDom.setAttribute('data-got-unit-id', targetGotUnitId);
             sourceGotLessonDom.setAttribute('data-lesson-id', targetLessonId);
+
             sourceDeleteLessonBtnDom.setAttribute('data-lesson-id', targetLessonId);
+
+            sourceCopyLessonBtnDom.setAttribute('data-grade-subject-id', targetGradeSubjectId);
+            sourceCopyLessonBtnDom.setAttribute('data-got-unit-id', targetGotUnitId);
 
             // データ属性を更新
             $(sourceGotLesson).data('subjectName', targetSubjectName);
@@ -85,7 +96,11 @@ export function dragDropSchedule (schoolClassId) {
             targetGotLessonDom.setAttribute('data-grade-subject-id', sourceGradeSubjectId);
             targetGotLessonDom.setAttribute('data-got-unit-id', sourceGotUnitId);
             targetGotLessonDom.setAttribute('data-lesson-id', sourceLessonId);
-            targetDeleteLessonBtnDom.setAttribute('data-lesson-id', sourceLessonId)
+
+            targetDeleteLessonBtnDom.setAttribute('data-lesson-id', sourceLessonId);
+
+            targetCopyLessonBtnDom.setAttribute('data-grade-subject-id', sourceGradeSubjectId);
+            targetCopyLessonBtnDom.setAttribute('data-got-unit-id', sourceGotUnitId);
 
             // データ属性を更新
             $(targetGotLesson).data('subjectName', sourceSubjectName);
