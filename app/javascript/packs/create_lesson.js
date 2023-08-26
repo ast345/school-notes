@@ -19,7 +19,7 @@ export function createLesson(schoolClassId) {
         
         $(`#${Id}`+'.new_lesson_btn').on('click', () => {
             $(`#${Id}`+'.edit_lesson_box').removeClass('hidden')
-            $(`#${Id}`+'.new_lesson_btn').addClass('hidden')
+            $(`#${Id}`+'.new_lesson_menu').addClass('hidden')
 
             
             selectSubject.addEventListener('change', function() {
