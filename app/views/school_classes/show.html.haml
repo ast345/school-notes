@@ -5,17 +5,20 @@
         .class_name
             - grade = @school_class.grade.grade_name.gsub('生', '')
             %p.class_name_display= grade + @school_class.class_name
+    .navbar
+        %a{href: school_class_path(start_of_week: @start_of_week - 1.week)} 前の週
+        %a{href: school_class_path(start_of_week: @start_of_week + 1.week)} 次の週
 
     %table.class_weekly
         %tr
             %th
-            - (Date.today.beginning_of_week..Date.today.end_of_week).each do |date|
+            - (@start_of_week..@end_of_week).each do |date|
                 - next unless (1..5).include?(date.wday)
                 %th  #{date.strftime('%m月%d日')}(#{l(date, format: :abbr_day_name)})
         - (1..6).each do |period|
             %tr
                 %td #{period}時間目
-                - (Date.today.beginning_of_week..Date.today.end_of_week).each do |date|
+                - (@start_of_week..@end_of_week).each do |date|
                     - next unless (1..5).include?(date.wday)
                     %td
                         .lesson_box{id: "#{period}#{date}"}

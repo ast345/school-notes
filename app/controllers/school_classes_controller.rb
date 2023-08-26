@@ -47,10 +47,14 @@ class SchoolClassesController < ApplicationController
     def show
         @school_class = SchoolClass.find(params[:id])
         gon.school_class_id = @school_class.id
-        today = Date.today
-        start_of_week = today.beginning_of_week(:monday)
-        end_of_week = today.end_of_week(:sunday)
-        @this_week_lessons = @school_class.lessons.where(date: start_of_week..end_of_week)
+        if params[:start_of_week]
+            @start_of_week = params[:start_of_week].to_date
+        else
+            @start_of_week = Date.today.beginning_of_week
+        end
+        @end_of_week = @start_of_week.end_of_week
+
+        @this_week_lessons = @school_class.lessons.where(date: @start_of_week..@end_of_week)
 
         current_teacher = current_user.teacher
         current_class_teacher = SchoolClassTeacher.where(teachers_id: current_teacher.id, school_classes_id: @school_class.id).first
