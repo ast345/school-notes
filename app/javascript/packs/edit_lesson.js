@@ -108,6 +108,19 @@ export function editLesson(schoolClassId) {
             const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
             const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
             const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
+
+            const editDataSet = (resData) => {
+                
+                // deleteに対応させるためのデータセットをattribute
+                var deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
+                deleteLessonBtn.setAttribute('data-lesson-id', `${resData.id}`)
+
+                // copyに対応させるためのデータセットをAttribute
+                // obseverまだ
+                var copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
+                copyLessonBtn.setAttribute('data-grade-subject-id', `${resData.grade_subject_id}`)
+                copyLessonBtn.setAttribute('data-got-unit-id', `${resData.grade_subject_unit_id}`)
+            };
             
             if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
                 const selectUnit = document.getElementById(`unit${Id}`)
@@ -120,6 +133,7 @@ export function editLesson(schoolClassId) {
                         lesson: {grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                     })
                     .then((res) =>{
+                        var resData= res.data
                         $(`#grade_subject_units${Id}`).addClass('hidden')
                         $(`#${Id}.edit_lesson_box`).addClass('hidden')
                         $(`#got_lesson${Id}`).removeClass('hidden')
@@ -129,9 +143,10 @@ export function editLesson(schoolClassId) {
                         
                         // 再変更のために定義変更
                         SubjectName = `${selectSubject.value}`
-                        GotUnitId = res.data.grade_subject_unit_id
-                        GradeSubjectId = res.data.grade_subject_id
+                        GotUnitId = resData.grade_subject_unit_id
+                        GradeSubjectId = resData.grade_subject_id
 
+                        editDataSet(resData);
                     });
                     document.removeEventListener('click', editEndHandler)
                 } else {
@@ -149,6 +164,7 @@ export function editLesson(schoolClassId) {
                                 lesson: {grade_subject_unit_id: createdUnitId, grade_subject_id: selectedGradeSubjectId}
                             })
                             .then((res) => {
+                                var resData = res.data
                                 $(`#${Id}.edit_lesson_box`).addClass('hidden')
                                 $(`#${Id}`+'.new_unit_box').addClass('hidden')
                                 $(`#got_lesson${Id}`).removeClass('hidden')
@@ -157,8 +173,10 @@ export function editLesson(schoolClassId) {
                                 displayLessonUnit.innerHTML = `${newUnitName}`
 
                                 SubjectName = `${selectSubject.value}`
-                                GotUnitId = res.data.grade_subject_unit_id
-                                GradeSubjectId = res.data.grade_subject_id
+                                GotUnitId = resData.grade_subject_unit_id
+                                GradeSubjectId = resData.grade_subject_id
+
+                                editDataSet(resData);
                             })
                         })
 

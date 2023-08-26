@@ -85,7 +85,7 @@ document.addEventListener('turbolinks:load', () =>{
                 })
                 .then((res) =>{
                     if(res.status === 200){
-                        const resData = res.data
+                        var resData = res.data
                         $(`#${Id}.new_lesson_menu`).addClass('hidden')
                         $(`#got_lesson${Id}`).removeClass('hidden')
                         displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
