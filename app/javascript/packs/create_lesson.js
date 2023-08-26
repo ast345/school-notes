@@ -76,6 +76,12 @@ export function createLesson(schoolClassId) {
                                     // deleteに対応させるためのデータセットをattribute
                                     var deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
                                     deleteLessonBtn.setAttribute('data-lesson-id', `${res.data.id}`)
+
+                                    // copyに対応させるためのデータセットをAttribute
+                                    // obseverまだ
+                                    var copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
+                                    copyLessonBtn.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
+                                    copyLessonBtn.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
                     };
 
                     //$(`#${Id}`+'.new_unit_box')がhiddenクラスを持つかどうかで条件分岐

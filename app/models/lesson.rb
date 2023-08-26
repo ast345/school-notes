@@ -28,6 +28,8 @@ class Lesson < ApplicationRecord
     end
 
     def unit_name
-        grade_subject_unit.unit_name
+        if grade_subject_unit
+            grade_subject_unit.unit_name
+        end
     end
 end

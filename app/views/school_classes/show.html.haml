@@ -39,8 +39,10 @@
                                 .new_unit_box.hidden{id: "#{period}#{date}"}
                                     = text_area_tag :new_unit, '', class: 'new_unit_text', id: "new_unit_name#{period}#{date}"
                                     %p.cancel_btn{id: "#{period}#{date}"} ×
-                                .new_lesson_btn.hidden{id: "#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
-                                    %p 新規作成
+                                .new_lesson_menu.hidden{id: "#{period}#{date}"}
+                                    .new_lesson_btn{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}}
+                                        %p 新規作成
+                                    %p.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}} ペースト
                             - else
                                 .new_lesson_menu{id: "#{period}#{date}"}
                                     .new_lesson_btn{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}}
