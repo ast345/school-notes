@@ -12,7 +12,7 @@ class LessonsController < ApplicationController
     def update
         @lesson = Lesson.find(params[:id])
         @lesson.update(lesson_params)
-        render json: @lesson
+        render json: @lesson.as_json(methods: [:grade_subject_name, :unit_name])
     end
 
     def destroy

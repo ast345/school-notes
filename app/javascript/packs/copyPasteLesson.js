@@ -63,26 +63,60 @@ export function copyPasteLesson (schoolClassId) {
             copyLessonBtn.setAttribute('data-got-unit-id', `${resData.grade_subject_unit_id}`)
         };
 
-        $(`#paste_lesson_btn${Id}`).on('click', () =>{
-            if(copiedGradeSubjectId){
-                axios.post(`/school_classes/${schoolClassId}/lessons`, {
-                    lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: copiedGradeSubjectUnitId, grade_subject_id: copiedGradeSubjectId}
-                })
-                .then((res) =>{
-                    if(res.status === 200){
-                        var resData = res.data
-                        $(`#${Id}.new_lesson_menu`).addClass('hidden')
-                        $(`#got_lesson${Id}`).removeClass('hidden')
-                        displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
-                        if(resData.unit_name !== null){
-                            displayLessonUnit.innerHTML = `${resData.unit_name}`
-                        } else {
-                            displayLessonUnit.innerHTML = "&nbsp;"
-                        }
+        const editLessonDisplay = (resData) => {
+            displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
+            if(resData.unit_name !== null){
+                displayLessonUnit.innerHTML = `${resData.unit_name}`
+            } else {
+                displayLessonUnit.innerHTML = "&nbsp;"
+            }
+        };
 
-                        createDataSet(resData);
-                    };
-                });
+        $(`#paste_lesson_btn${Id}`).on('click', () =>{
+
+            // GotLessonがhiddenを持っているか持っていないか判定
+            var hasLesson = !$(`#got_lesson${Id}`).hasClass('hidden')
+            if(copiedGradeSubjectId){
+                if (hasLesson) {
+                    var gotLesson = document.getElementById(`got_lesson${Id}`)
+                    var lessonId = gotLesson.getAttribute('data-lesson-id')
+                    axios.put(`/school_classes/${schoolClassId}/lessons/${lessonId}`, {
+                        lesson: {grade_subject_unit_id: copiedGradeSubjectUnitId, grade_subject_id: copiedGradeSubjectId}
+                    })
+                    .then((res) =>{
+                        if(res.status === 200){
+                            var resData = res.data
+                            editLessonDisplay(resData)
+                            // displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
+                            // if(resData.unit_name !== null){
+                            //     displayLessonUnit.innerHTML = `${resData.unit_name}`
+                            // } else {
+                            //     displayLessonUnit.innerHTML = "&nbsp;"
+                            // }
+                            createDataSet(resData);
+                        };
+                    });
+                } else {
+                    // lessonがない場所にペーストする場合
+                    axios.post(`/school_classes/${schoolClassId}/lessons`, {
+                        lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: copiedGradeSubjectUnitId, grade_subject_id: copiedGradeSubjectId}
+                    })
+                    .then((res) =>{
+                        if(res.status === 200){
+                            var resData = res.data
+                            $(`#${Id}.new_lesson_menu`).addClass('hidden')
+                            $(`#got_lesson${Id}`).removeClass('hidden')
+                            editLessonDisplay(resData);
+                            // displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
+                            // if(resData.unit_name !== null){
+                            //     displayLessonUnit.innerHTML = `${resData.unit_name}`
+                            // } else {
+                            //     displayLessonUnit.innerHTML = "&nbsp;"
+                            // }
+                            createDataSet(resData);
+                        };
+                    });
+                }
             } else {
                 window.alert('何もコピーされていません')
             }
