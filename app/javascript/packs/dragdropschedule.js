@@ -6,7 +6,7 @@ import 'jquery-ui/ui/widgets/droppable';
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
-export function dragDropSchedule (schoolClassId) {
+export function dragDropLesson (schoolClassId) {
     $('.lesson_box').draggable({
         revert: 'invalid',
         cursor: 'move',
