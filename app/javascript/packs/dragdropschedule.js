@@ -32,6 +32,12 @@ export function dragDropSchedule (schoolClassId) {
           // 要素のデータ属性を data() メソッドを使用して取得
           const targetDataSet = $(targetGotLesson).data();
           const sourceDataSet = $(sourceGotLesson).data();
+
+          // deleteアクションに対応させるためのdelete_lesson_btnを取得
+          var targetDeleteLessonBtn = targetBox.find('.delete_lesson_btn');
+          var sourceDeleteLessonBtn = sourceBox.find('.delete_lesson_btn');
+          var targetDeleteLessonBtnDom = targetDeleteLessonBtn[0];
+          var sourceDeleteLessonBtnDom = sourceDeleteLessonBtn[0];
         
           // 変更前のtargetDataSetの内容
           const targetSubjectName = targetDataSet.subjectName;
@@ -60,6 +66,7 @@ export function dragDropSchedule (schoolClassId) {
             sourceGotLessonDom.setAttribute('data-grade-subject-id', targetGradeSubjectId);
             sourceGotLessonDom.setAttribute('data-got-unit-id', targetGotUnitId);
             sourceGotLessonDom.setAttribute('data-lesson-id', targetLessonId);
+            sourceDeleteLessonBtnDom.setAttribute('data-lesson-id', targetLessonId);
 
             // データ属性を更新
             $(sourceGotLesson).data('subjectName', targetSubjectName);
@@ -78,6 +85,7 @@ export function dragDropSchedule (schoolClassId) {
             targetGotLessonDom.setAttribute('data-grade-subject-id', sourceGradeSubjectId);
             targetGotLessonDom.setAttribute('data-got-unit-id', sourceGotUnitId);
             targetGotLessonDom.setAttribute('data-lesson-id', sourceLessonId);
+            targetDeleteLessonBtnDom.setAttribute('data-lesson-id', sourceLessonId)
 
             // データ属性を更新
             $(targetGotLesson).data('subjectName', sourceSubjectName);

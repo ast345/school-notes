@@ -15,7 +15,12 @@
 
 
 }
-
+.delete_lesson_btn{
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+    background-color: #fff;
+}
 .new{
     &_lesson_box{
         display: inline-block;

@@ -28,6 +28,7 @@
                                     - unit_name = "\b"
                                     - got_unit_id
                                 .got_lesson{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", date: date, day_of_week: date.wday, period: period, lesson_id: lesson.id, subject_name: lesson.grade_subject.subject.subject_name, grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
+                                    %p.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}", lesson_id: lesson.id}} ×
                                     %p.lesson_subject{id: "lesson_subject#{period}#{date}"} #{lesson.grade_subject.subject.subject_name}
                                     %p.lesson_unit{id: "lesson_unit#{period}#{date}"} #{unit_name}
                                 .edit_lesson_box.hidden{id: "#{period}#{date}"}
@@ -39,7 +40,7 @@
                                 .new_lesson_btn.hidden{id: "#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
                                     %p 新規作成
                             - else
-                                .new_lesson_btn{id: "#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
+                                .new_lesson_btn{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}}
                                     %p 新規作成
                                 .edit_lesson_box.hidden{id: "#{period}#{date}"}
                                     = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{date}", include_blank: true
@@ -48,6 +49,7 @@
                                     = text_area_tag :new_unit, '', class: 'new_unit_text', id: "new_unit_name#{period}#{date}"
                                     %p.cancel_btn{id: "#{period}#{date}"} ×
                                 .got_lesson.hidden{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", date: date, day_of_week: date.wday, period: period}}
+                                    %p.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}"}} ×
                                     %p.lesson_subject{id: "lesson_subject#{period}#{date}"}
                                     %p.lesson_unit{id: "lesson_unit#{period}#{date}"}
 

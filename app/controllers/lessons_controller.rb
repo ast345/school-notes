@@ -15,6 +15,11 @@ class LessonsController < ApplicationController
         render json: @lesson
     end
 
+    def destroy
+        lesson = Lesson.find(params[:id])
+        lesson.destroy!
+    end
+
     private
     def lesson_params
         params.require(:lesson).permit(:date, :day_of_week, :period, :grade_subject_unit_id, :grade_subject_id)

@@ -10,10 +10,13 @@ document.addEventListener('turbolinks:load', () =>{
 
     dragDropSchedule(schoolClassId);
 
+    //複製機能を作成
+
+
     // 新規作成に対する処理
     $('.new_lesson_btn').each(function(index, element){
         const dataset = $(element).data()
-        const Id = dataset.id
+        const Id = element.id
         const period = dataset.period
         const date = dataset.date
         const dayOfWeek = dataset.dayOfWeek
@@ -97,6 +100,10 @@ document.addEventListener('turbolinks:load', () =>{
                                 gotLesson.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
                                 gotLesson.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
                                 gotLesson.setAttribute('data-lesson-id', `${res.data.id}`)
+
+                                // deleteに対応させるためのデータセットをattribute
+                                var deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
+                                deleteLessonBtn.setAttribute('data-lesson-id', `${res.data.id}`)
                             })
                         }
                         document.removeEventListener('click', createEndHandler);
@@ -127,6 +134,10 @@ document.addEventListener('turbolinks:load', () =>{
                                     gotLesson.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
                                     gotLesson.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
                                     gotLesson.setAttribute('data-lesson-id', `${res.data.id}`)
+
+                                    // deleteに対応させるためのデータセットをattribute
+                                    var deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
+                                    deleteLessonBtn.setAttribute('data-lesson-id', `${res.data.id}`)
                                 })
                             })
 
@@ -146,6 +157,7 @@ document.addEventListener('turbolinks:load', () =>{
     $('.got_lesson').each(function(index, element){
         const dataset = $(element).data()
         const Id = dataset.id
+
         var SubjectName = dataset.subjectName
         var GradeSubjectId = dataset.gradeSubjectId
         var GotUnitId = dataset.gotUnitId
@@ -313,5 +325,38 @@ document.addEventListener('turbolinks:load', () =>{
         
     });
 
+    //destroy機能
+    $('.delete_lesson_btn').each(function(index, element){
+        const dataSet = $(element).data()
+        const Id =dataSet.id
+        var lessonId = dataSet.lessonId
+
+        //datasetが追加されたことを検知して再定義
+        const deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
+
+        // MutationObserverのコールバック関数
+        // 要素の属性変更を検知するObserverを作成
+        var observer = new MutationObserver(function(mutationsList) {
+            for (var mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-lesson-id') {
+                    debugger
+                    lessonId = Number(deleteLessonBtn.getAttribute('data-lesson-id'))
+                }
+            }
+        });
+
+        observer.observe(deleteLessonBtn, { attributes: true})
+        
+        $(`#delete_lesson_btn${Id}`).on('click', () =>{
+            axios.delete(`/school_classes/${schoolClassId}/lessons/${lessonId}`)
+            .then((res) =>{
+                if(res.status === 204){
+                    $(`#got_lesson${Id}`).addClass('hidden')
+                    $(`#${Id}.new_lesson_btn`).removeClass('hidden')
+                };
+            });
+        })
+
+    });
 
 });
