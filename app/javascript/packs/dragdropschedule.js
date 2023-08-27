@@ -24,6 +24,7 @@ export function dragDropLesson (schoolClassId) {
           var sourceGotLesson = sourceBox.find('.got_lesson');
           var targetGotLessonDom = targetGotLesson[0];
           var sourceGotLessonDom = sourceGotLesson[0];
+
           // sourceBoxとtargetBoxの中身が新規作成なのか、既存のlessonがあるのかを判別
           var targetHasLesson = !targetGotLesson.hasClass('hidden');
           var sourceHasLesson = !sourceGotLesson.hasClass('hidden');
@@ -120,7 +121,6 @@ export function dragDropLesson (schoolClassId) {
                     changeTargetBoxContent();
                 };
             });
-
             // sourceLessonのEdit
             axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
                 lesson: {date: targetDataSet.date, day_of_week: targetDataSet.dayOfWeek, period: targetDataSet.period}
@@ -150,8 +150,6 @@ export function dragDropLesson (schoolClassId) {
                     sourceBox.find('.new_lesson_menu').addClass('hidden');
                     sourceBox.find('.copy_lesson_btn').removeClass('hidden');
                     sourceBox.find('.delete_lesson_btn').removeClass('hidden');
-
-
                     changeSourceBoxContent();
                 };
             });

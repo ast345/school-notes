@@ -61,6 +61,12 @@ export function copyPasteLesson (schoolClassId) {
             var copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
             copyLessonBtn.setAttribute('data-grade-subject-id', `${resData.grade_subject_id}`)
             copyLessonBtn.setAttribute('data-got-unit-id', `${resData.grade_subject_unit_id}`)
+
+            // 入れ替えに対応させるためにデータ属性を更新
+            $(`#got_lesson${Id}`).data('subjectName', `${resData.grade_subject_name}`)
+            $(`#got_lesson${Id}`).data('gradeSubjectId', `${resData.grade_subject_id}`)
+            $(`#got_lesson${Id}`).data('gotUnitId', `${resData.grade_subject_unit_id}`)
+            $(`#got_lesson${Id}`).data('lessonId', `${resData.id}`);
         };
 
         const editLessonDisplay = (resData) => {
@@ -86,12 +92,6 @@ export function copyPasteLesson (schoolClassId) {
                         if(res.status === 200){
                             var resData = res.data
                             editLessonDisplay(resData)
-                            // displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
-                            // if(resData.unit_name !== null){
-                            //     displayLessonUnit.innerHTML = `${resData.unit_name}`
-                            // } else {
-                            //     displayLessonUnit.innerHTML = "&nbsp;"
-                            // }
                             createDataSet(resData);
                         };
                     });
@@ -108,12 +108,6 @@ export function copyPasteLesson (schoolClassId) {
                             $(`#copy_lesson_btn${Id}`).removeClass('hidden')
                             $(`#delete_lesson_btn${Id}`).removeClass('hidden')
                             editLessonDisplay(resData);
-                            // displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
-                            // if(resData.unit_name !== null){
-                            //     displayLessonUnit.innerHTML = `${resData.unit_name}`
-                            // } else {
-                            //     displayLessonUnit.innerHTML = "&nbsp;"
-                            // }
                             createDataSet(resData);
                         };
                     });

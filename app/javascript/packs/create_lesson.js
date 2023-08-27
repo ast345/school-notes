@@ -82,6 +82,12 @@ export function createLesson(schoolClassId) {
                                     var copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
                                     copyLessonBtn.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
                                     copyLessonBtn.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
+
+                                    // 入れ替えに対応させるためにデータ属性を更新
+                                    $(`#got_lesson${Id}`).data('subjectName', `${selectSubject.value}`)
+                                    $(`#got_lesson${Id}`).data('gradeSubjectId', `${res.data.grade_subject_id}`)
+                                    $(`#got_lesson${Id}`).data('gotUnitId', `${res.data.grade_subject_unit_id}`)
+                                    $(`#got_lesson${Id}`).data('lessonId', `${res.data.id}`);
                     };
 
                     const lessonBtnDisplay = () => {
