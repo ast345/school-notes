@@ -35,6 +35,7 @@ document.addEventListener('turbolinks:load', () =>{
                     if (!newEvent) {
                         $(`#${Id}.event_btn_box`).removeClass('hidden')
                         $(`#${Id}.event_text_box`).addClass('hidden')
+                        document.removeEventListener('click', createEventEndHandler);
                     } else {
                         axios.post(`/school_classes/${schoolClassId}/events`, {
                             event: {date: date, day_of_week: dayOfWeek, event_name: newEvent}
@@ -42,9 +43,6 @@ document.addEventListener('turbolinks:load', () =>{
                         .then((res) =>{
                             if(res.status === 200){
                                 var eventName = res.event_name
-                                $(`#${Id}.event_btn_box`).removeClass('hidden')
-                                $(`#${Id}.event_edit_btn`).removeClass('hidden')
-                                $(`#${Id}.event_create_btn`).addClass('hidden')
                                 $(`#event_display${Id}`).removeClass('hidden')
                                 $(`#${Id}.event_text_box`).addClass('hidden')
 
@@ -52,6 +50,7 @@ document.addEventListener('turbolinks:load', () =>{
                                 eventDisplay.innerHTML = `${res.data.event_name}`
                             }
                         });
+                        document.removeEventListener('click', createEventEndHandler);
                     };
                 };
             };

@@ -33,6 +33,7 @@ export function editLesson(schoolClassId) {
         
         $(`#lesson_subject${Id}, #lesson_unit${Id}`).on('click', () =>{
             $(`#got_lesson${Id}`).addClass('hidden')
+            $(`#${Id}.lesson_btn_box`).addClass('hidden')
             $(`#${Id}.edit_lesson_box`).removeClass('hidden')
 
             $(`#select_subject${Id} option`).each(function() {
@@ -74,7 +75,7 @@ export function editLesson(schoolClassId) {
                             const unitSet = res.data
                             const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
                             gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id="${Id}">新規</p>`
-    
+
                         })
                         .catch(error => {
                             console.error('Error fetching data:', error);
@@ -110,7 +111,6 @@ export function editLesson(schoolClassId) {
             const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
 
             const editDataSet = (resData) => {
-                
                 // deleteに対応させるためのデータセットをattribute
                 var deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
                 deleteLessonBtn.setAttribute('data-lesson-id', `${resData.id}`)
@@ -121,7 +121,7 @@ export function editLesson(schoolClassId) {
                 copyLessonBtn.setAttribute('data-grade-subject-id', `${resData.grade_subject_id}`)
                 copyLessonBtn.setAttribute('data-got-unit-id', `${resData.grade_subject_unit_id}`)
             };
-            
+
             if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
                 const selectUnit = document.getElementById(`unit${Id}`)
                 const selectedOption = selectUnit.querySelector("option:checked");
@@ -137,10 +137,11 @@ export function editLesson(schoolClassId) {
                         $(`#grade_subject_units${Id}`).addClass('hidden')
                         $(`#${Id}.edit_lesson_box`).addClass('hidden')
                         $(`#got_lesson${Id}`).removeClass('hidden')
+                        $(`#${Id}.lesson_btn_box`).removeClass('hidden')
                         // 中身を差し替え
                         displayLessonSubject.innerHTML = `${selectSubject.value}`
                         displayLessonUnit.innerHTML = `${selectedUnitName}`
-                        
+
                         // 再変更のために定義変更
                         SubjectName = `${selectSubject.value}`
                         GotUnitId = resData.grade_subject_unit_id
@@ -168,6 +169,7 @@ export function editLesson(schoolClassId) {
                                 $(`#${Id}.edit_lesson_box`).addClass('hidden')
                                 $(`#${Id}`+'.new_unit_box').addClass('hidden')
                                 $(`#got_lesson${Id}`).removeClass('hidden')
+                                $(`#${Id}.lesson_btn_box`).removeClass('hidden')
 
                                 displayLessonSubject.innerHTML = `${selectSubject.value}`
                                 displayLessonUnit.innerHTML = `${newUnitName}`
@@ -187,4 +189,4 @@ export function editLesson(schoolClassId) {
         }
     });
 
-};
+}

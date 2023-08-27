@@ -15,13 +15,12 @@ export function createLesson(schoolClassId) {
         const selectSubject = document.getElementById(`select_subject${Id}`)
         const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
         const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
-        
-        
+
         $(`#${Id}`+'.new_lesson_btn').on('click', () => {
             $(`#${Id}`+'.edit_lesson_box').removeClass('hidden')
+            $(`#${Id}`+'.lesson_btn_box').addClass('hidden')
             $(`#${Id}`+'.new_lesson_menu').addClass('hidden')
 
-            
             selectSubject.addEventListener('change', function() {
                 const selectedSubject = selectSubject.value;
                 const gradeSubjectUnits = document.getElementById(`grade_subject_units${Id}`);
@@ -37,7 +36,7 @@ export function createLesson(schoolClassId) {
                         const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
                         gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id= "${Id}">新規</p>`
                         $(`#grade_subject_units${Id}`).removeClass('hidden')
-                    
+
                         $(`#${Id}`+'.new_unit_btn').on('click', () =>{
                             $(`#${Id}`+'.new_unit_box').removeClass('hidden')
                             $(`#grade_subject_units${Id}`).addClass('hidden')
@@ -62,7 +61,7 @@ export function createLesson(schoolClassId) {
                 if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
                     const selectedSubjectIndex = selectSubject.selectedIndex;
                     const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
-                    
+
                     const selectUnit = document.getElementById(`unit${Id}`);
 
                     const createDataSet = (res) => {
@@ -72,7 +71,7 @@ export function createLesson(schoolClassId) {
                                     gotLesson.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
                                     gotLesson.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
                                     gotLesson.setAttribute('data-lesson-id', `${res.data.id}`)
-                                    
+
                                     // deleteに対応させるためのデータセットをattribute
                                     var deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
                                     deleteLessonBtn.setAttribute('data-lesson-id', `${res.data.id}`)
@@ -91,7 +90,8 @@ export function createLesson(schoolClassId) {
                     };
 
                     const lessonBtnDisplay = () => {
-                        $(`#copy_lesson_btn${Id}`).removeClass('hidden');
+                        $(`#${Id}.lesson_btn_box`).removeClass('hidden')
+                        $(`#copy_lesson_btn${Id}`).removeClass('hidden')
                         $(`#delete_lesson_btn${Id}`).removeClass('hidden')
                     };
 
@@ -114,7 +114,7 @@ export function createLesson(schoolClassId) {
                                     $(`#got_lesson${Id}`).removeClass('hidden')
                                     displayLessonSubject.innerHTML = `${selectSubject.value}`
                                     displayLessonUnit.innerHTML = `${selectedUnitName}`
-                                    
+
                                     lessonBtnDisplay();
                                     createDataSet(res);
                                 };

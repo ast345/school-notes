@@ -23,15 +23,13 @@
                     .event_box{id: "#{date}"}
                         - event = @this_week_events.find_by(date: date)
                         - if event
-                            .event_btn_box
-                                %p.event_edit_btn 編集
-                                %p.event_create_btn.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                            .event_btn_box.hidden
+                                %p.event_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
                             .event_text_box.hidden{id: "#{date}"}
                                 = text_area_tag :event_text, "#{event.event_name}", class: 'event_text', id: "event_text#{date}"
                             %p.event_display  #{event.event_name}
                         - else
                             .event_btn_box{id: "#{date}"}
-                                %p.event_edit_btn.hidden{id: "#{date}"} 編集
                                 %p.event_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
                             .event_text_box.hidden{id: "#{date}"}
                                 = text_area_tag :event_text, '', class: 'event_text', id: "event_text#{date}"
@@ -51,7 +49,7 @@
                                 - else
                                     - unit_name = "\b"
                                     - got_unit_id
-                                .lesson_btn_box
+                                .lesson_btn_box{id: "#{period}#{date}"}
                                     %p.copy_lesson_btn{id: "copy_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}",grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}} コピー
                                     %p.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}} ペースト
                                     %p.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}", lesson_id: lesson.id}} 削除
@@ -68,7 +66,7 @@
                                     .new_lesson_btn{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}}
                                         %p 新規作成
                             - else
-                                .lesson_btn_box
+                                .lesson_btn_box{id: "#{period}#{date}"}
                                     %p.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}"}} コピー
                                     %p.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}} ペースト
                                     %p.delete_lesson_btn.hidden{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}"}} 削除
