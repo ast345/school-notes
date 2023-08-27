@@ -15,9 +15,30 @@
 
 
 }
-.lesson_btn_box{
+.lesson_btn_box, .event_btn_box{
     text-align: right;
     height: 26px;
+}
+
+.event{
+    &_edit_btn, &_create_btn{
+        display:inline-block;
+        cursor: pointer;
+        color: rgb(156, 202, 255);
+        background-color: #fff;
+        border-radius: 5px;
+        font-size: 10px;
+    }
+
+    &_text{
+        height: 100px;
+        vertical-align: middle;
+
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        resize: none;
+    }
+
 }
 .delete_lesson_btn{
     display: inline-block;

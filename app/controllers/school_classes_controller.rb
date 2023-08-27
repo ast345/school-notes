@@ -5,7 +5,7 @@ class SchoolClassesController < ApplicationController
         @school_class = SchoolClass.new
         @grades = Grade.all.map { |grade| [grade.full_grade_name, grade.id] }
     end
-    
+
     def create
         @school_class = SchoolClass.new(school_class_params)
         if @school_class.save
@@ -37,7 +37,7 @@ class SchoolClassesController < ApplicationController
             render :edit, notice: 'クラス情報を更新できませんでした'
         end
     end
-    
+
     def destroy
         school_class = SchoolClass.find(params[:id])
         school_class.destroy!
@@ -55,6 +55,7 @@ class SchoolClassesController < ApplicationController
         @end_of_week = @start_of_week.end_of_week
 
         @this_week_lessons = @school_class.lessons.where(date: @start_of_week..@end_of_week)
+        @this_week_events = @school_class.events.where(date: @start_of_week..@end_of_week)
 
         current_teacher = current_user.teacher
         current_class_teacher = SchoolClassTeacher.where(teachers_id: current_teacher.id, school_classes_id: @school_class.id).first
@@ -69,7 +70,7 @@ class SchoolClassesController < ApplicationController
 
         gon.grade_subject_ids = @grade_subject_ids
     end
-    
+
     private
     def school_class_params
         params.require(:school_class).permit(:grade_id, :class_name)

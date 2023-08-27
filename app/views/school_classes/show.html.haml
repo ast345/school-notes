@@ -15,6 +15,27 @@
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless (1..5).include?(date.wday)
                 %th  #{date.strftime('%m月%d日')}(#{l(date, format: :abbr_day_name)})
+        %tr
+            %td 行事予定
+            - (@start_of_week..@end_of_week).each do |date|
+                - next unless (1..5).include?(date.wday)
+                %td
+                    .event_box{id: "#{date}"}
+                        - event = @this_week_events.find_by(date: date)
+                        - if event
+                            .event_btn_box
+                                %p.event_edit_btn 編集
+                                %p.event_create_btn.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                            .event_text_box.hidden{id: "#{date}"}
+                                = text_area_tag :event_text, "#{event.event_name}", class: 'event_text', id: "event_text#{date}"
+                            %p.event_display  #{event.event_name}
+                        - else
+                            .event_btn_box{id: "#{date}"}
+                                %p.event_edit_btn.hidden{id: "#{date}"} 編集
+                                %p.event_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                            .event_text_box.hidden{id: "#{date}"}
+                                = text_area_tag :event_text, '', class: 'event_text', id: "event_text#{date}"
+                            %p.event_display.hidden{id: "event_display#{date}"}
         - (1..6).each do |period|
             %tr
                 %td #{period}時間目
