@@ -23,17 +23,17 @@
                     .event_box{id: "#{date}"}
                         - event = @this_week_events.find_by(date: date)
                         - if event
-                            .event_btn_box.hidden
+                            .event_btn_box.hidden{id: "#{date}"}
                                 %p.event_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
                             .event_text_box.hidden{id: "#{date}"}
                                 = text_area_tag :event_text, "#{event.event_name}", class: 'event_text', id: "event_text#{date}"
-                            %p.event_display  #{event.event_name}
+                            %p.event_display{id: "event_display#{date}", data: {id: "#{date}", event_id: event.id}}  #{event.event_name}
                         - else
                             .event_btn_box{id: "#{date}"}
                                 %p.event_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
                             .event_text_box.hidden{id: "#{date}"}
                                 = text_area_tag :event_text, '', class: 'event_text', id: "event_text#{date}"
-                            %p.event_display.hidden{id: "event_display#{date}"}
+                            %p.event_display.hidden{id: "event_display#{date}", data: {id: "#{date}"}}
         - (1..6).each do |period|
             %tr
                 %td #{period}時間目

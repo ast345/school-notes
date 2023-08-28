@@ -5,6 +5,7 @@ import { dragDropLesson } from './dragdropschedule';
 import { createLesson} from './create_lesson.js';
 import { editLesson } from './edit_lesson.js';
 import { copyPasteLesson} from './copyPasteLesson.js';
+import { event} from './event.js'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
@@ -16,48 +17,7 @@ document.addEventListener('turbolinks:load', () =>{
     editLesson(schoolClassId);
     copyPasteLesson(schoolClassId);
 
-    //行事予定の追加
-    $('.event_create_btn').each(function(index, element){
-        const Id = element.id
-        const dataSet = $(element).data()
-        var date = dataSet.date
-        var dayOfWeek = dataSet.dayOfWeek
-        $(`#${Id}.event_create_btn`).on('click', () =>{
-            $(`#${Id}.event_btn_box`).addClass('hidden')
-            $(`#${Id}.event_text_box`).removeClass('hidden')
-
-            function createEventEndHandler(event) {
-                var clickedElement = event.target;
-                var creatingElement = $(`#${Id}.event_box`);
-                if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
-                    var newEvent = $(`#event_text${Id}`).val();
-                    
-                    if (!newEvent) {
-                        $(`#${Id}.event_btn_box`).removeClass('hidden')
-                        $(`#${Id}.event_text_box`).addClass('hidden')
-                        document.removeEventListener('click', createEventEndHandler);
-                    } else {
-                        axios.post(`/school_classes/${schoolClassId}/events`, {
-                            event: {date: date, day_of_week: dayOfWeek, event_name: newEvent}
-                        })
-                        .then((res) =>{
-                            if(res.status === 200){
-                                var eventName = res.event_name
-                                $(`#event_display${Id}`).removeClass('hidden')
-                                $(`#${Id}.event_text_box`).addClass('hidden')
-
-                                const eventDisplay = document.getElementById(`event_display${Id}`)
-                                eventDisplay.innerHTML = `${res.data.event_name}`
-                            }
-                        });
-                        document.removeEventListener('click', createEventEndHandler);
-                    };
-                };
-            };
-
-            document.addEventListener('click', createEventEndHandler);
-        })
-    })
+    event(schoolClassId);
 
     //destroy機能
     $('.delete_lesson_btn').each(function(index, element){
