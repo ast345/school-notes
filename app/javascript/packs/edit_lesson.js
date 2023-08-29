@@ -180,9 +180,17 @@ export function editLesson(schoolClassId) {
 
                                 editDataSet(resData);
                             })
+                            document.removeEventListener('click', editEndHandler);
                         })
+                        .catch(error => {
+                            const errorMessage = error.response.data;
+                            if (errorMessage.includes('PG::UniqueViolation')) {
+                                window.alert(`「${newUnitName}」はすでに登録されています`)
+                            } else {
+                                window.alert("単元名を新しく作成できませんでした")
+                            };
+                        });
 
-                        document.removeEventListener('click', editEndHandler);
                     }
                 };
             };

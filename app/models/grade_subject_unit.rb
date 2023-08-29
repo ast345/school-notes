@@ -10,7 +10,8 @@
 #
 # Indexes
 #
-#  index_grade_subject_units_on_grade_subject_id  (grade_subject_id)
+#  index_grade_subject_units_on_grade_subject_id                (grade_subject_id)
+#  index_grade_subject_units_on_unit_name_and_grade_subject_id  (unit_name,grade_subject_id) UNIQUE
 #
 class GradeSubjectUnit < ApplicationRecord
     belongs_to :grade_subject

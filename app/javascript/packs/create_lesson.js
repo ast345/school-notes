@@ -130,24 +130,34 @@ export function createLesson(schoolClassId) {
                                 grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId}
                             })
                             .then((res) => {
-                                const createdUnitId = res.data.id
-                                axios.post(`/school_classes/${schoolClassId}/lessons`, {
-                                    lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: createdUnitId, grade_subject_id: selectedGradeSubjectId}
-                                })
-                                .then((res) => {
-                                    if(res.status === 200){
-                                        $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
-                                        $(`#${Id}`+'.new_unit_box').addClass('hidden')
-                                        $(`#got_lesson${Id}`).removeClass('hidden')
-                                        displayLessonSubject.innerHTML = `${selectSubject.value}`
-                                        displayLessonUnit.innerHTML = `${newUnitName}`
-                                        lessonBtnDisplay();
-                                        createDataSet(res);
-                                    }
-                                })
+                                if(res.status === 200) {
+                                    const createdUnitId = res.data.id
+                                    axios.post(`/school_classes/${schoolClassId}/lessons`, {
+                                        lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: createdUnitId, grade_subject_id: selectedGradeSubjectId}
+                                    })
+                                    .then((res) => {
+                                        if(res.status === 200){
+                                            $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
+                                            $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                                            $(`#got_lesson${Id}`).removeClass('hidden')
+                                            displayLessonSubject.innerHTML = `${selectSubject.value}`
+                                            displayLessonUnit.innerHTML = `${newUnitName}`
+                                            lessonBtnDisplay();
+                                            createDataSet(res);
+                                        }
+                                    })
+                                }
+                                document.removeEventListener('click', createEndHandler);
                             })
+                            .catch(error => {
+                                const errorMessage = error.response.data;
+                                if (errorMessage.includes('PG::UniqueViolation')) {
+                                    window.alert(`「${newUnitName}」はすでに登録されています`)
+                                } else {
+                                    window.alert("単元名を新しく作成できませんでした")
+                                };
+                            });
 
-                            document.removeEventListener('click', createEndHandler);
                         }
                     };
                 };
