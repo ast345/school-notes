@@ -82,6 +82,25 @@
                                 .new_lesson_menu{id: "#{period}#{date}"}
                                     .new_lesson_btn{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}}
                                         %p 新規作成
+        %tr
+            %td 持ち物
+            - (@start_of_week..@end_of_week).each do |date|
+                - next unless (1..5).include?(date.wday)
+                %td
+                    .item_box{id: "#{date}"}
+                        - item = @this_week_date_items.find_by(date: date)
+                        - if item
+                            .item_btn_box.hidden{id: "#{date}"}
+                                %p.item_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                            .item_text_box.hidden{id: "#{date}"}
+                                = text_area_tag :item_text, "#{item.item_name}", class: 'item_text', id: "item_text#{date}"
+                            %p.item_display{id: "item_display#{date}", data: {id: "#{date}", date_item_id: item.id}}  #{item.item_name}
+                        - else
+                            .item_btn_box{id: "#{date}"}
+                                %p.item_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                            .item_text_box.hidden{id: "#{date}"}
+                                = text_area_tag :item_text, '', class: 'item_text', id: "item_text#{date}"
+                            %p.item_display.hidden{id: "item_display#{date}", data: {id: "#{date}"}}
 
 
 = javascript_pack_tag 'school_class'

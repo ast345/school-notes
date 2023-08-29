@@ -15,13 +15,13 @@
 
 
 }
-.lesson_btn_box, .event_btn_box{
+.lesson_btn_box, .event_btn_box, .item_btn_box{
     text-align: right;
     height: 26px;
 }
 
-.event{
-    &_edit_btn, &_create_btn{
+.event, .item{
+    &_create_btn{
         display:inline-block;
         cursor: pointer;
         color: rgb(156, 202, 255);

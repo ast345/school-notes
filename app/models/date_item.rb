@@ -12,7 +12,8 @@
 #
 # Indexes
 #
-#  index_date_items_on_school_class_id  (school_class_id)
+#  index_date_items_on_date_and_school_class_id  (date,school_class_id) UNIQUE
+#  index_date_items_on_school_class_id           (school_class_id)
 #
 class DateItem < ApplicationRecord
     belongs_to :school_class
