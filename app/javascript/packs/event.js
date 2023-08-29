@@ -69,7 +69,6 @@ export function event(schoolClassId) {
         $(`#event_display${Id}`).on('click', () => {
             $(this).addClass('hidden')
             $(`#${Id}.event_text_box`).removeClass('hidden')
-
             function editEventEndHandler(event) {
                 var clickedElement = event.target;
                 var creatingElement = $(`#${Id}.event_box`);
@@ -98,7 +97,7 @@ export function event(schoolClassId) {
                                 eventDisplay.innerHTML = `${res.data.event_name}`
                             };
                         });
-
+                        document.removeEventListener('click', editEventEndHandler);
                     };
 
                 };
