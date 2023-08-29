@@ -67,16 +67,16 @@ document.addEventListener('turbolinks:load', () =>{
         const Id = dataSet.id
         var itemId = dataSet.dateItemId
         const itemDisplay = document.getElementById(`item_display${Id}`)
-    //     //datasetが追加されたことを検知して再定義
-    //     var observer = new MutationObserver(function(mutationsList) {
-    //         for (var mutation of mutationsList) {
-    //             if (mutation.type === 'attributes' && mutation.attributeName === 'data-event-id') {
-    //                 eventId = Number(eventDisplay.getAttribute('data-event-id'))
-    //             }
-    //         }
-    //     });
+        //datasetが追加されたことを検知して再定義
+        var observer = new MutationObserver(function(mutationsList) {
+            for (var mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-item-id') {
+                    itemId = Number(itemDisplay.getAttribute('data-item-id'))
+                }
+            }
+        });
 
-    //     observer.observe(eventDisplay, { attributes: true})
+        observer.observe(itemDisplay, { attributes: true})
         
         $(`#item_display${Id}`).on('click', () => {
             $(this).addClass('hidden')
