@@ -6,19 +6,18 @@ class DateItemsController < ApplicationController
         @item = school_class.date_items.build(date_item_params)
         @item.save
         render json: @item
-        # serializer作りから
     end
 
-    # def update
-    #     @event = Event.find(params[:id])
-    #     @event.update(event_params)
-    #     render json: @event
-    # end
+    def update
+        @item = DateItem.find(params[:id])
+        @item.update(date_item_params)
+        render json: @item
+    end
 
-    # def destroy
-    #     @event = Event.find(params[:id])
-    #     @event.destroy!
-    # end
+    def destroy
+        @item = DateItem.find(params[:id])
+        @item.destroy!
+    end
 
     private
     def date_item_params
