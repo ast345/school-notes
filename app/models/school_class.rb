@@ -20,6 +20,7 @@ class SchoolClass < ApplicationRecord
     has_many :lessons, through: :lesson_classes
     has_many :events
     has_many :date_items
+    has_many :class_leaving_times
 
     accepts_nested_attributes_for :school_class_teachers
 
