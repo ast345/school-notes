@@ -15,12 +15,17 @@
 
 
 }
-.lesson_btn_box, .event_btn_box, .item_btn_box{
+.lesson_btn_box{
     text-align: right;
     height: 26px;
 }
 
-.event, .item{
+.event, .item, .leaving_time{
+    &_btn_box{
+        text-align: right;
+        height: 26px;
+    }
+
     &_create_btn{
         display:inline-block;
         cursor: pointer;
@@ -90,4 +95,39 @@
             resize: none;
         }
     }
+}
+.leaving_time_box{
+    display: block;
+    height: 100%;
+}
+.leaving_time_select_area{
+    align-items: center;
+    position: relative;
+    text-align: center;
+}
+
+.leaving_time_select_box::after {
+    position: absolute;
+    // right: 15px;
+    // width: 10px;
+    // height: 7px;
+    background-color: #535353;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    content: '';
+    pointer-events: none;
+}
+
+.leaving_time_select_box select {
+    appearance: none;
+    min-width: 50px;
+    border: none;
+    border-bottom: 2px solid #cccccc;
+    background-color: #fff;
+    color: #333333;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.leaving_time_select_box select:focus {
+    outline: none;
 }

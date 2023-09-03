@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :lessons, only: [:new, :create, :update, :destroy]
     resources :events, only: [:create, :update, :destroy]
     resources :date_items, only: [:new, :create, :edit, :update, :destroy]
+    resources :class_leaving_time, only: [:create, :update]
   end
 
   resources :assigned_subjects, only: [:new, :create, :destroy]

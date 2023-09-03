@@ -101,6 +101,25 @@
                             .item_text_box.hidden{id: "#{date}"}
                                 = text_area_tag :item_text, '', class: 'item_text', id: "item_text#{date}"
                             %p.item_display.hidden{id: "item_display#{date}", data: {id: "#{date}"}}
+        %tr
+            %td 下校時刻
+            - (@start_of_week..@end_of_week).each do |date|
+                - next unless (1..5).include?(date.wday)
+                %td
+                    .leaving_time_box{id: "#{date}"}
+                        - leaving_time = @this_week_class_leaving_times.find_by(date: date)
+                        - if leaving_time
+                            .leaving_time_btn_box.hidden{id: "#{date}"}
+                                %p.leaving_time_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                            -# .item_text_box.hidden{id: "#{date}"}
+                            -#     = text_area_tag :item_text, "#{item.item_name}", class: 'item_text', id: "item_text#{date}"
+                            %p.leaving_time_display{id: "item_display#{date}", data: {id: "#{date}", date_leaving_time_id: leaving_time.id}}  #{leaving_time.leaving_time.strftime("%H:%M")}
+                        - else
+                            .leaving_time_btn_box{id: "#{date}"}
+                                %p.leaving_time_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                            .leaving_time_select_box.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}}
+                                = time_select("leaving_time", "time_select", {include_blank: true}, {class: 'leaving_time_select_area', id: "leaving_time#{date}"})
+                            %p.leaving_time_display.hidden{id: "leaving_time_display#{date}", data: {id: "#{date}"}}
 
 
 = javascript_pack_tag 'school_class'

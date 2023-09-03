@@ -57,7 +57,8 @@ class SchoolClassesController < ApplicationController
         @this_week_lessons = @school_class.lessons.where(date: @start_of_week..@end_of_week)
         @this_week_events = @school_class.events.where(date: @start_of_week..@end_of_week)
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
-
+        @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
+        
         current_teacher = current_user.teacher
         current_class_teacher = SchoolClassTeacher.where(teachers_id: current_teacher.id, school_classes_id: @school_class.id).first
         assigned_subjects = current_class_teacher.assigned_subjects
