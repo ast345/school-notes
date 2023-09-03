@@ -1,9 +1,15 @@
 class ClassLeavingTimeController < ApplicationController
     def create
         school_class = SchoolClass.find(params[:school_class_id])
-        @ClassLeavingTime = school_class.class_leaving_times.build(leaving_time_params)
-        @ClassLeavingTime.save
-        render json: @ClassLeavingTime
+        @classLeavingTime = school_class.class_leaving_times.build(leaving_time_params)
+        @classLeavingTime.save
+        render json: @classLeavingTime
+    end
+
+    def update
+        @classLeavingTime = ClassLeavingTime.find(params[:id])
+        @classLeavingTime.update(leaving_time_params)
+        render json: @classLeavingTime
     end
 
     private

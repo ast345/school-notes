@@ -111,9 +111,9 @@
                         - if leaving_time
                             .leaving_time_btn_box.hidden{id: "#{date}"}
                                 %p.leaving_time_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
-                            -# .item_text_box.hidden{id: "#{date}"}
-                            -#     = text_area_tag :item_text, "#{item.item_name}", class: 'item_text', id: "item_text#{date}"
-                            %p.leaving_time_display{id: "item_display#{date}", data: {id: "#{date}", date_leaving_time_id: leaving_time.id}}  #{leaving_time.leaving_time.strftime("%H:%M")}
+                            .leaving_time_select_box.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}}
+                                = time_select("leaving_time", "time_select", {default: leaving_time.leaving_time}, {class: 'leaving_time_select_area', id: "leaving_time#{date}"})
+                            %p.leaving_time_display{id: "leaving_time_display#{date}", data: {id: "#{date}", leaving_time_id: leaving_time.id}}  #{leaving_time.leaving_time.strftime("%H:%M")}
                         - else
                             .leaving_time_btn_box{id: "#{date}"}
                                 %p.leaving_time_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加

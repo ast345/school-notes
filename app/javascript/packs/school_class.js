@@ -35,8 +35,8 @@ document.addEventListener('turbolinks:load', () =>{
                 var clickedElement = event.target;
                 var creatingElement = $(`#${Id}.leaving_time_box`);
                 if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
-                    var newTimeH = $('select[name="leaving_time[time_select(4i)]"]').val();
-                    var newTimeM = $('select[name="leaving_time[time_select(5i)]"]').val();
+                    var newTimeH = $(`select#leaving_time${Id}[name="leaving_time[time_select(4i)]"]`).val()
+                    var newTimeM = $(`select#leaving_time${Id}[name="leaving_time[time_select(5i)]"]`).val()
                     if(!newTimeH && !newTimeM) {
                         $(`#${Id}.leaving_time_btn_box`).removeClass('hidden')
                         $(`#${Id}.leaving_time_select_box`).addClass('hidden')
@@ -64,6 +64,60 @@ document.addEventListener('turbolinks:load', () =>{
 
             document.addEventListener('click', createLeavingTimeEndHandler);
 
+        });
+    });
+
+    //下校時刻の編集
+    $(`.leaving_time_display`).each(function(index, element){
+        const dataSet = $(element).data()
+        const Id = dataSet.id
+        var classLeavingTimeId = dataSet.leavingTimeId
+        const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
+
+        //datasetが追加されたことを検知して再定義
+        var observer = new MutationObserver(function(mutationsList) {
+            for (var mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-leaving-time-id') {
+                    classLeavingTimeId = Number(leavingTimeDisplay.getAttribute('data-leaving-time-id'))
+                }
+            }
+        });
+
+        observer.observe(leavingTimeDisplay, { attributes: true})
+
+        $(`#leaving_time_display${Id}`).on('click', () => {
+            $(this).addClass('hidden')
+            $(`#${Id}.leaving_time_select_box`).removeClass('hidden')
+
+            function editLeavingTimeEndHandler(event) {
+                var clickedElement = event.target;
+                var creatingElement = $(`#${Id}.leaving_time_box`);
+
+                if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
+                    var newTimeH = $(`select#leaving_time${Id}[name="leaving_time[time_select(4i)]"]`).val()
+                    var newTimeM = $(`select#leaving_time${Id}[name="leaving_time[time_select(5i)]"]`).val()
+                    if(!newTimeH && !newTimeM) {
+                        $(`#${Id}.leaving_time_btn_box`).removeClass('hidden')
+                        $(`#${Id}.leaving_time_select_box`).addClass('hidden')
+                        document.removeEventListener('click', editLeavingTimeEndHandler);
+                    } else if(!newTimeH || !newTimeM){
+                        window.alert("時刻を選択してください")
+                    } else {
+                        axios.put(`/school_classes/${schoolClassId}/class_leaving_time/${classLeavingTimeId}`, {
+                            time: {leaving_time: `${newTimeH}:${newTimeM}`}
+                        })
+                        .then((res) =>{
+                            $(`#${Id}.leaving_time_select_box`).addClass('hidden')
+                            $(`#leaving_time_display${Id}`).removeClass('hidden')
+                            const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
+                            const leavingTime = new Date(res.data.leaving_time).toISOString().substr(11, 5)
+                            leavingTimeDisplay.innerHTML = leavingTime
+                        });
+                        document.removeEventListener('click', editLeavingTimeEndHandler);
+                    };
+                };
+            };
+            document.addEventListener('click', editLeavingTimeEndHandler);
         });
     });
 
