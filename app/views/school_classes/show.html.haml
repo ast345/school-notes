@@ -109,14 +109,16 @@
                     .leaving_time_box{id: "#{date}"}
                         - leaving_time = @this_week_class_leaving_times.find_by(date: date)
                         - if leaving_time
-                            .leaving_time_btn_box.hidden{id: "#{date}"}
-                                %p.leaving_time_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                            .leaving_time_btn_box{id: "#{date}"}
+                                %p.leaving_time_create_btn.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                                %p.delete_leaving_time_btn{id: "delete_leaving_time_btn#{date}", data: {id: "#{date}", leaving_time_id: leaving_time.id}} 削除
                             .leaving_time_select_box.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}}
                                 = time_select("leaving_time", "time_select", {default: leaving_time.leaving_time}, {class: 'leaving_time_select_area', id: "leaving_time#{date}"})
                             %p.leaving_time_display{id: "leaving_time_display#{date}", data: {id: "#{date}", leaving_time_id: leaving_time.id}}  #{leaving_time.leaving_time.strftime("%H:%M")}
                         - else
                             .leaving_time_btn_box{id: "#{date}"}
                                 %p.leaving_time_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} 追加
+                                %p.delete_leaving_time_btn.hidden{id: "delete_leaving_time_btn#{date}"} 削除
                             .leaving_time_select_box.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}}
                                 = time_select("leaving_time", "time_select", {include_blank: true}, {class: 'leaving_time_select_area', id: "leaving_time#{date}"})
                             %p.leaving_time_display.hidden{id: "leaving_time_display#{date}", data: {id: "#{date}"}}

@@ -45,14 +45,18 @@
     }
 
 }
-.delete_lesson_btn{
+.delete{
+    &_lesson_btn, &_leaving_time_btn{
     display: inline-block;
     cursor: pointer;
     background-color: #fff;
     border-radius: 5px;
     font-size: 10px;
     color: rgb(243, 134, 134);
+    }
 }
+
+
 .copy_lesson_btn{
     display:inline-block;
     cursor: pointer;
