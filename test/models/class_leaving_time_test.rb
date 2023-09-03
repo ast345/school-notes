@@ -5,7 +5,7 @@
 #  id              :bigint           not null, primary key
 #  date            :date
 #  day_of_week     :integer
-#  leaving_time    :time
+#  leaving_time    :time             not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  school_class_id :bigint           not null
