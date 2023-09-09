@@ -5,6 +5,18 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function dateItem(schoolClassId) {
+
+        // 文字の大きさ調整
+        function adjustItemFontSize(element) {
+            const textElem = element;
+            for (let size = 30; textElem.scrollHeight > textElem.getBoundingClientRect().height && size > 1; size--) {
+              textElem.style.fontSize = size + "px";
+            }
+          }
+          
+        $('.item_display').each(function(index, element){
+            adjustItemFontSize(element);
+        })
         // 持ち物の追加
     $('.item_create_btn').each(function(index, element){
         const Id = element.id
@@ -36,6 +48,7 @@ export function dateItem(schoolClassId) {
                                 const itemDisplay = document.getElementById(`item_display${Id}`)
                                 itemDisplay.innerHTML = `${res.data.item_name}`
                                 itemDisplay.setAttribute('data-item-id', `${res.data.id}`)
+                                adjustItemFontSize(itemDisplay);
                             }
                         });
                         document.removeEventListener('click', createDateItemEndHandler);
@@ -94,6 +107,7 @@ export function dateItem(schoolClassId) {
                                 $(`#${Id}.item_text_box`).addClass('hidden')
 
                                 itemDisplay.innerHTML = `${res.data.item_name}`
+                                adjustItemFontSize(itemDisplay);
                             };
                         });
                         document.removeEventListener('click', editDateItemEndHandler);

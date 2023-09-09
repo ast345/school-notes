@@ -10,6 +10,9 @@ import { dateItem } from './date_item.js'
 import { classLeavingTime } from './class_leaving_time.js'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
+  
+
+
 
 document.addEventListener('turbolinks:load', () =>{
     const schoolClassId = gon.school_class_id;
@@ -22,6 +25,22 @@ document.addEventListener('turbolinks:load', () =>{
     event(schoolClassId);
     dateItem(schoolClassId);
     classLeavingTime(schoolClassId);
+
+
+    // lesson_btn_boxの表示・非表示
+    $('.lesson_box').each(function(index, element){
+        const Id = element.id
+
+        $(`#${Id}.lesson_box`).on('mouseenter', function(){
+            $(`#${Id}.lesson_btn_box`).removeClass('hidden');
+            $(`#${Id}.new_lesson_btn`).removeClass('hidden');
+        }).on('mouseleave', function(){
+            $(`#${Id}.lesson_btn_box`).addClass('hidden');
+            $(`#${Id}.new_lesson_btn`).addClass('hidden');
+        })
+    });
+
+    
 
     //lessonのdestroy機能
     $('.delete_lesson_btn').each(function(index, element){
@@ -60,5 +79,6 @@ document.addEventListener('turbolinks:load', () =>{
         })
 
     });
+
 
 });

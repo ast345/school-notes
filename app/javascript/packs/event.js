@@ -5,6 +5,19 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function event(schoolClassId) {
+    
+    // 文字の大きさ調整
+    function adjustFontSize(element) {
+        const textElem = element;
+        for (let size = 30; textElem.scrollHeight > textElem.getBoundingClientRect().height && size > 1; size--) {
+          textElem.style.fontSize = size + "px";
+        }
+      }
+      
+    $('.event_display').each(function(index, element){
+        adjustFontSize(element);
+    })
+
     //行事予定の追加
     $('.event_create_btn').each(function(index, element){
         const Id = element.id
@@ -37,6 +50,7 @@ export function event(schoolClassId) {
                                 const eventDisplay = document.getElementById(`event_display${Id}`)
                                 eventDisplay.innerHTML = `${res.data.event_name}`
                                 eventDisplay.setAttribute('data-event-id', `${res.data.id}`)
+                                adjustFontSize(eventDisplay);
                             }
                         });
                         document.removeEventListener('click', createEventEndHandler);
@@ -95,6 +109,8 @@ export function event(schoolClassId) {
                                 $(`#${Id}.event_text_box`).addClass('hidden')
 
                                 eventDisplay.innerHTML = `${res.data.event_name}`
+                                debugger
+                                adjustFontSize(eventDisplay);
                             };
                         });
                         document.removeEventListener('click', editEventEndHandler);

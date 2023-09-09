@@ -21,6 +21,8 @@ class EventsController < ApplicationController
 
     private
     def event_params
-        params.require(:event).permit(:date, :day_of_week, :event_name)
+        event_parameters = params.require(:event).permit(:date, :day_of_week, :event_name)
+        event_parameters[:event_name] = event_parameters[:event_name].gsub("\n", "<br>")
+        return event_parameters
     end
 end

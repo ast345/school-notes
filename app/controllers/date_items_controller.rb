@@ -21,6 +21,8 @@ class DateItemsController < ApplicationController
 
     private
     def date_item_params
-        params.require(:item).permit(:date, :day_of_week, :item_name)
+        item_parameters = params.require(:item).permit(:date, :day_of_week, :item_name)
+        item_parameters[:item_name] = item_parameters[:item_name].gsub("\n", "<br>")
+        return item_parameters
     end
 end

@@ -99,7 +99,7 @@ export function createLesson(schoolClassId) {
                     if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
                         if(selectSubject.value === ""){
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
-                            $(`#${Id}`+'.new_lesson_btn').removeClass('hidden')
+                            $(`#${Id}`+'.new_lesson_menu').removeClass('hidden')
                         } else {
                             const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
                             const selectedUnitName = selectedOption.textContent;
