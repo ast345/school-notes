@@ -12,6 +12,7 @@ export function classLeavingTime(schoolClassId) {
             var date = dataSet.date
             var dayOfWeek = dataSet.dayOfWeek
             $(`#${Id}.leaving_time_create_btn`).on('click', () =>{
+                $(`#${Id}.item_create_btn_box`).addClass('hidden')
                 $(`#${Id}.leaving_time_btn_box`).addClass('hidden')
                 $(`#${Id}.leaving_time_select_box`).removeClass('hidden')
                 function createLeavingTimeEndHandler(event) {
@@ -137,6 +138,7 @@ export function classLeavingTime(schoolClassId) {
                             $(`#delete_leaving_time_btn${Id}`).addClass('hidden')
                             $(`#${Id}.leaving_time_create_btn`).removeClass('hidden')
                             $(`#leaving_time_display${Id}`).addClass('hidden')
+                            $(`#${Id}.item_create_btn_box`).removeClass('hidden')
                         };
                     })
                 };

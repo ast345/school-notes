@@ -169,6 +169,14 @@
 .leaving_time_box{
     display: flex;
     flex-direction: row-reverse;
+    height: 27px;
+    &:hover .leaving_time_create_btn{
+        display: inline-block;
+    }
+}
+
+.leaving_time_create_btn{
+    display: none;
 }
 
 .leaving_time_display{
