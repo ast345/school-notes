@@ -115,6 +115,7 @@ GEM
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
     ffi (1.15.5)
+    flatpickr (4.6.13.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
     gon (6.4.0)
@@ -363,6 +364,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   erb2haml
+  flatpickr
   gon
   hamlit
   jbuilder (~> 2.7)

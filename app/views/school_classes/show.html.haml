@@ -8,7 +8,6 @@
     .navbar
         %a{href: school_class_path(start_of_week: @start_of_week - 1.week)} 前の週
         %a{href: school_class_path(start_of_week: @start_of_week + 1.week)} 次の週
-
     %table.class_weekly
         %tr
             %th
@@ -112,7 +111,8 @@
                             .leaving_time_delete_btn_box{id: "#{date}"}
                                 %i.fa-regular.fa-calendar-xmark.delete_leaving_time_btn{id: "delete_leaving_time_btn#{date}", data: {id: "#{date}", leaving_time_id: leaving_time.id}}
                             .leaving_time_select_box.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}}
-                                = time_select("leaving_time", "time_select", {default: leaving_time.leaving_time}, {class: 'leaving_time_select_area', id: "leaving_time#{date}"})
+                                -# = time_select("leaving_time", "time_select", {default: leaving_time.leaving_time}, {class: 'leaving_time_select_area', id: "leaving_time#{date}"})
+                                %input{type: "time", id: "leaving_time#{date}", value: "#{leaving_time.leaving_time.strftime("%H:%M")}", class: "leaving_time_form"}
                             %p.leaving_time_display{id: "leaving_time_display#{date}", data: {id: "#{date}", leaving_time_id: leaving_time.id}}  #{leaving_time.leaving_time.strftime("%H:%M")}
                         - else
                             .leaving_time_create_btn_box{id: "#{date}"}
@@ -120,7 +120,7 @@
                             .leaving_time_delete_btn_box.hidden{id: "#{date}"}
                                 %i.fa-regular.fa-calendar-xmark.delete_leaving_time_btn{id: "delete_leaving_time_btn#{date}", data: {id: "#{date}"}}
                             .leaving_time_select_box.hidden{id: "#{date}", data: {date: date, day_of_week: date.wday}}
-                                = time_select("leaving_time", "time_select", {include_blank: true}, {class: 'leaving_time_select_area', id: "leaving_time#{date}"})
+                                %input{type: "time", id: "leaving_time#{date}", class: "leaving_time_form"}
                             %p.leaving_time_display.hidden{id: "leaving_time_display#{date}", data: {id: "#{date}"}}
 
 

@@ -2,6 +2,7 @@ import $ from 'jquery'
 import axios from 'axios'
 import { csrfToken } from 'rails-ujs'
 
+
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function classLeavingTime(schoolClassId) {
@@ -11,6 +12,8 @@ export function classLeavingTime(schoolClassId) {
             const dataSet = $(element).data()
             var date = dataSet.date
             var dayOfWeek = dataSet.dayOfWeek
+            
+
             $(`#${Id}.leaving_time_create_btn`).on('click', () =>{
                 $(`#${Id}.leaving_time_create_btn_box`).addClass('hidden')
                 $(`#${Id}.leaving_time_select_box`).removeClass('hidden')
@@ -18,17 +21,14 @@ export function classLeavingTime(schoolClassId) {
                     var clickedElement = event.target;
                     var creatingElement = $(`#${Id}.leaving_time_box`);
                     if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
-                        var newTimeH = $(`select#leaving_time${Id}[name="leaving_time[time_select(4i)]"]`).val()
-                        var newTimeM = $(`select#leaving_time${Id}[name="leaving_time[time_select(5i)]"]`).val()
-                        if(!newTimeH && !newTimeM) {
+                        var newTime = $(`#leaving_time${Id}`).val();
+                        if(!newTime) {
                             $(`#${Id}.leaving_time_create_btn_box`).removeClass('hidden')
                             $(`#${Id}.leaving_time_select_box`).addClass('hidden')
                             document.removeEventListener('click', createLeavingTimeEndHandler);
-                        } else if(!newTimeH || !newTimeM){
-                            window.alert("時刻を選択してください")
                         } else {
                             axios.post(`/school_classes/${schoolClassId}/class_leaving_time`, {
-                                time: {date: date, day_of_week: dayOfWeek, leaving_time: `${newTimeH}:${newTimeM}`}
+                                time: {date: date, day_of_week: dayOfWeek, leaving_time: newTime}
                             })
                             .then((res) =>{
                                 if(res.status === 200){

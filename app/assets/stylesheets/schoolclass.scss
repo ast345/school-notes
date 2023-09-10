@@ -236,6 +236,22 @@
     outline: none;
 }
 
+.leaving_time_form{
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding-left: 25px;
+
+    &::-webkit-calendar-picker-indicator {
+        color: rgb(30, 48, 80);
+        border-radius: 10px;
+    }
+
+    &::-webkit-calendar-picker-indicator:hover {
+        background-color: #eeeeee;
+    }
+  }
+
 .left_column{
     text-align: center;
     width: 88px;
