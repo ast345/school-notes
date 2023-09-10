@@ -12,8 +12,7 @@ export function classLeavingTime(schoolClassId) {
             var date = dataSet.date
             var dayOfWeek = dataSet.dayOfWeek
             $(`#${Id}.leaving_time_create_btn`).on('click', () =>{
-                $(`#${Id}.item_create_btn_box`).addClass('hidden')
-                $(`#${Id}.leaving_time_btn_box`).addClass('hidden')
+                $(`#${Id}.leaving_time_create_btn_box`).addClass('hidden')
                 $(`#${Id}.leaving_time_select_box`).removeClass('hidden')
                 function createLeavingTimeEndHandler(event) {
                     var clickedElement = event.target;
@@ -22,7 +21,7 @@ export function classLeavingTime(schoolClassId) {
                         var newTimeH = $(`select#leaving_time${Id}[name="leaving_time[time_select(4i)]"]`).val()
                         var newTimeM = $(`select#leaving_time${Id}[name="leaving_time[time_select(5i)]"]`).val()
                         if(!newTimeH && !newTimeM) {
-                            $(`#${Id}.leaving_time_btn_box`).removeClass('hidden')
+                            $(`#${Id}.leaving_time_create_btn_box`).removeClass('hidden')
                             $(`#${Id}.leaving_time_select_box`).addClass('hidden')
                             document.removeEventListener('click', createLeavingTimeEndHandler);
                         } else if(!newTimeH || !newTimeM){
@@ -33,9 +32,7 @@ export function classLeavingTime(schoolClassId) {
                             })
                             .then((res) =>{
                                 if(res.status === 200){
-                                    $(`#${Id}.leaving_time_btn_box`).removeClass('hidden')
-                                    $(`#delete_leaving_time_btn${Id}`).removeClass('hidden')
-                                    $(`#${Id}.leaving_time_create_btn`).addClass('hidden')
+                                    $(`#${Id}.leaving_time_delete_btn_box`).removeClass('hidden')
                                     $(`#${Id}.leaving_time_select_box`).addClass('hidden')
                                     $(`#leaving_time_display${Id}`).removeClass('hidden')
                                     const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
@@ -78,6 +75,7 @@ export function classLeavingTime(schoolClassId) {
             $(`#leaving_time_display${Id}`).on('click', () => {
                 $(this).addClass('hidden')
                 $(`#${Id}.leaving_time_select_box`).removeClass('hidden')
+                $(`#${Id}.leaving_time_delete_btn_box`).addClass('hidden')
     
                 function editLeavingTimeEndHandler(event) {
                     var clickedElement = event.target;
@@ -99,6 +97,7 @@ export function classLeavingTime(schoolClassId) {
                             .then((res) =>{
                                 $(`#${Id}.leaving_time_select_box`).addClass('hidden')
                                 $(`#leaving_time_display${Id}`).removeClass('hidden')
+                                $(`#${Id}.leaving_time_delete_btn_box`).removeClass('hidden')
                                 const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
                                 const leavingTime = new Date(res.data.leaving_time).toISOString().substr(11, 5)
                                 leavingTimeDisplay.innerHTML = leavingTime
@@ -135,10 +134,9 @@ export function classLeavingTime(schoolClassId) {
                     axios.delete(`/school_classes/${schoolClassId}/class_leaving_time/${leavingTimeId}`)
                     .then((res) =>{
                         if(res.status === 204){
-                            $(`#delete_leaving_time_btn${Id}`).addClass('hidden')
-                            $(`#${Id}.leaving_time_create_btn`).removeClass('hidden')
+                            $(`#${Id}.leaving_time_delete_btn_box`).addClass('hidden')
                             $(`#leaving_time_display${Id}`).addClass('hidden')
-                            $(`#${Id}.item_create_btn_box`).removeClass('hidden')
+                            $(`#${Id}.leaving_time_create_btn_box`).removeClass('hidden')
                         };
                     })
                 };

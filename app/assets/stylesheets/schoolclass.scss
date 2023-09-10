@@ -74,7 +74,7 @@
 }
 
 .delete{
-    &_lesson_btn, &_leaving_time_btn{
+    &_lesson_btn{
         display: inline-block;
         cursor: pointer;
 
@@ -90,6 +90,21 @@
     }
 }
 
+.delete_leaving_time_btn{
+    display: none;
+    float: right;
+    cursor: pointer;
+
+    color: rgb(243, 134, 134);
+
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 13px;
+
+    &:hover{
+        background-color: #eeeeee;
+    }
+}
 
 .copy_lesson_btn, .paste_lesson_btn{
     display:inline-block;
@@ -167,12 +182,18 @@
 }
 
 .leaving_time_box{
-    display: flex;
-    flex-direction: row-reverse;
     height: 27px;
     &:hover .leaving_time_create_btn{
         display: inline-block;
     }
+    &:hover .delete_leaving_time_btn{
+        display: block;
+    }
+}
+
+.leaving_time_delete_btn_box{
+    display: block;
+    float: right;
 }
 
 .leaving_time_create_btn{
@@ -180,8 +201,9 @@
 }
 
 .leaving_time_display{
-    width: 72px;
-    text-align: center;
+    display: inline-block;
+    height: 23px;
+    padding-left: 37px;
 }
 
 
