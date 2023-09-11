@@ -82,17 +82,14 @@ export function classLeavingTime(schoolClassId) {
                     var creatingElement = $(`#${Id}.leaving_time_box`);
     
                     if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
-                        var newTimeH = $(`select#leaving_time${Id}[name="leaving_time[time_select(4i)]"]`).val()
-                        var newTimeM = $(`select#leaving_time${Id}[name="leaving_time[time_select(5i)]"]`).val()
-                        if(!newTimeH && !newTimeM) {
+                        var newTime = $(`#leaving_time${Id}`).val();
+                        if(!newTime) {
                             $(`#${Id}.leaving_time_btn_box`).removeClass('hidden')
                             $(`#${Id}.leaving_time_select_box`).addClass('hidden')
                             document.removeEventListener('click', editLeavingTimeEndHandler);
-                        } else if(!newTimeH || !newTimeM){
-                            window.alert("時刻を選択してください")
                         } else {
                             axios.put(`/school_classes/${schoolClassId}/class_leaving_time/${classLeavingTimeId}`, {
-                                time: {leaving_time: `${newTimeH}:${newTimeM}`}
+                                time: {leaving_time: newTime}
                             })
                             .then((res) =>{
                                 $(`#${Id}.leaving_time_select_box`).addClass('hidden')
