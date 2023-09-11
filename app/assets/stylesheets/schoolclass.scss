@@ -2,9 +2,15 @@
     &_subject{
         border-bottom: 1px solid rgb(203, 203, 203);
         text-align: center;
+        &:hover{
+            cursor: text;
+        }
     }
     &_unit{
         text-align: center;
+        &:hover{
+            cursor: text;
+        }
     }
 
     &_box{
@@ -12,10 +18,13 @@
         height: 98px;
         width: 118px;
         position: relative;
+        z-index: 1;
 
         &:hover{
+            cursor: grab;
             border-radius: 10px;
-            border: 1px dotted #333333;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
     }
 }

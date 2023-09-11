@@ -9,8 +9,8 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 export function dragDropLesson (schoolClassId) {
     $('.lesson_box').draggable({
         revert: 'invalid',
-        cursor: 'move',
-        helper: 'clone'
+        helper: 'clone',
+        zIndex: 2,
       });
     
       $('.lesson_box').droppable({
@@ -19,6 +19,7 @@ export function dragDropLesson (schoolClassId) {
           var sourceBox = $(ui.draggable);
           var targetBox = $(this);
 
+          targetBox.css('z-index', 2);
           // 中身を入れ替えるためのGotLessonクラスを取得
           var targetGotLesson = targetBox.find('.got_lesson');
           var sourceGotLesson = sourceBox.find('.got_lesson');
