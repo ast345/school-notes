@@ -19,7 +19,7 @@ export function dragDropLesson (schoolClassId) {
           var sourceBox = $(ui.draggable);
           var targetBox = $(this);
 
-          targetBox.css('z-index', 2);
+          targetBox.css('z-index', 1);
           // 中身を入れ替えるためのGotLessonクラスを取得
           var targetGotLesson = targetBox.find('.got_lesson');
           var sourceGotLesson = sourceBox.find('.got_lesson');
