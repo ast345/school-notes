@@ -52,7 +52,7 @@ export function editLesson(schoolClassId) {
                 const unitSet = res.data
                 const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
                 $(`#grade_subject_units${Id}`).removeClass('hidden')
-                gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id="${Id}">新規</p>`
+                gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-solid fa-circle-plus"></i>`
                 $(`#unit${Id} option`).each(function() {
                     const optionValue = Number($(this).val());
                     // optionValue と SubjectName を比較して一致する場合、選択状態にする
@@ -74,7 +74,7 @@ export function editLesson(schoolClassId) {
                         .then((res) => {
                             const unitSet = res.data
                             const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
-                            gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id="${Id}">新規</p>`
+                            gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-solid fa-circle-plus"></i>`
 
                         })
                         .catch(error => {

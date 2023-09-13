@@ -29,6 +29,36 @@
     }
 }
 
+
+.edit_lesson_box{
+    padding-top: 25px;
+    border-bottom: 1px solid rgb(203, 203, 203);
+    text-align: center;
+    & select {
+        text-align: center;
+        & option {
+            text-align: center;
+        }
+    }
+}
+.select_subject{
+    height: 25px;
+}
+
+.unit_select_box{
+    padding-left: 4px;
+    & select {
+        text-align: center;
+        & option {
+            text-align: center;
+        }
+    }
+}
+.select_unit{
+    height: 25px;
+    width: 80%;
+}
+
 .class{
     &_weekly{
         display: inline-block;
@@ -179,14 +209,36 @@
         }
 
         &_text{
-            height: 20px;
-            width: 100px;
-            vertical-align: middle;
-            
+            height: 100%;
+            width: 80%;
+            // vertical-align: middle;
             border: 1px solid #cccccc;
             border-radius: 4px;
             resize: none;
         }
+    }
+}
+.unit_create_btn{
+    color: rgb(30, 48, 80);
+    padding: 5px 5px;
+    border-radius: 10px;
+    font-size: 12px;
+    float: right;
+    &:hover{
+        cursor: pointer;
+        background-color: #eeeeee;
+    }
+}
+
+.cancel_btn{
+    color: rgb(30, 48, 80);
+    padding: 0px 4px;
+    border-radius: 10px;
+    font-size: 14px;
+    float: right;
+    &:hover{
+        cursor: pointer;
+        background-color: #eeeeee;
     }
 }
 

@@ -34,10 +34,10 @@ export function createLesson(schoolClassId) {
                     .then((res) => {
                         const unitSet = res.data
                         const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
-                        gradeSubjectUnits.innerHTML = `<select id="unit${Id}"><option value="">&nbsp;</option>${options}</select><p class="new_unit_btn" id= "${Id}">新規</p>`
+                        gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-regular fa-pen-to-square unit_create_btn", id="${Id}"></i>`
                         $(`#grade_subject_units${Id}`).removeClass('hidden')
 
-                        $(`#${Id}`+'.new_unit_btn').on('click', () =>{
+                        $(`#${Id}.unit_create_btn`).on('click', () =>{
                             $(`#${Id}`+'.new_unit_box').removeClass('hidden')
                             $(`#grade_subject_units${Id}`).addClass('hidden')
                         });

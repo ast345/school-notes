@@ -109,7 +109,6 @@ export function event(schoolClassId) {
                                 $(`#${Id}.event_text_box`).addClass('hidden')
 
                                 eventDisplay.innerHTML = `${res.data.event_name}`
-                                debugger
                                 adjustFontSize(eventDisplay);
                             };
                         });
