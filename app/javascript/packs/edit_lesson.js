@@ -52,7 +52,7 @@ export function editLesson(schoolClassId) {
                 const unitSet = res.data
                 const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
                 $(`#grade_subject_units${Id}`).removeClass('hidden')
-                gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-solid fa-circle-plus"></i>`
+                gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-regular fa-pen-to-square unit_create_btn", id="${Id}"></i>`
                 $(`#unit${Id} option`).each(function() {
                     const optionValue = Number($(this).val());
                     // optionValue と SubjectName を比較して一致する場合、選択状態にする
@@ -74,7 +74,7 @@ export function editLesson(schoolClassId) {
                         .then((res) => {
                             const unitSet = res.data
                             const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
-                            gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-solid fa-circle-plus"></i>`
+                            gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-regular fa-pen-to-square unit_create_btn", id="${Id}"></i>`
 
                         })
                         .catch(error => {
@@ -83,14 +83,14 @@ export function editLesson(schoolClassId) {
                     };
                 });
 
-                $(`#${Id}`+'.new_unit_btn').on('click', () =>{
+                $(`#${Id}.unit_create_btn`).on('click', () =>{
                     $(`#${Id}`+'.new_unit_box').removeClass('hidden')
-                    $('.unit_select_box').addClass('hidden')
+                    $(`#grade_subject_units${Id}`).addClass('hidden')
                 });
 
                 $(`#${Id}`+'.cancel_btn').on('click', () => {
                     $(`#${Id}`+'.new_unit_box').addClass('hidden')
-                    $('.unit_select_box').removeClass('hidden')
+                    $(`#grade_subject_units${Id}`).removeClass('hidden')
                 });
 
                 document.addEventListener('click', editEndHandler);
