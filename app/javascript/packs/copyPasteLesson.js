@@ -32,6 +32,14 @@ export function copyPasteLesson (schoolClassId) {
         $(`#copy_lesson_btn${Id}`).on('click', () =>{
             copiedGradeSubjectId = gradeSubjectId
             copiedGradeSubjectUnitId = gotUnitId
+
+            $(this).removeClass('fa-copy').addClass('fa-check');
+
+        // 数秒後に元のアイコンに戻す
+        var btn = $(this);
+        setTimeout(function() {
+            btn.removeClass('fa-check').addClass('fa-copy');
+        }, 5000);
         });
 
     });
