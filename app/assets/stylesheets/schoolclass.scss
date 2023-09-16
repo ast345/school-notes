@@ -179,10 +179,13 @@
     padding: 5px 5px;
     border-radius: 10px;
     font-size: 15px;
-    margin: 0px 28.5px;
+    display: none;
     &:hover{
         cursor: pointer;
         background-color: #eeeeee;
+    }
+    &_box{
+        text-align: center;
     }
 }
 
@@ -256,10 +259,6 @@
 .leaving_time_delete_btn_box{
     display: block;
     float: right;
-}
-
-.leaving_time_create_btn{
-    display: none;
 }
 
 .leaving_time_display{
