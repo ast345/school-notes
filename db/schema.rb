@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_03_222408) do
+ActiveRecord::Schema.define(version: 2023_09_17_101553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,22 @@ ActiveRecord::Schema.define(version: 2023_09_03_222408) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lesson_id"], name: "index_lesson_classes_on_lesson_id"
     t.index ["school_class_id"], name: "index_lesson_classes_on_school_class_id"
+  end
+
+  create_table "lesson_wdays", force: :cascade do |t|
+    t.bigint "school_class_id", null: false
+    t.date "start_of_week", null: false
+    t.boolean "monday", default: true, null: false
+    t.boolean "tuesday", default: true, null: false
+    t.boolean "wednesday", default: true, null: false
+    t.boolean "thursday", default: true, null: false
+    t.boolean "friday", default: true, null: false
+    t.boolean "saturday", default: false, null: false
+    t.boolean "sunday", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_class_id", "start_of_week"], name: "index_lesson_wdays_on_school_class_id_and_start_of_week", unique: true
+    t.index ["school_class_id"], name: "index_lesson_wdays_on_school_class_id"
   end
 
   create_table "lessons", force: :cascade do |t|
