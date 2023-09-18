@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_17_101553) do
+ActiveRecord::Schema.define(version: 2023_09_18_102637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,24 @@ ActiveRecord::Schema.define(version: 2023_09_17_101553) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_teachers_on_user_id"
+  end
+
+  create_table "template_lesson_classes", force: :cascade do |t|
+    t.bigint "school_class_id", null: false
+    t.bigint "template_lesson_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_class_id"], name: "index_template_lesson_classes_on_school_class_id"
+    t.index ["template_lesson_id"], name: "index_template_lesson_classes_on_template_lesson_id"
+  end
+
+  create_table "template_lessons", force: :cascade do |t|
+    t.integer "day_of_week", null: false
+    t.integer "period", null: false
+    t.bigint "grade_subject_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_subject_id"], name: "index_template_lessons_on_grade_subject_id"
   end
 
   create_table "user_to_types", force: :cascade do |t|

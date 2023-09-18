@@ -18,6 +18,8 @@ class SchoolClass < ApplicationRecord
     has_many :teachers, through: :school_class_teachers
     has_many :lesson_classes, dependent: :destroy
     has_many :lessons, through: :lesson_classes
+    has_many :template_lesson_classes, dependent: :destroy
+    has_many :template_lessons, through: :template_lesson_classes
     has_many :events
     has_many :date_items
     has_many :class_leaving_times
