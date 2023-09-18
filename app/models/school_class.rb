@@ -16,6 +16,12 @@ class SchoolClass < ApplicationRecord
     belongs_to :grade
     has_many :school_class_teachers, foreign_key: 'school_classes_id', dependent: :destroy
     has_many :teachers, through: :school_class_teachers
+    has_many :lesson_classes, dependent: :destroy
+    has_many :lessons, through: :lesson_classes
+    has_many :events
+    has_many :date_items
+    has_many :class_leaving_times
+    has_many :lesson_wdays, dependent: :destroy
 
     accepts_nested_attributes_for :school_class_teachers
 

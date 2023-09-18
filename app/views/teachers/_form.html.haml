@@ -1,9 +1,0 @@
-= form_with(model: teacher, remote: true) do |form|
-  .row
-    .col-xs-10
-      .input-group.input-group-sm
-        = form.text_field :display_name, value: teacher.display_name, required: true, class:"form-control", max: 15
-        %span.input-group-btn
-          = form.submit '更新', class: "btn btn-brown"
-    -# .col-xs-1
-    -#   = category.cancel_btn

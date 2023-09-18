@@ -9,7 +9,6 @@
 
     &_title{
         text-align: center;
-        font-family: BIZ UDGothic;
         font-size: 16px;
         padding-top: 8px;
     }
@@ -28,25 +27,38 @@
         display: inline-block;
         height: 40px;
 
-        &_a{
-            display: inline-block;
-            height: 32px;
-            vertical-align: text-top;
-        }
-
         &_img{
             display: inline-block;
             height: 20px;
         }
     }
+
+    &_text_area{
+        height: 40px;
+    }
+
+    &_submit-btn{
+        display: inline-block;
+        padding: 5px 15px;
+        margin-left: 15px;
+        background-color: rgb(95, 163, 241);
+        border-radius: 10px;
+        color: white;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.6;
+        }
+    }
 }
 
-#display_name{
+.display_name{
     display: inline-block;
     padding-top: 8px;
-
-    font-family: BIZ UDGothic;
     font-size: 16px;
+
+    &_box{
+        height: 40px;
+    }
 }
 
 
@@ -58,6 +70,31 @@
     &_link{
         margin-left: 20px;
         display: inline-block;
+    }
+
+    &_text_area{
+        height: 40px;
+    }
+
+    &_display_name{
+        text-decoration: underline;
+        color: blue;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &_submit-btn{
+        display: inline-block;
+        padding: 5px 15px;
+        margin-left: 15px;
+        background-color: rgb(95, 163, 241);
+        border-radius: 10px;
+        color: white;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.6;
+        }
     }
 }
 
@@ -77,7 +114,6 @@
             width: 20%;
 
             text-align: center;
-            font-family: BIZ UDGothic;
             font-size: 16px;
         }
     }
@@ -97,7 +133,6 @@
 
     &_display{
         text-align: center;
-        font-family: BIZ UDGothic;
         font-size: 16px;
         padding-top: 8px;
     }
@@ -133,4 +168,23 @@
 
 .add_subject{
     display: inline-block;
+}
+
+.sm{
+    height: 30px;
+    width: 300px;
+    vertical-align: middle;
+
+    border: 2px solid #cccccc;
+    border-radius: 6px;
+    resize: none;
+}
+
+
+
+.new_setting{
+    display: inline-block;
+    height: 40px;
+    width: 69%;
+    text-align: center;
 }

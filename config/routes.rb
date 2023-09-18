@@ -6,7 +6,17 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :teachers, only: [:index, :show, :new, :edit, :create, :update]
-  resources :school_classes, only: [:new, :create, :edit, :update, :destroy]
+  resources :school_classes, only: [:show, :new, :create, :edit, :update, :destroy] do
+    resources :lessons, only: [:new, :create, :update, :destroy]
+    resources :events, only: [:create, :update, :destroy]
+    resources :date_items, only: [:new, :create, :edit, :update, :destroy]
+    resources :class_leaving_time, only: [:create, :update, :destroy]
+    resources :lesson_wdays, only: [:create, :update]
+  end
+
   resources :assigned_subjects, only: [:new, :create, :destroy]
+  resources :grade_subject_units, only: [:create]
+
+  get '/get_grade_subject_units', to: 'grade_subject_unit#get_grade_subject_units'
 
 end

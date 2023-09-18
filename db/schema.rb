@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_30_021537) do
+ActiveRecord::Schema.define(version: 2023_09_17_101553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,48 @@ ActiveRecord::Schema.define(version: 2023_07_30_021537) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grade_subjects_id"], name: "index_assigned_subjects_on_grade_subjects_id"
     t.index ["school_class_teachers_id"], name: "index_assigned_subjects_on_school_class_teachers_id"
+  end
+
+  create_table "class_leaving_times", force: :cascade do |t|
+    t.time "leaving_time", null: false
+    t.date "date"
+    t.integer "day_of_week"
+    t.bigint "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["date", "school_class_id"], name: "index_class_leaving_times_on_date_and_school_class_id", unique: true
+    t.index ["school_class_id"], name: "index_class_leaving_times_on_school_class_id"
+  end
+
+  create_table "date_items", force: :cascade do |t|
+    t.string "item_name", null: false
+    t.date "date"
+    t.integer "day_of_week"
+    t.bigint "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["date", "school_class_id"], name: "index_date_items_on_date_and_school_class_id", unique: true
+    t.index ["school_class_id"], name: "index_date_items_on_school_class_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "event_name", null: false
+    t.date "date"
+    t.integer "day_of_week"
+    t.bigint "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["date", "school_class_id"], name: "index_events_on_date_and_school_class_id", unique: true
+    t.index ["school_class_id"], name: "index_events_on_school_class_id"
+  end
+
+  create_table "grade_subject_units", force: :cascade do |t|
+    t.string "unit_name", null: false
+    t.bigint "grade_subject_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_subject_id"], name: "index_grade_subject_units_on_grade_subject_id"
+    t.index ["unit_name", "grade_subject_id"], name: "index_grade_subject_units_on_unit_name_and_grade_subject_id", unique: true
   end
 
   create_table "grade_subjects", force: :cascade do |t|
@@ -39,6 +81,43 @@ ActiveRecord::Schema.define(version: 2023_07_30_021537) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["school_types_id"], name: "index_grades_on_school_types_id"
+  end
+
+  create_table "lesson_classes", force: :cascade do |t|
+    t.bigint "school_class_id", null: false
+    t.bigint "lesson_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lesson_id"], name: "index_lesson_classes_on_lesson_id"
+    t.index ["school_class_id"], name: "index_lesson_classes_on_school_class_id"
+  end
+
+  create_table "lesson_wdays", force: :cascade do |t|
+    t.bigint "school_class_id", null: false
+    t.date "start_of_week", null: false
+    t.boolean "monday", default: true, null: false
+    t.boolean "tuesday", default: true, null: false
+    t.boolean "wednesday", default: true, null: false
+    t.boolean "thursday", default: true, null: false
+    t.boolean "friday", default: true, null: false
+    t.boolean "saturday", default: false, null: false
+    t.boolean "sunday", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_class_id", "start_of_week"], name: "index_lesson_wdays_on_school_class_id_and_start_of_week", unique: true
+    t.index ["school_class_id"], name: "index_lesson_wdays_on_school_class_id"
+  end
+
+  create_table "lessons", force: :cascade do |t|
+    t.date "date"
+    t.integer "day_of_week"
+    t.integer "period"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "grade_subject_unit_id"
+    t.bigint "grade_subject_id"
+    t.index ["grade_subject_id"], name: "index_lessons_on_grade_subject_id"
+    t.index ["grade_subject_unit_id"], name: "index_lessons_on_grade_subject_unit_id"
   end
 
   create_table "school_class_teachers", force: :cascade do |t|

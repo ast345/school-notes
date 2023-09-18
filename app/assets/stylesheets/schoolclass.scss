@@ -1,0 +1,420 @@
+.lesson{
+    &_subject{
+        border-bottom: 1px solid rgb(203, 203, 203);
+        text-align: center;
+        &:hover{
+            cursor: text;
+        }
+    }
+    &_unit{
+        text-align: center;
+        width: 117px;
+        &:hover{
+            cursor: text;
+        }
+    }
+
+    &_box{
+        background-color: white;
+        height: 98px;
+        width: 118px;
+        position: relative;
+        z-index: 1;
+        cursor: grab;
+
+        &:hover{
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+
+.edit_lesson_box{
+    padding-top: 25px;
+    border-bottom: 1px solid rgb(203, 203, 203);
+    text-align: center;
+    & select {
+        text-align: center;
+        & option {
+            text-align: center;
+        }
+    }
+}
+.select_subject{
+    height: 25px;
+}
+
+.unit_select_box{
+    padding-left: 4px;
+    & select {
+        text-align: center;
+        & option {
+            text-align: center;
+        }
+    }
+}
+.select_unit{
+    height: 25px;
+    width:  79%;
+}
+
+.class{
+    &_weekly{
+        display: inline-block;
+    }
+
+
+}
+.lesson_btn_box{
+    float: right;
+    height: 20px;
+}
+
+.item{
+    &_create_btn{
+        display: none;
+    }
+
+    &_box:hover .item_create_btn{
+        display: inline-block;
+    }
+
+    &_btn_box{
+        text-align: center;
+    }
+
+    &_text{
+        height: 118px;
+        width: 118px;
+        vertical-align: middle;
+
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        resize: none;
+    }
+
+    &_row{
+        height: 120px;
+    }
+    &_display{
+        height: 100%;
+        width: 100%;
+        word-wrap: break-word;
+    }
+
+    &_box{
+        height: 118px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+    }
+}
+
+.delete{
+    &_lesson_btn{
+        display: inline-block;
+        cursor: pointer;
+
+        color: rgb(243, 134, 134);
+
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 13px;
+
+        &:hover{
+            background-color: #eeeeee;
+        }
+    }
+}
+
+.delete_leaving_time_btn{
+    display: none;
+    float: right;
+    cursor: pointer;
+
+    color: rgb(243, 134, 134);
+
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 13px;
+
+    &:hover{
+        background-color: #eeeeee;
+    }
+}
+
+.copy_lesson_btn, .paste_lesson_btn{
+    display:inline-block;
+    cursor: pointer;
+
+    // background-color: #fff;
+    color: rgb(30, 48, 80);
+
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 13px;
+
+    &:hover{
+        background-color: #eeeeee;
+    }
+}
+
+.new_lesson_btn, .item_create_btn, .event_create_btn{
+    color: rgb(30, 48, 80);
+    padding: 5px 5px;
+    border-radius: 10px;
+    font-size: 15px;
+
+    &:hover{
+        cursor: pointer;
+        background-color: #eeeeee;
+    }
+}
+
+.leaving_time_create_btn{
+    color: rgb(30, 48, 80);
+    padding: 5px 5px;
+    border-radius: 10px;
+    font-size: 15px;
+    display: none;
+    &:hover{
+        cursor: pointer;
+        background-color: #eeeeee;
+    }
+    &_box{
+        text-align: center;
+    }
+}
+
+.new{
+    &_lesson_box{
+        display: inline-block;
+        vertical-align: top;
+    }
+    &_lesson_menu{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70%;
+        text-align: center;
+    }
+
+    &_unit{
+        &_btn{
+            display: inline-block;
+            background-color: rgb(95, 163, 241);
+            color: white;
+            border-radius: 7px;
+            margin-left: 10px;
+        }
+
+        &_text{
+            height: 100%;
+            width: 80%;
+            // vertical-align: middle;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            resize: none;
+        }
+    }
+}
+.unit_create_btn{
+    color: rgb(30, 48, 80);
+    padding: 5px 5px;
+    border-radius: 10px;
+    font-size: 12px;
+    float: right;
+    &:hover{
+        cursor: pointer;
+        background-color: #eeeeee;
+    }
+}
+
+.cancel_btn{
+    color: rgb(30, 48, 80);
+    padding: 0px 4px;
+    border-radius: 10px;
+    font-size: 14px;
+    float: right;
+    &:hover{
+        cursor: pointer;
+        background-color: #eeeeee;
+    }
+}
+
+.leaving_time_box{
+    height: 27px;
+    &:hover .leaving_time_create_btn{
+        display: inline-block;
+    }
+    &:hover .delete_leaving_time_btn{
+        display: block;
+    }
+}
+
+.leaving_time_delete_btn_box{
+    display: block;
+    float: right;
+}
+
+.leaving_time_display{
+    display: inline-block;
+    height: 23px;
+    padding-left: 37px;
+}
+
+
+.leaving_time_select_area{
+    align-items: center;
+    position: relative;
+    text-align: center;
+}
+
+.leaving_time_select_box::after {
+    position: absolute;
+    background-color: #535353;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    content: '';
+    pointer-events: none;
+}
+
+.leaving_time_select_box select {
+    appearance: none;
+    min-width: 50px;
+    border: none;
+    border-bottom: 2px solid #cccccc;
+    background-color: #fff;
+    color: #333333;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.leaving_time_select_box select:focus {
+    outline: none;
+}
+
+.leaving_time_form{
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding-left: 25px;
+
+    &::-webkit-calendar-picker-indicator {
+        color: rgb(30, 48, 80);
+        border-radius: 10px;
+    }
+
+    &::-webkit-calendar-picker-indicator:hover {
+        background-color: #eeeeee;
+    }
+  }
+
+.left_column{
+    text-align: center;
+    width: 88px;
+}
+
+.date_header{
+    width: 120px;
+}
+
+.event{
+    &_box{
+        width: 120px;
+        height: 63px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    &_btn_box{
+        text-align: center;
+        height: 26px;
+    }
+
+
+    &_text{
+        height: 62px;
+        width: 118px;
+        vertical-align: middle;
+
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        resize: none;
+    }
+
+    &_btn_box{
+        display: block;
+    }
+
+    &_create_btn{
+        display: none;
+    }
+    &_box:hover .event_create_btn{
+        display: inline-block;
+    }
+    &_display{
+        width: 100%;
+        height: 100%;
+        word-wrap: break-word;
+    }
+}
+
+.lesson_row{
+    height: 100px;
+}
+
+
+.got_lesson{
+    padding-top: 25px;
+}
+
+.copy_lesson_btn_explain{
+    display: none;
+}
+
+.copy_lesson_btn:hover + .copy_lesson_btn_explain{
+    display: block;
+}
+
+.wday{
+    &_setting{
+        display: inline-block;
+    }
+    &_btn{
+    display: inline-block;
+    background-color: #eeeeee;
+    padding: 0 10px;
+    border-radius: 10px;
+    &:hover{
+        cursor: pointer;
+    }
+    }
+
+    &_select_box{
+        text-align: center;
+        position: absolute;
+        display: none;
+        z-index: 10;
+        background-color: #eeeeee;
+        border-radius: 10px;
+        margin-top: 5px;
+        padding: 5px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    &_submit_btn{
+        background-color: #fff;
+        border-radius: 10px;
+        margin: 3px 0;
+    }
+
+}
+.navbar{
+    margin-bottom: 10px;
+}
