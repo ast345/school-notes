@@ -52,6 +52,7 @@ class SchoolClassesController < ApplicationController
         else
             @start_of_week = Date.today.beginning_of_week
         end
+        gon.start_of_week = @start_of_week
 
         lesson_wday = LessonWday.where(school_class_id: @school_class.id, start_of_week: @start_of_week).first
         gon.lesson_wday = lesson_wday

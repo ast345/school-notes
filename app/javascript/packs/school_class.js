@@ -33,16 +33,36 @@ document.addEventListener('turbolinks:load', () =>{
     });
 
     $(".wday_submit_btn").on('click', () =>{
-        const form = document.getElementById('weekday-form');
-        const selectedWeekdays = Array.from(form.elements).filter(element => {
-            return element.type === 'checkbox' && element.checked;
-        }).map(element => element.name);
+        const monday = document.getElementById('monday').checked;
+        const tuesday = document.getElementById('tuesday').checked;
+        const wednesday = document.getElementById('wednesday').checked;
+        const thursday = document.getElementById('thursday').checked;
+        const friday = document.getElementById('friday').checked;
+        const saturday = document.getElementById('saturday').checked;
+        const sunday = document.getElementById('sunday').checked;
+
 
         const lessonWday = gon.lesson_wday
+        const startOfWeek = gon.start_of_week
+
         if(lessonWday === null){
-            debugger
+            axios.post(`/school_classes/${schoolClassId}/lesson_wdays`, {
+                wday: {start_of_week: startOfWeek, monday: monday, tuesday: tuesday, wednesday: wednesday, thursday: thursday, friday: friday, saturday: saturday, sunday: sunday}
+            })
+            .then((res) =>{
+                if(res.status === 204){
+                    location.reload()
+                };
+            });
         } else {
-            debugger
+            axios.put(`/school_classes/${schoolClassId}/lesson_wdays/${lessonWday.id}`, {
+                wday: {monday: monday, tuesday: tuesday, wednesday: wednesday, thursday: thursday, friday: friday, saturday: saturday, sunday: sunday}
+            })
+            .then((res) =>{
+                if(res.status === 204){
+                    location.reload()
+                };
+            });
         };
     });
     // lesson_btn_boxの表示・非表示

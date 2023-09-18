@@ -13,25 +13,25 @@
             .wday_select_box
                 %form#weekday-form
                     %label
-                        %input{:checked => @display_wday.include?(1), :name => "monday", :type => "checkbox"} &nbsp;月曜日
+                        %input{:checked => @display_wday.include?(1), :name => "monday", :id => "monday", :type => "checkbox"} &nbsp;月曜日
                     %br/
                     %label
-                        %input{:checked => @display_wday.include?(2), :name => "tuesday", :type => "checkbox"} &nbsp;火曜日
+                        %input{:checked => @display_wday.include?(2), :name => "tuesday", :id => "tuesday", :type => "checkbox"} &nbsp;火曜日
                     %br/
                     %label
-                        %input{:checked => @display_wday.include?(3), :name => "wednesday", :type => "checkbox"} &nbsp;水曜日
+                        %input{:checked => @display_wday.include?(3), :name => "wednesday", :id => "wednesday", :type => "checkbox"} &nbsp;水曜日
                     %br/
                     %label
-                        %input{:checked => @display_wday.include?(4), :name => "thursday", :type => "checkbox"} &nbsp;木曜日
+                        %input{:checked => @display_wday.include?(4), :name => "thursday", :id => "thursday", :type => "checkbox"} &nbsp;木曜日
                     %br/
                     %label
-                        %input{:checked => @display_wday.include?(5), :name => "friday", :type => "checkbox"} &nbsp;金曜日
+                        %input{:checked => @display_wday.include?(5), :name => "friday", :id => "friday", :type => "checkbox"} &nbsp;金曜日
                     %br/
                     %label
-                        %input{:checked => @display_wday.include?(6), :name => "saturday", :type => "checkbox"} &nbsp;土曜日
+                        %input{:checked => @display_wday.include?(6), :name => "saturday", :id => "saturday", :type => "checkbox"} &nbsp;土曜日
                     %br/
                     %label
-                        %input{:checked => @display_wday.include?(0), :name => "sunday", :type => "checkbox"} &nbsp;日曜日
+                        %input{:checked => @display_wday.include?(0), :name => "sunday", :id => "sunday", :type => "checkbox"} &nbsp;日曜日
                     %br/
                     %button.wday_submit_btn{:type => "button"} 保存
     %table.class_weekly
