@@ -8,16 +8,42 @@
     .navbar
         %a{href: school_class_path(start_of_week: @start_of_week - 1.week)} 前の週
         %a{href: school_class_path(start_of_week: @start_of_week + 1.week)} 次の週
+        .wday_setting
+            %i.bi.bi-menu-button.wday_btn
+            .wday_select_box
+                %form#weekday-form
+                    %label
+                        %input{:checked => @display_wday.include?(1), :name => "monday", :type => "checkbox"} &nbsp;月曜日
+                    %br/
+                    %label
+                        %input{:checked => @display_wday.include?(2), :name => "tuesday", :type => "checkbox"} &nbsp;火曜日
+                    %br/
+                    %label
+                        %input{:checked => @display_wday.include?(3), :name => "wednesday", :type => "checkbox"} &nbsp;水曜日
+                    %br/
+                    %label
+                        %input{:checked => @display_wday.include?(4), :name => "thursday", :type => "checkbox"} &nbsp;木曜日
+                    %br/
+                    %label
+                        %input{:checked => @display_wday.include?(5), :name => "friday", :type => "checkbox"} &nbsp;金曜日
+                    %br/
+                    %label
+                        %input{:checked => @display_wday.include?(6), :name => "saturday", :type => "checkbox"} &nbsp;土曜日
+                    %br/
+                    %label
+                        %input{:checked => @display_wday.include?(0), :name => "sunday", :type => "checkbox"} &nbsp;日曜日
+                    %br/
+                    %button.wday_submit_btn{:type => "button"} 保存
     %table.class_weekly
         %tr
             %th
             - (@start_of_week..@end_of_week).each do |date|
-                - next unless (1..5).include?(date.wday)
+                - next unless @display_wday.include?(date.wday)
                 %th.date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
         %tr.event_row
             %td.left_column 行事予定
             - (@start_of_week..@end_of_week).each do |date|
-                - next unless (1..5).include?(date.wday)
+                - next unless @display_wday.include?(date.wday)
                 %td.event_cell
                     .event_box{id: "#{date}"}
                         - event = @this_week_events.find_by(date: date)
@@ -37,7 +63,7 @@
             %tr.lesson_row
                 %td.left_column #{period}
                 - (@start_of_week..@end_of_week).each do |date|
-                    - next unless (1..5).include?(date.wday)
+                    - next unless @display_wday.include?(date.wday)
                     %td
                         .lesson_box{id: "#{period}#{date}"}
                             - lesson = @this_week_lessons.find_by(date: date, period: period)
@@ -82,7 +108,7 @@
         %tr.item_row
             %td.left_column 持ち物
             - (@start_of_week..@end_of_week).each do |date|
-                - next unless (1..5).include?(date.wday)
+                - next unless @display_wday.include?(date.wday)
                 %td
                     .item_box{id: "#{date}"}
                         - item = @this_week_date_items.find_by(date: date)
@@ -101,7 +127,7 @@
         %tr
             %td.left_column 下校時刻
             - (@start_of_week..@end_of_week).each do |date|
-                - next unless (1..5).include?(date.wday)
+                - next unless @display_wday.include?(date.wday)
                 %td
                     .leaving_time_box{id: "#{date}"}
                         - leaving_time = @this_week_class_leaving_times.find_by(date: date)

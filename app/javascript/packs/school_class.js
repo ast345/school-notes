@@ -14,19 +14,37 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 
 
+
 document.addEventListener('turbolinks:load', () =>{
     const schoolClassId = gon.school_class_id;
-
     dragDropLesson(schoolClassId);
     createLesson(schoolClassId);
     editLesson(schoolClassId);
     copyPasteLesson(schoolClassId);
-
+    
     event(schoolClassId);
     dateItem(schoolClassId);
     classLeavingTime(schoolClassId);
+    
 
 
+    $(".wday_btn").on('click', () =>{
+        $(".wday_select_box").slideToggle("");
+    });
+
+    $(".wday_submit_btn").on('click', () =>{
+        const form = document.getElementById('weekday-form');
+        const selectedWeekdays = Array.from(form.elements).filter(element => {
+            return element.type === 'checkbox' && element.checked;
+        }).map(element => element.name);
+
+        const lessonWday = gon.lesson_wday
+        if(lessonWday === null){
+            debugger
+        } else {
+            debugger
+        };
+    });
     // lesson_btn_boxの表示・非表示
     $('.lesson_box').each(function(index, element){
         const Id = element.id
