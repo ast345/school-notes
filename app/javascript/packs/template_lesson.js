@@ -21,7 +21,7 @@ document.addEventListener('turbolinks:load', () =>{
         })
     });
 
-
+    //create処理
     $('.new_lesson_btn').each(function(index, element){
         const dataset = $(element).data()
         const Id = element.id
@@ -98,4 +98,89 @@ document.addEventListener('turbolinks:load', () =>{
         });
 
     });
+
+    //edit処理
+    $('.got_lesson').each(function(index, element){
+        const dataset = $(element).data()
+        const Id = dataset.id
+
+        var subjectName = dataset.subjectName
+        var gradeSubjectId = dataset.gradeSubjectId
+        var templateLessonId = dataset.templateLessonId
+
+        // const selectSubject = document.getElementById(`select_subject${Id}`)
+
+        //datasetが追加されたことを検知して再定義
+        const gotLesson = document.getElementById(`got_lesson${Id}`)
+        var observer = new MutationObserver(function(mutationsList) {
+            for (var mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-template-lesson-id') {
+                    subjectName = gotLesson.getAttribute('data-subject-name')
+                    gradeSubjectId= Number(gotLesson.getAttribute('data-grade-subject-id'))
+                    templateLessonId = Number(gotLesson.getAttribute('data-template-lesson-id'))
+                    debugger
+                }
+            }
+        });
+        observer.observe(gotLesson, { attributes: true})
+        
+        $(`#lesson_subject${Id}`).on('click', () =>{
+            $(`#got_lesson${Id}`).addClass('hidden')
+            $(`#${Id}.lesson_btn_js_box`).addClass('hidden')
+            $(`#${Id}.edit_lesson_box`).removeClass('hidden')
+
+            $(`#select_subject${Id} option`).each(function() {
+                const optionValue = $(this).val();
+                
+                // value と SubjectName を比較して一致する場合、選択状態にする
+                if (optionValue === subjectName) {
+                    $(this).prop('selected', true);
+                }
+            });
+
+            document.addEventListener('click', editEndHandler);
+        });
+
+        function editEndHandler(event) {
+            const clickedElement = event.target;
+            const creatingElement = $('.lesson_box'+`#${Id}`);
+
+            const selectSubject = document.getElementById(`select_subject${Id}`)
+            const selectedSubjectIndex = selectSubject.selectedIndex;
+            const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
+            const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
+
+            const editDataSet = (resData) => {
+                // deleteに対応させるためのデータセットをattribute
+                var deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
+                deleteLessonBtn.setAttribute('data-template-lesson-id', `${resData.id}`)
+
+                // copyに対応させるためのデータセットをAttribute
+                var copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
+                copyLessonBtn.setAttribute('data-grade-subject-id', `${resData.grade_subject_id}`)
+            };
+
+            if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
+                    axios.put(`/school_classes/${schoolClassId}/template_lessons/${templateLessonId}`, {
+                        template_lesson: {grade_subject_id: selectedGradeSubjectId}
+                    })
+                    .then((res) =>{
+                        var resData= res.data
+                        $(`#${Id}.edit_lesson_box`).addClass('hidden')
+                        $(`#got_lesson${Id}`).removeClass('hidden')
+                        $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                        // 中身を差し替え
+                        displayLessonSubject.innerHTML = `${selectSubject.value}`
+
+                        // 再変更のために定義変更
+                        subjectName = `${selectSubject.value}`
+                        gradeSubjectId = resData.grade_subject_id
+
+                        editDataSet(resData);
+                    });
+                    document.removeEventListener('click', editEndHandler)
+            };
+        }
+    });
 });
+

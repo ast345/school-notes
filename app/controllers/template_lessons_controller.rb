@@ -31,6 +31,12 @@ class TemplateLessonsController < ApplicationController
         render json: @template_lesson.as_json(methods: [:subject_name])
     end
 
+    def update
+        @template_lesson = TemplateLesson.find(params[:id])
+        @template_lesson.update(template_lesson_params)
+        render json: @template_lesson.as_json(methods: [:subject_name])
+    end
+
     private
     def template_lesson_params
         params.require(:template_lesson).permit(:day_of_week, :period, :grade_subject_id)

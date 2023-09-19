@@ -73,10 +73,11 @@
                                 - else
                                     - unit_name = "\b"
                                     - got_unit_id
-                                .lesson_btn_box.hidden{id: "#{period}#{date}"}
-                                    %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}",grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
-                                    %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
-                                    %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}", lesson_id: lesson.id}}
+                                .lesson_btn_js_box{id: "#{period}#{date}"}
+                                    .lesson_btn_box.hidden{id: "#{period}#{date}"}
+                                        %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}",grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
+                                        %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
+                                        %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}", lesson_id: lesson.id}}
                                 .got_lesson{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", date: date, day_of_week: date.wday, period: period, lesson_id: lesson.id, subject_name: lesson.grade_subject.subject.subject_name, grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
                                     %p.lesson_subject{id: "lesson_subject#{period}#{date}"} #{lesson.grade_subject.subject.subject_name}
                                     %p.lesson_unit{id: "lesson_unit#{period}#{date}"} #{unit_name}
@@ -89,10 +90,11 @@
                                 .new_lesson_menu.hidden{id: "#{period}#{date}"}
                                     %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}} &nbsp;新規
                             - else
-                                .lesson_btn_box.hidden{id: "#{period}#{date}"}
-                                    %i.fa-solid.fa-copy.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}"}}
-                                    %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
-                                    %i.fa-regular.fa-calendar-xmark.delete_lesson_btn.hidden{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}"}}
+                                .lesson_btn_js_box{id: "#{period}#{date}"}
+                                    .lesson_btn_box.hidden{id: "#{period}#{date}"}
+                                        %i.fa-solid.fa-copy.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}"}}
+                                        %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
+                                        %i.fa-regular.fa-calendar-xmark.delete_lesson_btn.hidden{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}"}}
                                 .got_lesson.hidden{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", date: date, day_of_week: date.wday, period: period}}
                                     %p.lesson_subject{id: "lesson_subject#{period}#{date}"}
                                     %p.lesson_unit{id: "lesson_unit#{period}#{date}"}
