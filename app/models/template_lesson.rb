@@ -18,4 +18,8 @@ class TemplateLesson < ApplicationRecord
     
     belongs_to :grade_subject
     has_many :template_lesson_classes, dependent: :destroy
+
+    def subject_name
+        self.grade_subject.subject.subject_name
+    end
 end

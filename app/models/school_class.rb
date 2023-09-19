@@ -29,4 +29,9 @@ class SchoolClass < ApplicationRecord
 
     validates :grade_id, presence: true
     validates :class_name, presence: true
+
+    def grade_class
+        grade_name = self.grade.grade_name.gsub('生', '')
+        "#{grade_name}#{self.class_name}"
+    end
 end

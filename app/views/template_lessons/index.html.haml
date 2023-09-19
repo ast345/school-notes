@@ -1,0 +1,41 @@
+.page_header
+    %h1.page_header_title テンプレート作成
+.container
+    .class_page_top
+        .class_name
+            %p.class_name_display= @school_class.grade_class
+    %table.class_weekly
+        %tr
+            %th
+            - (1..5).each do |wday|
+                %th.date_header= @japanese_weekdays[wday]
+        - (1..6).each do |period|
+            %tr.lesson_row
+                %td.left_column #{period}
+                - (1..5).each do |wday|
+                    %td
+                        .lesson_box{id: "#{period}#{wday}"}
+                            - template_lesson = @template_lessons.find_by(day_of_week: wday, period: period)
+                            - if template_lesson
+                                .lesson_btn_box.hidden{id: "#{period}#{wday}"}
+                                    %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}",grade_subject_id: template_lesson.grade_subject.id}}
+                                    %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
+                                    %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}", lesson_id: template_lesson.id}}
+                                .got_lesson{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period, template_lesson_id: template_lesson.id, subject_name: template_lesson.subject_name, grade_subject_id: template_lesson.grade_subject.id}}
+                                    %p.lesson_subject{id: "lesson_subject#{period}#{wday}"} #{template_lesson.subject_name}
+                                .edit_lesson_box.hidden{id: "#{period}#{wday}"}
+                                    = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{wday}", include_blank: true, class: "select_subject"
+                                .new_lesson_menu.hidden{id: "#{period}#{wday}"}
+                                    %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{wday}", data: { period: period, day_of_week: wday}} &nbsp;新規
+                            - else
+                                .lesson_btn_box.hidden{id: "#{period}#{wday}"}
+                                    %i.fa-solid.fa-copy.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}"}}
+                                    %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
+                                    %i.fa-regular.fa-calendar-xmark.delete_lesson_btn.hidden{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}"}}
+                                .got_lesson.hidden{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period}}
+                                    %p.lesson_subject{id: "lesson_subject#{period}#{wday}"}
+                                .edit_lesson_box.hidden{id: "#{period}#{wday}"}
+                                    = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{wday}", include_blank: true, class: "select_subject"
+                                .new_lesson_menu{id: "#{period}#{wday}"}
+                                    %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{wday}", data: {period: period, day_of_week: wday}} &nbsp;新規
+= javascript_pack_tag 'template_lesson'
