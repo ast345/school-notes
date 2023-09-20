@@ -118,7 +118,6 @@ document.addEventListener('turbolinks:load', () =>{
                     subjectName = gotLesson.getAttribute('data-subject-name')
                     gradeSubjectId= Number(gotLesson.getAttribute('data-grade-subject-id'))
                     templateLessonId = Number(gotLesson.getAttribute('data-template-lesson-id'))
-                    debugger
                 }
             }
         });
@@ -181,6 +180,44 @@ document.addEventListener('turbolinks:load', () =>{
                     document.removeEventListener('click', editEndHandler)
             };
         }
+    });
+
+    //lessonのdestroy機能
+    $('.delete_lesson_btn').each(function(index, element){
+        const dataSet = $(element).data()
+        const Id =dataSet.id
+        var templateLessonId = dataSet.templateLessonId
+
+        //datasetが追加されたことを検知して再定義
+        const deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
+
+        // MutationObserverのコールバック関数
+        // 要素の属性変更を検知するObserverを作成
+        var observer = new MutationObserver(function(mutationsList) {
+            for (var mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-lesson-id') {
+                    templateLessonId = Number(deleteLessonBtn.getAttribute('data-template-lesson-id'))
+                }
+            }
+        });
+
+        observer.observe(deleteLessonBtn, { attributes: true})
+        
+        $(`#delete_lesson_btn${Id}`).on('click', () =>{
+            var result =window.confirm('本当に削除しますか');
+            if(result === true){
+                axios.delete(`/school_classes/${schoolClassId}/template_lessons/${templateLessonId}`)
+                .then((res) =>{
+                    if(res.status === 204){
+                        $(`#got_lesson${Id}`).addClass('hidden')
+                        $(`#${Id}.new_lesson_menu`).removeClass('hidden')
+                        $(`#copy_lesson_btn${Id}`).addClass('hidden')
+                        $(`#delete_lesson_btn${Id}`).addClass('hidden')
+                    };
+                });
+            }
+        })
+
     });
 });
 
