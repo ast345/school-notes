@@ -4,7 +4,7 @@ import { csrfToken } from 'rails-ujs'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
-export function tempLessonCud(schoolClassId) {
+export function tempLessonCUD(schoolClassId) {
         //create処理
         $('.new_lesson_btn').each(function(index, element){
             const dataset = $(element).data()
