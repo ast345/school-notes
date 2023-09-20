@@ -2,6 +2,7 @@ import $ from 'jquery'
 import axios from 'axios'
 import { csrfToken } from 'rails-ujs'
 import {tempLessonCUD} from './temp_lesson_cud'
+import {copyPasteTemplateLesson} from './tempLessonCP'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
@@ -23,7 +24,6 @@ document.addEventListener('turbolinks:load', () =>{
     });
     
     tempLessonCUD(schoolClassId)
-
-
+    copyPasteTemplateLesson(schoolClassId)
 });
 
