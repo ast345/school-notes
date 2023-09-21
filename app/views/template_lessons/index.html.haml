@@ -4,6 +4,8 @@
     .class_page_top
         .class_name
             %p.class_name_display= @school_class.grade_class
+    .nav
+        = link_to " 戻る", school_class_path(@school_class.id, start_of_week: @start_of_week), class: "fa-solid fa-caret-left temp_return_link", data: {"turbolinks" => false}
     %table.class_weekly
         %tr
             %th

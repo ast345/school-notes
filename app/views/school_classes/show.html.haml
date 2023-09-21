@@ -8,7 +8,7 @@
         %a{href: school_class_path(start_of_week: @start_of_week - 1.week)} 前の週
         %a{href: school_class_path(start_of_week: @start_of_week + 1.week)} 次の週
         .wday_setting
-            %i.bi.bi-menu-button.wday_btn
+            %i.fa-solid.fa-calendar-week.wday_btn &nbsp;曜日
             .wday_select_box
                 %form#weekday-form
                     %label
@@ -33,6 +33,10 @@
                         %input{checked: @display_wday.include?(0), name: "sunday", id: "sunday", type: "checkbox"} &nbsp;日曜日
                     %br/
                     %button.wday_submit_btn{type: "button"} 保存
+        .template_nav
+            %p.template_nav_title テンプレ
+            %i.fa-solid.fa-plus.add_from_template.add_from_temp &nbsp;利用
+            = link_to " 設定", school_class_template_lessons_path(@school_class.id, start_of_week: @start_of_week), class: "fa-solid fa-sliders temp_setting", data: {"turbolinks" => false}
     %table.class_weekly
         %tr
             %th

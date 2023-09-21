@@ -389,7 +389,7 @@
     &_btn{
     display: inline-block;
     background-color: #eeeeee;
-    padding: 0 10px;
+    padding: 5px 5px;
     border-radius: 10px;
     &:hover{
         cursor: pointer;
@@ -417,4 +417,18 @@
 }
 .navbar{
     margin-bottom: 10px;
+}
+
+.template_nav{
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    &_title{
+        display: inline;
+    }
+}
+.add_from_temp, .temp_setting, .temp_return_link{
+    background-color: #eeeeee;
+    padding: 2px 2px;
+    color: rgb(30, 48, 80);
+    text-decoration: none;
 }
