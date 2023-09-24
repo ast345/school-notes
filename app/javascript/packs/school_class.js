@@ -25,61 +25,6 @@ document.addEventListener('turbolinks:load', () =>{
     event(schoolClassId);
     dateItem(schoolClassId);
     classLeavingTime(schoolClassId);
-    
-    $('.add_from_temp').on('click', (event) =>{
-        const startOfWeek = $(event.currentTarget).data('startOfWeek');
-        axios.get(`	/school_classes/${schoolClassId}/template_lessons/get_temp`, {
-            params: {start_of_week: startOfWeek}
-        })
-        .then((res) =>{
-            var template_lessons =res.data
-            template_lessons.forEach(function(template_lesson){
-                const period = template_lesson.period
-                const date = template_lesson.date
-                const Id = `${period}${date}`
-                const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
-                const lessonBtnDisplay = () => {
-                    $(`#copy_lesson_btn${Id}`).removeClass('hidden')
-                    $(`#delete_lesson_btn${Id}`).removeClass('hidden')
-                    $(`#${Id}`+'.new_lesson_menu').addClass('hidden')
-                };
-                const createDataSet = (res) => {
-                    // editに対応させるためデータセットをattribute
-                    var gotLesson = document.getElementById(`got_lesson${Id}`)
-                    gotLesson.setAttribute('data-subject-name', `${res.data.grade_subject_name}`)
-                    gotLesson.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
-                    gotLesson.setAttribute('data-lesson-id', `${res.data.id}`)
-
-                    // deleteに対応させるためのデータセットをattribute
-                    var deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
-                    deleteLessonBtn.setAttribute('data-lesson-id', `${res.data.id}`)
-
-                    // copyに対応させるためのデータセットをAttribute
-                    var copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
-                    copyLessonBtn.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
-
-                    // 入れ替えに対応させるためにデータ属性を更新
-                    $(`#got_lesson${Id}`).data('subjectName', `${res.data.grade_subject_name}`)
-                    $(`#got_lesson${Id}`).data('gradeSubjectId', `${res.data.grade_subject_id}`)
-                    $(`#got_lesson${Id}`).data('lessonId', `${res.data.id}`);
-                };
-
-                axios.post(`/school_classes/${schoolClassId}/lessons`, {
-                    lesson: {date: date, day_of_week: template_lesson.day_of_week, period: period, grade_subject_id: template_lesson.grade_subject_id}
-                })
-                .then((res) =>{
-                    if(res.status === 200){
-                        const subjectName = res.data.grade_subject_name
-                        $(`#got_lesson${Id}`).removeClass('hidden')
-                        displayLessonSubject.innerHTML = `${subjectName}`
-
-                        lessonBtnDisplay();
-                        createDataSet(res);
-                    }
-                })
-            });
-        })
-    });
 
     $(".wday_btn").on('click', () =>{
         $(".wday_select_box").slideToggle("");
