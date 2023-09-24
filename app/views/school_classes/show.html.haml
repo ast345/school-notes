@@ -35,7 +35,7 @@
                     %button.wday_submit_btn{type: "button"} 保存
         .template_nav
             %p.template_nav_title テンプレ
-            %i.fa-solid.fa-plus.add_from_template.add_from_temp &nbsp;利用
+            %i.fa-solid.fa-plus.add_from_template.add_from_temp{data: {start_of_week: @start_of_week}} &nbsp;利用
             = link_to " 設定", school_class_template_lessons_path(@school_class.id, start_of_week: @start_of_week), class: "fa-solid fa-sliders temp_setting", data: {"turbolinks" => false}
     %table.class_weekly
         %tr

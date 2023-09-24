@@ -71,6 +71,7 @@ class SchoolClassesController < ApplicationController
 
         @end_of_week = @start_of_week.end_of_week
         @this_week_lessons = @school_class.lessons.where(date: @start_of_week..@end_of_week)
+        gon.this_week_lessons = @this_week_lessons
         @this_week_events = @school_class.events.where(date: @start_of_week..@end_of_week)
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)

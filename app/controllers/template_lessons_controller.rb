@@ -43,8 +43,46 @@ class TemplateLessonsController < ApplicationController
         template_lesson.destroy!
     end
 
+    def get_temp
+        school_class = SchoolClass.find(params[:school_class_id])
+        template_lessons = school_class.template_lessons
+        start_of_week = params[:start_of_week].to_date
+        end_of_week = start_of_week.end_of_week
+        this_week_lessons = school_class.lessons.where(date: start_of_week..end_of_week)
+        filtered_template_lessons = remove_duplicate_template_lessons(template_lessons, this_week_lessons)
+        dates = (start_of_week..end_of_week).map { |date| [date, date.wday]}
+        add_dates_to_template_lessons(filtered_template_lessons, dates)
+        render json: @lessons_from_template
+    end
+
     private
     def template_lesson_params
         params.require(:template_lesson).permit(:day_of_week, :period, :grade_subject_id)
     end
+
+    def remove_duplicate_template_lessons(template_lessons, this_week_lessons)
+        this_week_lesson_periods = this_week_lessons.map { |lesson| [lesson.day_of_week, lesson.period] }
+        template_lessons.reject do |template_lesson|
+            this_week_lesson_periods.include?([template_lesson.day_of_week, template_lesson.period])
+        end
+    end
+
+    def add_dates_to_template_lessons(filtered_template_lessons, dates)
+        
+
+        day_mapping = {
+            "sunday" => 0,
+            "monday" => 1,
+            "tuesday" => 2,
+            "wednesday" => 3,
+            "thursday" => 4,
+            "friday" => 5,
+            "saturday" => 6
+        }
+        @lessons_from_template = []
+        filtered_template_lessons.each do |template_lesson|
+          matching_date = dates.find { |date| date[1] == day_mapping[template_lesson.day_of_week] }
+          @lessons_from_template << {date: matching_date[0], day_of_week: template_lesson.day_of_week, period: template_lesson.period, grade_subject_id: template_lesson.grade_subject_id}
+        end
+      end
 end

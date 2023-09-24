@@ -77,7 +77,6 @@ export function createLesson(schoolClassId) {
                                     deleteLessonBtn.setAttribute('data-lesson-id', `${res.data.id}`)
 
                                     // copyに対応させるためのデータセットをAttribute
-                                    // obseverまだ
                                     var copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
                                     copyLessonBtn.setAttribute('data-grade-subject-id', `${res.data.grade_subject_id}`)
                                     copyLessonBtn.setAttribute('data-got-unit-id', `${res.data.grade_subject_unit_id}`)
@@ -90,7 +89,6 @@ export function createLesson(schoolClassId) {
                     };
 
                     const lessonBtnDisplay = () => {
-                        $(`#${Id}.lesson_btn_box`).removeClass('hidden')
                         $(`#copy_lesson_btn${Id}`).removeClass('hidden')
                         $(`#delete_lesson_btn${Id}`).removeClass('hidden')
                     };
