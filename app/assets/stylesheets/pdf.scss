@@ -1,0 +1,25 @@
+.pdf{
+    &_header{
+        text-align: center;
+    }
+
+    &_table_box{
+        text-align: center;
+    }
+    &_leav_time_row{
+        height: 40px;
+    }
+
+    &_leaving_time_display{
+        display: inline-block;
+    }
+
+    &_event_box{
+        text-align: left;
+        height: 80px;
+    }
+
+    &_item_box{
+        text-align: left;
+    }
+}

@@ -7,7 +7,7 @@ class LessonsController < ApplicationController
             lesson_class = school_class.lesson_classes.build(school_class_id: school_class.id,lesson_id: @lesson.id)
             lesson_class.save
         end
-        render json: @lesson.as_json(methods: [:grade_subject_name])
+        render json: @lesson.as_json(methods: [:grade_subject_name, :unit_name])
     end
 
     def update

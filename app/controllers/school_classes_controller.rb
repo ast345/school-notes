@@ -87,6 +87,17 @@ class SchoolClassesController < ApplicationController
         end
 
         gon.grade_subject_ids = @grade_subject_ids
+
+        respond_to do |format|
+            format.html  { redirect_to action: :show, format: :pdf, debug: true }
+            format.pdf do
+              render pdf: '時間割', #pdfファイルの名前。これがないとエラーが出ます
+                     layout: 'pdf.html', #レイアウトファイルの指定。views/layoutsが読まれます。
+                     template: 'school_classes/show.pdf', #テンプレートファイルの指定。viewsフォルダが読み込まれます。
+                     encording: 'UTF-8',
+                     show_as_html: params.key?('debug')
+            end
+          end
     end
 
     private
