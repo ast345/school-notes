@@ -44,6 +44,9 @@ gem 'active_model_serializers'
 
 gem 'gon'
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 # yarnで処理するので以下は多分不要
 # gem 'jquery-rails'
 # gem 'jquery-ui-rails'

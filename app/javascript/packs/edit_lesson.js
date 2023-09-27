@@ -33,7 +33,7 @@ export function editLesson(schoolClassId) {
         
         $(`#lesson_subject${Id}, #lesson_unit${Id}`).on('click', () =>{
             $(`#got_lesson${Id}`).addClass('hidden')
-            $(`#${Id}.lesson_btn_box`).addClass('hidden')
+            $(`#${Id}.lesson_btn_js_box`).addClass('hidden')
             $(`#${Id}.edit_lesson_box`).removeClass('hidden')
 
             $(`#select_subject${Id} option`).each(function() {

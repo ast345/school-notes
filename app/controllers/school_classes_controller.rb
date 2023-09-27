@@ -71,6 +71,7 @@ class SchoolClassesController < ApplicationController
 
         @end_of_week = @start_of_week.end_of_week
         @this_week_lessons = @school_class.lessons.where(date: @start_of_week..@end_of_week)
+        gon.this_week_lessons = @this_week_lessons
         @this_week_events = @school_class.events.where(date: @start_of_week..@end_of_week)
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
@@ -86,6 +87,17 @@ class SchoolClassesController < ApplicationController
         end
 
         gon.grade_subject_ids = @grade_subject_ids
+
+        respond_to do |format|
+            format.html
+            format.pdf do
+              render pdf: '時間割',
+                     layout: 'pdf.html',
+                     template: 'school_classes/show.pdf',
+                     encording: 'UTF-8',
+                     show_as_html: params.key?('debug')
+            end
+          end
     end
 
     private

@@ -25,8 +25,14 @@ document.addEventListener('turbolinks:load', () =>{
     event(schoolClassId);
     dateItem(schoolClassId);
     classLeavingTime(schoolClassId);
-    
 
+    $(".print_btn").on('click', (event) =>{
+        const startOfWeek = $(event.currentTarget).data('startOfWeek');
+        const pdfPage = window.open(`/school_classes/${schoolClassId}.pdf?start_of_week=${startOfWeek}`)
+        pdfPage.onload = function () {
+            pdfPage.print();
+        };
+    })
 
     $(".wday_btn").on('click', () =>{
         $(".wday_select_box").slideToggle("");
@@ -86,6 +92,9 @@ document.addEventListener('turbolinks:load', () =>{
         const Id =dataSet.id
         var lessonId = dataSet.lessonId
 
+        const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
+        const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
+
         //datasetが追加されたことを検知して再定義
         const deleteLessonBtn = document.getElementById(`delete_lesson_btn${Id}`)
 
@@ -111,6 +120,9 @@ document.addEventListener('turbolinks:load', () =>{
                         $(`#${Id}.new_lesson_menu`).removeClass('hidden')
                         $(`#copy_lesson_btn${Id}`).addClass('hidden')
                         $(`#delete_lesson_btn${Id}`).addClass('hidden')
+
+                        displayLessonSubject.innerHTML = ""
+                        displayLessonUnit.innerHTML = ""
                     };
                 });
             }

@@ -315,12 +315,9 @@
 
 .left_column{
     text-align: center;
-    width: 88px;
+    min-width: 88px;
 }
 
-.date_header{
-    width: 120px;
-}
 
 .event{
     &_box{
@@ -339,7 +336,7 @@
 
 
     &_text{
-        height: 62px;
+        height: 98px;
         width: 118px;
         vertical-align: middle;
 
@@ -389,7 +386,7 @@
     &_btn{
     display: inline-block;
     background-color: #eeeeee;
-    padding: 0 10px;
+    padding: 5px 5px;
     border-radius: 10px;
     &:hover{
         cursor: pointer;
@@ -415,6 +412,39 @@
     }
 
 }
+.output_nav{
+    display: inline-block;
+}
+.print_btn{
+    display: inline-block;
+    background-color: #eeeeee;
+    padding: 5px 5px;
+    border-radius: 10px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+
 .navbar{
     margin-bottom: 10px;
+}
+
+.template_nav{
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    &_title{
+        display: inline;
+    }
+}
+.add_from_temp, .temp_setting, .temp_return_link{
+    background-color: #eeeeee;
+    padding: 2px 2px;
+    color: rgb(30, 48, 80);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.date_header{
+    width: 120px;
 }

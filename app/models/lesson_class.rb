@@ -24,7 +24,7 @@ class LessonClass < ApplicationRecord
         lesson_period = lesson.period
     
         if Lesson.joins(:lesson_classes)
-                 .where(lesson_classes: { school_class_id: school_class_id })
+                 .where(lesson_classes: { school_class_id: school_class.id })
                  .where(date: lesson_date, period: lesson_period)
                  .exists?
           errors.add(:base, "This school class already has a lesson for the same date and period.")

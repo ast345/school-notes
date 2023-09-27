@@ -1,4 +1,5 @@
 class LessonsController < ApplicationController
+    before_action :authenticate_user!
     def create
         school_class = SchoolClass.find(params[:school_class_id])
         @lesson = school_class.lessons.build(lesson_params)
