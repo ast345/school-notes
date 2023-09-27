@@ -26,6 +26,14 @@ document.addEventListener('turbolinks:load', () =>{
     dateItem(schoolClassId);
     classLeavingTime(schoolClassId);
 
+    $(".print_btn").on('click', (event) =>{
+        const startOfWeek = $(event.currentTarget).data('startOfWeek');
+        const pdfPage = window.open(`/school_classes/${schoolClassId}.pdf?start_of_week=${startOfWeek}`)
+        pdfPage.onload = function () {
+            pdfPage.print();
+        };
+    })
+
     $(".wday_btn").on('click', () =>{
         $(".wday_select_box").slideToggle("");
     });

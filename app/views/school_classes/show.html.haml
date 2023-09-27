@@ -38,7 +38,7 @@
             %i.fa-solid.fa-plus.add_from_template.add_from_temp{data: {start_of_week: @start_of_week}} &nbsp;利用
             = link_to " 設定", school_class_template_lessons_path(@school_class.id, start_of_week: @start_of_week), class: "fa-solid fa-sliders temp_setting", data: {"turbolinks" => false}
         .output_nav
-            %i.fa-solid.fa-print.print_btn &nbsp;印刷
+            %i.fa-solid.fa-print.print_btn{data: {start_of_week: @start_of_week}} &nbsp;印刷
     .table_box
         %table.class_weekly
             %tr
