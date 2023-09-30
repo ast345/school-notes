@@ -13,11 +13,11 @@
                 %td.left_column 行事予定
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
-                    %td.event_cell
+                    %td.pdf_event_cell
                         .pdf_event_box
                             - event = @this_week_events.find_by(date: date)
                             - if event
-                                %p.event_display  #{event.event_name.html_safe}
+                                %p.event_display.pdf_event_display  #{event.event_name.html_safe}
             - (1..6).each do |period|
                 %tr.lesson_row
                     %td.left_column #{period}
@@ -54,3 +54,4 @@
                             - leaving_time = @this_week_class_leaving_times.find_by(date: date)
                             - if leaving_time
                                 %p.pdf_leaving_time_display  #{leaving_time.leaving_time.strftime("%H:%M")}
+
