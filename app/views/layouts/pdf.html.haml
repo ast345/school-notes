@@ -4,11 +4,10 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %meta{:charset => "utf-8"}/
     = wicked_pdf_stylesheet_link_tag "application"
-    = wicked_pdf_javascript_include_tag "number_pages"
 
     %link{:href => "https://fonts.googleapis.com", :rel => "preconnect"}/
     %link{:crossorigin => "", :href => "https://fonts.gstatic.com", :rel => "preconnect"}/
     %link{:href => "https://fonts.googleapis.com/css2?family=BIZ+UDGothic&family=BIZ+UDPGothic&display=swap", :rel => "stylesheet"}/
-  %body{:onload => "number_pages"}
+  %body
     #content
       = yield

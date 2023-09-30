@@ -16,10 +16,19 @@
 
     &_event_box{
         text-align: left;
-        height: 80px;
+        width: 118px;
+        min-height: 80px;
+    }
+
+    &_event_cell{
+        vertical-align: top;
     }
 
     &_item_box{
         text-align: left;
+        width: 120px;
+        min-height: 118px;
+
     }
+
 }
