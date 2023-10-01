@@ -1,5 +1,6 @@
 class SchoolClassesController < ApplicationController
     before_action :authenticate_user!
+    before_action :hide_header
 
     def new
         @school_class = SchoolClass.new
@@ -103,5 +104,9 @@ class SchoolClassesController < ApplicationController
     private
     def school_class_params
         params.require(:school_class).permit(:grade_id, :class_name)
+    end
+
+    def hide_header
+        @show_header = true
     end
 end

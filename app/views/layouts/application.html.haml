@@ -17,9 +17,10 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     
   %body
-    %header.header.no-print
-      .header_logos
-        =image_tag 'School Notes.png', class: 'header_logo'
+    - if @show_header
+      %header.header
+        .header_logos
+          =image_tag 'School Notes.png', class: 'header_logo'
     - if flash.present?
       .flash
         - flash.each do |key, value|
