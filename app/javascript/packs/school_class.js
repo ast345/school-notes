@@ -8,6 +8,7 @@ import { copyPasteLesson } from './copyPasteLesson.js';
 import { event } from './event.js'
 import { dateItem } from './date_item.js'
 import { classLeavingTime } from './class_leaving_time.js'
+import html2canvas from 'html2canvas'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
   
@@ -33,6 +34,18 @@ document.addEventListener('turbolinks:load', () =>{
             pdfPage.print();
         };
     })
+
+    $(".image_btn").on('click', (event) =>{
+        const startOfWeek = $(event.currentTarget).data('startOfWeek');
+        const endOfWeek = $(event.currentTarget).data('endOfWeek');
+        const className = $(event.currentTarget).data('className');
+        html2canvas(document.querySelector('.class_weekly')).then(canvas =>{
+            const link = document.createElement('a')
+            link.href = canvas.toDataURL()
+            link.download = `${className}時間割(${startOfWeek}〜${endOfWeek}).png`
+            link.click()
+        })
+    });
 
     $(".wday_btn").on('click', () =>{
         $(".wday_select_box").slideToggle("");

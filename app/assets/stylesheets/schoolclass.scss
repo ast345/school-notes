@@ -415,11 +415,12 @@
 .output_nav{
     display: inline-block;
 }
-.print_btn{
+.print_btn, .image_btn{
     display: inline-block;
     background-color: #eeeeee;
     padding: 5px 5px;
     border-radius: 10px;
+    font-weight: bold;
     &:hover{
         cursor: pointer;
     }
@@ -447,4 +448,8 @@
 
 .date_header{
     width: 120px;
+}
+
+.class_weekly{
+    padding: 10px;
 }

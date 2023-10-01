@@ -39,6 +39,7 @@
             = link_to " 設定", school_class_template_lessons_path(@school_class.id, start_of_week: @start_of_week), class: "fa-solid fa-sliders temp_setting", data: {"turbolinks" => false}
         .output_nav
             %i.fa-solid.fa-print.print_btn{data: {start_of_week: @start_of_week}} &nbsp;印刷
+            %i.fa-regular.fa-file-image.image_btn{data: {start_of_week: @start_of_week, end_of_week: @end_of_week, class_name: @school_class.grade_class}} &nbsp;画像
     .table_box
         %table.class_weekly
             %tr
