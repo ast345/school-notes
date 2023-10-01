@@ -1,4 +1,5 @@
 class IframeController < ApplicationController
+    after_action :allow_iframe
     def index
         @show_header = false
         @school_class = SchoolClass.find(params[:school_class_id])
@@ -28,5 +29,10 @@ class IframeController < ApplicationController
         @this_week_lessons = @school_class.lessons.where(date: @start_of_week..@end_of_week)
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
+    end
+
+    private
+    def allow_iframe
+        response.headers['X-Frame-Options'] = 'ALLOWALL'
     end
 end

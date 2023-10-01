@@ -1,32 +1,32 @@
-.class_page_top
-    .class_name
+.class_page_top.iframe_class_page_top
+    .iframe_class_name
         %p.class_name_display= @school_class.grade_class
-.navbar
-    %a{href: school_class_iframe_index_path(start_of_week: @start_of_week - 1.week)} 前の週
-    %a{href: school_class_iframe_index_path(start_of_week: @start_of_week + 1.week)} 次の週
-.table_box
-    %table.class_weekly
+    .navbar.iframe_navbar
+        %a{href: school_class_iframe_index_path(start_of_week: @start_of_week - 1.week)} 前の週
+        %a{href: school_class_iframe_index_path(start_of_week: @start_of_week + 1.week)} 次の週
+.table_box.iframe_table_box
+    %table.iframe_class_weekly
         %tr
             %th
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
-                %th.date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
+                %th.iframe_date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
         %tr.event_row
-            %td.left_column 行事予定
+            %td.iframe_left_column 行事予定
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td.event_cell
-                    .event_box
+                    .iframe_event_box
                         - event = @this_week_events.find_by(date: date)
                         - if event
                             %p.event_display  #{event.event_name.html_safe}
         - (1..6).each do |period|
-            %tr.lesson_row
-                %td.left_column #{period}
+            %tr.iframe_lesson_row
+                %td.iframe_left_column #{period}
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td
-                        .lesson_box_iframe
+                        .iframe_lesson_box
                             - lesson = @this_week_lessons.find_by(date: date, period: period)
                             - if lesson
                                 - if lesson.grade_subject_unit
@@ -35,26 +35,26 @@
                                 - else
                                     - unit_name = "\b"
                                     - got_unit_id
-                                .got_lesson
+                                .iframe_got_lesson
                                     %p.lesson_subject #{lesson.grade_subject.subject.subject_name}
-                                    %p.lesson_unit #{unit_name}
-        %tr.item_row
-            %td.left_column 持ち物
+                                    %p.iframe_lesson_unit #{unit_name}
+        %tr.iframe_item_row
+            %td.iframe_left_column 持ち物
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td
-                    .item_box
+                    .iframe_item_box
                         - item = @this_week_date_items.find_by(date: date)
                         - if item
-                            %p.item_display  #{item.item_name.html_safe}
+                            %p.iframe_item_display  #{item.item_name.html_safe}
         %tr
-            %td.left_column 下校時刻
+            %td.iframe_left_column 下校時刻
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td
-                    .leaving_time_box
+                    .iframe_leaving_time_box
                         - leaving_time = @this_week_class_leaving_times.find_by(date: date)
                         - if leaving_time
-                            %p.leaving_time_display  #{leaving_time.leaving_time.strftime("%H:%M")}
+                            %p.iframe_leaving_time_display  #{leaving_time.leaving_time.strftime("%H:%M")}
 
 = javascript_pack_tag 'iframe'

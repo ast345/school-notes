@@ -13,7 +13,7 @@ document.addEventListener('turbolinks:load', () =>{
         adjustFontSize(element);
     })
 
-    $('.item_display').each(function(index, element){
+    $('.iframe_item_display').each(function(index, element){
         adjustFontSize(element);
     })
 });
