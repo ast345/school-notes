@@ -19,7 +19,7 @@
                     .iframe_event_box
                         - event = @this_week_events.find_by(date: date)
                         - if event
-                            %p.event_display  #{event.event_name.html_safe}
+                            %p.iframe_event_display  #{event.event_name.html_safe}
         - (1..6).each do |period|
             %tr.iframe_lesson_row
                 %td.iframe_left_column #{period}

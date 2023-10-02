@@ -7,13 +7,24 @@ document.addEventListener('turbolinks:load', () =>{
         for (let size = 30; textElem.scrollHeight > textElem.getBoundingClientRect().height && size > 1; size--) {
             textElem.style.fontSize = size + "px";
         }
+        debugger
         }
         
-    $('.event_display').each(function(index, element){
+    $('.iframe_event_display').each(function(index, element){
         adjustFontSize(element);
     })
 
     $('.iframe_item_display').each(function(index, element){
         adjustFontSize(element);
     })
+
+    // window.addEventListener('resize', () =>{
+    //     $('.iframe_event_display').each(function(index, element){
+    //         adjustFontSize(element);
+    //     })
+    
+    //     $('.iframe_item_display').each(function(index, element){
+    //         adjustFontSize(element);
+    //     })
+    // });
 });
