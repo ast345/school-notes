@@ -7,7 +7,6 @@ document.addEventListener('turbolinks:load', () =>{
         for (let size = 30; textElem.scrollHeight > textElem.getBoundingClientRect().height && size > 1; size--) {
             textElem.style.fontSize = size + "px";
         }
-        debugger
         }
         
     $('.iframe_event_display').each(function(index, element){
