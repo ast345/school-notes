@@ -47,6 +47,18 @@ document.addEventListener('turbolinks:load', () =>{
         })
     });
 
+    $(".iframe_btn").on('click', () =>{
+        $(".iframe_code_box").slideToggle("");
+    });
+
+    $(".iframe_copy_btn").on('click', () =>{
+        const iframeCode = $(".iframe_code").val();
+        navigator.clipboard.writeText(iframeCode)
+            .catch((error) =>{
+                window.alert("コピーできませんでした")
+            })
+    })
+
     $(".wday_btn").on('click', () =>{
         $(".wday_select_box").slideToggle("");
     });
