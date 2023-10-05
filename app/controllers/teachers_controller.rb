@@ -1,5 +1,6 @@
 class TeachersController < ApplicationController
     before_action :authenticate_user!
+    before_action :hide_header
 
     def new
         @teacher = current_user.build_teacher
@@ -41,5 +42,9 @@ class TeachersController < ApplicationController
     private
     def teacher_params
         params.require(:teacher).permit(:display_name, :user_id)
+    end
+
+    def hide_header
+        @show_header = true
     end
 end

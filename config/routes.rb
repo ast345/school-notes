@@ -17,6 +17,7 @@ Rails.application.routes.draw do
         get 'get_temp'
       end
     end
+    resources :iframe, only: [:index]
   end
 
   resources :assigned_subjects, only: [:new, :create, :destroy]

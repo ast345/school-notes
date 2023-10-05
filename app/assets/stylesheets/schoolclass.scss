@@ -28,6 +28,7 @@
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
     }
+
 }
 
 
@@ -412,14 +413,15 @@
     }
 
 }
-.output_nav{
+.output_nav, .iframe_nav{
     display: inline-block;
 }
-.print_btn{
+.print_btn, .image_btn, .iframe_btn{
     display: inline-block;
     background-color: #eeeeee;
     padding: 5px 5px;
     border-radius: 10px;
+    font-weight: bold;
     &:hover{
         cursor: pointer;
     }
@@ -447,4 +449,38 @@
 
 .date_header{
     width: 120px;
+}
+
+.class_weekly{
+    padding: 10px;
+}
+
+.iframe_code_box{
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+    z-index: 10;
+    display: none;
+}
+
+.iframe_code{
+    width: 200px;
+    height: 100px;
+    resize: none;
+}
+
+.iframe_copy_btn{
+    display: inline-block;
+    padding: 5px;
+    border-radius: 10px;
+    background-color:  rgb(30, 48, 80);
+    color: #fff;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    &:hover{
+        cursor: pointer;
+    }
+    &_box{
+    text-align: center;
+    }
 }
