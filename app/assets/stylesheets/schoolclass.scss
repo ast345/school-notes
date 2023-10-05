@@ -163,7 +163,7 @@
     }
 }
 
-.new_lesson_btn, .item_create_btn, .event_create_btn{
+.new_lesson_btn, .item_create_btn, .event_create_btn, .morning_act_create_btn{
     color: rgb(30, 48, 80);
     padding: 5px 5px;
     border-radius: 10px;
@@ -323,7 +323,7 @@
 .event{
     &_box{
         width: 120px;
-        height: 63px;
+        height: 64px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -362,6 +362,51 @@
         word-wrap: break-word;
     }
 }
+
+.morning_act{
+    &_box{
+        width: 120px;
+        height: 27px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    &_btn_box{
+        text-align: center;
+        height: 27px;
+    }
+
+    &_text{
+        height: 25px;
+        width: 118px;
+        vertical-align: middle;
+
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        resize: none;
+    }
+
+    &_btn_box{
+        display: block;
+    }
+
+    &_create_btn{
+        display: none;
+    }
+    
+    &_box:hover .morning_act_create_btn{
+        display: inline-block;
+    }
+    &_display{
+        width: 100%;
+        height: 100%;
+        word-wrap: break-word;
+    }
+}
+
+
 
 .lesson_row{
     height: 100px;

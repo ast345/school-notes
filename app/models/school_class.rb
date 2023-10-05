@@ -20,9 +20,10 @@ class SchoolClass < ApplicationRecord
     has_many :lessons, through: :lesson_classes
     has_many :template_lesson_classes, dependent: :destroy
     has_many :template_lessons, through: :template_lesson_classes
-    has_many :events
-    has_many :date_items
-    has_many :class_leaving_times
+    has_many :events, dependent: :destroy
+    has_many :date_items, dependent: :destroy
+    has_many :class_leaving_times, dependent: :destroy
+    has_many :morning_activities, dependent: :destroy
     has_many :lesson_wdays, dependent: :destroy
 
     accepts_nested_attributes_for :school_class_teachers
