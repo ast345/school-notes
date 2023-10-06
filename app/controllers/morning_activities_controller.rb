@@ -8,16 +8,16 @@ class MorningActivitiesController < ApplicationController
         render json: @morning_act
     end
 
-    # def update
-    #     @event = Event.find(params[:id])
-    #     @event.update(event_params)
-    #     render json: @event
-    # end
+    def update
+        @morning_act = MorningActivity.find(params[:id])
+        @morning_act.update(morning_act_params)
+        render json: @morning_act
+    end
 
-    # def destroy
-    #     @event = Event.find(params[:id])
-    #     @event.destroy!
-    # end
+    def destroy
+        @morning_act = MorningActivity.find(params[:id])
+        @morning_act.destroy!
+    end
 
     private
     def morning_act_params
