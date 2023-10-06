@@ -104,7 +104,6 @@ export function event(schoolClassId) {
                         })
                         .then((res) =>{
                             if(res.status === 200){
-                                var eventName = res.event_name
                                 $(`#event_display${Id}`).removeClass('hidden')
                                 $(`#${Id}.event_text_box`).addClass('hidden')
 
