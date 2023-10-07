@@ -578,6 +578,7 @@
         &_box{
             max-width: 60px;
             height: 18px;
+            font-size: 10px;
         }
     }
 
@@ -620,5 +621,9 @@
     }
     .leaving_time_delete_btn_box{
         width: 60px;
+    }
+
+    .iframe_nav{
+        display: none;
     }
 }
