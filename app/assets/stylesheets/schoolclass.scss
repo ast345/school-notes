@@ -177,20 +177,6 @@
     }
 }
 
-.leaving_time_create_btn{
-    color: rgb(30, 48, 80);
-    padding: 5px 5px;
-    border-radius: 10px;
-    font-size: 15px;
-    display: none;
-    &:hover{
-        cursor: pointer;
-        background-color: #eeeeee;
-    }
-    &_box{
-        text-align: center;
-    }
-}
 
 .new{
     &_lesson_box{
@@ -249,22 +235,44 @@
     }
 }
 
-.leaving_time_box{
-    height: 27px;
-    text-align: center;
-    vertical-align: baseline;
-    &:hover .leaving_time_create_btn{
-        display: inline-block;
+.leaving_time{
+    &_box{
+        height: 27px;
+        text-align: center;
+        vertical-align: center;
+        &:hover .leaving_time_create_btn{
+            display: inline-block;
+        }
+        &:hover .delete_leaving_time_btn{
+            display: block;
+        }
     }
-    &:hover .delete_leaving_time_btn{
-        display: block;
-    }
-}
 
-.leaving_time_delete_btn_box{
-    display: block;
-    position: absolute;
-    width: 120px;
+    &_create_btn{
+        color: rgb(30, 48, 80);
+        padding: 5px 5px;
+        border-radius: 10px;
+        font-size: 15px;
+        display: none;
+        &:hover{
+            cursor: pointer;
+            background-color: #eeeeee;
+        }
+        &_box{
+            display: block;
+            padding-top: 1px;
+        }
+    }
+
+    &_delete_btn_box{
+        display: block;
+        position: absolute;
+        width: 120px;
+    }
+
+    &_display{
+        padding-top: 1.5px;
+    }
 }
 
 .leaving_time_select_area{
@@ -351,6 +359,7 @@
     &_create_btn{
         display: none;
     }
+
     &_box:hover .event_create_btn{
         display: inline-block;
     }
@@ -625,5 +634,22 @@
 
     .iframe_nav{
         display: none;
+    }
+
+    .new_lesson_btn, .item_create_btn, .event_create_btn, .morning_act_create_btn, .leaving_time_create_btn{
+        padding: 3px 3px;
+        border-radius: 5px;
+        font-size: 6px;
+    }
+    .new_lesson_menu, .event_btn_box, .morning_act_btn_box, .leaving_time_create_btn_box{
+        width: 60px;
+        height: fit-content;
+    }
+
+    .leaving_time_create_btn_box {
+        display: flex;
+        align-items: center; /* 上下中央に配置 */
+        justify-content: center; /* 左右中央に配置 */
+        height: 100%; /* 親要素の高さいっぱいに広げる */
     }
 }
