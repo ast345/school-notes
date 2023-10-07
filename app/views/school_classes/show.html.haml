@@ -89,7 +89,7 @@
                                 .morning_act_btn_box{id: "#{date}"}
                                     %i.fa-regular.fa-pen-to-square.morning_act_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} &nbsp;追加
                                 .morning_act_text_box.hidden{id: "#{date}"}
-                                    = text_area_tag :morning_act_text, '', class: 'morning_act_text', id: "event_text#{date}"
+                                    = text_area_tag :morning_act_text, '', class: 'morning_act_text', id: "morning_act_text#{date}"
                                 %p.morning_act_display.hidden{id: "morning_act_display#{date}", data: {id: "#{date}"}}
             - (1..6).each do |period|
                 %tr.lesson_row

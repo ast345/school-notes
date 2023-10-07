@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :events, only: [:create, :update, :destroy]
     resources :date_items, only: [:new, :create, :edit, :update, :destroy]
     resources :class_leaving_time, only: [:create, :update, :destroy]
+    resources :morning_activities, only: [:create, :update, :destroy]
     resources :lesson_wdays, only: [:create, :update]
     resources :template_lessons, only: [:index, :create, :update, :destroy] do
       collection do
