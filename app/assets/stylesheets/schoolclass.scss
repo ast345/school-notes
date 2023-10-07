@@ -65,7 +65,9 @@
     &_weekly{
         display: inline-block;
     }
-
+    &_page_top{
+        padding-left: 10px;
+    }
 
 }
 .lesson_btn_box{
@@ -249,6 +251,8 @@
 
 .leaving_time_box{
     height: 27px;
+    text-align: center;
+    vertical-align: baseline;
     &:hover .leaving_time_create_btn{
         display: inline-block;
     }
@@ -259,15 +263,9 @@
 
 .leaving_time_delete_btn_box{
     display: block;
-    float: right;
+    position: absolute;
+    width: 120px;
 }
-
-.leaving_time_display{
-    display: inline-block;
-    height: 23px;
-    padding-left: 37px;
-}
-
 
 .leaving_time_select_area{
     align-items: center;
@@ -475,6 +473,7 @@
 
 .navbar{
     margin-bottom: 10px;
+    padding-left: 10px;
 }
 
 .template_nav{
@@ -527,5 +526,99 @@
     }
     &_box{
     text-align: center;
+    }
+}
+.week_nav{
+    display: inline-block;
+}
+
+@media (max-width: 480px) {
+
+    .class_name{
+        width: 110px;
+        height: 34px;
+        &_display{
+            text-align: center;
+            font-size: 10px;
+        }
+    }
+    .week_nav{
+        display: block;
+        margin-bottom: 5px;
+        font-size: 10px;
+    }
+
+    .wday_setting, .template_nav, .output_nav,.iframe_nav{
+        font-size: 8px;
+    }
+
+    .date_header{
+        max-width: 60px;
+        font-size: 10px;
+    }
+    .left_column{
+        font-size: 10px;
+        min-width: 20px;
+        max-width: 50px;
+    }
+
+    .event_box {
+        max-width: 60px; // 例: 幅をさらに小さくする
+        height: 30px;    // 例: 高さをさらに小さくする
+        font-size: 10px;
+        line-height: 1em;
+    }
+    .event_display{
+        width: 60px;
+        height: 30px;
+        overflow: hidden;
+    }
+
+    .morning_act{
+        &_box{
+            max-width: 60px;
+            height: 18px;
+        }
+    }
+
+    .lesson_box {
+        width: 60px;     // 例: 幅をさらに小さくする
+        height: 40px;
+        font-size: 10px;
+    }
+
+    .lesson_unit{
+        width: 60px;
+    }
+
+    .lesson_row{
+        height: 48px;
+    }
+
+    .item_row{
+        height: 60px;
+    }
+
+    .item_box{
+        height: 60px;
+        width: 60px;
+        font-size: 10px;
+    }
+
+    .item_display{
+        height: 60px;
+        width: 60px;
+        overflow: hidden;
+    }
+
+    .leaving_time_box{
+        height: 18px;
+        text-align: center;
+    }
+    .leaving_time_display{
+        font-size: 10px;
+    }
+    .leaving_time_delete_btn_box{
+        width: 60px;
     }
 }

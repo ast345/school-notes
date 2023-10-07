@@ -5,8 +5,9 @@
         .class_name
             %p.class_name_display= @school_class.grade_class
     .navbar
-        %a{href: school_class_path(start_of_week: @start_of_week - 1.week)} 前の週
-        %a{href: school_class_path(start_of_week: @start_of_week + 1.week)} 次の週
+        .week_nav
+            %a{href: school_class_path(start_of_week: @start_of_week - 1.week)} 前の週
+            %a{href: school_class_path(start_of_week: @start_of_week + 1.week)} 次の週
         .wday_setting
             %i.fa-solid.fa-calendar-week.wday_btn &nbsp;曜日
             .wday_select_box
@@ -49,7 +50,7 @@
     .table_box
         %table.class_weekly
             %tr
-                %th
+                %th.left_column
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %th.date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
