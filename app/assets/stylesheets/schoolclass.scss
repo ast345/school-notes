@@ -28,7 +28,10 @@
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
     }
-
+    &_btn_box{
+        float: right;
+        height: 20px;
+    }
 }
 
 
@@ -69,10 +72,6 @@
         padding-left: 10px;
     }
 
-}
-.lesson_btn_box{
-    float: right;
-    height: 20px;
 }
 
 .item{
@@ -133,21 +132,7 @@
     }
 }
 
-.delete_leaving_time_btn{
-    display: none;
-    float: right;
-    cursor: pointer;
 
-    color: rgb(243, 134, 134);
-
-    padding: 5px;
-    border-radius: 10px;
-    font-size: 13px;
-
-    &:hover{
-        background-color: #eeeeee;
-    }
-}
 
 .copy_lesson_btn, .paste_lesson_btn{
     display:inline-block;
@@ -237,6 +222,7 @@
 
 .leaving_time{
     &_box{
+        position: relative;
         height: 27px;
         text-align: center;
         vertical-align: center;
@@ -265,13 +251,32 @@
     }
 
     &_delete_btn_box{
-        display: block;
         position: absolute;
-        width: 120px;
+        top: 5%;
+        left: 80%;
     }
 
     &_display{
-        padding-top: 1.5px;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 1.5px;
+        width: 120px;
+    }
+}
+
+.delete_leaving_time_btn{
+    display: none;
+    float: right;
+    cursor: pointer;
+
+    color: rgb(243, 134, 134);
+
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 13px;
+
+    &:hover{
+        background-color: #eeeeee;
     }
 }
 
@@ -651,5 +656,13 @@
         align-items: center; /* 上下中央に配置 */
         justify-content: center; /* 左右中央に配置 */
         height: 100%; /* 親要素の高さいっぱいに広げる */
+    }
+    .copy_lesson_btn, .paste_lesson_btn, .delete_lesson_btn, .delete_leaving_time_btn{
+        font-size: 5px;
+    }
+
+    .delete_leaving_time_btn{
+        padding: 2px;
+        border-radius: 5px;
     }
 }
