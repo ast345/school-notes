@@ -107,12 +107,6 @@
         height: fit-content;
     }
 
-    .leaving_time_create_btn_box {
-        display: flex;
-        align-items: center; /* 上下中央に配置 */
-        justify-content: center; /* 左右中央に配置 */
-        height: 100%; /* 親要素の高さいっぱいに広げる */
-    }
     .copy_lesson_btn, .paste_lesson_btn, .delete_lesson_btn, .delete_leaving_time_btn{
         font-size: 5px;
         padding: 2px;

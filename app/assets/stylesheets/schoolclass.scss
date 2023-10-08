@@ -247,9 +247,12 @@
         &_box{
             display: block;
             padding-top: 1px;
+            display: flex;
+            align-items: center; /* 上下中央に配置 */
+            justify-content: center; /* 左右中央に配置 */
+            height: 100%; /* 親要素の高さいっぱいに広げる */
         }
     }
-
     &_delete_btn_box{
         position: absolute;
         top: 5%;
