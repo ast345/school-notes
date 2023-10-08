@@ -25,6 +25,7 @@ class SchoolClass < ApplicationRecord
     has_many :class_leaving_times, dependent: :destroy
     has_many :morning_activities, dependent: :destroy
     has_many :lesson_wdays, dependent: :destroy
+    has_many :template_morning_activities, dependent: :destroy
 
     accepts_nested_attributes_for :school_class_teachers
 
