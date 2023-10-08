@@ -28,7 +28,10 @@
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
     }
-
+    &_btn_box{
+        float: right;
+        height: 20px;
+    }
 }
 
 
@@ -48,7 +51,6 @@
 }
 
 .unit_select_box{
-    padding-left: 4px;
     & select {
         text-align: center;
         & option {
@@ -65,12 +67,10 @@
     &_weekly{
         display: inline-block;
     }
+    &_page_top{
+        padding-left: 10px;
+    }
 
-
-}
-.lesson_btn_box{
-    float: right;
-    height: 20px;
 }
 
 .item{
@@ -131,21 +131,7 @@
     }
 }
 
-.delete_leaving_time_btn{
-    display: none;
-    float: right;
-    cursor: pointer;
 
-    color: rgb(243, 134, 134);
-
-    padding: 5px;
-    border-radius: 10px;
-    font-size: 13px;
-
-    &:hover{
-        background-color: #eeeeee;
-    }
-}
 
 .copy_lesson_btn, .paste_lesson_btn{
     display:inline-block;
@@ -175,20 +161,6 @@
     }
 }
 
-.leaving_time_create_btn{
-    color: rgb(30, 48, 80);
-    padding: 5px 5px;
-    border-radius: 10px;
-    font-size: 15px;
-    display: none;
-    &:hover{
-        cursor: pointer;
-        background-color: #eeeeee;
-    }
-    &_box{
-        text-align: center;
-    }
-}
 
 .new{
     &_lesson_box{
@@ -247,62 +219,76 @@
     }
 }
 
-.leaving_time_box{
-    height: 27px;
-    &:hover .leaving_time_create_btn{
+.leaving_time{
+    &_box{
+        position: relative;
+        height: 27px;
+        text-align: center;
+        &:hover .leaving_time_create_btn{
+            display: inline-block;
+        }
+        &:hover .delete_leaving_time_btn{
+            display: block;
+        }
+    }
+
+    &_create_btn{
+        color: rgb(30, 48, 80);
+        padding: 5px 5px;
+        border-radius: 10px;
+        font-size: 15px;
+        display: none;
+        &:hover{
+            cursor: pointer;
+            background-color: #eeeeee;
+        }
+        &_box{
+            display: block;
+            padding-top: 1px;
+            display: flex;
+            align-items: center; /* 上下中央に配置 */
+            justify-content: center; /* 左右中央に配置 */
+            height: 100%; /* 親要素の高さいっぱいに広げる */
+        }
+    }
+    &_delete_btn_box{
+        position: absolute;
+        top: 5%;
+        left: 80%;
+    }
+
+    &_display{
         display: inline-block;
+        vertical-align: middle;
+        line-height: 1.5px;
     }
-    &:hover .delete_leaving_time_btn{
-        display: block;
-    }
 }
 
-.leaving_time_delete_btn_box{
-    display: block;
-    float: right;
-}
-
-.leaving_time_display{
-    display: inline-block;
-    height: 23px;
-    padding-left: 37px;
-}
-
-
-.leaving_time_select_area{
-    align-items: center;
-    position: relative;
-    text-align: center;
-}
-
-.leaving_time_select_box::after {
-    position: absolute;
-    background-color: #535353;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    content: '';
-    pointer-events: none;
-}
-
-.leaving_time_select_box select {
-    appearance: none;
-    min-width: 50px;
-    border: none;
-    border-bottom: 2px solid #cccccc;
-    background-color: #fff;
-    color: #333333;
-    font-size: 1em;
+.delete_leaving_time_btn{
+    display: none;
     cursor: pointer;
+
+    color: rgb(243, 134, 134);
+
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 13px;
+
+    &:hover{
+        background-color: #eeeeee;
+    }
 }
 
-.leaving_time_select_box select:focus {
-    outline: none;
+.leaving_time_select_box{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .leaving_time_form{
     position: relative;
     width: 100%;
     text-align: center;
-    padding-left: 25px;
 
     &::-webkit-calendar-picker-indicator {
         color: rgb(30, 48, 80);
@@ -353,6 +339,7 @@
     &_create_btn{
         display: none;
     }
+
     &_box:hover .event_create_btn{
         display: inline-block;
     }
@@ -475,6 +462,7 @@
 
 .navbar{
     margin-bottom: 10px;
+    padding-left: 10px;
 }
 
 .template_nav{
@@ -529,3 +517,7 @@
     text-align: center;
     }
 }
+.week_nav{
+    display: inline-block;
+}
+

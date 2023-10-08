@@ -1,0 +1,176 @@
+@media (max-width: 480px) {
+
+    .class_name{
+        width: 110px;
+        height: 34px;
+        &_display{
+            text-align: center;
+            font-size: 10px;
+        }
+    }
+    .navbar{
+        margin-bottom: 0px;
+    }
+    .week_nav{
+        margin-bottom: 5px;
+        font-size: 10px;
+    }
+
+    .wday_setting, .template_nav, .output_nav,.iframe_nav{
+        font-size: 8px;
+    }
+
+    .date_header{
+        max-width: 60px;
+        font-size: 10px;
+    }
+    .left_column{
+        font-size: 10px;
+        min-width: 20px;
+        max-width: 50px;
+    }
+
+    .event{
+        &_box {
+            max-width: 60px; // 例: 幅をさらに小さくする
+            height: 30px;    // 例: 高さをさらに小さくする
+            font-size: 10px;
+            line-height: 1em;
+        }
+        &_display{
+            width: 60px;
+            height: 30px;
+            overflow: hidden;
+        }
+        &_text{
+            width: 60px;
+            height: 30px;
+            font-size: 10px;
+        }
+    }
+
+    .morning_act{
+        &_box, &_text{
+            max-width: 60px;
+            height: 18px;
+            font-size: 10px;
+        }
+    }
+
+    .lesson{
+        &_box {
+            width: 60px;     // 例: 幅をさらに小さくする
+            height: 48px;
+            font-size: 10px;
+        }
+        &_unit{
+            width: 60px;
+        }
+    
+        &_row{
+            height: 48px;
+        }
+        &_btn_box{
+            display: block !important;
+            height: 15px;
+        }
+    }
+
+    .item{
+        &_row{
+            height: 60px;
+        }
+        &_box, &_text{
+            height: 60px;
+            width: 60px;
+            font-size: 10px;
+        }
+    
+        &_display{
+            height: 60px;
+            width: 60px;
+            overflow: hidden;
+        }
+    }
+
+    .leaving_time{
+        &_box{
+            height: 18px;
+        }
+        &_select_box{
+            height: 18px;
+        }
+        &_form{
+            height: 16px;
+            font-size: 9px;
+        }
+        &_display{
+            font-size: 9px;
+            height: 14px;
+            width: 60px;
+            line-height: 0.5;
+        }
+        &_delete_btn_box{
+            width: 60px;
+        }
+        &_delete_btn_box{
+            top: 10%;
+            left: 76%;
+            width: 16px;
+        }
+    }
+
+    .iframe_nav, .output_nav{
+        display: none;
+    }
+
+    .new_lesson_btn, .item_create_btn, .event_create_btn, .morning_act_create_btn, .leaving_time_create_btn{
+        padding: 3px 3px;
+        border-radius: 5px;
+        font-size: 6px;
+        display: inline-block !important;
+    }
+    .new_lesson_menu, .event_btn_box, .morning_act_btn_box, .leaving_time_create_btn_box{
+        width: 60px;
+        height: fit-content;
+    }
+
+    .copy_lesson_btn, .paste_lesson_btn, .delete_lesson_btn, .delete_leaving_time_btn, .unit_create_btn{
+        font-size: 5px;
+        padding: 2px;
+    }
+    .cancel_btn{
+        font-size: 2px;
+        padding: 1px;
+        position: absolute;
+    }
+
+    .delete_leaving_time_btn{
+        padding: 1px;
+        display: block;
+    }
+
+    .got_lesson, .edit_lesson_box{
+        padding-top: 10px;
+    }
+
+    .select_subject{
+        height: 14px;
+        width: 100%;
+        font-size: 10px;
+    }
+    .select_unit{
+        height: 14px;
+        font-size: 10px;
+        width: 70%;
+    }
+    .new_unit{
+        &_box{
+            width: 75%;
+            height:20px;
+        }
+        &_text{
+            width: 100%;
+        }
+    }
+}

@@ -10,7 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ * require_tree .
  *= require_self
  */
 
@@ -19,6 +19,8 @@
  @import 'header';
  @import 'table';
  @import 'schoolclass';
+ @import 'pdf';
+ @import 'iframe';
 
  html {
     word-spacing: 1px;
@@ -74,3 +76,8 @@
     display: none;
   }
 
+  @media (max-width: 480px) {
+    .container{
+      padding: 40px 5px;
+    }
+  }
