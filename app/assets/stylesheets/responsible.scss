@@ -1,0 +1,140 @@
+@media (max-width: 480px) {
+
+    .class_name{
+        width: 110px;
+        height: 34px;
+        &_display{
+            text-align: center;
+            font-size: 10px;
+        }
+    }
+    .navbar{
+        margin-bottom: 0px;
+    }
+    .week_nav{
+        margin-bottom: 5px;
+        font-size: 10px;
+    }
+
+    .wday_setting, .template_nav, .output_nav,.iframe_nav{
+        font-size: 8px;
+    }
+
+    .date_header{
+        max-width: 60px;
+        font-size: 10px;
+    }
+    .left_column{
+        font-size: 10px;
+        min-width: 20px;
+        max-width: 50px;
+    }
+
+    .event_box {
+        max-width: 60px; // 例: 幅をさらに小さくする
+        height: 30px;    // 例: 高さをさらに小さくする
+        font-size: 10px;
+        line-height: 1em;
+    }
+    .event_display{
+        width: 60px;
+        height: 30px;
+        overflow: hidden;
+    }
+
+    .morning_act{
+        &_box{
+            max-width: 60px;
+            height: 18px;
+            font-size: 10px;
+        }
+    }
+
+    .lesson_box {
+        width: 60px;     // 例: 幅をさらに小さくする
+        height: 48px;
+        font-size: 10px;
+    }
+
+    .lesson_unit{
+        width: 60px;
+    }
+
+    .lesson_row{
+        height: 48px;
+    }
+
+    .item_row{
+        height: 60px;
+    }
+
+    .item_box{
+        height: 60px;
+        width: 60px;
+        font-size: 10px;
+    }
+
+    .item_display{
+        height: 60px;
+        width: 60px;
+        overflow: hidden;
+    }
+
+    .leaving_time_box{
+        height: 18px;
+    }
+    .leaving_time_display{
+        font-size: 9px;
+        height: 14px;
+        line-height: 0.5;
+    }
+    .leaving_time_delete_btn_box{
+        width: 60px;
+    }
+
+    .iframe_nav, .output_nav{
+        display: none;
+    }
+
+    .new_lesson_btn, .item_create_btn, .event_create_btn, .morning_act_create_btn, .leaving_time_create_btn{
+        padding: 3px 3px;
+        border-radius: 5px;
+        font-size: 6px;
+        display: inline-block !important;
+    }
+    .new_lesson_menu, .event_btn_box, .morning_act_btn_box, .leaving_time_create_btn_box{
+        width: 60px;
+        height: fit-content;
+    }
+
+    .leaving_time_create_btn_box {
+        display: flex;
+        align-items: center; /* 上下中央に配置 */
+        justify-content: center; /* 左右中央に配置 */
+        height: 100%; /* 親要素の高さいっぱいに広げる */
+    }
+    .copy_lesson_btn, .paste_lesson_btn, .delete_lesson_btn, .delete_leaving_time_btn{
+        font-size: 5px;
+        padding: 2px;
+    }
+
+    .delete_leaving_time_btn{
+        padding: 1px;
+        display: block;
+    }
+    .leaving_time_delete_btn_box{
+        top: 10%;
+        left: 76%;
+        width: 16px;
+    }
+
+    .got_lesson{
+        padding-top: 10px;
+    }
+
+    .lesson_btn_box{
+        display: block !important;
+        height: 15px;
+    }
+
+}
