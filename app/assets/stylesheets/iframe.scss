@@ -15,6 +15,10 @@
         height: 100%;
         word-wrap: break-word;
     }
+    &_morning_act_box{
+        max-width: 100px;
+        text-align: center;
+    }
 
     &_lesson_box{
         width: 100px;
@@ -108,7 +112,9 @@
             height: 30px;
             overflow: hidden;
         }
-
+        &_morning_act_box{
+            font-size: 10px;
+        }
         &_item_display{
             height: 100%;
             width: 100%;

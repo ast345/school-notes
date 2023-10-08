@@ -20,6 +20,15 @@
                         - event = @this_week_events.find_by(date: date)
                         - if event
                             %p.iframe_event_display  #{event.event_name.html_safe}
+        %tr.morning_act_row
+            %td.iframe_left_column 朝
+            - (@start_of_week..@end_of_week).each do |date|
+                - next unless @display_wday.include?(date.wday)
+                %td.morning_act_cell
+                    .iframe_morning_act_box{id: "#{date}"}
+                        - morning_act = @this_week_morning_activities.find_by(date: date)
+                        - if morning_act
+                            %p.morning_act_display  #{morning_act.activity_name.html_safe}
         - (1..6).each do |period|
             %tr.iframe_lesson_row
                 %td.iframe_left_column #{period}

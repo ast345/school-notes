@@ -29,6 +29,7 @@ class IframeController < ApplicationController
         @this_week_lessons = @school_class.lessons.where(date: @start_of_week..@end_of_week)
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
+        @this_week_morning_activities = @school_class.morning_activities.where(date: @start_of_week..@end_of_week)
     end
 
     private
