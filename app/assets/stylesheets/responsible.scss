@@ -42,10 +42,15 @@
             height: 30px;
             overflow: hidden;
         }
+        &_text{
+            width: 60px;
+            height: 30px;
+            font-size: 10px;
+        }
     }
 
     .morning_act{
-        &_box{
+        &_box, &_text{
             max-width: 60px;
             height: 18px;
             font-size: 10px;
@@ -75,7 +80,7 @@
         &_row{
             height: 60px;
         }
-        &_box{
+        &_box, &_text{
             height: 60px;
             width: 60px;
             font-size: 10px;
@@ -92,9 +97,17 @@
         &_box{
             height: 18px;
         }
+        &_select_box{
+            height: 18px;
+        }
+        &_form{
+            height: 16px;
+            font-size: 9px;
+        }
         &_display{
             font-size: 9px;
             height: 14px;
+            width: 60px;
             line-height: 0.5;
         }
         &_delete_btn_box{

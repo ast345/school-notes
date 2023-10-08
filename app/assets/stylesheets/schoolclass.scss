@@ -225,7 +225,6 @@
         position: relative;
         height: 27px;
         text-align: center;
-        vertical-align: center;
         &:hover .leaving_time_create_btn{
             display: inline-block;
         }
@@ -281,40 +280,16 @@
     }
 }
 
-.leaving_time_select_area{
-    align-items: center;
-    position: relative;
-    text-align: center;
-}
-
-.leaving_time_select_box::after {
-    position: absolute;
-    background-color: #535353;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    content: '';
-    pointer-events: none;
-}
-
-.leaving_time_select_box select {
-    appearance: none;
-    min-width: 50px;
-    border: none;
-    border-bottom: 2px solid #cccccc;
-    background-color: #fff;
-    color: #333333;
-    font-size: 1em;
-    cursor: pointer;
-}
-
-.leaving_time_select_box select:focus {
-    outline: none;
+.leaving_time_select_box{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .leaving_time_form{
     position: relative;
     width: 100%;
     text-align: center;
-    padding-left: 25px;
 
     &::-webkit-calendar-picker-indicator {
         color: rgb(30, 48, 80);
