@@ -555,7 +555,6 @@
         }
     }
     .week_nav{
-        display: block;
         margin-bottom: 5px;
         font-size: 10px;
     }
@@ -596,7 +595,7 @@
 
     .lesson_box {
         width: 60px;     // 例: 幅をさらに小さくする
-        height: 40px;
+        height: 48px;
         font-size: 10px;
     }
 
@@ -626,16 +625,17 @@
 
     .leaving_time_box{
         height: 18px;
-        text-align: center;
     }
     .leaving_time_display{
-        font-size: 10px;
+        font-size: 9px;
+        height: 14px;
+        line-height: 0.5;
     }
     .leaving_time_delete_btn_box{
         width: 60px;
     }
 
-    .iframe_nav{
+    .iframe_nav, .output_nav{
         display: none;
     }
 
@@ -643,6 +643,7 @@
         padding: 3px 3px;
         border-radius: 5px;
         font-size: 6px;
+        display: inline-block !important;
     }
     .new_lesson_menu, .event_btn_box, .morning_act_btn_box, .leaving_time_create_btn_box{
         width: 60px;
@@ -657,10 +658,25 @@
     }
     .copy_lesson_btn, .paste_lesson_btn, .delete_lesson_btn, .delete_leaving_time_btn{
         font-size: 5px;
+        padding: 2px;
     }
 
     .delete_leaving_time_btn{
-        padding: 2px;
-        border-radius: 5px;
+        padding: 1px;
+        display: block;
+    }
+    .leaving_time_delete_btn_box{
+        top: 10%;
+        left: 76%;
+        width: 16px;
+    }
+
+    .got_lesson{
+        padding-top: 10px;
+    }
+
+    .lesson_btn_box{
+        display: block !important;
+        height: 15px;
     }
 }
