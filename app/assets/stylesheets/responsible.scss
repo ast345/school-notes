@@ -135,9 +135,14 @@
         height: fit-content;
     }
 
-    .copy_lesson_btn, .paste_lesson_btn, .delete_lesson_btn, .delete_leaving_time_btn{
+    .copy_lesson_btn, .paste_lesson_btn, .delete_lesson_btn, .delete_leaving_time_btn, .unit_create_btn{
         font-size: 5px;
         padding: 2px;
+    }
+    .cancel_btn{
+        font-size: 2px;
+        padding: 1px;
+        position: absolute;
     }
 
     .delete_leaving_time_btn{
@@ -145,8 +150,27 @@
         display: block;
     }
 
-    .got_lesson{
+    .got_lesson, .edit_lesson_box{
         padding-top: 10px;
     }
 
+    .select_subject{
+        height: 14px;
+        width: 100%;
+        font-size: 10px;
+    }
+    .select_unit{
+        height: 14px;
+        font-size: 10px;
+        width: 70%;
+    }
+    .new_unit{
+        &_box{
+            width: 75%;
+            height:20px;
+        }
+        &_text{
+            width: 100%;
+        }
+    }
 }
