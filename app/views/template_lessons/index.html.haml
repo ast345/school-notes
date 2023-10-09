@@ -11,6 +11,24 @@
             %th
             - (1..5).each do |wday|
                 %th.date_header= @japanese_weekdays[wday]
+        %tr.morning_act_row
+            %td.left_column 朝
+            - (1..5).each do |wday|
+                %td.morning_act_cell
+                    .morning_act_box{id: "#{wday}"}
+                        - template_morning_act = @template_morning_acts.find_by(day_of_week: wday)
+                        - if template_morning_act
+                            .morning_act_btn_box.hidden{id: "#{wday}"}
+                                %i.fa-regular.fa-pen-to-square.morning_act_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
+                            .morning_act_text_box.hidden{id: "#{wday}"}
+                                = text_area_tag :morning_act_text, template_morning_act.activity_name.gsub("<br>", "\n"), class: 'morning_act_text', id: "morning_act_text#{wday}"
+                            %p.morning_act_display{id: "morning_act_display#{wday}", data: {id: "#{wday}", morning_activity_id: template_morning_act.id}}  #{template_morning_act.activity_name.html_safe}
+                        - else
+                            .morning_act_btn_box{id: "#{wday}"}
+                                %i.fa-regular.fa-pen-to-square.morning_act_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
+                            .morning_act_text_box.hidden{id: "#{wday}"}
+                                = text_area_tag :morning_act_text, '', class: 'morning_act_text', id: "morning_act_text#{wday}"
+                            %p.morning_act_display.hidden{id: "morning_act_display#{wday}", data: {id: "#{wday}"}}
         - (1..6).each do |period|
             %tr.lesson_row
                 %td.left_column #{period}
