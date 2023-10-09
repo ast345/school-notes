@@ -6,6 +6,7 @@ class TemplateLessonsController < ApplicationController
         @template_lessons = @school_class.template_lessons
         @template_morning_acts = @school_class.template_morning_activities
         @template_date_items = @school_class.template_date_items
+        @template_class_leaving_times = @school_class.template_class_leaving_times
         @start_of_week = params[:start_of_week]
 
         @japanese_weekdays = ["日", "月", "火", "水", "木", "金", "土"]
