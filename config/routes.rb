@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         get 'get_temp'
       end
     end
+    resources :template_morning_activities, only: [:create, :update, :destroy]
     resources :iframe, only: [:index]
   end
 
