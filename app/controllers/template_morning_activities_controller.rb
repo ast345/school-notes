@@ -8,9 +8,14 @@ class TemplateMorningActivitiesController < ApplicationController
     end
 
     def update
+        @temp_morning_act = TemplateMorningActivity.find(params[:id])
+        @temp_morning_act.update(temp_morning_act_params)
+        render json: @temp_morning_act
     end
 
     def destroy
+        @temp_morning_act = TemplateMorningActivity.find(params[:id])
+        @temp_morning_act.destroy!
     end
 
     private
