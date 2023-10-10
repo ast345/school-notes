@@ -4,6 +4,7 @@ import { csrfToken } from 'rails-ujs'
 import {tempLessonCUD} from './temp_lesson_cud'
 import {copyPasteTemplateLesson} from './tempLessonCP'
 import {dragDropTempLesson} from './temp_lesson_dd.js'
+import {tempMorningActivity} from './temp_morning_act.js'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
@@ -27,6 +28,7 @@ document.addEventListener('turbolinks:load', () =>{
     tempLessonCUD(schoolClassId)
     copyPasteTemplateLesson(schoolClassId)
     dragDropTempLesson(schoolClassId)
+    tempMorningActivity(schoolClassId)
 
 });
 
