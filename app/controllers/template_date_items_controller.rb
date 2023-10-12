@@ -8,9 +8,14 @@ class TemplateDateItemsController < ApplicationController
     end
 
     def update
+        @temp_item = TemplateDateItem.find(params[:id])
+        @temp_item.update(temp_date_item_params)
+        render json: @temp_item
     end
 
     def destroy
+        @temp_item = TemplateDateItem.find(params[:id])
+        @temp_item.destroy!
     end
 
     private
