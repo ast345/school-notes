@@ -44,8 +44,6 @@ class TemplateMorningActivitiesController < ApplicationController
     end
 
     def add_dates_to_template_morning_acts(filtered_template_morning_acts, dates)
-        
-
         day_mapping = {
             "sunday" => 0,
             "monday" => 1,
@@ -60,5 +58,5 @@ class TemplateMorningActivitiesController < ApplicationController
           matching_date = dates.find { |date| date[1] == day_mapping[template_morning_act.day_of_week] }
           @morning_acts_from_template << {date: matching_date[0], day_of_week: template_morning_act.day_of_week, activity_name: template_morning_act.activity_name}
         end
-      end
+    end
 end

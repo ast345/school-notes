@@ -120,4 +120,37 @@ export function dateItem(schoolClassId) {
             document.addEventListener('click', editDateItemEndHandler);
         });
     });
+
+
+    $('.add_from_temp').on('click', (event) =>{
+        const startOfWeek = $(event.currentTarget).data('startOfWeek');
+        axios.get(`	/school_classes/${schoolClassId}/template_date_items/get_temp`, {
+            params: {start_of_week: startOfWeek}
+        })
+        .then((res) =>{
+            var template_date_items = res.data
+            template_date_items.forEach(function(template_date_item){
+                const date =template_date_item.date
+                const Id =`${date}`
+                const dayOfWeek = template_date_item.day_of_week
+                const newItem = template_date_item.item_name
+                const dateItemText = document.getElementById(`item_text${Id}`)
+
+                axios.post(`/school_classes/${schoolClassId}/date_items`, {
+                    item: {date: date, day_of_week: dayOfWeek, item_name: newItem}
+                })
+                .then((res) =>{
+                    if(res.status === 200){
+                        $(`#item_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.item_btn_box`).addClass('hidden')
+                        const itemDisplay = document.getElementById(`item_display${Id}`)
+                        itemDisplay.innerHTML = `${res.data.item_name}`
+                        itemDisplay.setAttribute('data-item-id', `${res.data.id}`)
+                        dateItemText.value = res.data.item_name
+                        adjustItemFontSize(itemDisplay);
+                    }
+                });
+            });
+        });
+    });
 }
