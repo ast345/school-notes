@@ -18,7 +18,11 @@ Rails.application.routes.draw do
         get 'get_temp'
       end
     end
-    resources :template_morning_activities, only: [:create, :update, :destroy]
+    resources :template_morning_activities, only: [:create, :update, :destroy] do
+      collection do
+        get 'get_temp'
+       end
+    end
     resources :template_date_items, only: [:create, :update, :destroy]
     resources :template_class_leaving_times, only: [:create, :update, :destroy]
     resources :iframe, only: [:index]

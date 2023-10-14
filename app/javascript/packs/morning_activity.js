@@ -119,5 +119,36 @@ export function morningActivity(schoolClassId) {
         });
     });
 
+    $('.add_from_temp').on('click', (event) =>{
+        const startOfWeek = $(event.currentTarget).data('startOfWeek');
+        axios.get(`	/school_classes/${schoolClassId}/template_morning_activities/get_temp`, {
+            params: {start_of_week: startOfWeek}
+        })
+        .then((res) =>{
+            var template_morning_acts = res.data
+            template_morning_acts.forEach(function(template_morning_act){
+                const date = template_morning_act.date
+                const Id = `${date}`
+                const dayOfWeek = template_morning_act.day_of_week
+                const newMorningAct = template_morning_act.activity_name
+                const morningActText = document.getElementById(`morning_act_text${Id}`)
+                axios.post(`/school_classes/${schoolClassId}/morning_activities`, {
+                    morning_act: {date: date, day_of_week: dayOfWeek, activity_name: newMorningAct}
+                })
+                .then((res) =>{
+                    if(res.status === 200){
+                        $(`#morning_act_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.morning_act_btn_box`).addClass('hidden')
+
+                        const morningActDisplay = document.getElementById(`morning_act_display${Id}`)
+                        morningActDisplay.innerHTML = `${res.data.activity_name}`
+                        morningActDisplay.setAttribute('data-morning-activity-id', `${res.data.id}`)
+                        morningActText.value = res.data.activity_name
+                        adjustFontSize(morningActDisplay);
+                    }
+                });
+            })
+        })
+    });
 
 }
