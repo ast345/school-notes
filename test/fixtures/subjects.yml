@@ -4,6 +4,7 @@
 #
 #  id           :bigint           not null, primary key
 #  subject_name :string
+#  yomigana     :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
