@@ -32,8 +32,18 @@
 # Grade.create(grade_name: '2年生', school_types_id: 3)
 # Grade.create(grade_name: '3年生', school_types_id: 3)
 
+
+# subject読み仮名付き
+# Subject.create(subject_name: "国語", yomigana: "こくご")
+# Subject.create(subject_name: "算数", yomigana: "さんすう")
+# Subject.create(subject_name: "音楽", yomigana: "おんがく")
+# Subject.create(subject_name: "体育", yomigana: "たいいく")
+# Subject.create(subject_name: "生活", yomigana: "せいかつ")
+# Subject.create(subject_name: "道徳", yomigana: "どうとく")
+# Subject.create(subject_name: "図画工作", yomigana: "ずがこうさく")
+# Subject.create(subject_name: "特別活動", yomigana: "とくべつかつどう")
 # Subjectデータベース
-# subjects =['国語', '社会', '算数', '理科', '生活', '英語', '音楽', '図工', '家庭', '図画工作', '体育', '道徳', '総合', '外国語活動', '特別活動', '学級活動', 'プログラミング', '地理', '歴史', '公民', '現代社会', '数学', '美術', '技術', '現代文', '古典', '言語文化', '地学', '世界史', '日本史', '政治・経済', '公共', '数学Ⅰ', '数学Ⅱ', '数学Ⅲ', '数学A', '数学B', '数学活用', '数学C', '物理', '化学', '生物', '理科課題研究', 'コミュニケーション英語', '英語表現', '英語会話', '書道', '理数', '情報',
+# subjects =['社会', '理科', '生活', '英語', '家庭', '総合', '外国語活動', '学級活動', 'プログラミング', '地理', '歴史', '公民', '現代社会', '数学', '美術', '技術', '現代文', '古典', '言語文化', '地学', '世界史', '日本史', '政治・経済', '公共', '数学Ⅰ', '数学Ⅱ', '数学Ⅲ', '数学A', '数学B', '数学活用', '数学C', '物理', '化学', '生物', '理科課題研究', 'コミュニケーション英語', '英語表現', '英語会話', '書道', '理数', '情報',
 # '国語総合', '国語表現', '現代文Ａ', '古典Ａ', '世界史Ａ', '日本史Ａ', '地理Ａ', 'コミュニケーション英語基礎', '科学と人間生活', '物理基礎', '化学基礎', '生物基礎', '地学基礎', '家庭基礎', '情報の科学', '総合的な学習の時間', '保健', '現代文Ｂ', '古典Ｂ', '世界史Ｂ', '日本史Ｂ', '地理Ｂ', '倫理', '家庭総合', '生活デザイン', '社会と情報', '保健', '音楽Ⅰ', '美術Ⅰ', '工芸Ⅰ', '書道Ⅰ',
 # '倫理', '政治・経済', 'コミュニケーション英語Ⅰ', '英語表現Ⅰ',  '社会と情報', '音楽Ⅱ', '美術Ⅱ', '工芸Ⅱ', '書道Ⅱ'
 # 'コミュニケーション英語Ⅱ', 'コミュニケーション英語Ⅲ', '英語表現Ⅱ', '英語会話', '音楽Ⅲ', '美術Ⅲ', '工芸Ⅲ', '書道Ⅲ']
@@ -48,17 +58,18 @@
 #     Subject.create(subject_name: subject)
 # end
 
+
 ## grade_sbujectデータベース
 
 #小学1年生
-# subject_for1 =  ['国語', '算数', '音楽', '図工', '体育', '生活', '道徳', '図画工作', '特別活動']
+# subject_for1 =  ['国語', '算数', '音楽', '体育', '生活', '道徳', '図画工作', '特別活動']
 # subject_for1.each do |subject|
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 1, subjects_id: subject_id)
 # end
 
 # # 小学2年生
-# subject_for2 =  ['国語', '算数', '音楽', '図工', '体育', '生活', '道徳', '図画工作', '特別活動']
+# subject_for2 =  ['国語', '算数', '音楽', '体育', '生活', '道徳', '図画工作', '特別活動']
 # subject_for2.each do |subject|
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 2, subjects_id: subject_id)
