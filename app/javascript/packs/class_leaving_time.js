@@ -139,4 +139,40 @@ export function classLeavingTime(schoolClassId) {
                 };
             });
         });
+
+        $('.add_from_temp').on('click', (event) =>{
+            const startOfWeek = $(event.currentTarget).data('startOfWeek');
+            axios.get(`	/school_classes/${schoolClassId}/template_class_leaving_times/get_temp`, {
+                params: {start_of_week: startOfWeek}
+            })
+            .then((res)=>{
+                var template_leaving_times = res.data
+                template_leaving_times.forEach(function(template_leaving_time){
+                    const date = template_leaving_time.date
+                    const Id = `${date}`
+                    const dayOfWeek = template_leaving_time.day_of_week
+                    const newTime = template_leaving_time.leaving_time
+                    const leavingTimeText = document.getElementById(`leaving_time${Id}`)
+
+                    axios.post(`/school_classes/${schoolClassId}/class_leaving_time`, {
+                        time: {date: date, day_of_week: dayOfWeek, leaving_time: newTime}
+                    })
+                    .then((res) =>{
+                        if(res.status === 200){
+                            $(`#${Id}.leaving_time_delete_btn_box`).removeClass('hidden')
+                            $(`#leaving_time_display${Id}`).removeClass('hidden')
+                            $(`#${Id}.leaving_time_create_btn_box`).addClass('hidden')
+
+                            const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
+                            const leavingTime = new Date(res.data.leaving_time).toISOString().substr(11, 5)
+                            leavingTimeDisplay.innerHTML = leavingTime
+                            leavingTimeText.value = leavingTime
+                            leavingTimeDisplay.setAttribute('data-leaving-time-id', `${res.data.id}`)
+                            const deleteLeavingTimeBtn = document.getElementById(`delete_leaving_time_btn${Id}`)
+                            deleteLeavingTimeBtn.setAttribute('data-leaving-time-id', `${res.data.id}`)
+                        }
+                    });
+                })
+            });
+        });
 }
