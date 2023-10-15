@@ -1,7 +1,10 @@
 .pdf_container
     .class_page_top.pdf_header
         .class_name
-            %p.class_name_display #{@school_class.grade_class} 時間割
+            - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                %p.class_name_display #{@school_class.grade_class} じかんわり
+            - else
+                %p.class_name_display #{@school_class.grade_class} 時間割
     .table_box.pdf_table_box
         %table.class_weekly
             %tr
@@ -10,7 +13,10 @@
                     - next unless @display_wday.include?(date.wday)
                     %th.date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
             %tr.event_row
-                %td.left_column 行事予定
+                - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                    %td.left_column ぎょうじ
+                - else
+                    %td.left_column 行事予定
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td.pdf_event_cell
@@ -19,7 +25,10 @@
                             - if event
                                 %p.event_display.pdf_event_display  #{event.event_name.html_safe}
             %tr.morning_act_row
-                %td.left_column 朝
+                - if @school_class.grade_id ==1
+                    %td.left_column あさ
+                - else
+                    %td.left_column 朝
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td.morning_act_cell
@@ -46,7 +55,10 @@
                                         %p.lesson_subject #{lesson.grade_subject.subject.subject_name}
                                         %p.lesson_unit #{unit_name}
             %tr.item_row
-                %td.left_column 持ち物
+                - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                    %td.left_column もちもの
+                - else
+                    %td.left_column 持ち物
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td
@@ -55,7 +67,10 @@
                             - if item
                                 %p.item_display #{item.item_name.html_safe}
             %tr.leav_time_row.pdf_leav_time_row
-                %td.left_column 下校時刻
+                - if @school_class.grade_id ==1
+                    %td.left_column げこう
+                - else
+                    %td.left_column 下校
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td
