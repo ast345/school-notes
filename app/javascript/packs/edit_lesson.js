@@ -134,12 +134,13 @@ export function editLesson(schoolClassId) {
                     })
                     .then((res) =>{
                         var resData= res.data
+                        var resSubjectName= resData.grade_subject_name
                         $(`#grade_subject_units${Id}`).addClass('hidden')
                         $(`#${Id}.edit_lesson_box`).addClass('hidden')
                         $(`#got_lesson${Id}`).removeClass('hidden')
                         $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
                         // 中身を差し替え
-                        displayLessonSubject.innerHTML = `${selectSubject.value}`
+                        displayLessonSubject.innerHTML = `${resSubjectName}`
                         displayLessonUnit.innerHTML = `${selectedUnitName}`
 
                         // 再変更のために定義変更
@@ -166,12 +167,13 @@ export function editLesson(schoolClassId) {
                             })
                             .then((res) => {
                                 var resData = res.data
+                                var resSubjectName = resData.grade_subject_name
                                 $(`#${Id}.edit_lesson_box`).addClass('hidden')
                                 $(`#${Id}`+'.new_unit_box').addClass('hidden')
                                 $(`#got_lesson${Id}`).removeClass('hidden')
                                 $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
 
-                                displayLessonSubject.innerHTML = `${selectSubject.value}`
+                                displayLessonSubject.innerHTML = `${resSubjectName}`
                                 displayLessonUnit.innerHTML = `${newUnitName}`
 
                                 SubjectName = `${selectSubject.value}`

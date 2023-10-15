@@ -107,10 +107,11 @@ export function createLesson(schoolClassId) {
                             })
                             .then((res) => {
                                 if(res.status === 200){
+                                    var resSubjectName = res.data.grade_subject_name
                                     $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                                     $(`#grade_subject_units${Id}`).addClass('hidden')
                                     $(`#got_lesson${Id}`).removeClass('hidden')
-                                    displayLessonSubject.innerHTML = `${selectSubject.value}`
+                                    displayLessonSubject.innerHTML = `${resSubjectName}`
                                     displayLessonUnit.innerHTML = `${selectedUnitName}`
 
                                     lessonBtnDisplay();
@@ -135,10 +136,11 @@ export function createLesson(schoolClassId) {
                                     })
                                     .then((res) => {
                                         if(res.status === 200){
+                                            var resSubjectName = res.data.grade_subject_name
                                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                                             $(`#${Id}`+'.new_unit_box').addClass('hidden')
                                             $(`#got_lesson${Id}`).removeClass('hidden')
-                                            displayLessonSubject.innerHTML = `${selectSubject.value}`
+                                            displayLessonSubject.innerHTML = `${resSubjectName}`
                                             displayLessonUnit.innerHTML = `${newUnitName}`
                                             lessonBtnDisplay();
                                             createDataSet(res);
