@@ -113,7 +113,7 @@
                                             %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
                                             %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}", lesson_id: lesson.id}}
                                     .got_lesson{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", date: date, day_of_week: date.wday, period: period, lesson_id: lesson.id, subject_name: lesson.grade_subject.subject.subject_name, grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
-                                        %p.lesson_subject{id: "lesson_subject#{period}#{date}"} #{lesson.grade_subject.subject.subject_name}
+                                        %p.lesson_subject{id: "lesson_subject#{period}#{date}"} #{lesson.grade_subject_name}
                                         %p.lesson_unit{id: "lesson_unit#{period}#{date}"} #{unit_name}
                                     .edit_lesson_box.hidden{id: "#{period}#{date}"}
                                         = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{date}", include_blank: true, class: "select_subject"

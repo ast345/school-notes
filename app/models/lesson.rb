@@ -24,7 +24,12 @@ class Lesson < ApplicationRecord
     belongs_to :grade_subject_unit, optional: true
 
     def grade_subject_name
-        grade_subject.subject.subject_name
+        grade_id = grade_subject.grade.id
+        if grade_id == 1 or grade_id == 2
+            grade_subject.subject.yomigana
+        else
+            grade_subject.subject.subject_name
+        end
     end
 
     def unit_name
