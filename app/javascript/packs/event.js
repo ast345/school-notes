@@ -121,4 +121,6 @@ export function event(schoolClassId) {
             document.addEventListener('click', editEventEndHandler);
         });
     });
+
+
 }

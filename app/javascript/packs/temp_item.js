@@ -4,8 +4,7 @@ import { csrfToken } from 'rails-ujs'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
-export function dateItem(schoolClassId) {
-
+export function tempItem(schoolClassId) {
         // 文字の大きさ調整
         function adjustItemFontSize(element) {
             const textElem = element;
@@ -20,9 +19,7 @@ export function dateItem(schoolClassId) {
         // 持ち物の追加
     $('.item_create_btn').each(function(index, element){
         const Id = element.id
-        const dataSet = $(element).data()
-        var date = dataSet.date
-        var dayOfWeek = dataSet.dayOfWeek
+        var dayOfWeek = $(element).data().dayOfWeek
 
         $(`#${Id}.item_create_btn`).on('click', () =>{
             $(`#${Id}.item_btn_box`).addClass('hidden')
@@ -38,8 +35,8 @@ export function dateItem(schoolClassId) {
                         $(`#${Id}.item_text_box`).addClass('hidden')
                         document.removeEventListener('click', createDateItemEndHandler);
                     } else {
-                        axios.post(`/school_classes/${schoolClassId}/date_items`, {
-                            item: {date: date, day_of_week: dayOfWeek, item_name: newItem}
+                        axios.post(`/school_classes/${schoolClassId}/template_date_items`, {
+                            temp_item: {day_of_week: dayOfWeek, item_name: newItem}
                         })
                         .then((res) =>{
                             if(res.status === 200){
@@ -64,13 +61,13 @@ export function dateItem(schoolClassId) {
     $(`.item_display`).each(function(index, element){
         const dataSet = $(element).data()
         const Id = dataSet.id
-        var itemId = dataSet.dateItemId
+        var tempItemId = dataSet.dateItemId
         const itemDisplay = document.getElementById(`item_display${Id}`)
         //datasetが追加されたことを検知して再定義
         var observer = new MutationObserver(function(mutationsList) {
             for (var mutation of mutationsList) {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'data-item-id') {
-                    itemId = Number(itemDisplay.getAttribute('data-item-id'))
+                    tempItemId = Number(itemDisplay.getAttribute('data-item-id'))
                 }
             }
         });
@@ -89,7 +86,7 @@ export function dateItem(schoolClassId) {
                 if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
                     var editItem = $(`#item_text${Id}`).val();
                     if (!editItem) {
-                        axios.delete(`/school_classes/${schoolClassId}/date_items/${itemId}`)
+                        axios.delete(`/school_classes/${schoolClassId}/template_date_items/${tempItemId}`)
                         .then((res) =>{
                             if(res.status === 204){
                                 $(`#${Id}.item_btn_box`).removeClass('hidden')
@@ -98,8 +95,8 @@ export function dateItem(schoolClassId) {
                             };
                         });
                     } else {
-                        axios.patch(`/school_classes/${schoolClassId}/date_items/${itemId}`, {
-                            item: {item_name: editItem}
+                        axios.patch(`/school_classes/${schoolClassId}/template_date_items/${tempItemId}`, {
+                            temp_item: {item_name: editItem}
                         })
                         .then((res) =>{
                             if(res.status === 200){
@@ -118,39 +115,6 @@ export function dateItem(schoolClassId) {
             };
 
             document.addEventListener('click', editDateItemEndHandler);
-        });
-    });
-
-
-    $('.add_from_temp').on('click', (event) =>{
-        const startOfWeek = $(event.currentTarget).data('startOfWeek');
-        axios.get(`	/school_classes/${schoolClassId}/template_date_items/get_temp`, {
-            params: {start_of_week: startOfWeek}
-        })
-        .then((res) =>{
-            var template_date_items = res.data
-            template_date_items.forEach(function(template_date_item){
-                const date =template_date_item.date
-                const Id =`${date}`
-                const dayOfWeek = template_date_item.day_of_week
-                const newItem = template_date_item.item_name
-                const dateItemText = document.getElementById(`item_text${Id}`)
-
-                axios.post(`/school_classes/${schoolClassId}/date_items`, {
-                    item: {date: date, day_of_week: dayOfWeek, item_name: newItem}
-                })
-                .then((res) =>{
-                    if(res.status === 200){
-                        $(`#item_display${Id}`).removeClass('hidden')
-                        $(`#${Id}.item_btn_box`).addClass('hidden')
-                        const itemDisplay = document.getElementById(`item_display${Id}`)
-                        itemDisplay.innerHTML = `${res.data.item_name}`
-                        itemDisplay.setAttribute('data-item-id', `${res.data.id}`)
-                        dateItemText.value = res.data.item_name
-                        adjustItemFontSize(itemDisplay);
-                    }
-                });
-            });
         });
     });
 }

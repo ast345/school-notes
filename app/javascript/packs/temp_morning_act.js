@@ -4,7 +4,7 @@ import { csrfToken } from 'rails-ujs'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
-export function morningActivity(schoolClassId) {
+export function tempMorningActivity(schoolClassId) {
     // 文字の大きさ調整
     function adjustFontSize(element) {
         const textElem = element;
@@ -20,9 +20,7 @@ export function morningActivity(schoolClassId) {
     //朝活動の追加
     $('.morning_act_create_btn').each(function(index, element){
         const Id = element.id
-        const dataSet = $(element).data()
-        var date = dataSet.date
-        var dayOfWeek = dataSet.dayOfWeek
+        var dayOfWeek = $(element).data().dayOfWeek
 
         $(`#${Id}.morning_act_create_btn`).on('click', () =>{
             $(`#${Id}.morning_act_btn_box`).addClass('hidden')
@@ -32,14 +30,13 @@ export function morningActivity(schoolClassId) {
                 var creatingElement = $(`#${Id}.morning_act_box`);
                 if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
                     var newMorningAct = $(`#morning_act_text${Id}`).val();
-
                     if (!newMorningAct) {
                         $(`#${Id}.morning_act_btn_box`).removeClass('hidden')
                         $(`#${Id}.morning_act_text_box`).addClass('hidden')
                         document.removeEventListener('click', createMorningActEndHandler);
                     } else {
-                        axios.post(`/school_classes/${schoolClassId}/morning_activities`, {
-                            morning_act: {date: date, day_of_week: dayOfWeek, activity_name: newMorningAct}
+                        axios.post(`/school_classes/${schoolClassId}/template_morning_activities`, {
+                            temp_morning_act: {day_of_week: dayOfWeek, activity_name: newMorningAct}
                         })
                         .then((res) =>{
                             if(res.status === 200){
@@ -61,7 +58,7 @@ export function morningActivity(schoolClassId) {
         })
     })
 
-    //朝活動の編集
+    // //朝活動の編集
     $(`.morning_act_display`).each(function(index, element){
         const dataSet = $(element).data()
         const Id = dataSet.id
@@ -77,7 +74,6 @@ export function morningActivity(schoolClassId) {
         });
 
         observer.observe(morningActDisplay, { attributes: true})
-        
         $(`#morning_act_display${Id}`).on('click', () => {
             $(this).addClass('hidden')
             $(`#${Id}.morning_act_text_box`).removeClass('hidden')
@@ -87,7 +83,7 @@ export function morningActivity(schoolClassId) {
                 if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
                     var editMorningAct = $(`#morning_act_text${Id}`).val();
                     if (!editMorningAct) {
-                        axios.delete(`/school_classes/${schoolClassId}/morning_activities/${morningActId}`)
+                        axios.delete(`/school_classes/${schoolClassId}/template_morning_activities/${morningActId}`)
                         .then((res) =>{
                             if(res.status === 204){
                                 $(`#${Id}.morning_act_btn_box`).removeClass('hidden')
@@ -96,8 +92,8 @@ export function morningActivity(schoolClassId) {
                             };
                         });
                     } else {
-                        axios.patch(`/school_classes/${schoolClassId}/morning_activities/${morningActId}`, {
-                            morning_act: {activity_name: editMorningAct}
+                        axios.patch(`/school_classes/${schoolClassId}/template_morning_activities/${morningActId}`, {
+                            temp_morning_act: {activity_name: editMorningAct}
                         })
                         .then((res) =>{
                             if(res.status === 200){
@@ -119,36 +115,5 @@ export function morningActivity(schoolClassId) {
         });
     });
 
-    $('.add_from_temp').on('click', (event) =>{
-        const startOfWeek = $(event.currentTarget).data('startOfWeek');
-        axios.get(`	/school_classes/${schoolClassId}/template_morning_activities/get_temp`, {
-            params: {start_of_week: startOfWeek}
-        })
-        .then((res) =>{
-            var template_morning_acts = res.data
-            template_morning_acts.forEach(function(template_morning_act){
-                const date = template_morning_act.date
-                const Id = `${date}`
-                const dayOfWeek = template_morning_act.day_of_week
-                const newMorningAct = template_morning_act.activity_name
-                const morningActText = document.getElementById(`morning_act_text${Id}`)
-                axios.post(`/school_classes/${schoolClassId}/morning_activities`, {
-                    morning_act: {date: date, day_of_week: dayOfWeek, activity_name: newMorningAct}
-                })
-                .then((res) =>{
-                    if(res.status === 200){
-                        $(`#morning_act_display${Id}`).removeClass('hidden')
-                        $(`#${Id}.morning_act_btn_box`).addClass('hidden')
-
-                        const morningActDisplay = document.getElementById(`morning_act_display${Id}`)
-                        morningActDisplay.innerHTML = `${res.data.activity_name}`
-                        morningActDisplay.setAttribute('data-morning-activity-id', `${res.data.id}`)
-                        morningActText.value = res.data.activity_name
-                        adjustFontSize(morningActDisplay);
-                    }
-                });
-            })
-        })
-    });
 
 }

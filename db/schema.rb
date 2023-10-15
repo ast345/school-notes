@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_04_114834) do
+ActiveRecord::Schema.define(version: 2023_10_09_123915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,26 @@ ActiveRecord::Schema.define(version: 2023_10_04_114834) do
     t.index ["user_id"], name: "index_teachers_on_user_id"
   end
 
+  create_table "template_class_leaving_times", force: :cascade do |t|
+    t.time "leaving_time"
+    t.integer "day_of_week"
+    t.bigint "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["day_of_week", "school_class_id"], name: "temp_leav_times_validates", unique: true
+    t.index ["school_class_id"], name: "index_template_class_leaving_times_on_school_class_id"
+  end
+
+  create_table "template_date_items", force: :cascade do |t|
+    t.string "item_name", null: false
+    t.integer "day_of_week"
+    t.bigint "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["day_of_week", "school_class_id"], name: "temp_d_items_validates", unique: true
+    t.index ["school_class_id"], name: "index_template_date_items_on_school_class_id"
+  end
+
   create_table "template_lesson_classes", force: :cascade do |t|
     t.bigint "school_class_id", null: false
     t.bigint "template_lesson_id", null: false
@@ -185,6 +205,16 @@ ActiveRecord::Schema.define(version: 2023_10_04_114834) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grade_subject_id"], name: "index_template_lessons_on_grade_subject_id"
+  end
+
+  create_table "template_morning_activities", force: :cascade do |t|
+    t.string "activity_name", null: false
+    t.integer "day_of_week", null: false
+    t.bigint "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["day_of_week", "school_class_id"], name: "temp_m_act_validates", unique: true
+    t.index ["school_class_id"], name: "index_template_morning_activities_on_school_class_id"
   end
 
   create_table "user_to_types", force: :cascade do |t|
