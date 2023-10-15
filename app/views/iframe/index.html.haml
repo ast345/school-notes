@@ -12,7 +12,10 @@
                 - next unless @display_wday.include?(date.wday)
                 %th.iframe_date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
         %tr.event_row
-            %td.iframe_left_column 行事予定
+            - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                %td.left_column ぎょうじ
+            - else
+                %td.left_column 行事予定
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td.event_cell
@@ -21,7 +24,10 @@
                         - if event
                             %p.iframe_event_display  #{event.event_name.html_safe}
         %tr.morning_act_row
-            %td.iframe_left_column 朝
+            - if @school_class.grade_id ==1
+                %td.left_column あさ
+            - else
+                %td.left_column 朝
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td.morning_act_cell
@@ -48,7 +54,10 @@
                                     %p.lesson_subject #{lesson.grade_subject.subject.subject_name}
                                     %p.iframe_lesson_unit #{unit_name}
         %tr.iframe_item_row
-            %td.iframe_left_column 持ち物
+            - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                %td.left_column もちもの
+            - else
+                %td.left_column 持ち物
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td
@@ -57,7 +66,10 @@
                         - if item
                             %p.iframe_item_display  #{item.item_name.html_safe}
         %tr
-            %td.iframe_left_column 下校時刻
+            - if @school_class.grade_id ==1
+                %td.left_column げこう
+            - else
+                %td.left_column 下校
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td
