@@ -55,7 +55,10 @@
                     - next unless @display_wday.include?(date.wday)
                     %th.date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
             %tr.event_row
-                %td.left_column 行事予定
+                - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                    %td.left_column ぎょうじ
+                - else
+                    %td.left_column 行事予定
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td.event_cell
@@ -74,7 +77,10 @@
                                     = text_area_tag :event_text, '', class: 'event_text', id: "event_text#{date}"
                                 %p.event_display.hidden{id: "event_display#{date}", data: {id: "#{date}"}}
             %tr.morning_act_row
-                %td.left_column 朝
+                - if @school_class.grade_id ==1
+                    %td.left_column あさ
+                - else
+                    %td.left_column 朝
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td.morning_act_cell
@@ -113,7 +119,7 @@
                                             %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}", date: date, period: period, day_of_week: date.wday}}
                                             %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{date}",data: {id:"#{period}#{date}", lesson_id: lesson.id}}
                                     .got_lesson{id: "got_lesson#{period}#{date}", data: {id: "#{period}#{date}", date: date, day_of_week: date.wday, period: period, lesson_id: lesson.id, subject_name: lesson.grade_subject.subject.subject_name, grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
-                                        %p.lesson_subject{id: "lesson_subject#{period}#{date}"} #{lesson.grade_subject.subject.subject_name}
+                                        %p.lesson_subject{id: "lesson_subject#{period}#{date}"} #{lesson.grade_subject_name}
                                         %p.lesson_unit{id: "lesson_unit#{period}#{date}"} #{unit_name}
                                     .edit_lesson_box.hidden{id: "#{period}#{date}"}
                                         = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{date}", include_blank: true, class: "select_subject"
@@ -141,7 +147,10 @@
                                     .new_lesson_menu{id: "#{period}#{date}"}
                                         %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}} &nbsp;新規
             %tr.item_row
-                %td.left_column 持ち物
+                - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                    %td.left_column もちもの
+                - else
+                    %td.left_column 持ち物
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td
@@ -160,7 +169,10 @@
                                     = text_area_tag :item_text, '', class: 'item_text', id: "item_text#{date}"
                                 %p.item_display.hidden{id: "item_display#{date}", data: {id: "#{date}"}}
             %tr
-                %td.left_column 下校時刻
+                - if @school_class.grade_id ==1
+                    %td.left_column げこう
+                - else
+                    %td.left_column 下校
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td
