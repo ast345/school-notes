@@ -18,12 +18,13 @@
     = stylesheet_link_tag 'responsible', media: 'all', 'data-turbolinks-track': 'reload'
     
   %body
-    - if @show_header
+    .page_container
+      -# - if @show_header
       %header.header
         .header_logos
-          =image_tag 'School Notes.png', class: 'header_logo'
-    - if flash.present?
-      .flash
-        - flash.each do |key, value|
-          %div{:class => key}= value
-    = yield
+          %h1 School Notes
+      - if flash.present?
+        .flash
+          - flash.each do |key, value|
+            %div{:class => key}= value
+      = yield

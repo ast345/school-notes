@@ -56,6 +56,8 @@
   
   .container {
     flex: 1;
+    margin-left: 260px;
+    overflow-y: auto;
 
     // position: relative;
     // padding: 60px 32px;
@@ -84,18 +86,15 @@
   }
 
   .header {
+    position: fixed;
+    height: 100vh;
     width: 260px;
     padding: 20px 20px;
-
     background-color: rgb(219,217,214);
-    // display: block;
-    // height: 60px;
-    // border-bottom: solid 2px #ddd;
-    // .header_logo{
-    //     position: absolute;
-    //     padding-top: 13px;
-    //     padding-left: 40px;
-    // }
+    &_logos{
+      text-align: center;
+      font-size: 15px;
+    }
 }
 
 .page_header{
