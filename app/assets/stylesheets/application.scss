@@ -16,7 +16,6 @@
 
  @import 'devise';
  @import 'setting';
- @import 'header';
  @import 'table';
  @import 'schoolclass';
  @import 'pdf';
@@ -48,11 +47,19 @@
     letter-spacing: 0.05em;
     line-height: 1.5;
   }
+
+  .page_container{
+    display: flex;
+    height: 100vh;
+    background-color: rgb(246,246,246);
+  }
   
   .container {
-    position: relative;
-    padding: 60px 32px;
-    width: 100%;
+    flex: 1;
+
+    // position: relative;
+    // padding: 60px 32px;
+
  
     .title{
       position: relative;
@@ -76,8 +83,39 @@
     display: none;
   }
 
+  .header {
+    width: 260px;
+    padding: 20px 20px;
+
+    background-color: rgb(219,217,214);
+    // display: block;
+    // height: 60px;
+    // border-bottom: solid 2px #ddd;
+    // .header_logo{
+    //     position: absolute;
+    //     padding-top: 13px;
+    //     padding-left: 40px;
+    // }
+}
+
+.page_header{
+    &_title{
+        display: block;
+        position: relative;
+        text-align: center;
+        
+
+        color: #000;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+  }
+
   @media (max-width: 480px) {
     .container{
       padding: 40px 5px;
     }
   }
+
