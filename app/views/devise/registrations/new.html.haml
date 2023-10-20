@@ -1,30 +1,30 @@
-.devise-box
-  %h1.devise-box-title School Notes
-  %h3.devise-box-subtitle サインアップ
-  .form-box
-    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-      = render "devise/shared/error_messages", resource: resource
-      .field
-        .username-box
-          = f.label :ユーザ名
-          %br/
-          =f.text_field :name, autocomplete: "name", autofocus: true
-      .field
-        .email-box
-          = f.label :メールアドレス
-          %br/
-          = f.email_field :email, autofocus: true, autocomplete: "email"
-      .field
-        .password-box
-          = f.label :パスワード
-          %br/
-          = f.password_field :password, autocomplete: "new-password"
-      .field
-        .password-box
-          = f.label :パスワード（確認）
-          %br/
-          = f.password_field :password_confirmation, autocomplete: "new-password"
-      .actions
-        = f.submit "登録"
-    %hr.devise-section-line
-    = render "devise/shared/links"
+.container
+  .devise-box
+    %h1.devise-box-title School Notes
+    %h3.devise-box-subtitle サインアップ
+    .form-box
+      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+        = render "devise/shared/error_messages", resource: resource
+        .field
+          .username-box
+            = f.label :ユーザ名
+            %br/
+            =f.text_field :name, autocomplete: "name", autofocus: true
+        .field
+          .email-box
+            = f.label :メールアドレス
+            %br/
+            = f.email_field :email, autofocus: true, autocomplete: "email"
+        .field
+          .password-box
+            = f.label :パスワード
+            %br/
+            = f.password_field :password, autocomplete: "new-password"
+        .field
+          .password-box
+            = f.label :パスワード（確認）
+            %br/
+            = f.password_field :password_confirmation, autocomplete: "new-password"
+        .actions
+          = f.submit "登録"
+      = render "devise/shared/links"
