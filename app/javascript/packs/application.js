@@ -22,3 +22,27 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 import $ from 'jquery';
 import axios from 'axios';
+
+document.addEventListener('turbolinks:load', () =>{
+    $(".menu-btn").on('click', (event) =>{
+        $('.resp_header_overlay').removeClass('hidden');
+        $('.cover').removeClass('hidden');
+        event.stopPropagation();
+
+    });
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('.resp_header_overlay').length) {
+            $('.resp_header_overlay').addClass('hidden');
+            $('.cover').addClass('hidden');
+        }
+    });
+    $('.close-btn').on('click', ()=> {
+        $('.resp_header_overlay').addClass('hidden');
+        $('.cover').addClass('hidden');
+    });
+});
+
+// document.querySelector('.menu-btn').addEventListener('click', function() {
+//   });
+  
+  

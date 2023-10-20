@@ -27,4 +27,13 @@
         .flash
           - flash.each do |key, value|
             %div{:class => key}= value
+      %header.resp_header.hidden
+        %i.fa-solid.fa-bars.menu-btn
+        .header_logos
+          %h1 School Notes
+      .resp_header_overlay.hidden
+        %i.fa-solid.fa-circle-xmark.close-btn
+        .header_logos
+          %h1 School Notes
+      .cover.hidden
       = yield

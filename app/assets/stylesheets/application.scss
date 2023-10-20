@@ -21,6 +21,8 @@
  @import 'pdf';
  @import 'iframe';
 
+ $header-grey: rgb(219,217,214);
+ $main-black: #333;
  html {
     word-spacing: 1px;
     -ms-text-size-adjust: 100%;
@@ -58,27 +60,23 @@
     flex: 1;
     margin-left: 260px;
     overflow-y: auto;
-
-    // position: relative;
-    // padding: 60px 32px;
-
  
-    .title{
-      position: relative;
-      width: 183px;
-      height: 36px;
-      top: 33px;
-      margin-bottom: 80px;
+    // .title{
+    //   position: relative;
+    //   width: 183px;
+    //   height: 36px;
+    //   top: 33px;
+    //   margin-bottom: 80px;
  
-      font-style: normal;
-      font-weight: 800;
-      font-size: 26px;
-      line-height: 36px;
-       /* identical to box height */
+    //   font-style: normal;
+    //   font-weight: 800;
+    //   font-size: 26px;
+    //   line-height: 36px;
+    //    /* identical to box height */
  
  
-      color: #000000;
-    }
+    //   color: #000000;
+    // }
   }
 
   .hidden {
@@ -90,31 +88,72 @@
     height: 100vh;
     width: 260px;
     padding: 20px 20px;
-    background-color: rgb(219,217,214);
+    background-color: $header-grey;
     &_logos{
       text-align: center;
-      font-size: 15px;
+      font-size: 14px;
+      color: $main-black;
     }
 }
 
-.page_header{
-    &_title{
-        display: block;
-        position: relative;
-        text-align: center;
-        
+.cover{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background: rgba(3,3,3,.5);
+}
 
-        color: #000;
-        font-size: 30px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-    }
-  }
 
   @media (max-width: 480px) {
+    .page_container{
+      display: block;
+    }
+    .header{
+      display: none;
+    }
+    .resp_header{
+      display: block;
+      height: 50px;
+      background-color: $header-grey;
+      padding: 5px;
+      &_overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80%;
+        height: 100%;
+        background-color: $header-grey;
+        z-index: 100;
+      }
+    }
+    .header_logos{
+      font-size: 10px;
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 10px;
+    }
     .container{
-      padding: 40px 5px;
+      //   padding: 40px 5px;
+      display: block;
+      margin-left: 0;
+    }
+    .menu-btn{
+      cursor: pointer;
+      display: inline-block;
+      color: $main-black;
+      font-size: 24px;
+      vertical-align: middle;
+    }
+    .close-btn{
+      cursor: pointer;
+      display: inline-block;
+      color: $main-black;
+      font-size: 24px;
+      padding: 5px;
+      vertical-align: middle;
     }
   }
 
