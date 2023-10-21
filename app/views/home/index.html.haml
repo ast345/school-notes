@@ -1,2 +1,15 @@
 .container
-    %h1 Home
+    .page_title_box
+        %h1 School Notes
+        %h2.page_title_sub 時間割作成・共有をカンタンに
+    .page_explain_box
+        .page_explain_left
+        .page_explain_right
+            .page_explain_right_box
+                %i.fa-solid.fa-check.page_explain_text &nbsp;直感的な操作でカンタン作成
+                %i.fa-solid.fa-check.page_explain_text &nbsp;いつでも最新の時間割をカンタン共有
+                %i.fa-solid.fa-check.page_explain_text &nbsp;印刷対応
+                %i.fa-solid.fa-check.page_explain_text &nbsp;無料
+            .page_explain_right_btn
+                = link_to "登録", new_user_registration_path, class: "sign_up_btn"
+                = link_to "ログイン", user_session_path, class: "sign_in_btn"

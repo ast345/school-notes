@@ -1,18 +1,19 @@
-.devise-box
-  %h1.devise-box-title School Notes
-  %h3.devise-box-subtitle サインイン
-  .form-box
-    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-      .field
-        .email-box
-          = f.label :メールアドレス
-          %br/
-          = f.email_field :email, autofocus: true, autocomplete: "email"
-      .field
-        .password-box
-          = f.label :パスワード
-          %br/
-          = f.password_field :password, autocomplete: "current-password"
-      .actions
-        = f.submit "ログイン"
-    = render "devise/shared/links"
+.container
+  .devise-box
+    %h1.devise-box-title School Notes
+    %h3.devise-box-subtitle サインイン
+    .form-box
+      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .field
+          .email-box
+            = f.label :メールアドレス
+            %br/
+            = f.email_field :email, autofocus: true, autocomplete: "email"
+        .field
+          .password-box
+            = f.label :パスワード
+            %br/
+            = f.password_field :password, autocomplete: "current-password"
+        .actions
+          = f.submit "ログイン", class: "submit_btn"
+      = render "devise/shared/links"

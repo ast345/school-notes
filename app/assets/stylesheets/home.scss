@@ -1,0 +1,77 @@
+@import './variables';
+.page_title{
+    &_box{
+        padding-top: 60px;
+        text-align: center;
+        color: $main-black;
+    }
+    &_sub{
+        padding-top: 10px;
+    }
+}
+
+.page_explain{
+    &_box{
+        display: flex;
+        padding-top: 60px;
+    }
+    &_left{
+        width: 50%;
+        background-color: rgb(118, 118, 118);
+    }
+    &_right{
+        width: 50%;
+        &_box, &_btn{
+            padding: 10px;
+        }
+        &_btn{
+            display: flex;
+        }
+    }
+    &_text{
+        display: block;
+        line-height: 150%;
+        color: $main-black;
+    }
+}
+
+.sign{
+    &_up_btn{
+        display: flex;
+        width: 40%;
+        height: 40px;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: $main-red;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover{
+            background-color: white;
+            color: $main-red;
+            border: 1px solid $main-red;
+        }
+    }
+
+    &_in_btn{
+        display: flex;
+        height: 40px;
+        margin-left: 5%;
+        width: 40%;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        background-color: $main-black;
+        border-radius: 5px;
+
+        &:hover{
+
+            color: $main-black;
+            background-color: white;
+            border: 1px solid $main-black;
+        }
+    }
+}

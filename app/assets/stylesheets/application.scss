@@ -20,9 +20,9 @@
  @import 'schoolclass';
  @import 'pdf';
  @import 'iframe';
+ @import 'home';
+ @import './variables';
 
- $header-grey: rgb(219,217,214);
- $main-black: #333;
  html {
     word-spacing: 1px;
     -ms-text-size-adjust: 100%;
