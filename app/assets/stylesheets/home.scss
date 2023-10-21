@@ -75,3 +75,28 @@
         }
     }
 }
+
+@media (max-width: 480px) {
+    .page_explain{
+        &_box{
+            flex-direction: column;
+        }
+        &_left{
+            width: 100%;
+            height: 50px;
+        }
+        &_right{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            &_box{
+                width: fit-content;
+            }
+            &_btn{
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    }
+}
