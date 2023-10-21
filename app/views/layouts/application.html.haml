@@ -29,7 +29,8 @@
               %div{:class => key}= value
         .header_bottom
           = link_to "ご意見箱", opinions_path, class: "header_link"
-          = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header_link"
+          - if user_signed_in?
+            = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header_link"
       %header.resp_header.hidden
         %i.fa-solid.fa-bars.menu-btn
         .header_logos
@@ -44,6 +45,7 @@
           %h1 School Notes
         .header_bottom
           = link_to "ご意見箱", opinions_path, class: "header_link"
-          = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header_link"
+          - if user_signed_in?
+            = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header_link"
       .cover.hidden
       = yield
