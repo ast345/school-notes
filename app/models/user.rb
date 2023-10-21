@@ -26,7 +26,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_many :user_to_types, foreign_key: 'users_id'
   has_one :teacher
-  after_create :create_user_to_type
+  after_create :create_user_rel
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -54,7 +54,9 @@ class User < ApplicationRecord
     uid.present?
   end
 
-  def create_user_to_type
+  def create_user_rel
     self.user_to_types.create(users_id: self.id, user_types_id: 1)
+    @teacher = self.build_teacher(user_id: self.id, display_name: self.name)
+    @teacher.save
   end
 end
