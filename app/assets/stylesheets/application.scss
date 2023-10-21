@@ -106,7 +106,6 @@
   background: rgba(3,3,3,.5);
 }
 
-
   @media (max-width: 480px) {
     .page_container{
       display: block;
@@ -116,7 +115,7 @@
     }
     .resp_header{
       display: block;
-      height: 50px;
+      height: 60px;
       background-color: $header-grey;
       padding: 5px;
       &_overlay{

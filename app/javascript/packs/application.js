@@ -40,9 +40,9 @@ document.addEventListener('turbolinks:load', () =>{
         $('.resp_header_overlay').addClass('hidden');
         $('.cover').addClass('hidden');
     });
-});
 
-// document.querySelector('.menu-btn').addEventListener('click', function() {
-//   });
-  
-  
+
+    $(function(){
+        setTimeout("$('.flash').fadeOut('slow')", 2000);
+    });
+});

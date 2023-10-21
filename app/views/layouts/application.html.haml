@@ -23,14 +23,20 @@
       %header.header
         .header_logos
           %h1 School Notes
-      - if flash.present?
-        .flash
-          - flash.each do |key, value|
-            %div{:class => key}= value
+        - if flash.present?
+          .flash
+            - flash.each do |key, value|
+              %div{:class => key}= value
+        .sign_out
+          = link_to "ログアウト", destroy_user_session_path, method: :delete
       %header.resp_header.hidden
         %i.fa-solid.fa-bars.menu-btn
         .header_logos
           %h1 School Notes
+        - if flash.present?
+          .flash
+            - flash.each do |key, value|
+              %div{:class => key}= value
       .resp_header_overlay.hidden
         %i.fa-solid.fa-circle-xmark.close-btn
         .header_logos
