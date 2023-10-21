@@ -41,8 +41,5 @@ document.addEventListener('turbolinks:load', () =>{
         $('.cover').addClass('hidden');
     });
 
-
-    $(function(){
-        setTimeout("$('.flash').fadeOut('slow')", 2000);
-    });
+    $('.flash').fadeOut(3000)
 });
