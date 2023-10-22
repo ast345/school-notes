@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_15_005027) do
+ActiveRecord::Schema.define(version: 2023_10_22_021121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -216,6 +216,24 @@ ActiveRecord::Schema.define(version: 2023_10_15_005027) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["day_of_week", "school_class_id"], name: "temp_m_act_validates", unique: true
     t.index ["school_class_id"], name: "index_template_morning_activities_on_school_class_id"
+  end
+
+  create_table "text_book_comps", force: :cascade do |t|
+    t.string "comp_name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "abbreviation", null: false
+  end
+
+  create_table "text_books", force: :cascade do |t|
+    t.bigint "grade_subject_id", null: false
+    t.bigint "text_book_comp_id", null: false
+    t.string "text_book_name", null: false
+    t.integer "revision_year", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_subject_id"], name: "index_text_books_on_grade_subject_id"
+    t.index ["text_book_comp_id"], name: "index_text_books_on_text_book_comp_id"
   end
 
   create_table "user_to_types", force: :cascade do |t|

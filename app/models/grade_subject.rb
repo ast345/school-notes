@@ -25,4 +25,5 @@ class GradeSubject < ApplicationRecord
     has_many :grade_subject_units, dependent: :destroy
     has_many :lessons
     has_many :template_lessons
+    has_many :text_books
 end
