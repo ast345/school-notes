@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 # db/seeds.rb
+require 'csv'
 
 #Grade事前設定データベース
 
@@ -144,6 +145,14 @@
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 12, subjects_id: subject_id)
 # end
+
+# 教科書会社
+CSV.foreach(Rails.root.join('db/csv/textbooks.csv'), headers: true) do |row|
+    TextBookComp.create(
+      comp_name: row['comp_name'],
+      abbreviation: row['abbreviation']
+    )
+  end
 
 # user_type= ['教職員', '生徒', '保護者']
 # user_type.each do |user_type|
