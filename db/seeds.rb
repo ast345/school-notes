@@ -147,12 +147,12 @@ require 'csv'
 # end
 
 # 教科書会社
-CSV.foreach(Rails.root.join('db/csv/textbooks.csv'), headers: true) do |row|
-    TextBookComp.create(
-      comp_name: row['comp_name'],
-      abbreviation: row['abbreviation']
-    )
-  end
+# CSV.foreach(Rails.root.join('db/csv/textbookscomp.csv'), headers: true) do |row|
+#     TextBookComp.create(
+#       comp_name: row['comp_name'],
+#       abbreviation: row['abbreviation']
+#     )
+#   end
 
 # user_type= ['教職員', '生徒', '保護者']
 # user_type.each do |user_type|
