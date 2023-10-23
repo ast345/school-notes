@@ -18,4 +18,5 @@
 class TextBook < ApplicationRecord
     belongs_to :grade_subject
     belongs_to :text_book_comp
+    has_many :grade_subject_unit
 end
