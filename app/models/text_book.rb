@@ -19,5 +19,6 @@ class TextBook < ApplicationRecord
     belongs_to :grade_subject
     belongs_to :text_book_comp
     has_many :grade_subject_units
+    has_many :using_texts, dependent: :destroy
     has_many :school_classes, through: :using_texts
 end

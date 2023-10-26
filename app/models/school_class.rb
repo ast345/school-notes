@@ -16,7 +16,8 @@ class SchoolClass < ApplicationRecord
     belongs_to :grade
     has_many :school_class_teachers, foreign_key: 'school_classes_id', dependent: :destroy
     has_many :teachers, through: :school_class_teachers
-    has_many :textbooks, through: :using_texts
+    has_many :using_texts, dependent: :destroy
+    has_many :text_books, through: :using_texts
     has_many :lesson_classes, dependent: :destroy
     has_many :lessons, through: :lesson_classes
     has_many :template_lesson_classes, dependent: :destroy
