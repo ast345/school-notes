@@ -9,6 +9,7 @@ document.addEventListener('turbolinks:load', () =>{
     selectGrade.addEventListener('change', function(){
         const selectedGrade = selectGrade.value;
         $('.class_subjects').empty();
+        $('.class_setting_submit_btn_box').addClass('hidden');
 
         axios.get(`/grade_subject`, {
             params: {grade_id: selectedGrade}
@@ -32,7 +33,7 @@ document.addEventListener('turbolinks:load', () =>{
                     'value': subjectData.grade_subject_id
                 }));
                 subjectBox.append($('<label>', {
-                    text: subjectData.subject_name
+                    text: ` ${subjectData.subject_name}`
                 }));
 
                 
