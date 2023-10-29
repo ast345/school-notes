@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   resources :assigned_subjects, only: [:new, :create, :destroy]
   resources :grade_subject_units, only: [:create]
   resources :opinions, only: [:index]
+  resources :grade_subject, only: [:index]
 
   get '/get_grade_subject_units', to: 'grade_subject_unit#get_grade_subject_units'
 

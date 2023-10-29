@@ -20,7 +20,7 @@ export function createLesson(schoolClassId) {
             $(`#${Id}`+'.edit_lesson_box').removeClass('hidden')
             $(`#${Id}`+'.lesson_btn_box').addClass('hidden')
             $(`#${Id}`+'.new_lesson_menu').addClass('hidden')
-
+            debugger
             selectSubject.addEventListener('change', function() {
                 const selectedSubject = selectSubject.value;
                 const gradeSubjectUnits = document.getElementById(`grade_subject_units${Id}`);
