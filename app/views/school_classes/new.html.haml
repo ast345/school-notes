@@ -5,7 +5,7 @@
     = select_tag 'grade', options_for_select(@grades), include_blank: true , class: "class_setting_grade", id: "class_setting_grade"
     .class_setting_name_box
       %h3.class_setting_title クラス名
-      = text_field 'class_name', '', class: "class_setting_name"
+      = text_field 'class_name', '', class: "class_setting_name", id: "class_setting_name"
   .class_subjects_box
     .class_subjects
   .class_setting_submit_btn_box.hidden

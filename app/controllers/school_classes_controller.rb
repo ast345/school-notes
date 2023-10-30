@@ -9,11 +9,18 @@ class SchoolClassesController < ApplicationController
 
     def create
         @school_class = SchoolClass.new(school_class_params)
+        subjects = subjects_params[:subjects_data_set]
         if @school_class.save
             school_class_teacher = @school_class.school_class_teachers.build(teacher: current_user.teacher, teacher_type: "担任")
-            school_class_teacher.save
-          # 保存成功時の処理
-            redirect_to teachers_path, notice: 'クラスを作成できました'
+            if school_class_teacher.save
+                subjects.each do |subject|
+                    AssignedSubject.create(school_class_teachers_id: school_class_teacher.id, grade_subjects_id: subject[:grade_subject_id])
+                    if subject[:text_book_id]
+                        UsingText.create(school_class_id: @school_class.id, text_book_id: subject[:text_book_id])
+                    end
+                end
+            end
+            render json: @school_class
         else
           render :new
         end
@@ -105,6 +112,10 @@ class SchoolClassesController < ApplicationController
     private
     def school_class_params
         params.require(:school_class).permit(:grade_id, :class_name)
+    end
+
+    def subjects_params
+        params.require(:subjects).permit(subjects_data_set: [:grade_subject_id, :text_book_id])
     end
 
     def hide_header
