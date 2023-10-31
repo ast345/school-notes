@@ -1,11 +1,27 @@
 .container
-  %h1.page_header クラス編集
+  %h2.create_class_header クラス情報の編集
+  .class_setting
+    %h3.class_setting_title 学年
+    = select_tag 'grade', options_for_select(@grades, @default_grade_id), include_blank: true , class: "class_setting_grade", id: "class_setting_grade"
+    .class_setting_name_box
+      %h3.class_setting_title クラス名
+      = text_field 'class_name', '', class: "class_setting_name", id: "class_setting_name", value: "#{@default_class_name}"
+  .class_subjects_box
+    .class_subjects
+      - @subjects.each do |subject|
+        .class_setting_subject
+          .subject_box
+            - if subject[:has_assigned]
+              = check_box_tag "checkbox", value = subject[:grade_subject_id], checked=true
+            - else
+              = check_box_tag "checkbox", value = subject[:grade_subject_id], checked=false
+            = label_tag "label", "#{subject[:subject_name]}"
+          - if not subject[:text_books].empty?
+            .text_book_box
+              - if subject[:using_text_id]
+                =select_tag 'text_book', options_for_select(subject[:text_books], subject[:using_text_id]), include_blank: true, class: "text_book_select"
+              - else
+                =select_tag 'text_book', options_for_select(subject[:text_books]), include_blank: true, class: "text_book_select"
+  .class_setting_submit_btn_box
+    %p.class_setting_submit_btn 変更
 
-  = form_with(model: @school_class, url: school_class_path, method: 'put') do |form|
-    = form.label :grade_id, '学年'
-    = form.select :grade_id, options_for_select(@grades)
-
-    = form.label :class_name, '組'
-    = form.text_field :class_name
-
-    = form.submit '作成'

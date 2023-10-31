@@ -29,10 +29,53 @@ class SchoolClassesController < ApplicationController
     def edit
         @school_class = SchoolClass.find(params[:id])
         @grades = Grade.all.map { |grade| [grade.full_grade_name, grade.id] }
-        grade_to_display_first = @grades.find { |grade| grade[1] == @school_class.grade_id }
-        if grade_to_display_first.present?
-            @grades.delete(grade_to_display_first)  # 指定した学年を一旦削除
-            @grades.unshift(grade_to_display_first)  # 指定した学年を配列の先頭に追加
+        grade_to_display = @grades.find { |grade| grade[1] == @school_class.grade_id }
+        @default_grade_id = grade_to_display[1]
+        @default_class_name = @school_class.class_name
+
+
+        teacher = SchoolClassTeacher.find_by(teachers_id: current_user.teacher.id, school_classes_id: @school_class.id)
+        assigned_subjects = AssignedSubject.where(school_class_teachers_id: teacher.id)
+        using_texts = UsingText.where(school_class_id: @school_class.id)
+        grade_subjects = GradeSubject.where(grades_id: @default_grade_id)
+        @subjects = []
+        grade_subjects.each do |grade_subject|
+            grade_subject_id = grade_subject.id
+            subject_name = grade_subject.subject.subject_name
+
+            if assigned_subjects.find_by(grade_subjects_id: grade_subject_id)
+                has_assigned = true
+            else
+                has_assigned =false
+            end
+
+            text_books = grade_subject.text_books
+            text_books_data = []
+            using_text_id = nil
+            text_books.each do |text_book|
+                text_book_id = text_book.id
+                text_book_name = text_book.text_book_name
+                text_book_comp = text_book.text_book_comp.abbreviation
+
+                using_text = using_texts.find_by(text_book_id: text_book_id)
+                if using_text
+                    using_text_id = text_book_id
+                end
+                text_book_data = ["#{text_book_name}(#{text_book_comp})", text_book_id]
+
+                text_books_data << text_book_data
+            end
+            # レスポンスデータを作成
+            subject_data = {
+                grade_subject_id: grade_subject_id,
+                subject_name: subject_name,
+                has_assigned: has_assigned,
+                using_text_id: using_text_id,
+                text_books: text_books_data
+            }
+
+            # レスポンスデータを配列に追加
+            @subjects << subject_data
         end
     end
 
