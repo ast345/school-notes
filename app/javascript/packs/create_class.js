@@ -162,10 +162,10 @@ document.addEventListener('turbolinks:load', () =>{
                     subjects: {subjects_data_set: subjectsDataBox}
                 })
                 .then((res) =>{
-                    // if(res.status === 200){
-                    //     var schoolClassId = res.data.id
-                    //     window.location.href = `/school_classes/${schoolClassId}`
-                    // }
+                    if(res.status === 200){
+                        var schoolClassId = res.data.id
+                        window.location.href = `/school_classes/${schoolClassId}`
+                    }
                 })
             }
         };
