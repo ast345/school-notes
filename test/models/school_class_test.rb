@@ -3,7 +3,7 @@
 # Table name: school_classes
 #
 #  id         :bigint           not null, primary key
-#  class_name :string           not null
+#  class_name :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  grade_id   :bigint           not null
