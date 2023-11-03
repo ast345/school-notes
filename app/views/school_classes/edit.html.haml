@@ -8,20 +8,21 @@
       = text_field 'class_name', '', class: "class_setting_name", id: "class_setting_name", value: "#{@default_class_name}"
   .class_subjects_box
     .class_subjects
-      - @subjects.each do |subject|
+      - @subjects.each_with_index do |subject, index|
         .class_setting_subject
           .subject_box
             - if subject[:has_assigned]
-              = check_box_tag "checkbox", value = subject[:grade_subject_id], checked=true
+              = check_box_tag "checkbox", value = subject[:grade_subject_id], checked=true, id: "subject_check_box#{index}"
             - else
-              = check_box_tag "checkbox", value = subject[:grade_subject_id], checked=false
+              = check_box_tag "checkbox", value = subject[:grade_subject_id], checked=false, id: "subject_check_box#{index}"
             = label_tag "label", "#{subject[:subject_name]}"
           - if not subject[:text_books].empty?
             .text_book_box
               - if subject[:using_text_id]
-                =select_tag 'text_book', options_for_select(subject[:text_books], subject[:using_text_id]), include_blank: true, class: "text_book_select"
+                =select_tag 'text_book', options_for_select(subject[:text_books], subject[:using_text_id]), include_blank: true, class: "text_book_select", id: "text_book_select#{index}", data: {using_text_id: subject[:using_text_id]}
               - else
-                =select_tag 'text_book', options_for_select(subject[:text_books]), include_blank: true, class: "text_book_select"
+                =select_tag 'text_book', options_for_select(subject[:text_books]), include_blank: true, class: "text_book_select", id: "text_book_select#{index}"
   .class_setting_submit_btn_box
-    %p.class_setting_submit_btn 変更
-
+    %p.class_setting_edit_submit_btn{data: {school_class_id: @school_class.id}} 変更
+    // edit送信
+= javascript_pack_tag "create_class"

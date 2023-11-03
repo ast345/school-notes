@@ -82,8 +82,50 @@ class SchoolClassesController < ApplicationController
     def update
         @school_class = SchoolClass.find(params[:id])
         @school_class.update(school_class_params)
+        subjects = subjects_params[:subjects_data_set]
+        teachers = @school_class.teachers
+        current_teacher = current_user.teacher.id
+        current_class_teacher = SchoolClassTeacher.find_by(teachers_id: current_teacher, school_classes_id: params[:id])
+        assigned_subjects = AssignedSubject.where(school_class_teachers_id: current_class_teacher.id)
         if @school_class.save
-            redirect_to teachers_path, notice: 'クラス情報を更新できました'
+            teacher_id = Teacher.find_by(user_id: current_user.id)
+            school_class_teacher_id = SchoolClassTeacher.find_by(teachers_id: teacher_id, school_classes_id: params[:id]).id
+            subjects.each do |subject|
+                has_subject = AssignedSubject.find_by(school_class_teachers_id: school_class_teacher_id, grade_subjects_id: subject[:grade_subject_id])
+                if !has_subject
+                    AssignedSubject.create(school_class_teachers_id: school_class_teacher_id, grade_subjects_id: subject[:grade_subject_id])
+                    if subject[:text_book_id]
+                        UsingText.create(school_class_id: @school_class.id, text_book_id: subject[:text_book_id])
+                    end
+                else
+                    using_text_id = subject[:using_text_id]
+                    selected_text_id = subject[:text_book_id].to_i
+                    if using_text_id != selected_text_id
+                        usingtext = UsingText.find_by(school_class_id: params[:id], text_book_id: using_text_id)
+                        usingtext.update(text_book_id: selected_text_id)
+                    end
+                end
+            end
+
+            # assigned_subjectsからgrade_subject_idを取得
+            assigned_subjects_grade_subject_ids = assigned_subjects.map { |assigned_subject| assigned_subject.grade_subjects_id }
+            subject_grade_subject_ids = subjects.map { |subject| subject["grade_subject_id"].to_i }
+            destroied_grade_subject_ids = assigned_subjects_grade_subject_ids - subject_grade_subject_ids
+            destroied_assigned_subjects = assigned_subjects.select { |assigned_subject| destroied_grade_subject_ids.include?(assigned_subject.grade_subjects_id) }
+            destroied_assigned_subjects.each do |dest_assigned_subject|
+                using_texts = UsingText.where(school_class_id: params[:id])
+                using_texts.each do |using_text|
+                    grade_subject_id = using_text.text_book.grade_subject.id
+                    if grade_subject_id == dest_assigned_subject.grade_subject.id
+                        using_text.destroy!
+                    end
+                end
+                dest_assigned_subject.destroy!
+            end
+
+            render json: @school_class
+
+
         else
             render :edit, notice: 'クラス情報を更新できませんでした'
         end
@@ -158,7 +200,7 @@ class SchoolClassesController < ApplicationController
     end
 
     def subjects_params
-        params.require(:subjects).permit(subjects_data_set: [:grade_subject_id, :text_book_id])
+        params.require(:subjects).permit(subjects_data_set: [:grade_subject_id, :text_book_id, :using_text_id])
     end
 
     def hide_header

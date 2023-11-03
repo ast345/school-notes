@@ -119,4 +119,55 @@ document.addEventListener('turbolinks:load', () =>{
             }
         };
     })
+
+    $('.class_setting_edit_submit_btn').on('click', () =>{
+        var schoolClassId = $('.class_setting_edit_submit_btn').data('school-class-id');
+        var gradeClass = selectGrade.value;
+        var className = classNameBox.value;
+
+        var subjectsDataBox = []
+        let emptyTextBookCount = 0;
+        $('.class_setting_subject').each(function(index) {
+            var subjectCheckBox = document.getElementById(`subject_check_box${index}`)
+            var usingTextId = $(`#text_book_select${index}`).data('using-text-id');
+            var select = $(this).find('select');
+            var textbook = select.val();
+            var checkbox = $(this).find('input[type="checkbox"]');
+            var subject = checkbox.val();
+            // チェックボックスの状態を確認
+            var isChecked = subjectCheckBox.checked;
+
+            if(isChecked) {
+                var subjectData = {
+                    grade_subject_id: subject,
+                    text_book_id: textbook,
+                    using_text_id: usingTextId
+                };
+
+                subjectsDataBox.push(subjectData)
+                if(textbook === ''){
+                    emptyTextBookCount++;
+                }
+            }
+        });
+
+        if(className === ''){
+            window.alert("クラス名を入力してください")
+        } else {
+            if(!emptyTextBookCount == 0){
+                window.alert("登録する教科の教科書をすべて選択してください")
+            } else {
+                axios.patch(`/school_classes/${schoolClassId}`, {
+                    school_class: {grade_id: gradeClass, class_name: className},
+                    subjects: {subjects_data_set: subjectsDataBox}
+                })
+                .then((res) =>{
+                    // if(res.status === 200){
+                    //     var schoolClassId = res.data.id
+                    //     window.location.href = `/school_classes/${schoolClassId}`
+                    // }
+                })
+            }
+        };
+    })
 })
