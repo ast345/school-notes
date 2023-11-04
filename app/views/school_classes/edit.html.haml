@@ -3,16 +3,22 @@
   .class_setting
     %h3.class_setting_title 学年
     = select_tag 'grade', options_for_select(@grades, @default_grade_id), include_blank: true , class: "class_setting_grade", id: "class_setting_grade"
-    .class_setting_name_box
-      %h3.class_setting_title クラス名
-      = text_field 'class_name', '', class: "class_setting_name", id: "class_setting_name", value: "#{@default_class_name}"
+    - if @subjects_data_count == 1
+      .class_setting_name_box
+        %h3.class_setting_title クラス名
+        = text_field 'class_name', '', class: "class_setting_name", id: "class_setting_name", value: "#{@default_class_name}"
+    - else
+      .class_setting_name_box.hidden
+        %h3.class_setting_title クラス名
+        = text_field 'class_name', '', class: "class_setting_name", id: "class_setting_name", value: "#{@default_class_name}"
   .class_subjects_box
     .class_subjects
+      - index = 0
       -@subjects_data.each do |subject_data|
         - subjects = subject_data[:grade_subjects]
         - if @subjects_data_count != 1
           %h3.grade_name_display #{subject_data[:grade_name]}
-        - subjects.each_with_index do |subject, index|
+        - subjects.each do |subject|
           .class_setting_subject
             .subject_box
               - if subject[:has_assigned]
@@ -26,6 +32,7 @@
                   =select_tag 'text_book', options_for_select(subject[:text_books], subject[:using_text_id]), include_blank: true, class: "text_book_select", id: "text_book_select#{index}", data: {using_text_id: subject[:using_text_id]}
                 - else
                   =select_tag 'text_book', options_for_select(subject[:text_books]), include_blank: true, class: "text_book_select", id: "text_book_select#{index}"
+          - index += 1
   .class_setting_submit_btn_box
     %p.class_setting_edit_submit_btn{data: {school_class_id: @school_class.id}} 変更
     // edit送信
