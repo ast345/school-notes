@@ -26,6 +26,7 @@ document.addEventListener('turbolinks:load', () =>{
             $('.class_subjects').append($('<h3>', {
                 'text' : "担当教科と教科書を選択してください。"
             }))
+            var index = 0
             subjectsDataSets.forEach(function(subjectsDataSet){
                 var grade = subjectsDataSet.grade_name
                 const subjectsData = subjectsDataSet.grade_subjects
@@ -35,7 +36,7 @@ document.addEventListener('turbolinks:load', () =>{
                         'class': 'grade_name_display'
                     }))
                 };
-                subjectsData.forEach(function(subjectData, index){
+                subjectsData.forEach(function(subjectData){
                     var classSettingSubject = $('<div>', {
                         'class': 'class_setting_subject',
                     })
@@ -88,6 +89,7 @@ document.addEventListener('turbolinks:load', () =>{
                         
                         $('.class_subjects').append(classSettingSubject);
                     }
+                    index = index+1
                 });
             })
             $('.class_setting_submit_btn_box').removeClass('hidden');
@@ -126,7 +128,24 @@ document.addEventListener('turbolinks:load', () =>{
         });
 
         if(className === ''){
-            window.alert("クラス名を入力してください")
+            if( gradeClass == 13 || gradeClass == 14 || gradeClass == 15){
+                if(!emptyTextBookCount == 0){
+                    window.alert("登録する教科の教科書をすべて選択してください")
+                } else {
+                    axios.post(`/school_classes`, {
+                        school_class: {grade_id: gradeClass},
+                        subjects: {subjects_data_set: subjectsDataBox}
+                    })
+                    .then((res) =>{
+                        if(res.status === 200){
+                            var schoolClassId = res.data.id
+                            window.location.href = `/school_classes/${schoolClassId}`
+                        }
+                    })
+                }
+            } else {
+                window.alert("クラス名を入力してください")
+            }
         } else {
             if(!emptyTextBookCount == 0){
                 window.alert("登録する教科の教科書をすべて選択してください")
