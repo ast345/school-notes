@@ -27,6 +27,17 @@
           .flash
             - flash.each do |key, value|
               %div{:class => key}= value
+        - if user_signed_in?
+          .header_user_classes
+            - @current_user_classes.each do |current_user_class|
+              .user_class
+                = link_to current_user_class[:class_name], school_class_path(current_user_class[:school_class_id]), method: :get
+                %i.fa-solid.fa-ellipsis-vertical
+                  .user_classs_edit_menu
+                    = link_to "編集", edit_school_class_path(current_user_class[:school_class_id]), method: :get
+                    = link_to "削除", school_class_path(current_user_class[:school_class_id]), method: :delete, data: { confirm: raw('本当にこのクラスを削除しますか？（一度削除すると復元できません）') }
+            .new_class
+              = link_to "+ 新規クラス作成", new_school_class_path,method: :get
         .header_bottom
           = link_to "ご意見箱", opinions_path, class: "header_link"
           - if user_signed_in?
