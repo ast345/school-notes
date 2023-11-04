@@ -176,8 +176,12 @@ class SchoolClassesController < ApplicationController
 
     def destroy
         school_class = SchoolClass.find(params[:id])
-        school_class.destroy!
-        redirect_to teachers_path, alert: "クラスを削除しました"
+        display_class_name = school_class.grade_class
+        if school_class.destroy!
+            redirect_to root_path, notice: "#{display_class_name}を削除しました"
+        else
+            flash[:notice] ='削除できませんでした'
+        end
     end
 
     def show
