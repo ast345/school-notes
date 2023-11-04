@@ -26,14 +26,14 @@ require 'csv'
 # Grade.create(grade_name: '4年生', school_types_id: 1)
 # Grade.create(grade_name: '5年生', school_types_id: 1)
 # Grade.create(grade_name: '6年生', school_types_id: 1)
-# Grade.create(grade_name: '専科', school_types_id: 1)
 # Grade.create(grade_name: '1年生', school_types_id: 2)
 # Grade.create(grade_name: '2年生', school_types_id: 2)
 # Grade.create(grade_name: '3年生', school_types_id: 2)
-# Grade.create(grade_name: '専科', school_types_id: 2)
 # Grade.create(grade_name: '1年生', school_types_id: 3)
 # Grade.create(grade_name: '2年生', school_types_id: 3)
 # Grade.create(grade_name: '3年生', school_types_id: 3)
+# Grade.create(grade_name: '専科', school_types_id: 1)
+# Grade.create(grade_name: '専科', school_types_id: 2)
 # Grade.create(grade_name: '専科', school_types_id: 3)
 
 # subject読み仮名付き
