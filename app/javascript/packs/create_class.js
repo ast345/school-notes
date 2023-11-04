@@ -196,7 +196,24 @@ document.addEventListener('turbolinks:load', () =>{
         });
 
         if(className === ''){
-            window.alert("クラス名を入力してください")
+            if( gradeClass == 13 || gradeClass == 14 || gradeClass == 15){
+                if(!emptyTextBookCount == 0){
+                    window.alert("登録する教科の教科書をすべて選択してください")
+                } else {
+                    axios.patch(`/school_classes/${schoolClassId}`, {
+                        school_class: {grade_id: gradeClass},
+                        subjects: {subjects_data_set: subjectsDataBox}
+                    })
+                    .then((res) =>{
+                        if(res.status === 200){
+                            var schoolClassId = res.data.id
+                            window.location.href = `/school_classes/${schoolClassId}`
+                        }
+                    })
+                }
+            } else {
+                window.alert("クラス名を入力してください")
+            }
         } else {
             if(!emptyTextBookCount == 0){
                 window.alert("登録する教科の教科書をすべて選択してください")
