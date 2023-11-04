@@ -32,51 +32,94 @@ class SchoolClassesController < ApplicationController
         grade_to_display = @grades.find { |grade| grade[1] == @school_class.grade_id }
         @default_grade_id = grade_to_display[1]
         @default_class_name = @school_class.class_name
+        school_types_id = Grade.find(@default_grade_id).school_types_id
 
 
         teacher = SchoolClassTeacher.find_by(teachers_id: current_user.teacher.id, school_classes_id: @school_class.id)
         assigned_subjects = AssignedSubject.where(school_class_teachers_id: teacher.id)
         using_texts = UsingText.where(school_class_id: @school_class.id)
-        grade_subjects = GradeSubject.where(grades_id: @default_grade_id)
-        @subjects = []
-        grade_subjects.each do |grade_subject|
-            grade_subject_id = grade_subject.id
-            subject_name = grade_subject.subject.subject_name
 
-            if assigned_subjects.find_by(grade_subjects_id: grade_subject_id)
-                has_assigned = true
-            else
-                has_assigned =false
+        subjects_with_grades = []
+        if @default_grade_id == 13 or @default_grade_id == 14 or @default_grade_id == 15
+            grades = Grade.where(school_types_id: school_types_id).where.not(grade_name: '専科')
+            grade_ids = []
+            grades.each do |grade|
+                grade_ids << grade.id
             end
-
-            text_books = grade_subject.text_books
-            text_books_data = []
-            using_text_id = nil
-            text_books.each do |text_book|
-                text_book_id = text_book.id
-                text_book_name = text_book.text_book_name
-                text_book_comp = text_book.text_book_comp.abbreviation
-
-                using_text = using_texts.find_by(text_book_id: text_book_id)
-                if using_text
-                    using_text_id = text_book_id
+            grade_ids.each do |grade_id|
+                grade_subjects = []
+                grade_name = Grade.find(grade_id).grade_name
+                grade_subject_sets = GradeSubject.where(grades_id: grade_id)
+                grade_subject_sets.each do |grade_subject_set|
+                    grade_subjects << grade_subject_set
                 end
-                text_book_data = ["#{text_book_name}(#{text_book_comp})", text_book_id]
-
-                text_books_data << text_book_data
+                subjects_with_grade = {
+                    grade_name: grade_name,
+                    grade_subjects: grade_subjects
+                }
+                subjects_with_grades << subjects_with_grade
             end
-            # レスポンスデータを作成
-            subject_data = {
-                grade_subject_id: grade_subject_id,
-                subject_name: subject_name,
-                has_assigned: has_assigned,
-                using_text_id: using_text_id,
-                text_books: text_books_data
+        else
+            grade_subjects = GradeSubject.where(grades_id: @default_grade_id)
+            grade_name = Grade.find(@default_grade_id).grade_name
+            subjects_with_grade = {
+                grade_name: grade_name,
+                grade_subjects: grade_subjects
             }
-
-            # レスポンスデータを配列に追加
-            @subjects << subject_data
+            subjects_with_grades << subjects_with_grade
         end
+
+        @subjects_data = []
+        subjects_with_grades.each do |subjects_with_grade|
+            grade_name = subjects_with_grade[:grade_name]
+            grade_subjects = subjects_with_grade[:grade_subjects]
+
+            subjects = []
+            grade_subjects.each do |grade_subject|
+                grade_subject_id = grade_subject.id
+                subject_name = grade_subject.subject.subject_name
+
+                if assigned_subjects.find_by(grade_subjects_id: grade_subject_id)
+                    has_assigned = true
+                else
+                    has_assigned =false
+                end
+
+                text_books = grade_subject.text_books
+                text_books_data = []
+                using_text_id = nil
+                text_books.each do |text_book|
+                    text_book_id = text_book.id
+                    text_book_name = text_book.text_book_name
+                    text_book_comp = text_book.text_book_comp.abbreviation
+
+                    using_text = using_texts.find_by(text_book_id: text_book_id)
+                    if using_text
+                        using_text_id = text_book_id
+                    end
+                    text_book_data = ["#{text_book_name}(#{text_book_comp})", text_book_id]
+
+                    text_books_data << text_book_data
+                end
+                # レスポンスデータを作成
+                subject_data = {
+                    grade_subject_id: grade_subject_id,
+                    subject_name: subject_name,
+                    has_assigned: has_assigned,
+                    using_text_id: using_text_id,
+                    text_books: text_books_data
+                }
+
+                # レスポンスデータを配列に追加
+                subjects << subject_data
+            end
+            grade_subjects_data = {
+                grade_name: grade_name,
+                grade_subjects: subjects
+            }
+            @subjects_data << grade_subjects_data
+        end
+        @subjects_data_count = @subjects_data.length
     end
 
     def update
