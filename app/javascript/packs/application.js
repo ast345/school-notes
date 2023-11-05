@@ -41,7 +41,7 @@ document.addEventListener('turbolinks:load', () =>{
         $('.cover').addClass('hidden');
     });
 
-    $('.flash').fadeOut(6000)
+    $('.flash').fadeOut(4000)
 
     $(".school_class_setting_btn").each(function(index, element){
         $(`#edit_btn${index}`).on('click', (event) =>{
