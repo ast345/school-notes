@@ -178,7 +178,13 @@ class SchoolClassesController < ApplicationController
         school_class = SchoolClass.find(params[:id])
         display_class_name = school_class.grade_class
         if school_class.destroy!
-            redirect_to root_path, notice: "#{display_class_name}を削除しました"
+            school_class_teacher = SchoolClassTeacher.find_by(teachers_id: current_user.teacher)
+            if school_class_teacher
+              school_class = school_class_teacher.school_class
+              redirect_to school_class_path(school_class.id), notice: "#{display_class_name}を削除しました"
+            else
+              redirect_to new_school_class_path, notice: "#{display_class_name}を削除しました"
+            end
         else
             flash[:notice] ='削除できませんでした'
         end
