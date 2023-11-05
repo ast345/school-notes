@@ -96,7 +96,7 @@
                                 .morning_act_text_box.hidden{id: "#{date}"}
                                     = text_area_tag :morning_act_text, '', class: 'morning_act_text', id: "morning_act_text#{date}"
                                 %p.morning_act_display.hidden{id: "morning_act_display#{date}", data: {id: "#{date}"}}
-            - (1..6).each do |period|
+            - (@start_of_period..@end_of_period).each do |period|
                 %tr.lesson_row
                     %td.left_column #{period}
                     - (@start_of_week..@end_of_week).each do |date|
