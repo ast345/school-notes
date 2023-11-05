@@ -192,6 +192,7 @@ class SchoolClassesController < ApplicationController
 
     def show
         @school_class = SchoolClass.find(params[:id])
+        @grade_id = @school_class.grade.id
         gon.school_class_id = @school_class.id
         if params[:start_of_week]
             @start_of_week = params[:start_of_week].to_date
