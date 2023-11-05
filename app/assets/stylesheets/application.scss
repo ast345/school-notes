@@ -104,6 +104,11 @@
       left: 0;
       text-align: center;
     }
+
+    &_user_display{
+      text-align: center;
+      padding: 20px
+    }
     &_user_class{
       display: flex;
       align-items: center;
@@ -114,7 +119,26 @@
       &:hover .school_class_setting_btn_box{
         display: flex;
       }
+    }
+    &_new_class{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      &:hover{
+        background-color: #d6d8db;
+      }
+      &:hover .school_class_setting_btn_box{
+        display: flex;
+      }
 
+      &_link{
+        width: 100%;
+        padding: 10px 0;
+        color: $main-black;
+        text-decoration: none;
+        text-align: center;
+      }
     }
 }
 

@@ -28,6 +28,8 @@
             - flash.each do |key, value|
               %div{:class => key}= value
         - if user_signed_in?
+          .header_user_display
+            %p #{@display_name}さん
           .header_user_classes
             - @current_user_classes.each_with_index do |current_user_class, index|
               .header_user_class
@@ -38,8 +40,8 @@
                   = link_to "編集", edit_school_class_path(current_user_class[:school_class_id]), method: :get, class: "school_class_edit_btn"
                   = link_to "削除", school_class_path(current_user_class[:school_class_id]), method: :delete, data: { confirm: raw('本当にこのクラスを削除しますか？（一度削除すると復元できません）') }, class: "school_class_edit_btn"
               %hr
-            .new_class
-              = link_to "+ 新規クラス作成", new_school_class_path,method: :get
+            .header_new_class
+              = link_to "+ 新規クラス作成", new_school_class_path,method: :get, class: "header_new_class_link"
         .header_bottom
           = link_to "ご意見箱", opinions_path, class: "header_link"
           - if user_signed_in?
