@@ -104,6 +104,18 @@
       left: 0;
       text-align: center;
     }
+    &_user_class{
+      display: flex;
+      align-items: center;
+      height: 40px;
+      &:hover{
+        background-color: #d6d8db;
+      }
+      &:hover .school_class_setting_btn_box{
+        display: flex;
+      }
+
+    }
 }
 
 .cover{
@@ -123,6 +135,51 @@
 .opinion_gform{
   width: 100%;
 }
+
+.school_class{
+  &_link{
+    width: 90%;
+    padding: 10px 0;
+    color: $main-black;
+    text-decoration: none;
+  }
+  &_setting_btn_box{
+    width: 10%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: $main-black;
+    display: none;
+  }
+  &_edit_menu{
+    position: absolute;
+    right: -35px;
+    padding: 5px;
+    background-color: $main-grey;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    text-align: center;
+  }
+  &_edit_btn{
+    display: block;
+    text-decoration: none;
+    color: $main-black;
+    padding: 5px;
+    &:hover{
+      background-color: $header-grey;
+    }
+  }
+
+  &_setting_btn{
+    padding: 3px;
+    &:hover{
+      cursor: pointer;
+      background-color: $main-grey;
+      border-radius: 5px;
+    }
+  }
+}
+
 
   @media (max-width: 480px) {
     .page_container{

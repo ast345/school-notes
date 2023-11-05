@@ -41,5 +41,16 @@ document.addEventListener('turbolinks:load', () =>{
         $('.cover').addClass('hidden');
     });
 
-    $('.flash').fadeOut(4000)
+    $('.flash').fadeOut(6000)
+
+    $(".school_class_setting_btn").each(function(index, element){
+        $(`#edit_btn${index}`).on('click', (event) =>{
+            $(`#edit${index}`).removeClass('hidden');
+        });
+
+        $(`#edit${index}`).on('mouseleave', () => {
+            // マウスポインターが #edit${index} の外に出たときの処理
+            $(`#edit${index}`).addClass('hidden');
+        });
+    });
 });
