@@ -22,6 +22,21 @@ class ApplicationController < ActionController::Base
     end
 
     helper_method :display_name, :current_user_classes
+
+    def after_sign_in_path_for(resource)
+      school_class_teacher = SchoolClassTeacher.find_by(teachers_id: current_user.teacher)
+      if school_class_teacher
+        school_class = school_class_teacher.school_class
+        school_class_path(school_class.id)
+      else
+        new_school_class_path
+      end
+    end
+
+    def after_sign_up_path_for(resource)
+      new_school_class_path
+    end
+
     protected
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
