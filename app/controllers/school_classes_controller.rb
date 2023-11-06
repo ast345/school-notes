@@ -215,11 +215,12 @@ class SchoolClassesController < ApplicationController
         else
             @display_wday = [1,2,3,4,5]
         end
-        lesson_period = @school_class.lesson_period
-        if lesson_period
-            @start_of_period = lesson_period.start_of_period
-            @end_of_period = lesson_period.end_of_period
+        @lesson_period = @school_class.lesson_period
+        if @lesson_period
+            @start_of_period = @lesson_period.start_of_period
+            @end_of_period = @lesson_period.end_of_period
         else
+            @lesson_period = LessonPeriod.new
             @start_of_period = 1
             @end_of_period = 6
         end

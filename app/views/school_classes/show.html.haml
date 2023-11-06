@@ -32,6 +32,13 @@
                         %input{checked: @display_wday.include?(0), name: "sunday", id: "sunday", type: "checkbox"} &nbsp;日曜日
                     %br/
                     %button.wday_submit_btn{type: "button"} 保存
+        .lesson_period_box
+            = form_with(model: [@school_class, @lesson_period], local: true) do |form|
+                =form.label "開始時限"
+                =form.number_field:start_of_period
+                =form.label "終了時限"
+                =form.number_field:end_of_period
+                =form.submit "設定する"
         .template_nav
             %p.template_nav_title テンプレ
             %i.fa-solid.fa-plus.add_from_template.add_from_temp{data: {start_of_week: @start_of_week}} &nbsp;利用
