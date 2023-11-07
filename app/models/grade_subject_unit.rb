@@ -17,6 +17,6 @@
 #
 class GradeSubjectUnit < ApplicationRecord
     belongs_to :grade_subject
-    belongs_to :text_book
+    belongs_to :text_book, optional: true
     has_many :lessons
 end
