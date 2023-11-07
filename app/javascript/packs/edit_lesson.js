@@ -46,7 +46,7 @@ export function editLesson(schoolClassId) {
             });
 
             axios.get(`/get_grade_subject_units`, {
-                params: {grade_subject_id: GradeSubjectId}
+                params: {grade_subject_id: GradeSubjectId, school_class_id: schoolClassId}
             })
             .then((res) => {
                 const unitSet = res.data

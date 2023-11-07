@@ -28,7 +28,7 @@ export function createLesson(schoolClassId) {
                 // 選択された科目に基づくアクションを追加
                 if (selectedSubject) {
                     axios.get(`/get_grade_subject_units`, {
-                        params: {grade_subject_id: selectedGradeSubjectId}
+                        params: {grade_subject_id: selectedGradeSubjectId, school_class_id: schoolClassId}
                     })
                     .then((res) => {
                         const unitSet = res.data
