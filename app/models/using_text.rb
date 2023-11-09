@@ -16,4 +16,12 @@
 class UsingText < ApplicationRecord
     belongs_to :school_class
     belongs_to :text_book
+
+    def subject_name
+        self.text_book.grade_subject.subject.subject_name
+    end
+
+    def text_book_name
+        self.text_book.text_book_name
+    end
 end

@@ -16,6 +16,9 @@ Rails.application.routes.draw do
     resources :morning_activities, only: [:create, :update, :destroy]
     resources :lesson_wdays, only: [:create, :update]
     resources :lesson_periods, only: [:create, :update]
+    resources :grade_subject_units, only: [:index]
+    resources :using_texts, only: [:index]
+    resources :text_books, only: [:show]
     resources :template_lessons, only: [:index, :create, :update, :destroy] do
       collection do
         get 'get_temp'
@@ -40,7 +43,7 @@ Rails.application.routes.draw do
   end
 
   resources :assigned_subjects, only: [:new, :create, :destroy]
-  resources :grade_subject_units, only: [:create]
+  resources :grade_subject_units, only: [:create, :update, :destroy]
   resources :opinions, only: [:index]
   resources :grade_subject, only: [:index]
 
