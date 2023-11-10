@@ -22,6 +22,6 @@ class UsingText < ApplicationRecord
     end
 
     def text_book_name
-        self.text_book.text_book_name
+        "#{self.text_book.text_book_name}(#{self.text_book.text_book_comp.abbreviation})"
     end
 end

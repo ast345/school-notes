@@ -22,6 +22,15 @@ class GradeSubjectUnitsController < ApplicationController
         render json: @grade_subject_unit
     end
 
+    def update
+        @grade_subject_unit = GradeSubjectUnit.find(params[:id])
+        if @grade_subject_unit.update(grade_subject_unit_params)
+          respond_to do |format|
+            format.json { render json: @grade_subject_unit.to_json }
+          end
+        end
+    end
+
     private
     def grade_subject_unit_params
         params.require(:grade_subject_unit).permit(:unit_name, :grade_subject_id, :school_class_id)
