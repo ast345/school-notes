@@ -2,14 +2,15 @@
     %h1.text_book_header="#{@text_book.text_book_name}(#{@text_book.text_book_comp.abbreviation})"
     .text_book_units
         - @grade_subject_units.each_with_index do |grade_subject_unit|
-            %p.unit_name{id: grade_subject_unit.id} #{grade_subject_unit.unit_name}
-            .unit_edit_form
-                = form_with(model: [grade_subject_unit], local: true, data: { remote: true }) do |form|
-                    =form.text_field :unit_name
-                    =form.submit "決定"
-            .unit_edit_btn
-                %i.fa-solid.fa-pen-to-square
-                %i.fa-solid.fa-trash-can
+            .unit_box{id: "unit_box#{grade_subject_unit.id}"}
+                %p.unit_name{id: grade_subject_unit.id} #{grade_subject_unit.unit_name}
+                .unit_edit_form
+                    = form_with(model: [grade_subject_unit], local: true, data: { remote: true }) do |form|
+                        =form.text_field :unit_name
+                        =form.submit "決定"
+                .unit_edit_btn
+                    %i.fa-solid.fa-pen-to-square
+                    %i.fa-solid.fa-trash-can.unit_delete_btn{id: "delete_btn#{grade_subject_unit.id}", data: { id: grade_subject_unit.id }}
     .add_text_book_units
         %p.add_text_book_units_btn + 新しく単元名を作成する
 

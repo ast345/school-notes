@@ -22,5 +22,23 @@ document.addEventListener("turbolinks:load", function() {
         }
       });
     });
+
+    $('.unit_delete_btn').each(function(index, element){
+        const Id =element.id
+        const dataset = $(element).data()
+        const gradeSubjectUnitId = dataset.id
+        $(`.unit_delete_btn#${Id}`).on('click', () =>{
+            axios.delete(`/grade_subject_units/${gradeSubjectUnitId}`)
+            .then((res) =>{
+                if(res.status === 204){
+                    var unitBox = document.getElementById(`unit_box${gradeSubjectUnitId}`);
+                    unitBox.remove();
+                }
+            })
+            .catch(error => {
+                window.alert("削除できませんでした")
+            })
+        })
+    })
   });
   

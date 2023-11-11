@@ -31,6 +31,11 @@ class GradeSubjectUnitsController < ApplicationController
         end
     end
 
+    def destroy
+        grade_subject_unit = GradeSubjectUnit.find(params[:id])
+        grade_subject_unit.destroy!
+    end
+
     private
     def grade_subject_unit_params
         params.require(:grade_subject_unit).permit(:unit_name, :grade_subject_id, :school_class_id)
