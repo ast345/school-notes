@@ -14,14 +14,17 @@ document.addEventListener("turbolinks:load", function() {
         data: $(this).serialize(),
         success: function(data) {
             var Id = data.id
-            var unitName= document.getElementById(`${Id}`)
+            var unitName= document.getElementById(`unit_name${Id}`)
             unitName.innerHTML = `${data.unit_name}`
+            $(`#unit_name${Id}`).removeClass('hidden');
+            $(`.unit_edit_form#${Id}`).addClass('hidden');
         },
         error: function() {
             window.alert("単元名を変更できませんでした")
         }
       });
     });
+
 
     $('.unit_delete_btn').each(function(index, element){
         const Id =element.id
@@ -40,6 +43,17 @@ document.addEventListener("turbolinks:load", function() {
             })
         })
     })
+
+    $('.unit_edit_btn').each(function(index, element){
+        const Id =element.id
+        const dataset = $(element).data()
+        const gradeSubjectUnitId = dataset.id
+        $(`.unit_edit_btn#${Id}`).on('click', () =>{
+            $(`#unit_name${gradeSubjectUnitId}`).addClass('hidden');
+            $(`.unit_edit_form#${gradeSubjectUnitId}`).removeClass('hidden');
+        })
+    })
+
 
     $('.add_text_book_units_btn').on('click', () =>{
         $('.new_unit_area').removeClass('hidden');
