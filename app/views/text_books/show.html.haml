@@ -13,5 +13,7 @@
                     %i.fa-solid.fa-trash-can.unit_delete_btn{id: "delete_btn#{grade_subject_unit.id}", data: { id: grade_subject_unit.id }}
     .add_text_book_units
         %p.add_text_book_units_btn + 新しく単元名を作成する
-
+        .new_unit_area.hidden
+            = text_field_tag 'new_text_unit', nil, {class: "new_text_unit", data: {text_book_id: @text_book.id, school_class_id: @school_class_id, grade_subject_id: @text_book.grade_subject_id}}
+            %p.new_unit_submit_btn 追加
 = javascript_pack_tag 'unit'

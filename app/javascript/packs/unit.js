@@ -40,5 +40,28 @@ document.addEventListener("turbolinks:load", function() {
             })
         })
     })
+
+    $('.add_text_book_units_btn').on('click', () =>{
+        $('.new_unit_area').removeClass('hidden');
+        $('.add_text_book_units_btn').addClass('hidden')
+    })
+
+    $('.new_unit_submit_btn').on('click', () =>{
+        var newUnitName = $(`.new_text_unit`).val()
+        var dataSet = $('.new_text_unit').data()
+        var gradeSubjectId = dataSet.gradeSubjectId
+        var schoolClassId = dataSet.schoolClassId
+        if (!newUnitName) {
+            window.alert('新しい単元名を入力してください')
+        } else {
+            axios.post(`/grade_subject_units`, {
+                grade_subject_unit: {unit_name: newUnitName, grade_subject_id: gradeSubjectId, school_class_id : schoolClassId}
+            })
+            .then((res) =>{
+                if(res.status === 200){
+                    location.reload()
+                }
+            })
+        }
+    })
   });
-  
