@@ -3,7 +3,8 @@
         %p.class_name_display= @school_class.grade_class
     .navbar.iframe_navbar
         %a{href: school_class_iframe_index_path(start_of_week: @start_of_week - 1.week)} 前の週
-        %a{href: school_class_iframe_index_path(start_of_week: @start_of_week + 1.week)} 次の週
+        - if @next_week_perm
+            %a{href: school_class_iframe_index_path(start_of_week: @start_of_week + 1.week)} 次の週
 .table_box.iframe_table_box
     %table.iframe_class_weekly
         %tr

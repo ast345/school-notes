@@ -10,6 +10,8 @@ class IframeController < ApplicationController
             @start_of_week = Date.today.beginning_of_week
         end
         @end_of_week = @start_of_week.end_of_week
+        @next_week_perm = next_week_permission(@start_of_week)
+
 
         lesson_wday = LessonWday.where(school_class_id: @school_class.id, start_of_week: @start_of_week).first
         if lesson_wday
@@ -30,10 +32,23 @@ class IframeController < ApplicationController
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
         @this_week_morning_activities = @school_class.morning_activities.where(date: @start_of_week..@end_of_week)
+
     end
 
     private
     def allow_iframe
         response.headers['X-Frame-Options'] = 'ALLOWALL'
     end
+
+    def next_week_permission(start_of_week)
+        today = Date.today
+        days_until_friday = (5 - today.wday + 7) % 7
+        this_friday = today + days_until_friday
+        days_difference = (this_friday - start_of_week).to_i
+        if days_difference == 4 && today < this_friday
+            return false
+        else
+            return true
+        end
+      end
 end
