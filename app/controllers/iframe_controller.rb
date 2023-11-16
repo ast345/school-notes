@@ -4,13 +4,16 @@ class IframeController < ApplicationController
         @show_header = false
         @school_class = SchoolClass.find(params[:school_class_id])
 
+        @start_of_week = Date.today.beginning_of_week
+        pramas_exist =false
         if params[:start_of_week]
             @start_of_week = params[:start_of_week].to_date
-        else
-            @start_of_week = Date.today.beginning_of_week
+            params_exist = true
         end
+
+
+        next_week_permission(@start_of_week, params_exist)
         @end_of_week = @start_of_week.end_of_week
-        @next_week_perm = next_week_permission(@start_of_week)
 
 
         lesson_wday = LessonWday.where(school_class_id: @school_class.id, start_of_week: @start_of_week).first
@@ -40,15 +43,44 @@ class IframeController < ApplicationController
         response.headers['X-Frame-Options'] = 'ALLOWALL'
     end
 
-    def next_week_permission(start_of_week)
-        today = Date.today
-        days_until_friday = (5 - today.wday + 7) % 7
+    def next_week_permission(start_of_week, params_exist)
+        today = Date.today + 1
+        current_time = Time.now
+        wday_of_today = today.wday
+        days_until_friday = if today.saturday?
+                                -1
+                            elsif today.sunday?
+                                -2
+                            else
+                                (5 - today.wday + 7) % 7
+                            end
         this_friday = today + days_until_friday
+        switch_time = Time.new(this_friday.year, this_friday.month, this_friday.day, 18, 0, 0)
         days_difference = (this_friday - start_of_week).to_i
-        if days_difference == 4 && today < this_friday
-            return false
+
+        if wday_of_today >= 1 && wday_of_today <= 4
+            if days_difference == 4
+                @next_week_perm = false
+            else
+                @next_week_perm = true
+            end
+        elsif wday_of_today == 5 && current_time < switch_time
+            if days_difference == 4
+                @next_week_perm = false
+            else
+                @next_week_perm = true
+            end
         else
-            return true
+            if params_exist
+                if days_difference < 0
+                    @next_week_perm = false
+                else
+                    @next_week_perm = true
+                end
+            else
+                @next_week_perm = false
+                @start_of_week = start_of_week + 7
+            end
         end
-      end
+    end
 end
