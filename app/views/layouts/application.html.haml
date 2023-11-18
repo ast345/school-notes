@@ -19,7 +19,8 @@
     
   %body
     .page_container
-      - if @show_header
+      - if @header_hidden
+      - else
         %header.header
           .header_logos
             %h1 School Notes
