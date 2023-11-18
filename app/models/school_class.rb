@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  class_name :string
+#  token      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  grade_id   :bigint           not null
@@ -11,6 +12,7 @@
 # Indexes
 #
 #  index_school_classes_on_grade_id  (grade_id)
+#  index_school_classes_on_token     (token) UNIQUE
 #
 class SchoolClass < ApplicationRecord
     belongs_to :grade
