@@ -1,8 +1,8 @@
 class IframeController < ApplicationController
     after_action :allow_iframe
     def index
-        @header_hidden = false
-        @school_class = SchoolClass.find(params[:school_class_id])
+        @header_hidden = true
+        @school_class = SchoolClass.find_by(token: params[:token])
 
         @start_of_week = Date.today.beginning_of_week
         pramas_exist =false

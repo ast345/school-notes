@@ -39,8 +39,9 @@ Rails.application.routes.draw do
         get 'get_temp'
       end
     end
-    resources :iframe, only: [:index]
   end
+
+  get 'school_classes/:token/iframe', to: 'iframe#index', as: 'school_class_iframe_index'
 
   resources :assigned_subjects, only: [:new, :create, :destroy]
   resources :grade_subject_units, only: [:create, :update, :destroy]

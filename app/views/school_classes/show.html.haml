@@ -49,7 +49,7 @@
         .iframe_nav
             %i.fa-solid.fa-code.iframe_btn &nbsp;埋め込み
             .iframe_code_box
-                = text_area_tag :iframe_code, "<iframe src='http://localhost:3000/school_classes/#{@school_class.id}/iframe' width='600' height='600' frameborder='0'></iframe>", class: "iframe_code"
+                = text_area_tag :iframe_code, "<iframe src='http://localhost:3000/school_classes/#{@school_class.token}/iframe' width='600' height='600' frameborder='0'></iframe>", class: "iframe_code"
                 .iframe_copy_btn_box
                     %p.iframe_copy_btn コピー
     .table_box

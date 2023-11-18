@@ -8,7 +8,12 @@ class SchoolClassesController < ApplicationController
     end
 
     def create
-        @school_class = SchoolClass.new(school_class_params)
+        # school_class_paramsから必要なパラメータを取得
+        permitted_params = school_class_params
+        # トークンを生成してパラメータに追加
+        permitted_params[:token] = SecureRandom.hex(20)
+        # 新しいschool_classを作成
+        @school_class = SchoolClass.new(permitted_params)
         subjects = subjects_params[:subjects_data_set]
         if @school_class.save
             school_class_teacher = @school_class.school_class_teachers.build(teacher: current_user.teacher, teacher_type: "担任")
