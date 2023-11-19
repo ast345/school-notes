@@ -3,8 +3,8 @@ class ShareController < ApplicationController
     def index
         @header_hidden = true
         @school_class = SchoolClass.find_by(token: params[:token])
-
-        @start_of_week = Date.today.beginning_of_week
+        date = Date.today
+        @start_of_week = date.beginning_of_week
         pramas_exist =false
         if params[:start_of_week]
             @start_of_week = params[:start_of_week].to_date
@@ -44,7 +44,7 @@ class ShareController < ApplicationController
     end
 
     def next_week_permission(start_of_week, params_exist)
-        today = Date.today + 1
+        today = Date.today
         current_time = Time.now
         wday_of_today = today.wday
         days_until_friday = if today.saturday?
@@ -57,7 +57,6 @@ class ShareController < ApplicationController
         this_friday = today + days_until_friday
         switch_time = Time.new(this_friday.year, this_friday.month, this_friday.day, 18, 0, 0)
         days_difference = (this_friday - start_of_week).to_i
-
         if wday_of_today >= 1 && wday_of_today <= 4
             if days_difference == 4
                 @next_week_perm = false
