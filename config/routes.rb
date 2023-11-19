@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'school_classes/:token/iframe', to: 'iframe#index', as: 'school_class_iframe_index'
+  get 'school_classes/:token/share', to: 'share#index', as: 'school_class_share_index'
 
   resources :assigned_subjects, only: [:new, :create, :destroy]
   resources :grade_subject_units, only: [:create, :update, :destroy]

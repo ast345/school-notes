@@ -1,4 +1,4 @@
-class IframeController < ApplicationController
+class ShareController < ApplicationController
     after_action :allow_iframe
     def index
         @header_hidden = true

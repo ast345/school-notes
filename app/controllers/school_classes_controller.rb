@@ -251,6 +251,8 @@ class SchoolClassesController < ApplicationController
 
         gon.grade_subject_ids = @grade_subject_ids
 
+        @share_url = school_class_share_index_url(token: @school_class.token)
+
         respond_to do |format|
             format.html
             format.pdf do
