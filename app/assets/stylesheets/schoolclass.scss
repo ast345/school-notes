@@ -33,6 +33,13 @@
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
     }
+    &_box_for_share{
+        background-color: white;
+        height: 98px;
+        width: 118px;
+        position: relative;
+        z-index: 1;
+    }
     &_btn_box{
         float: right;
         height: 20px;

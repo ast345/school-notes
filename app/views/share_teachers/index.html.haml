@@ -1,0 +1,88 @@
+.container
+    .class_page_top
+        .class_name
+            %p.class_name_display= @school_class.grade_class
+    .navbar
+        .week_nav
+            %a{href: school_class_share_teacher_path(start_of_week: @start_of_week - 1.week)} 前の週
+            %a{href: school_class_share_teacher_path(start_of_week: @start_of_week + 1.week)} 次の週
+        .output_nav
+            %i.fa-solid.fa-print.print_btn{data: {start_of_week: @start_of_week}} &nbsp;印刷
+            %i.fa-regular.fa-file-image.image_btn{data: {start_of_week: @start_of_week, end_of_week: @end_of_week, class_name: @school_class.grade_class}} &nbsp;画像
+
+    .table_box
+        %table.class_weekly
+            %tr
+                %th.left_column
+                - (@start_of_week..@end_of_week).each do |date|
+                    - next unless @display_wday.include?(date.wday)
+                    %th.date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
+            %tr.event_row
+                - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                    %td.left_column ぎょうじ
+                - else
+                    %td.left_column 行事予定
+                - (@start_of_week..@end_of_week).each do |date|
+                    - next unless @display_wday.include?(date.wday)
+                    %td.event_cell
+                        .event_box
+                            - event = @this_week_events.find_by(date: date)
+                            - if event
+                                %p.event_display #{event.event_name.html_safe}
+            %tr.morning_act_row
+                - if @school_class.grade_id ==1
+                    %td.left_column あさ
+                - else
+                    %td.left_column 朝
+                - (@start_of_week..@end_of_week).each do |date|
+                    - next unless @display_wday.include?(date.wday)
+                    %td.morning_act_cell
+                        .morning_act_box
+                            - morning_act = @this_week_morning_activities.find_by(date: date)
+                            - if morning_act
+                                %p.morning_act_display  #{morning_act.activity_name.html_safe}
+            - (@start_of_period..@end_of_period).each do |period|
+                %tr.lesson_row
+                    %td.left_column #{period}
+                    - (@start_of_week..@end_of_week).each do |date|
+                        - next unless @display_wday.include?(date.wday)
+                        %td
+                            .lesson_box_for_share
+                                - lesson = @this_week_lessons.find_by(date: date, period: period)
+                                - if lesson
+                                    - if lesson.grade_subject_unit
+                                        - unit_name = lesson.grade_subject_unit.unit_name
+                                        - got_unit_id = lesson.grade_subject_unit.id
+                                    - else
+                                        - unit_name = "\b"
+                                        - got_unit_id
+                                    .lesson_btn_js_box
+                                        .lesson_btn_box.hidden
+                                    .got_lesson
+                                        %p.lesson_subject #{lesson.grade_subject_name(@grade_id)}
+                                        %p.lesson_unit #{unit_name}
+            %tr.item_row
+                - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+                    %td.left_column もちもの
+                - else
+                    %td.left_column 持ち物
+                - (@start_of_week..@end_of_week).each do |date|
+                    - next unless @display_wday.include?(date.wday)
+                    %td
+                        .item_box
+                            - item = @this_week_date_items.find_by(date: date)
+                            - if item
+                                %p.item_display #{item.item_name.html_safe}
+            %tr
+                - if @school_class.grade_id ==1
+                    %td.left_column げこう
+                - else
+                    %td.left_column 下校
+                - (@start_of_week..@end_of_week).each do |date|
+                    - next unless @display_wday.include?(date.wday)
+                    %td
+                        .leaving_time_box{id: "#{date}"}
+                            - leaving_time = @this_week_class_leaving_times.find_by(date: date)
+                            - if leaving_time
+                                %p.leaving_time_display  #{leaving_time.leaving_time.strftime("%H:%M")}
+    = javascript_pack_tag 'share_teacher'
