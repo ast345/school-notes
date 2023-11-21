@@ -11,4 +11,14 @@ class SchoolClassTeachersController < ApplicationController
         end
         redirect_to school_class_share_teacher_path(token: params[:class_token])
     end
+
+    def destroy
+        school_class_teacher = SchoolClassTeacher.find(params[:id])
+        if school_class_teacher.destroy!
+            flash[:notice] = "フォローを外しました"
+        else
+            flash[:notice] = "フォローを外せませんでした"
+        end
+        redirect_to request.referrer
+    end
 end
