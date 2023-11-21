@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     end
   end
 
+resources :school_class_teachers, only: [:create, :destroy]
+
   get 'school_classes/:token/share', to: 'share#index', as: 'school_class_share_index'
   get 'school_classes/:token/share_teachers', to:'share_teachers#index', as: 'school_class_share_teacher'
 
