@@ -1,3 +1,15 @@
+- if user_signed_in?
+    - if not @class_teacher
+        .top_container
+            %p このユーザはまだフォローしていません
+- else
+    .top_container
+        .top_info_box
+            %p.top_info 時間割をカンタンに作成・共有できるSchool Notesを利用してみませんか。
+            %p.top_info #{@main_teacher_name}先生の時間割もフォローしていつでも確認できるようになります。
+        .top_btn_box
+            = link_to "登録", new_user_registration_path(follow: true), class: "sign_up_btn"
+            = link_to "ログイン&フォロー", get_new_user_session_with_follow_path(class_token: @school_class.token), class: "sign_in_btn top_sign_in_btn"
 .container
     .class_page_top
         .class_name

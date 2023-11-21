@@ -11,7 +11,10 @@ class ShareTeachersController < ApplicationController
             params_exist = true
         end
         @end_of_week = @start_of_week.end_of_week
-
+        @main_teacher_name = SchoolClassTeacher.find_by(school_classes_id: @school_class.id).teacher.display_name
+        if user_signed_in?
+            @class_teacher = SchoolClassTeacher.find_by(school_classes_id: @school_class.id, teachers_id: current_user.teacher.id)
+        end
 
         lesson_wday = LessonWday.where(school_class_id: @school_class.id, start_of_week: @start_of_week).first
         if lesson_wday
@@ -43,4 +46,5 @@ class ShareTeachersController < ApplicationController
         @this_week_morning_activities = @school_class.morning_activities.where(date: @start_of_week..@end_of_week)
 
     end
+
 end
