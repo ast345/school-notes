@@ -50,5 +50,6 @@ Rails.application.routes.draw do
   resources :grade_subject, only: [:index]
 
   get '/get_grade_subject_units', to: 'grade_subject_unit#get_grade_subject_units'
+  get '/get_new_user_session_with_follow', to: 'get_session#sign_in'
 
 end
