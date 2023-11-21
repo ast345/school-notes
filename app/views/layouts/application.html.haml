@@ -44,6 +44,16 @@
                 %hr
               .header_new_class
                 = link_to "+ 新規クラス作成", new_school_class_path,method: :get, class: "header_new_class_link"
+            .header_user_classes
+              - @current_follow_classes.each_with_index do |current_follow_class, index|
+                .header_user_class
+                  = link_to current_follow_class[:class_name], school_class_share_teacher_path(token: current_follow_class[:token]), method: :get, class: "school_class_link"
+                  .school_class_setting_btn_box
+                    %i.fa-solid.fa-ellipsis.school_class_setting_btn{id: "follow_edit_btn#{index}"}
+                  .school_class_follow_edit_menu.hidden{id: "follow_edit#{index}"}
+                    = link_to "フォローを外す", school_class_teacher_path(current_follow_class[:school_class_teacher_id]), method: :delete, class: "school_class_link"
+
+
           .header_bottom
             = link_to "ご意見箱", opinions_path, class: "header_link"
             - if user_signed_in?

@@ -52,5 +52,14 @@ document.addEventListener('turbolinks:load', () =>{
             // マウスポインターが #edit${index} の外に出たときの処理
             $(`#edit${index}`).addClass('hidden');
         });
+
+        $(`#follow_edit_btn${index}`).on('click', (event) =>{
+            $(`#follow_edit${index}`).removeClass('hidden');
+        });
+
+        $(`#follow_edit${index}`).on('mouseleave', () => {
+            // マウスポインターが #edit${index} の外に出たときの処理
+            $(`#follow_edit${index}`).addClass('hidden');
+        });
     });
 });
