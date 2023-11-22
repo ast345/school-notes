@@ -198,6 +198,7 @@ class SchoolClassesController < ApplicationController
     def show
         @school_class = SchoolClass.find(params[:id])
         @grade_id = @school_class.grade.id
+        @has_class = has_class(@school_class.id)
         gon.school_class_id = @school_class.id
         if params[:start_of_week]
             @start_of_week = params[:start_of_week].to_date
@@ -269,6 +270,16 @@ class SchoolClassesController < ApplicationController
     private
     def school_class_params
         params.require(:school_class).permit(:grade_id, :class_name)
+    end
+
+    def has_class(school_class_id)
+        teacher = current_user.teacher
+        school_class_teacher = SchoolClassTeacher.find_by(teachers_id: teacher.id, school_classes_id: school_class_id, teacher_type: "担任")
+        if school_class_teacher
+            return true
+        else
+            return false
+        end
     end
 
     def subjects_params
