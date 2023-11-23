@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   #  }
   root to: "home#index"
 
-  resources :teachers, only: [:index, :show, :new, :edit, :create, :update]
+  resources :teachers, only: [:update]
   resources :school_classes, only: [:show, :new, :create, :edit, :update, :destroy] do
     resources :lessons, only: [:new, :create, :update, :destroy]
     resources :events, only: [:create, :update, :destroy]
