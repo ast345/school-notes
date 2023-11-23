@@ -30,15 +30,15 @@ export function editLesson(schoolClassId) {
             }
         });
         observer.observe(gotLesson, { attributes: true})
-        
+
+        var statusDisplay = document.getElementById('status_display')
         $(`#lesson_subject${Id}, #lesson_unit${Id}`).on('click', () =>{
             $(`#got_lesson${Id}`).addClass('hidden')
             $(`#${Id}.lesson_btn_js_box`).addClass('hidden')
             $(`#${Id}.edit_lesson_box`).removeClass('hidden')
-
+            statusDisplay.innerHTML = "保存中…"
             $(`#select_subject${Id} option`).each(function() {
                 const optionValue = $(this).val();
-                
                 // value と SubjectName を比較して一致する場合、選択状態にする
                 if (optionValue === SubjectName) {
                     $(this).prop('selected', true);
@@ -78,7 +78,7 @@ export function editLesson(schoolClassId) {
 
                         })
                         .catch(error => {
-                            console.error('Error fetching data:', error);
+                            window.alert("単元名を正しく取得できませんでした。")
                         });
                     };
                 });
@@ -105,6 +105,7 @@ export function editLesson(schoolClassId) {
             const creatingElement = $('.lesson_box'+`#${Id}`);
 
             const selectSubject = document.getElementById(`select_subject${Id}`)
+            const selectedSubjectName = selectSubject.value;
             const selectedSubjectIndex = selectSubject.selectedIndex;
             const selectedGradeSubjectId = gon.grade_subject_ids[selectedSubjectIndex-1];
             const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
@@ -127,28 +128,28 @@ export function editLesson(schoolClassId) {
                 const selectedOption = selectUnit.querySelector("option:checked");
                 if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
                     // 単元名が新規作成されていない時の処理
+                    $(`#grade_subject_units${Id}`).addClass('hidden')
+                    $(`#${Id}.edit_lesson_box`).addClass('hidden')
+                    $(`#got_lesson${Id}`).removeClass('hidden')
+                    $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                    // 中身を差し替え
                     const selectedUnitName = selectedOption.textContent;
+                    displayLessonSubject.innerHTML = `${selectedSubjectName}`
+                    displayLessonUnit.innerHTML = `${selectedUnitName}`
+
                     const selectedUnitId = Number(selectUnit.value)
                     axios.put(`/school_classes/${schoolClassId}/lessons/${LessonId}`, {
                         lesson: {grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                     })
                     .then((res) =>{
                         var resData= res.data
-                        var resSubjectName= resData.grade_subject_name
-                        $(`#grade_subject_units${Id}`).addClass('hidden')
-                        $(`#${Id}.edit_lesson_box`).addClass('hidden')
-                        $(`#got_lesson${Id}`).removeClass('hidden')
-                        $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
-                        // 中身を差し替え
-                        displayLessonSubject.innerHTML = `${resSubjectName}`
-                        displayLessonUnit.innerHTML = `${selectedUnitName}`
-
                         // 再変更のために定義変更
                         SubjectName = `${selectSubject.value}`
                         GotUnitId = resData.grade_subject_unit_id
                         GradeSubjectId = resData.grade_subject_id
 
                         editDataSet(resData);
+                        statusDisplay.innerHTML = "保存済み"
                     });
                     document.removeEventListener('click', editEndHandler)
                 } else {
@@ -157,6 +158,13 @@ export function editLesson(schoolClassId) {
                     if (!newUnitName) {
                         window.alert('新しい単元名を入力してください')
                     } else {
+                        $(`#${Id}.edit_lesson_box`).addClass('hidden')
+                        $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                        $(`#got_lesson${Id}`).removeClass('hidden')
+                        $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+
+                        displayLessonSubject.innerHTML = `${selectedSubjectName}`
+                        displayLessonUnit.innerHTML = `${newUnitName}`
                         axios.post(`/grade_subject_units`, {
                             grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId, school_class_id: schoolClassId}
                         })
@@ -167,20 +175,12 @@ export function editLesson(schoolClassId) {
                             })
                             .then((res) => {
                                 var resData = res.data
-                                var resSubjectName = resData.grade_subject_name
-                                $(`#${Id}.edit_lesson_box`).addClass('hidden')
-                                $(`#${Id}`+'.new_unit_box').addClass('hidden')
-                                $(`#got_lesson${Id}`).removeClass('hidden')
-                                $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
-
-                                displayLessonSubject.innerHTML = `${resSubjectName}`
-                                displayLessonUnit.innerHTML = `${newUnitName}`
 
                                 SubjectName = `${selectSubject.value}`
                                 GotUnitId = resData.grade_subject_unit_id
                                 GradeSubjectId = resData.grade_subject_id
-
                                 editDataSet(resData);
+                                statusDisplay.innerHTML = "保存済み"
                             })
                             document.removeEventListener('click', editEndHandler);
                         })
