@@ -136,20 +136,23 @@ document.addEventListener('turbolinks:load', () =>{
         });
 
         observer.observe(deleteLessonBtn, { attributes: true})
-        
+
+        var statusDisplay = document.getElementById('status_display')
         $(`#delete_lesson_btn${Id}`).on('click', () =>{
             var result =window.confirm('本当に削除しますか');
             if(result === true){
+                $(`#got_lesson${Id}`).addClass('hidden')
+                $(`#${Id}.new_lesson_menu`).removeClass('hidden')
+                $(`#copy_lesson_btn${Id}`).addClass('hidden')
+                $(`#delete_lesson_btn${Id}`).addClass('hidden')
+
+                displayLessonSubject.innerHTML = ""
+                displayLessonUnit.innerHTML = ""
+                statusDisplay.innerHTML = "保存中…"
                 axios.delete(`/school_classes/${schoolClassId}/lessons/${lessonId}`)
                 .then((res) =>{
                     if(res.status === 204){
-                        $(`#got_lesson${Id}`).addClass('hidden')
-                        $(`#${Id}.new_lesson_menu`).removeClass('hidden')
-                        $(`#copy_lesson_btn${Id}`).addClass('hidden')
-                        $(`#delete_lesson_btn${Id}`).addClass('hidden')
-
-                        displayLessonSubject.innerHTML = ""
-                        displayLessonUnit.innerHTML = ""
+                        statusDisplay.innerHTML = "保存済み"
                     };
                 });
             }
