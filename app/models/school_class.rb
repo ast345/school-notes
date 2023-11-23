@@ -49,4 +49,20 @@ class SchoolClass < ApplicationRecord
             "#{grade_name}#{self.class_name}"
         end
     end
+
+    def grade_class_for_share
+        grade_id = self.grade_id
+        if grade_id == 1
+            "1ねん#{self.class_name}"
+        elsif grade_id ==2
+            "2ねん#{self.class_name}"
+        elsif grade_id == 13 || grade_id == 14 || grade_id == 15
+            teacher_name = self.school_class_teachers.first.teacher.display_name
+            grade_name = self.grade.grade_name
+            "#{grade_name}(#{teacher_name})"
+        else
+            grade_name = self.grade.grade_name.gsub('生', '')
+            "#{grade_name}#{self.class_name}"
+        end
+    end
 end

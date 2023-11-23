@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
       @current_follow_classes = []
       follow_school_class_teachers.each do |school_class_teacher|
         school_class = school_class_teacher.school_class
-        class_name = school_class.grade_class
+        class_name = school_class.grade_class_for_share
         token = school_class.token
         school_class_info = {
           class_name: class_name,
