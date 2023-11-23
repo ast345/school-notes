@@ -5,7 +5,7 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function event(schoolClassId) {
-    
+    var statusDisplay = document.getElementById('status_display')
     // 文字の大きさ調整
     function adjustFontSize(element) {
         const textElem = element;
@@ -25,6 +25,7 @@ export function event(schoolClassId) {
         var date = dataSet.date
         var dayOfWeek = dataSet.dayOfWeek
         $(`#${Id}.event_create_btn`).on('click', () =>{
+            statusDisplay.innerHTML = "保存中…"
             $(`#${Id}.event_btn_box`).addClass('hidden')
             $(`#${Id}.event_text_box`).removeClass('hidden')
 
@@ -39,18 +40,18 @@ export function event(schoolClassId) {
                         $(`#${Id}.event_text_box`).addClass('hidden')
                         document.removeEventListener('click', createEventEndHandler);
                     } else {
+                        $(`#event_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.event_text_box`).addClass('hidden')
+                        const eventDisplay = document.getElementById(`event_display${Id}`)
+                        eventDisplay.innerHTML = `${newEvent}`
+                        adjustFontSize(eventDisplay);
                         axios.post(`/school_classes/${schoolClassId}/events`, {
                             event: {date: date, day_of_week: dayOfWeek, event_name: newEvent}
                         })
                         .then((res) =>{
                             if(res.status === 200){
-                                $(`#event_display${Id}`).removeClass('hidden')
-                                $(`#${Id}.event_text_box`).addClass('hidden')
-
-                                const eventDisplay = document.getElementById(`event_display${Id}`)
-                                eventDisplay.innerHTML = `${res.data.event_name}`
                                 eventDisplay.setAttribute('data-event-id', `${res.data.id}`)
-                                adjustFontSize(eventDisplay);
+                                statusDisplay.innerHTML = "保存済み"
                             }
                         });
                         document.removeEventListener('click', createEventEndHandler);
@@ -81,8 +82,10 @@ export function event(schoolClassId) {
         observer.observe(eventDisplay, { attributes: true})
         
         $(`#event_display${Id}`).on('click', () => {
+            statusDisplay.innerHTML = "保存中…"
             $(this).addClass('hidden')
             $(`#${Id}.event_text_box`).removeClass('hidden')
+
             function editEventEndHandler(event) {
                 var clickedElement = event.target;
                 var creatingElement = $(`#${Id}.event_box`);
@@ -90,25 +93,27 @@ export function event(schoolClassId) {
                     var editEvent = $(`#event_text${Id}`).val();
 
                     if (!editEvent) {
+                        $(`#${Id}.event_btn_box`).removeClass('hidden')
+                        $(`#${Id}.event_text_box`).addClass('hidden')
+                        document.removeEventListener('click', editEventEndHandler);
                         axios.delete(`/school_classes/${schoolClassId}/events/${eventId}`)
                         .then((res) =>{
                             if(res.status === 204){
-                                $(`#${Id}.event_btn_box`).removeClass('hidden')
-                                $(`#${Id}.event_text_box`).addClass('hidden')
-                                document.removeEventListener('click', editEventEndHandler);
+                                statusDisplay.innerHTML = "保存済み"
                             };
                         });
                     } else {
+                        $(`#event_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.event_text_box`).addClass('hidden')
+
+                        eventDisplay.innerHTML = `${editEvent}`
+                        adjustFontSize(eventDisplay);
                         axios.patch(`/school_classes/${schoolClassId}/events/${eventId}`, {
                             event: {event_name: editEvent}
                         })
                         .then((res) =>{
                             if(res.status === 200){
-                                $(`#event_display${Id}`).removeClass('hidden')
-                                $(`#${Id}.event_text_box`).addClass('hidden')
-
-                                eventDisplay.innerHTML = `${res.data.event_name}`
-                                adjustFontSize(eventDisplay);
+                                statusDisplay.innerHTML = "保存済み"
                             };
                         });
                         document.removeEventListener('click', editEventEndHandler);
