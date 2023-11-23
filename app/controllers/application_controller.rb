@@ -5,9 +5,8 @@ class ApplicationController < ActionController::Base
 
 
     def school_class_info
-      teacher = current_user.teacher
-      @display_name = teacher.display_name
-      school_class_teachers = SchoolClassTeacher.where(teachers_id: teacher.id, teacher_type: "担任")
+      @teacher = current_user.teacher
+      school_class_teachers = SchoolClassTeacher.where(teachers_id: @teacher.id, teacher_type: "担任")
       @current_user_classes = []
       school_class_teachers.each do |school_class_teacher|
         school_class = school_class_teacher.school_class
@@ -20,7 +19,7 @@ class ApplicationController < ActionController::Base
         @current_user_classes << school_class_info
       end
 
-      follow_school_class_teachers = SchoolClassTeacher.where(teachers_id: teacher.id, teacher_type: "フォロー")
+      follow_school_class_teachers = SchoolClassTeacher.where(teachers_id: @teacher.id, teacher_type: "フォロー")
       @current_follow_classes = []
       follow_school_class_teachers.each do |school_class_teacher|
         school_class = school_class_teacher.school_class

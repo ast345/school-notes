@@ -26,7 +26,12 @@
             %h1 School Notes
           - if user_signed_in?
             .header_user_display
-              %p #{@display_name}さん
+              %p.header_display_name #{@teacher.display_name}さん
+              %i.fa-solid.fa-user-pen.header_edit_btn
+              .header_edit_box.hidden
+                = form_with(model: @teacher, local: true, class: "header_name_edit") do |f|
+                  = f.text_field :display_name, class: "header_name_field"
+                  = f.submit "変更", class: "header_submit_btn"
             %p.header_category_name 自分のクラス
             = link_to new_school_class_path ,method: :get, class: "header_new_class_link" do
               %i.fa-solid.fa-plus

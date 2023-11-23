@@ -73,10 +73,6 @@
   }
 
 
-  .hidden {
-    flex: 1;
-    display: none;
-  }
 
   .header {
     position: fixed;
@@ -105,7 +101,7 @@
 
     &_user_display{
       text-align: center;
-      padding: 20px
+      padding: 20px 0;
     }
     &_user_classes{
       margin-bottom: 20px;
@@ -142,6 +138,25 @@
     &_category_name{
       display: inline-block;
       color: #5C431D;
+    }
+
+    &_name_edit{
+      display: flex;
+      width: fit-content;
+    }
+
+    &_submit_btn{
+      margin-left: 5px;
+    }
+    &_edit_box{
+      display: flex;
+      justify-content: center;
+    }
+    &_edit_btn{
+      cursor: pointer;
+    }
+    &_display_name{
+      display: inline-block;
     }
 }
 
@@ -269,5 +284,11 @@
     }
 
 
+  }
+
+
+  .hidden {
+    flex: 1;
+    display: none;
   }
 

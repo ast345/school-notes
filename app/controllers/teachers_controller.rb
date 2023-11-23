@@ -2,41 +2,14 @@ class TeachersController < ApplicationController
     before_action :authenticate_user!
     before_action :hide_header
 
-    def new
-        @teacher = current_user.build_teacher
-    end
-    
-    def index
-        @display_name = current_user.teacher ? current_user.teacher.display_name : "表示名から設定をはじめる"
-        if current_user.teacher
-            @teacher = current_user.teacher
-            if @teacher.school_classes
-                @classes = @teacher.school_classes
-            else
-            end
-        else
-        end
-    end
-
-    def edit
-        @teacher = Teacher.find(params[:id])
-    end
-
-    def create
-        @user = current_user
-        @teacher = current_user.build_teacher(teacher_params)
-        if @teacher.save
-            redirect_to teachers_path, notice: '保存できたよ'
-        else
-            redirect_to teachers_path, notice: '保存で来ませんでした'
-        end
-
-    end
-
     def update
         @teacher = Teacher.find(params[:id])
-        @teacher.update(teacher_params)
-        render json: @teacher
+        if @teacher.update(teacher_params)
+            flash[:notice] = "表示名を変更しました"
+            redirect_to request.referrer
+        else
+            flash[:notice] = "表示名を変更できませんでした"
+        end
     end
 
     private

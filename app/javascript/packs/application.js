@@ -41,17 +41,20 @@ document.addEventListener('turbolinks:load', () =>{
         $('.cover').addClass('hidden');
     });
 
-    // $('.flash').fadeOut(4000)
+    $(".header_edit_btn").on('click', ()=> {
+        $(".header_display_name").addClass("hidden")
+        $(".header_edit_btn").addClass("hidden")
+        $(".header_edit_box").removeClass("hidden")
+    })
+
     // 要素を取得
     const flash = document.getElementById('flash');
-
     // スライドアウトする関数
     function slideOut() {
     // 下から上へのアニメーションを追加するためのCSSを適用
     flash.style.transition = 'transform 0.5s ease-out';
     flash.style.transform = 'translateY(-100%)'; // 下から上へ移動する
     }
-
     // 数秒後にスライドアウト関数を実行
     setTimeout(slideOut, 3000); // 3000ミリ秒 = 3秒後
 
