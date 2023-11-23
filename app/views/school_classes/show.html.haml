@@ -4,6 +4,7 @@
             .class_name
                 %p.class_name_display= @school_class.grade_class
         .navbar
+            %p#status_display 保存済み
             .week_nav
                 %a{href: school_class_path(start_of_week: @start_of_week - 1.week)} 前の週
                 %a{href: school_class_path(start_of_week: @start_of_week + 1.week)} 次の週
