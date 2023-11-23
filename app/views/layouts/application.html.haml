@@ -18,11 +18,6 @@
     = stylesheet_link_tag 'responsible', media: 'all', 'data-turbolinks-track': 'reload'
     
   %body
-    - if flash.present?
-      .header_flash
-        .flash
-          - flash.each do |key, value|
-            %div{:class => key}= value
     .page_container
       - if @header_hidden
       - else
@@ -80,4 +75,9 @@
               = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header_link"
       .cover.hidden
       .main_container
+        - if flash.present?
+          .header_flash#flash
+            .flash
+              - flash.each do |key, value|
+                %div{:class => key}= value
         = yield

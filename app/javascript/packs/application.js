@@ -41,7 +41,20 @@ document.addEventListener('turbolinks:load', () =>{
         $('.cover').addClass('hidden');
     });
 
-    $('.flash').fadeOut(4000)
+    // $('.flash').fadeOut(4000)
+    // 要素を取得
+    const flash = document.getElementById('flash');
+
+    // スライドアウトする関数
+    function slideOut() {
+    // 下から上へのアニメーションを追加するためのCSSを適用
+    flash.style.transition = 'transform 0.5s ease-out';
+    flash.style.transform = 'translateY(-100%)'; // 下から上へ移動する
+    }
+
+    // 数秒後にスライドアウト関数を実行
+    setTimeout(slideOut, 3000); // 3000ミリ秒 = 3秒後
+
 
     $(".school_class_setting_btn").each(function(index, element){
         $(`#edit_btn${index}`).on('click', (event) =>{

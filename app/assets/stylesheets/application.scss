@@ -90,7 +90,9 @@
       color: $main-black;
     }
     &_flash{
-      height: 40px;
+      background-color: $main-red;
+      color: white;
+      text-align: center;
     }
 
     &_bottom{
