@@ -18,20 +18,23 @@
     = stylesheet_link_tag 'responsible', media: 'all', 'data-turbolinks-track': 'reload'
     
   %body
+    - if flash.present?
+      .header_flash
+        .flash
+          - flash.each do |key, value|
+            %div{:class => key}= value
     .page_container
       - if @header_hidden
       - else
         %header.header
           .header_logos
             %h1 School Notes
-          .header_flash
-            - if flash.present?
-              .flash
-                - flash.each do |key, value|
-                  %div{:class => key}= value
           - if user_signed_in?
             .header_user_display
               %p #{@display_name}さん
+            %p.header_category_name 自分のクラス
+            = link_to new_school_class_path ,method: :get, class: "header_new_class_link" do
+              %i.fa-solid.fa-plus
             .header_user_classes
               - @current_user_classes.each_with_index do |current_user_class, index|
                 .header_user_class
@@ -42,8 +45,8 @@
                     = link_to "編集", edit_school_class_path(current_user_class[:school_class_id]), method: :get, class: "school_class_edit_btn"
                     = link_to "削除", school_class_path(current_user_class[:school_class_id]), method: :delete, data: { confirm: raw('本当にこのクラスを削除しますか？（一度削除すると復元できません）') }, class: "school_class_edit_btn"
                 %hr
-              .header_new_class
-                = link_to "+ 新規クラス作成", new_school_class_path,method: :get, class: "header_new_class_link"
+            - if @current_follow_classes
+              %p.header_category_name フォロークラス
             .header_user_classes
               - @current_follow_classes.each_with_index do |current_follow_class, index|
                 .header_user_class
@@ -52,6 +55,7 @@
                     %i.fa-solid.fa-ellipsis.school_class_setting_btn{id: "follow_edit_btn#{index}"}
                   .school_class_follow_edit_menu.hidden{id: "follow_edit#{index}"}
                     = link_to "フォローを外す", school_class_teacher_path(current_follow_class[:school_class_teacher_id]), method: :delete, class: "school_class_link"
+                %hr
 
 
           .header_bottom

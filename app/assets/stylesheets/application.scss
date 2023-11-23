@@ -105,6 +105,11 @@
       text-align: center;
       padding: 20px
     }
+    &_user_classes{
+      margin-bottom: 20px;
+      max-height: 210px;
+      overflow-y: auto;
+    }
     &_user_class{
       display: flex;
       align-items: center;
@@ -117,24 +122,24 @@
       }
     }
     &_new_class{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 40px;
-      &:hover{
-        background-color: #d6d8db;
-      }
-      &:hover .school_class_setting_btn_box{
-        display: flex;
-      }
-
       &_link{
-        width: 100%;
-        padding: 10px 0;
+        display: inline-block;
+        // width: 100%;
+        padding: 0 5px;
         color: $main-black;
-        text-decoration: none;
-        text-align: center;
+        // text-decoration: none;
+        // text-align: center;
+        &:hover{
+          cursor: pointer;
+          background-color: $main-grey;
+          border-radius: 5px;
+        }
       }
+    }
+
+    &_category_name{
+      display: inline-block;
+      color: #5C431D;
     }
 }
 
