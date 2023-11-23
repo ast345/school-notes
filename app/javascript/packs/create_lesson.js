@@ -15,8 +15,10 @@ export function createLesson(schoolClassId) {
         const selectSubject = document.getElementById(`select_subject${Id}`)
         const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
         const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
+        var statusDisplay = document.getElementById('status_display')
 
         $(`#${Id}`+'.new_lesson_btn').on('click', () => {
+            statusDisplay.innerHTML = "保存中…"
             $(`#${Id}`+'.edit_lesson_box').removeClass('hidden')
             $(`#${Id}`+'.lesson_btn_box').addClass('hidden')
             $(`#${Id}`+'.new_lesson_menu').addClass('hidden')
@@ -93,28 +95,30 @@ export function createLesson(schoolClassId) {
                     };
 
                     //$(`#${Id}`+'.new_unit_box')がhiddenクラスを持つかどうかで条件分岐
+                    var selectedSubjectName = selectSubject.value;
                     if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
                         if(selectSubject.value === ""){
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_lesson_menu').removeClass('hidden')
+                            statusDisplay.innerHTML = "保存済み"
                         } else {
                             const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
                             const selectedUnitName = selectedOption.textContent;
                             const selectedUnitId = Number(selectUnit.value)
+                            $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
+                            $(`#grade_subject_units${Id}`).addClass('hidden')
+                            $(`#got_lesson${Id}`).removeClass('hidden')
+                            displayLessonSubject.innerHTML = `${selectedSubjectName}`
+                            displayLessonUnit.innerHTML = `${selectedUnitName}`
+
                             axios.post(`/school_classes/${schoolClassId}/lessons`, {
                                 lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                             })
                             .then((res) => {
                                 if(res.status === 200){
-                                    var resSubjectName = res.data.grade_subject_name
-                                    $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
-                                    $(`#grade_subject_units${Id}`).addClass('hidden')
-                                    $(`#got_lesson${Id}`).removeClass('hidden')
-                                    displayLessonSubject.innerHTML = `${resSubjectName}`
-                                    displayLessonUnit.innerHTML = `${selectedUnitName}`
-
                                     lessonBtnDisplay();
                                     createDataSet(res);
+                                    statusDisplay.innerHTML = "保存済み"
                                 };
                             })
                         }
@@ -124,6 +128,12 @@ export function createLesson(schoolClassId) {
                         if (!newUnitName) {
                             window.alert('新しい単元名を入力してください')
                         } else {
+                            $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
+                            $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                            $(`#got_lesson${Id}`).removeClass('hidden')
+                            displayLessonSubject.innerHTML = `${selectedSubjectName}`
+                            displayLessonUnit.innerHTML = `${newUnitName}`
+
                             axios.post(`/grade_subject_units`, {
                                 grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId, school_class_id : schoolClassId}
                             })
@@ -135,14 +145,9 @@ export function createLesson(schoolClassId) {
                                     })
                                     .then((res) => {
                                         if(res.status === 200){
-                                            var resSubjectName = res.data.grade_subject_name
-                                            $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
-                                            $(`#${Id}`+'.new_unit_box').addClass('hidden')
-                                            $(`#got_lesson${Id}`).removeClass('hidden')
-                                            displayLessonSubject.innerHTML = `${resSubjectName}`
-                                            displayLessonUnit.innerHTML = `${newUnitName}`
                                             lessonBtnDisplay();
                                             createDataSet(res);
+                                            statusDisplay.innerHTML = "保存済み"
                                         }
                                     })
                                 }
@@ -161,20 +166,22 @@ export function createLesson(schoolClassId) {
                     };
                 };
             }
-
-
             document.addEventListener('click', createEndHandler);
         });
 
     });
 
     $('.add_from_temp').on('click', (event) =>{
+        var statusDisplay = document.getElementById('status_display')
+        statusDisplay.innerHTML = "保存中…"
         const startOfWeek = $(event.currentTarget).data('startOfWeek');
         axios.get(`	/school_classes/${schoolClassId}/template_lessons/get_temp`, {
             params: {start_of_week: startOfWeek}
         })
         .then((res) =>{
             var template_lessons =res.data
+
+            const axiosRequests = [];
             template_lessons.forEach(function(template_lesson){
                 const period = template_lesson.period
                 const date = template_lesson.date
@@ -206,7 +213,7 @@ export function createLesson(schoolClassId) {
                     $(`#got_lesson${Id}`).data('lessonId', `${res.data.id}`);
                 };
 
-                axios.post(`/school_classes/${schoolClassId}/lessons`, {
+                const axiosRequest = axios.post(`/school_classes/${schoolClassId}/lessons`, {
                     lesson: {date: date, day_of_week: template_lesson.day_of_week, period: period, grade_subject_id: template_lesson.grade_subject_id}
                 })
                 .then((res) =>{
@@ -219,6 +226,17 @@ export function createLesson(schoolClassId) {
                         createDataSet(res);
                     }
                 })
+                axiosRequests.push(axiosRequest);
+            });
+
+
+            Promise.all(axiosRequests)
+            .then(() => {
+                statusDisplay.innerHTML = "保存済み"
+            })
+            .catch((error) => {
+                // エラーハンドリングを行います
+                window.alert('エラーが発生しました');
             });
         })
     });
