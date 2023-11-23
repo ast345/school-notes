@@ -148,26 +148,45 @@ export function tempLessonCUD(schoolClassId) {
                 };
     
                 if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
-                    $(`#${Id}.edit_lesson_box`).addClass('hidden')
-                    $(`#got_lesson${Id}`).removeClass('hidden')
-                    $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
-                    // 中身を差し替え
-                    displayLessonSubject.innerHTML = `${selectSubject.value}`
-
-                    axios.put(`/school_classes/${schoolClassId}/template_lessons/${templateLessonId}`, {
-                        template_lesson: {grade_subject_id: selectedGradeSubjectId}
-                    })
-                    .then((res) =>{
-                        var resData= res.data
-
-                        // 再変更のために定義変更
-                        subjectName = `${selectSubject.value}`
-                        gradeSubjectId = resData.grade_subject_id
-
-                        editDataSet(resData);
-                        statusDisplay.innerHTML = "保存済み"
-                    });
-                    document.removeEventListener('click', editEndHandler)
+                    if (selectedSubjectIndex == 0) {
+                        var result =window.confirm('このコマの予定を削除してよろしいですか。');
+                        if(result === true){
+                            $(`#got_lesson${Id}`).addClass('hidden')
+                            $(`#${Id}.new_lesson_menu`).removeClass('hidden')
+                            $(`#copy_lesson_btn${Id}`).addClass('hidden')
+                            $(`#delete_lesson_btn${Id}`).addClass('hidden')
+                            $(`#${Id}.edit_lesson_box`).addClass('hidden')
+                            $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                            axios.delete(`/school_classes/${schoolClassId}/template_lessons/${templateLessonId}`)
+                            .then((res) =>{
+                                if(res.status === 204){
+                                    statusDisplay.innerHTML = "保存済み"
+                                };
+                            });
+                        }
+                        document.removeEventListener('click', editEndHandler)
+                    } else {
+                        $(`#${Id}.edit_lesson_box`).addClass('hidden')
+                        $(`#got_lesson${Id}`).removeClass('hidden')
+                        $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                        // 中身を差し替え
+                        displayLessonSubject.innerHTML = `${selectSubject.value}`
+    
+                        axios.put(`/school_classes/${schoolClassId}/template_lessons/${templateLessonId}`, {
+                            template_lesson: {grade_subject_id: selectedGradeSubjectId}
+                        })
+                        .then((res) =>{
+                            var resData= res.data
+    
+                            // 再変更のために定義変更
+                            subjectName = `${selectSubject.value}`
+                            gradeSubjectId = resData.grade_subject_id
+    
+                            editDataSet(resData);
+                            statusDisplay.innerHTML = "保存済み"
+                        });
+                        document.removeEventListener('click', editEndHandler)
+                    }
                 };
             }
         });

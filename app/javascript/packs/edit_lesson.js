@@ -69,7 +69,7 @@ export function editLesson(schoolClassId) {
                     // 選択された科目に基づく単元名の表示
                     if (selectedSubject) {
                         axios.get(`/get_grade_subject_units`, {
-                            params: {grade_subject_id: selectedGradeSubjectId}
+                            params: {grade_subject_id: selectedGradeSubjectId, school_class_id: schoolClassId}
                         })
                         .then((res) => {
                             const unitSet = res.data
@@ -126,7 +126,29 @@ export function editLesson(schoolClassId) {
             if (!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0) {
                 const selectUnit = document.getElementById(`unit${Id}`)
                 const selectedOption = selectUnit.querySelector("option:checked");
-                if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
+
+                if(selectedSubjectIndex == 0){
+                    var result =window.confirm('このコマの予定を削除してよろしいですか。');
+                    if(result === true){
+                        $(`#got_lesson${Id}`).addClass('hidden')
+                        $(`#${Id}.new_lesson_menu`).removeClass('hidden')
+                        $(`#copy_lesson_btn${Id}`).addClass('hidden')
+                        $(`#delete_lesson_btn${Id}`).addClass('hidden')
+                        $(`#grade_subject_units${Id}`).addClass('hidden')
+                        $(`#${Id}.edit_lesson_box`).addClass('hidden')
+                        $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+        
+                        displayLessonSubject.innerHTML = ""
+                        displayLessonUnit.innerHTML = ""
+                        axios.delete(`/school_classes/${schoolClassId}/lessons/${LessonId}`)
+                        .then((res) =>{
+                            if(res.status === 204){
+                                statusDisplay.innerHTML = "保存済み"
+                            };
+                        });
+                        document.removeEventListener('click', editEndHandler)
+                    }
+                } else if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
                     // 単元名が新規作成されていない時の処理
                     $(`#grade_subject_units${Id}`).addClass('hidden')
                     $(`#${Id}.edit_lesson_box`).addClass('hidden')
