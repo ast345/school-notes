@@ -117,12 +117,12 @@ export function dragDropLesson (schoolClassId) {
             $(targetGotLesson).data('lessonId', sourceLessonId);
           };
 
-          var statusDisplay = document.getElementById('status_display')
+          var statusDisplay = document.getElementById('status_display');
+          statusDisplay.innerHTML = "保存中…"
 
           if (targetHasLesson && sourceHasLesson) {
             changeTargetBoxContent();
             changeSourceBoxContent();
-            statusDisplay.innerHTML = "保存中…"
             // targetLessonのEdit
             const targetLessonReq = axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
                 lesson: {date: sourceDataSet.date, day_of_week: sourceDataSet.dayOfWeek, period: sourceDataSet.period}
@@ -141,7 +141,6 @@ export function dragDropLesson (schoolClassId) {
                 }
             })
             .catch((error) => {
-                // エラーハンドリングを行います
                 window.alert('エラーが発生しました');
             });
           }
@@ -160,7 +159,6 @@ export function dragDropLesson (schoolClassId) {
             sourceBox.find('.copy_lesson_btn').removeClass('hidden');
             sourceBox.find('.delete_lesson_btn').removeClass('hidden');
             changeSourceBoxContent();
-            statusDisplay.innerHTML = "保存中…"
             axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
                 lesson: {date: sourceDataSet.date, day_of_week: sourceDataSet.dayOfWeek, period: sourceDataSet.period}
             })
@@ -184,7 +182,6 @@ export function dragDropLesson (schoolClassId) {
             targetBox.find('.delete_lesson_btn').removeClass('hidden');
 
             changeTargetBoxContent();
-            statusDisplay.innerHTML = "保存中…"
             axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
                 lesson: {date: targetDataSet.date, day_of_week: targetDataSet.dayOfWeek, period: targetDataSet.period}
             })

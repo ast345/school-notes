@@ -4,6 +4,7 @@
     .class_page_top
         .class_name
             %p.class_name_display= @school_class.grade_class
+        %p#status_display 保存済み
     .nav
         = link_to " 戻る", school_class_path(@school_class.id, start_of_week: @start_of_week), class: "fa-solid fa-caret-left temp_return_link", data: {"turbolinks" => false}
     %table.class_weekly
@@ -39,7 +40,7 @@
                             - if template_lesson
                                 .lesson_btn_js_box{id: "#{period}#{wday}"}
                                     .lesson_btn_box.hidden{id: "#{period}#{wday}"}
-                                        %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}",grade_subject_id: template_lesson.grade_subject.id}}
+                                        %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}",grade_subject_id: template_lesson.grade_subject.id, grade_subject_name: template_lesson.subject_name}}
                                         %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
                                         %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}", template_lesson_id: template_lesson.id}}
                                 .got_lesson{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period, template_lesson_id: template_lesson.id, subject_name: template_lesson.subject_name, grade_subject_id: template_lesson.grade_subject.id}}

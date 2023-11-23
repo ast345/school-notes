@@ -5,6 +5,7 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function tempItem(schoolClassId) {
+    var statusDisplay = document.getElementById('status_display');
         // 文字の大きさ調整
         function adjustItemFontSize(element) {
             const textElem = element;
@@ -22,6 +23,7 @@ export function tempItem(schoolClassId) {
         var dayOfWeek = $(element).data().dayOfWeek
 
         $(`#${Id}.item_create_btn`).on('click', () =>{
+            statusDisplay.innerHTML = "保存中…"
             $(`#${Id}.item_btn_box`).addClass('hidden')
             $(`#${Id}.item_text_box`).removeClass('hidden')
 
@@ -34,18 +36,21 @@ export function tempItem(schoolClassId) {
                         $(`#${Id}.item_btn_box`).removeClass('hidden')
                         $(`#${Id}.item_text_box`).addClass('hidden')
                         document.removeEventListener('click', createDateItemEndHandler);
+                        statusDisplay.innerHTML = "保存済み"
                     } else {
+                        $(`#item_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.item_text_box`).addClass('hidden')
+                        const itemDisplay = document.getElementById(`item_display${Id}`)
+                        itemDisplay.innerHTML = `${newItem}`
+                        adjustItemFontSize(itemDisplay);
+
                         axios.post(`/school_classes/${schoolClassId}/template_date_items`, {
                             temp_item: {day_of_week: dayOfWeek, item_name: newItem}
                         })
                         .then((res) =>{
                             if(res.status === 200){
-                                $(`#item_display${Id}`).removeClass('hidden')
-                                $(`#${Id}.item_text_box`).addClass('hidden')
-                                const itemDisplay = document.getElementById(`item_display${Id}`)
-                                itemDisplay.innerHTML = `${res.data.item_name}`
                                 itemDisplay.setAttribute('data-item-id', `${res.data.id}`)
-                                adjustItemFontSize(itemDisplay);
+                                statusDisplay.innerHTML = "保存済み"
                             }
                         });
                         document.removeEventListener('click', createDateItemEndHandler);
@@ -77,6 +82,7 @@ export function tempItem(schoolClassId) {
         $(`#item_display${Id}`).on('click', () => {
             $(this).addClass('hidden')
             $(`#${Id}.item_text_box`).removeClass('hidden')
+            statusDisplay.innerHTML = "保存中…"
 
 
 
@@ -86,25 +92,27 @@ export function tempItem(schoolClassId) {
                 if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
                     var editItem = $(`#item_text${Id}`).val();
                     if (!editItem) {
+                        $(`#${Id}.item_btn_box`).removeClass('hidden')
+                        $(`#${Id}.item_text_box`).addClass('hidden')
+                        document.removeEventListener('click', editDateItemEndHandler);
                         axios.delete(`/school_classes/${schoolClassId}/template_date_items/${tempItemId}`)
                         .then((res) =>{
                             if(res.status === 204){
-                                $(`#${Id}.item_btn_box`).removeClass('hidden')
-                                $(`#${Id}.item_text_box`).addClass('hidden')
-                                document.removeEventListener('click', editDateItemEndHandler);
+                                statusDisplay.innerHTML = "保存済み"
                             };
                         });
                     } else {
+                        $(`#item_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.item_text_box`).addClass('hidden')
+
+                        itemDisplay.innerHTML = `${editItem}`
+                        adjustItemFontSize(itemDisplay);
                         axios.patch(`/school_classes/${schoolClassId}/template_date_items/${tempItemId}`, {
                             temp_item: {item_name: editItem}
                         })
                         .then((res) =>{
                             if(res.status === 200){
-                                $(`#item_display${Id}`).removeClass('hidden')
-                                $(`#${Id}.item_text_box`).addClass('hidden')
-
-                                itemDisplay.innerHTML = `${res.data.item_name}`
-                                adjustItemFontSize(itemDisplay);
+                                statusDisplay.innerHTML = "保存済み"
                             };
                         });
                         document.removeEventListener('click', editDateItemEndHandler);

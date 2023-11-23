@@ -6,10 +6,12 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function copyPasteTemplateLesson (schoolClassId) {
     var copiedGradeSubjectId
+    var copiedGradeSubjectName
     $('.copy_lesson_btn').each(function(index, element){
         const dataSet = $(element).data();
         const Id =dataSet.id;
         var gradeSubjectId = dataSet.gradeSubjectId
+        var gradeSubjectName = dataSet.gradeSubjectName
 
         //datasetが追加されたことを検知して再定義
         const copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
@@ -27,7 +29,8 @@ export function copyPasteTemplateLesson (schoolClassId) {
         observer.observe(copyLessonBtn, { attributes: true})
 
         $(`#copy_lesson_btn${Id}`).on('click', () =>{
-            copiedGradeSubjectId = gradeSubjectId
+            copiedGradeSubjectId = gradeSubjectId;
+            copiedGradeSubjectName = gradeSubjectName;
 
             $(this).removeClass('fa-copy').addClass('fa-check');
 
@@ -68,37 +71,41 @@ export function copyPasteTemplateLesson (schoolClassId) {
             $(`#got_lesson${Id}`).data('templateLessonId', `${resData.id}`);
         };
 
+        var statusDisplay = document.getElementById('status_display')
         $(`#paste_lesson_btn${Id}`).on('click', () =>{
             // GotLessonがhiddenを持っているか持っていないか判定
+            statusDisplay.innerHTML = "保存中…"
             var hasLesson = !$(`#got_lesson${Id}`).hasClass('hidden')
             if(copiedGradeSubjectId){
                 if (hasLesson) {
                     var gotLesson = document.getElementById(`got_lesson${Id}`)
                     var templateLessonId = gotLesson.getAttribute('data-template-lesson-id')
+                    displayLessonSubject.innerHTML = `${copiedGradeSubjectName}`
                     axios.put(`/school_classes/${schoolClassId}/template_lessons/${templateLessonId}`, {
                         template_lesson: {grade_subject_id: copiedGradeSubjectId}
                     })
                     .then((res) =>{
                         if(res.status === 200){
                             var resData = res.data
-                            displayLessonSubject.innerHTML = `${resData.subject_name}`
                             createDataSet(resData);
+                            statusDisplay.innerHTML = "保存済み";
                         };
                     });
                 } else {
                     // lessonがない場所にペーストする場合
+                    $(`#${Id}.new_lesson_menu`).addClass('hidden')
+                    $(`#got_lesson${Id}`).removeClass('hidden')
+                    $(`#copy_lesson_btn${Id}`).removeClass('hidden')
+                    $(`#delete_lesson_btn${Id}`).removeClass('hidden')
+                    displayLessonSubject.innerHTML = `${copiedGradeSubjectName}`
                     axios.post(`/school_classes/${schoolClassId}/template_lessons`, {
                         template_lesson: {day_of_week: dayOfWeek, period: period, grade_subject_id: copiedGradeSubjectId}
                     })
                     .then((res) =>{
                         if(res.status === 200){
                             var resData = res.data
-                            $(`#${Id}.new_lesson_menu`).addClass('hidden')
-                            $(`#got_lesson${Id}`).removeClass('hidden')
-                            $(`#copy_lesson_btn${Id}`).removeClass('hidden')
-                            $(`#delete_lesson_btn${Id}`).removeClass('hidden')
-                            displayLessonSubject.innerHTML = `${resData.subject_name}`
                             createDataSet(resData);
+                            statusDisplay.innerHTML = "保存済み";
                         };
                     });
                 }

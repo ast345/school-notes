@@ -5,6 +5,7 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function tempMorningActivity(schoolClassId) {
+    var statusDisplay = document.getElementById('status_display')
     // 文字の大きさ調整
     function adjustFontSize(element) {
         const textElem = element;
@@ -23,6 +24,7 @@ export function tempMorningActivity(schoolClassId) {
         var dayOfWeek = $(element).data().dayOfWeek
 
         $(`#${Id}.morning_act_create_btn`).on('click', () =>{
+            statusDisplay.innerHTML = "保存中…"
             $(`#${Id}.morning_act_btn_box`).addClass('hidden')
             $(`#${Id}.morning_act_text_box`).removeClass('hidden')
             function createMorningActEndHandler(event) {
@@ -34,19 +36,22 @@ export function tempMorningActivity(schoolClassId) {
                         $(`#${Id}.morning_act_btn_box`).removeClass('hidden')
                         $(`#${Id}.morning_act_text_box`).addClass('hidden')
                         document.removeEventListener('click', createMorningActEndHandler);
+                        statusDisplay.innerHTML = "保存済み"
                     } else {
+                        $(`#morning_act_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.morning_act_text_box`).addClass('hidden')
+
+                        const morningActDisplay = document.getElementById(`morning_act_display${Id}`)
+                        morningActDisplay.innerHTML = `${newMorningAct}`
+                        adjustFontSize(morningActDisplay);
+
                         axios.post(`/school_classes/${schoolClassId}/template_morning_activities`, {
                             temp_morning_act: {day_of_week: dayOfWeek, activity_name: newMorningAct}
                         })
                         .then((res) =>{
                             if(res.status === 200){
-                                $(`#morning_act_display${Id}`).removeClass('hidden')
-                                $(`#${Id}.morning_act_text_box`).addClass('hidden')
-
-                                const morningActDisplay = document.getElementById(`morning_act_display${Id}`)
-                                morningActDisplay.innerHTML = `${res.data.activity_name}`
                                 morningActDisplay.setAttribute('data-morning-activity-id', `${res.data.id}`)
-                                adjustFontSize(morningActDisplay);
+                                statusDisplay.innerHTML = "保存済み"
                             }
                         });
                         document.removeEventListener('click', createMorningActEndHandler);
@@ -75,6 +80,7 @@ export function tempMorningActivity(schoolClassId) {
 
         observer.observe(morningActDisplay, { attributes: true})
         $(`#morning_act_display${Id}`).on('click', () => {
+            statusDisplay.innerHTML = "保存中…"
             $(this).addClass('hidden')
             $(`#${Id}.morning_act_text_box`).removeClass('hidden')
             function editMorningActEndHandler(event) {
@@ -83,25 +89,28 @@ export function tempMorningActivity(schoolClassId) {
                 if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
                     var editMorningAct = $(`#morning_act_text${Id}`).val();
                     if (!editMorningAct) {
+                        $(`#${Id}.morning_act_btn_box`).removeClass('hidden')
+                        $(`#${Id}.morning_act_text_box`).addClass('hidden')
+                        document.removeEventListener('click', editMorningActEndHandler);
+
                         axios.delete(`/school_classes/${schoolClassId}/template_morning_activities/${morningActId}`)
                         .then((res) =>{
                             if(res.status === 204){
-                                $(`#${Id}.morning_act_btn_box`).removeClass('hidden')
-                                $(`#${Id}.morning_act_text_box`).addClass('hidden')
-                                document.removeEventListener('click', editMorningActEndHandler);
+                                statusDisplay.innerHTML = "保存済み"
                             };
                         });
                     } else {
+                        $(`#morning_act_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.morning_act_text_box`).addClass('hidden')
+
+                        morningActDisplay.innerHTML = `${editMorningAct}`
+                        adjustFontSize(morningActDisplay);
                         axios.patch(`/school_classes/${schoolClassId}/template_morning_activities/${morningActId}`, {
                             temp_morning_act: {activity_name: editMorningAct}
                         })
                         .then((res) =>{
                             if(res.status === 200){
-                                $(`#morning_act_display${Id}`).removeClass('hidden')
-                                $(`#${Id}.morning_act_text_box`).addClass('hidden')
-
-                                morningActDisplay.innerHTML = `${res.data.activity_name}`
-                                adjustFontSize(morningActDisplay);
+                                statusDisplay.innerHTML = "保存済み"
                             };
                         });
                         document.removeEventListener('click', editMorningActEndHandler);
