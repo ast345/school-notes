@@ -61,6 +61,9 @@
                     = @share_url
                     %p 先生向けリンク
                     = @share_teacher_url
+            .units_nav
+                = link_to school_class_using_texts_path(@school_class.id) do
+                    %i.fa-solid.fa-list
 
         .table_box
             %table.class_weekly
