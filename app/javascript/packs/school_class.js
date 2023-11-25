@@ -37,6 +37,90 @@ document.addEventListener('turbolinks:load', () =>{
         };
     })
 
+    $('.fa-calendar-plus').on('click',(event) => {
+        $(".template_nav").toggleClass('hidden');
+    });
+
+    $('.fa-share').on('click', (event)=>{
+        $(".link_nav").toggleClass('hidden');
+    })
+    $('.fa-ellipsis').on('click', (event)=>{
+        $(".others_nav").toggleClass('hidden');
+    })
+    $('.period_setting').on('click', (event)=>{
+        $(".lesson_period_box").toggleClass('hidden')
+    })
+    $('.lesson_period_box').on('click', (e)=>{
+        e.stopPropagation();
+    })
+    $('.wday_setting').on('click', (event)=>{
+        $(".wday_select_box").toggleClass('hidden')
+    })
+    $(".wday_select_box").on('click', (e)=>{
+        e.stopPropagation();
+    })
+
+    $(document).on("click", (e)=> {
+        if (!$(e.target).closest('.fa-calendar-plus').length) {
+          // 追加の要素が表示されている場合は非表示にする
+          $('.template_nav').addClass('hidden');
+        }
+
+        if (!$(e.target).closest('.fa-share').length) {
+            // 追加の要素が表示されている場合は非表示にする
+            $('.link_nav').addClass('hidden');
+        }
+
+        if (!$(e.target).closest('.fa-ellipsis').length) {
+            // 追加の要素が表示されている場合は非表示にする
+            $('.others_nav').addClass('hidden');
+        }
+
+        if (!$(e.target).closest('.period_setting').length) {
+            // 追加の要素が表示されている場合は非表示にする
+            $('.lesson_period_box').addClass('hidden');
+        }
+
+        if (!$(e.target).closest('.wday_setting').length) {
+            // 追加の要素が表示されている場合は非表示にする
+            $('.wday_select_box').addClass('hidden');
+        }
+
+      });
+
+    $(".share_for_stu").on("click", (event)=>{
+        const url = $(event.currentTarget).data('link');
+        navigator.clipboard.writeText(url)
+            .then(()=>{
+                alert("クリップボードに児童・生徒向け共有urlをコピーしました!");
+            })
+            .catch((error) =>{
+                alert("urlをコピーできませんでした")
+            })
+    });
+
+    $(".share_for_tea").on("click", (event)=>{
+        const url = $(event.currentTarget).data('link');
+        navigator.clipboard.writeText(url)
+            .then(()=>{
+                alert("クリップボードに先生向け共有urlをコピーしました!");
+            })
+            .catch((error) =>{
+                alert("urlをコピーできませんでした")
+            })
+    });
+    $(".share_for_web").on("click", (event)=>{
+        const url = $(event.currentTarget).data('code');
+        navigator.clipboard.writeText(url)
+            .then(()=>{
+                alert("クリップボードにiframeコードをコピーしました!");
+            })
+            .catch((error) =>{
+                alert("urlをコピーできませんでした")
+            })
+    })
+
+
     $(".image_btn").on('click', (event) =>{
         const startOfWeek = $(event.currentTarget).data('startOfWeek');
         const endOfWeek = $(event.currentTarget).data('endOfWeek');
