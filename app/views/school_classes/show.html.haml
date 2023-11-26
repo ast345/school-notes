@@ -118,8 +118,9 @@
                             %td.column_left #{period}
                             - (@start_of_week..@end_of_week).each do |date|
                                 - next unless @display_wday.include?(date.wday)
-                                %td
+                                %td.column_lesson
                                     .lesson_box{id: "#{period}#{date}"}
+                                        %i.fa-solid.fa-ellipsis-vertical.lesson_ellipsis.hidden{id: "#{period}#{date}"}
                                         - lesson = @this_week_lessons.find_by(date: date, period: period)
                                         - if lesson
                                             - if lesson.grade_subject_unit

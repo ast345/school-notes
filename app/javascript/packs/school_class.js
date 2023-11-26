@@ -133,17 +133,6 @@ document.addEventListener('turbolinks:load', () =>{
         })
     });
 
-    $(".iframe_btn").on('click', () =>{
-        $(".iframe_code_box").slideToggle("");
-    });
-
-    $(".iframe_copy_btn").on('click', () =>{
-        const iframeCode = $(".iframe_code").val();
-        navigator.clipboard.writeText(iframeCode)
-            .catch((error) =>{
-                window.alert("コピーできませんでした")
-            })
-    })
 
     $(".wday_btn").on('click', () =>{
         $(".wday_select_box").slideToggle("");
@@ -187,12 +176,29 @@ document.addEventListener('turbolinks:load', () =>{
         const Id = element.id
 
         $(`#${Id}.lesson_box`).on('mouseenter', function(){
-            $(`#${Id}.lesson_btn_box`).removeClass('hidden');
+            $(`#${Id}.lesson_ellipsis`).removeClass('hidden');
             $(`#${Id}.new_lesson_btn`).removeClass('hidden');
         }).on('mouseleave', function(){
             $(`#${Id}.lesson_btn_box`).addClass('hidden');
             $(`#${Id}.new_lesson_btn`).addClass('hidden');
+            $(`#${Id}.lesson_ellipsis`).addClass('hidden');
         })
+
+        $(`#${Id}.lesson_ellipsis`).on('mouseenter', function(){
+            $(`#${Id}.lesson_btn_box`).removeClass('hidden');
+        })
+        // .on('mouseleave', function(){
+        //     $(`#${Id}.lesson_btn_box`).addClass('hidden');
+        // })
+
+        // $(`#${Id}.lesson_ellipsis`).on('click', ()=>{
+        //     $(`#${Id}.lesson_btn_js_box`)
+        //         .css('left', '100%') // 初期位置を右側に設定
+        //         .show() // 要素を表示
+        //         .animate({
+        //             left: '0' // 左端に移動
+        //         }, 500); // アニメーションの速度を調整する場合はここを変更
+        // });
     });
 
     
