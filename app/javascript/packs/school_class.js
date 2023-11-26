@@ -184,21 +184,9 @@ document.addEventListener('turbolinks:load', () =>{
             $(`#${Id}.lesson_ellipsis`).addClass('hidden');
         })
 
-        $(`#${Id}.lesson_ellipsis`).on('mouseenter', function(){
+        $(`#${Id}.lesson_ellipsis`).on('click', function(){
             $(`#${Id}.lesson_btn_box`).removeClass('hidden');
         })
-        // .on('mouseleave', function(){
-        //     $(`#${Id}.lesson_btn_box`).addClass('hidden');
-        // })
-
-        // $(`#${Id}.lesson_ellipsis`).on('click', ()=>{
-        //     $(`#${Id}.lesson_btn_js_box`)
-        //         .css('left', '100%') // 初期位置を右側に設定
-        //         .show() // 要素を表示
-        //         .animate({
-        //             left: '0' // 左端に移動
-        //         }, 500); // アニメーションの速度を調整する場合はここを変更
-        // });
     });
 
     
