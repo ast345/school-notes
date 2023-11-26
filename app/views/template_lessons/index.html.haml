@@ -13,9 +13,9 @@
             - (1..5).each do |wday|
                 %th.date_header= @japanese_weekdays[wday]
         %tr.morning_act_row
-            %td.left_column 朝
+            %td.column_left 朝
             - (1..5).each do |wday|
-                %td.morning_act_cell
+                %td.column_morning_act
                     .morning_act_box{id: "#{wday}"}
                         - template_morning_act = @template_morning_acts.find_by(day_of_week: wday)
                         - if template_morning_act
@@ -32,7 +32,7 @@
                             %p.morning_act_display.hidden{id: "morning_act_display#{wday}", data: {id: "#{wday}"}}
         - (1..6).each do |period|
             %tr.lesson_row
-                %td.left_column #{period}
+                %td.column_left #{period}
                 - (1..5).each do |wday|
                     %td
                         .lesson_box{id: "#{period}#{wday}"}
@@ -62,7 +62,7 @@
                                 .new_lesson_menu{id: "#{period}#{wday}"}
                                     %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{wday}", data: {period: period, day_of_week: wday}} &nbsp;新規
         %tr.item_row
-            %td.left_column 持ち物
+            %td.column_left 持ち物
             - (1..5).each do |wday|
                 %td
                     .item_box{id: "#{wday}"}
@@ -80,7 +80,7 @@
                                 = text_area_tag :item_text, '', class: 'item_text', id: "item_text#{wday}"
                             %p.item_display.hidden{id: "item_display#{wday}", data: {id: "#{wday}"}}
         %tr
-            %td.left_column 下校時刻
+            %td.column_left 下校時刻
             - (1..5).each do |wday|
                 %td
                     .leaving_time_box{id: "#{wday}"}

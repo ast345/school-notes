@@ -1,3 +1,32 @@
+.row{
+    &_date{
+        height: calc((100vh - 50px)*0.07);
+    }
+    &_event{
+        height: calc((100vh - 50px)*0.07);
+    }
+    &_morning_act{
+        height: calc((100vh - 50px)*0.03);
+    }
+    &_lesson{
+        height: calc((100vh - 50px)*0.65/6);
+    }
+    &_item{
+        height: calc((100vh - 50px)*0.15);
+    }
+    &_leaving{
+        height: calc((100vh - 50px)*0.03);
+    }
+}
+.column{
+    &_date, &_event, &_morning_act, &_item, &_leaving{
+        width: calc((100vh - 50px)*0.65/6/3*4);
+    }
+    &_left{
+        text-align: center;
+        width: 88px;
+    }
+}
 .schedule{
     &_container{
         display: flex;
@@ -32,6 +61,8 @@
 .table_box{
     display: flex;
     justify-content: center;
+    height: calc(100vh - 38px);
+    overflow-y: auto;
 }
 
 .lesson{
@@ -44,7 +75,6 @@
     }
     &_unit{
         text-align: center;
-        width: 117px;
         &:hover{
             cursor: text;
         }
@@ -52,8 +82,8 @@
 
     &_box{
         background-color: white;
-        height: 98px;
-        width: 118px;
+        // height: 98px;
+        // width: 118px;
         position: relative;
         z-index: 1;
         cursor: grab;
@@ -151,11 +181,9 @@
     }
 
     &_box{
-        height: 118px;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 120px;
     }
 }
 
@@ -267,7 +295,6 @@
 .leaving_time{
     &_box{
         position: relative;
-        height: 27px;
         text-align: center;
         &:hover .leaving_time_create_btn{
             display: inline-block;
@@ -345,16 +372,9 @@
     }
   }
 
-.left_column{
-    text-align: center;
-    min-width: 88px;
-}
-
 
 .event{
     &_box{
-        width: 120px;
-        height: 64px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -397,8 +417,6 @@
 
 .morning_act{
     &_box{
-        width: 120px;
-        height: 27px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -443,7 +461,7 @@
 
 
 .got_lesson{
-    padding-top: 25px;
+    // padding-top: 25px;
 }
 
 .copy_lesson_btn_explain{
@@ -477,9 +495,6 @@
     }
 }
 
-.date_header{
-    width: 120px;
-}
 
 .week{
     &_nav{
@@ -517,3 +532,4 @@
         }
     }
 }
+

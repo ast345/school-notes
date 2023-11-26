@@ -28,37 +28,37 @@
     .table_box
         %table.class_weekly
             %tr
-                %th.left_column
+                %th.column_left
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %th.date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
             %tr.event_row
                 - if @school_class.grade_id ==1 or @school_class.grade_id ==2
-                    %td.left_column ぎょうじ
+                    %td.column_left ぎょうじ
                 - else
-                    %td.left_column 行事予定
+                    %td.column_left 行事予定
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
-                    %td.event_cell
+                    %td.column_event
                         .event_box
                             - event = @this_week_events.find_by(date: date)
                             - if event
                                 %p.event_display #{event.event_name.html_safe}
             %tr.morning_act_row
                 - if @school_class.grade_id ==1
-                    %td.left_column あさ
+                    %td.column_left あさ
                 - else
-                    %td.left_column 朝
+                    %td.column_left 朝
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
-                    %td.morning_act_cell
+                    %td.column_morning_act
                         .morning_act_box
                             - morning_act = @this_week_morning_activities.find_by(date: date)
                             - if morning_act
                                 %p.morning_act_display  #{morning_act.activity_name.html_safe}
             - (@start_of_period..@end_of_period).each do |period|
                 %tr.lesson_row
-                    %td.left_column #{period}
+                    %td.column_left #{period}
                     - (@start_of_week..@end_of_week).each do |date|
                         - next unless @display_wday.include?(date.wday)
                         %td
@@ -78,9 +78,9 @@
                                         %p.lesson_unit #{unit_name}
             %tr.item_row
                 - if @school_class.grade_id ==1 or @school_class.grade_id ==2
-                    %td.left_column もちもの
+                    %td.column_left もちもの
                 - else
-                    %td.left_column 持ち物
+                    %td.column_left 持ち物
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td
@@ -90,9 +90,9 @@
                                 %p.item_display #{item.item_name.html_safe}
             %tr
                 - if @school_class.grade_id ==1
-                    %td.left_column げこう
+                    %td.column_left げこう
                 - else
-                    %td.left_column 下校
+                    %td.column_left 下校
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td
