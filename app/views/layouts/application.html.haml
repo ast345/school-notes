@@ -37,26 +37,25 @@
               %i.fa-solid.fa-plus
             .header_user_classes
               - @current_user_classes.each_with_index do |current_user_class, index|
-                .header_user_class
+                - link_class = current_page?(school_class_path(current_user_class[:school_class_id])) ? "header_user_class active_class" : "header_user_class"
+                %div{class: link_class}
                   = link_to current_user_class[:class_name], school_class_path(current_user_class[:school_class_id]), method: :get, class: "school_class_link"
                   .school_class_setting_btn_box
                     %i.fa-solid.fa-ellipsis.school_class_setting_btn{id: "edit_btn#{index}"}
                   .school_class_edit_menu.hidden{id: "edit#{index}"}
                     = link_to "編集", edit_school_class_path(current_user_class[:school_class_id]), method: :get, class: "school_class_edit_btn"
                     = link_to "削除", school_class_path(current_user_class[:school_class_id]), method: :delete, data: { confirm: raw('本当にこのクラスを削除しますか？（一度削除すると復元できません）') }, class: "school_class_edit_btn"
-                %hr
             - if @current_follow_classes
               %p.header_category_name フォロークラス
             .header_user_classes
               - @current_follow_classes.each_with_index do |current_follow_class, index|
-                .header_user_class
+                - link_class = current_page?(school_class_share_teacher_path(token: current_follow_class[:token])) ? "header_user_class active_class" : "header_user_class"
+                %div{class: link_class}
                   = link_to current_follow_class[:class_name], school_class_share_teacher_path(token: current_follow_class[:token]), method: :get, class: "school_class_link"
                   .school_class_setting_btn_box
                     %i.fa-solid.fa-ellipsis.school_class_setting_btn{id: "follow_edit_btn#{index}"}
                   .school_class_follow_edit_menu.hidden{id: "follow_edit#{index}"}
                     = link_to "フォローを外す", school_class_teacher_path(current_follow_class[:school_class_teacher_id]), method: :delete, class: "school_class_link"
-                %hr
-
 
           .header_bottom
             = link_to "ご意見箱", opinions_path, class: "header_link"

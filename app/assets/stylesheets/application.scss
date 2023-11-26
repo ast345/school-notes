@@ -112,7 +112,8 @@
       padding: 20px 0;
     }
     &_user_classes{
-      margin-bottom: 20px;
+      margin-top: 5px;
+      margin-bottom: 15px;
       max-height: 210px;
       overflow-y: auto;
     }
@@ -120,8 +121,9 @@
       display: flex;
       align-items: center;
       height: 40px;
+      border-radius: 5px;
       &:hover{
-        background-color: #d6d8db;
+        background-color: $hover-grey;
       }
       &:hover .school_class_setting_btn_box{
         display: flex;
@@ -130,14 +132,11 @@
     &_new_class{
       &_link{
         display: inline-block;
-        // width: 100%;
         padding: 0 5px;
         color: $main-black;
-        // text-decoration: none;
-        // text-align: center;
         &:hover{
           cursor: pointer;
-          background-color: $main-grey;
+          background-color: $btn-grey;
           border-radius: 5px;
         }
       }
@@ -146,6 +145,7 @@
     &_category_name{
       display: inline-block;
       color: #5C431D;
+      padding-left: 5px;
     }
 
     &_name_edit{
@@ -163,6 +163,11 @@
     &_edit_btn{
       cursor: pointer;
       font-size: 14px;
+      padding: 5px;
+      border-radius: 5px;
+      &:hover{
+        background-color: $btn-grey;
+      }
     }
     &_display_name{
       display: inline-block;
@@ -190,7 +195,7 @@
 .school_class{
   &_link{
     width: 90%;
-    padding: 10px 0;
+    padding: 10px 5px;
     color: $main-black;
     text-decoration: none;
   }
@@ -228,20 +233,24 @@
     color: $main-black;
     padding: 5px;
     &:hover{
-      background-color: $header-grey;
+      background-color: $btn-grey;
     }
   }
 
   &_setting_btn{
     padding: 3px;
+    margin-right: 5px;
     &:hover{
       cursor: pointer;
-      background-color: $main-grey;
+      background-color: $btn-grey;
       border-radius: 5px;
     }
   }
 }
 
+.active_class{
+  background-color: $active-grey;
+}
 
   @media (max-width: 480px) {
     .page_container{
