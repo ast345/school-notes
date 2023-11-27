@@ -23,6 +23,7 @@
 .column{
     &_date, &_event, &_morning_act, &_item, &_leaving, &_lesson{
         width: calc((100vh - 50px)*0.65/6/3*4);
+        padding: 0;
     }
     &_left{
         text-align: center;
@@ -443,11 +444,12 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        height: calc((100vh - 50px)*0.03);
+        height: calc((100vh - 50px)*0.03 + 5px);
         width: 100%;
     }
 
     &_btn_box{
+        display: block;
         text-align: center;
         height: 27px;
     }
@@ -455,18 +457,11 @@
     &_text{
         height: 100%;
         width: 100%;
-        vertical-align: middle;
-
-        border: 1px solid #cccccc;
-        border-radius: 4px;
+        border: 2px solid $active-grey;
         resize: none;
         &_box{
             height: 100%;
         }
-    }
-
-    &_btn_box{
-        display: block;
     }
 
     &_create_btn{
@@ -477,8 +472,7 @@
         display: inline-block;
     }
     &_display{
-        width: 100%;
-        height: 100%;
+        text-align: center;
         word-wrap: break-word;
     }
 }
