@@ -96,7 +96,7 @@
 
         &:hover{
             border: 1px solid rgba(0, 0, 0, 0.3);
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
         }
     }
     &_box_for_share{
@@ -182,17 +182,14 @@
     }
 
     &_text{
-        height: 118px;
-        width: 118px;
-        vertical-align: middle;
-
-        border: 1px solid #cccccc;
-        border-radius: 4px;
+        width:  100%;
+        height: 100%;
+        border: 1px solid $active-grey;
         resize: none;
-    }
-
-    &_row{
-        height: 120px;
+        &_box{
+            height: 100%;
+            width: 100%;
+        }
     }
     &_display{
         height: 100%;
@@ -204,6 +201,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        height: calc((100vh - 50px)*0.15);
     }
 }
 
@@ -411,7 +409,7 @@
     &_text{
         height: 100%;
         width: 100%;
-        border: 1px solid #cccccc;
+        border: 1px solid $active-grey;
         resize: none;
         &_box{
             display: flex;
