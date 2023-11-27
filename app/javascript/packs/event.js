@@ -8,10 +8,22 @@ export function event(schoolClassId) {
     var statusDisplay = document.getElementById('status_display')
     // 文字の大きさ調整
     function adjustFontSize(element) {
-        const textElem = element;
-        for (let size = 30; textElem.scrollHeight > textElem.getBoundingClientRect().height && size > 1; size--) {
-          textElem.style.fontSize = size + "px";
+        const $element = $(element);
+        const rowHeight = $('.row_event').height(); // 要素の高さを取得
+        const originalHTML = $element.html(); // 元のHTMLを保持
+        let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+        let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
+        $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
+    
+        while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+            fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+            lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
+            $element.css({
+                'font-size': fontSize + 'px',
+                'line-height': lineHeight + 'px',
+            });
         }
+        $element.html(originalHTML);
       }
       
     $('.event_display').each(function(index, element){
@@ -34,16 +46,17 @@ export function event(schoolClassId) {
                 var creatingElement = $(`#${Id}.event_box`);
                 if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
                     var newEvent = $(`#event_text${Id}`).val();
-
+                    var replacedText = newEvent.replace(/\n/g, "<br>");
                     if (!newEvent) {
                         $(`#${Id}.event_btn_box`).removeClass('hidden')
                         $(`#${Id}.event_text_box`).addClass('hidden')
                         document.removeEventListener('click', createEventEndHandler);
+                        statusDisplay.innerHTML = "保存済み";
                     } else {
                         $(`#event_display${Id}`).removeClass('hidden')
                         $(`#${Id}.event_text_box`).addClass('hidden')
                         const eventDisplay = document.getElementById(`event_display${Id}`)
-                        eventDisplay.innerHTML = `${newEvent}`
+                        eventDisplay.innerHTML = `${replacedText}`
                         adjustFontSize(eventDisplay);
                         axios.post(`/school_classes/${schoolClassId}/events`, {
                             event: {date: date, day_of_week: dayOfWeek, event_name: newEvent}
@@ -91,7 +104,8 @@ export function event(schoolClassId) {
                 var creatingElement = $(`#${Id}.event_box`);
                 if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
                     var editEvent = $(`#event_text${Id}`).val();
-
+                    var replacedText = editEvent.replace(/\n/g, "<br>");
+                    var event = $(`#event_text${Id}`)
                     if (!editEvent) {
                         $(`#${Id}.event_btn_box`).removeClass('hidden')
                         $(`#${Id}.event_text_box`).addClass('hidden')
@@ -106,7 +120,7 @@ export function event(schoolClassId) {
                         $(`#event_display${Id}`).removeClass('hidden')
                         $(`#${Id}.event_text_box`).addClass('hidden')
 
-                        eventDisplay.innerHTML = `${editEvent}`
+                        eventDisplay.innerHTML = `${replacedText}`
                         adjustFontSize(eventDisplay);
                         axios.patch(`/school_classes/${schoolClassId}/events/${eventId}`, {
                             event: {event_name: editEvent}

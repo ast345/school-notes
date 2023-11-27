@@ -1,3 +1,5 @@
+@import './variables';
+
 .row{
     &_date{
         height: calc((100vh - 50px)*0.07);
@@ -393,10 +395,11 @@
 .event{
     &_box{
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
+        height: calc((100vh - 50px)*0.07 - 3px);
+        width: calc((100vh - 50px)*0.65/6/3*4);
     }
-
 
     &_btn_box{
         text-align: center;
@@ -405,13 +408,14 @@
 
 
     &_text{
-        height: 64px;
-        width: 118px;
-        vertical-align: middle;
-
+        height: 100%;
+        width: 100%;
         border: 1px solid #cccccc;
-        border-radius: 4px;
         resize: none;
+        &_box{
+            display: flex;
+            height: 100%;
+        }
     }
 
     &_btn_box{
@@ -427,8 +431,9 @@
     }
     &_display{
         width: 100%;
-        height: 100%;
         word-wrap: break-word;
+        text-align: center;
+        padding: 2px;
     }
 }
 
@@ -438,6 +443,8 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+        height: calc((100vh - 50px)*0.03);
+        width: 100%;
     }
 
     &_btn_box{
@@ -446,13 +453,16 @@
     }
 
     &_text{
-        height: 25px;
-        width: 118px;
+        height: 100%;
+        width: 100%;
         vertical-align: middle;
 
         border: 1px solid #cccccc;
         border-radius: 4px;
         resize: none;
+        &_box{
+            height: 100%;
+        }
     }
 
     &_btn_box{
