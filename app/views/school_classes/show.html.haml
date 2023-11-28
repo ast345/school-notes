@@ -144,7 +144,7 @@
                                             .unit_select_box.hidden{id: "grade_subject_units#{period}#{date}"}
                                             .new_unit_box.hidden{id: "#{period}#{date}"}
                                                 = text_area_tag :new_unit, '', class: 'new_unit_text', id: "new_unit_name#{period}#{date}"
-                                                %i.bi.bi-card-list.cancel_btn{id: "#{period}#{date}"}
+                                                %i.bi.bi-card-list.cancel_btn{id: "#{period}#{date}"} &nbsp;一覧に戻る
                                             .new_lesson_menu.hidden{id: "#{period}#{date}"}
                                                 %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}} &nbsp;新規
                                         - else
@@ -161,7 +161,7 @@
                                             .unit_select_box.hidden{id: "grade_subject_units#{period}#{date}"}
                                             .new_unit_box.hidden{id: "#{period}#{date}"}
                                                 = text_area_tag :new_unit, '', class: 'new_unit_text', id: "new_unit_name#{period}#{date}"
-                                                %i.bi.bi-card-list.cancel_btn{id: "#{period}#{date}"}
+                                                %i.bi.bi-card-list.cancel_btn{id: "#{period}#{date}"} &nbsp;一覧に戻る
                                             .new_lesson_menu{id: "#{period}#{date}"}
                                                 %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}} &nbsp;新規
                     %tr.row_item
