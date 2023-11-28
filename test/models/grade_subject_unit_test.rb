@@ -11,9 +11,8 @@
 #
 # Indexes
 #
-#  index_grade_subject_units_on_grade_subject_id                (grade_subject_id)
-#  index_grade_subject_units_on_text_book_id                    (text_book_id)
-#  index_grade_subject_units_on_unit_name_and_grade_subject_id  (unit_name,grade_subject_id) UNIQUE
+#  index_grade_subject_units_on_grade_subject_id  (grade_subject_id)
+#  index_grade_subject_units_on_text_book_id      (text_book_id)
 #
 require 'test_helper'
 

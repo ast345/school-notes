@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_18_092906) do
+ActiveRecord::Schema.define(version: 2023_11_28_222834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 2023_11_18_092906) do
     t.bigint "text_book_id"
     t.index ["grade_subject_id"], name: "index_grade_subject_units_on_grade_subject_id"
     t.index ["text_book_id"], name: "index_grade_subject_units_on_text_book_id"
-    t.index ["unit_name", "grade_subject_id"], name: "index_grade_subject_units_on_unit_name_and_grade_subject_id", unique: true
   end
 
   create_table "grade_subjects", force: :cascade do |t|
