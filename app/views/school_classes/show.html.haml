@@ -11,7 +11,7 @@
                 .right_nav
                     %p#status_display 保存済み
                     %i.fa-solid.fa-share.right_nav_btn
-                    %i.fa-regular.fa-calendar-plus.right_nav_btn
+                    %i.fa-regular.fa-calendar-plus.right_nav_btn.temp_nav_btn
                     %i.fa-solid.fa-print.right_nav_btn.print_btn{data: {start_of_week: @start_of_week}}
                     %i.fa-solid.fa-ellipsis.right_nav_btn
 
@@ -120,7 +120,8 @@
                                 - next unless @display_wday.include?(date.wday)
                                 %td.column_lesson
                                     .lesson_box{id: "#{period}#{date}"}
-                                        %i.fa-solid.fa-ellipsis-vertical.lesson_ellipsis.hidden{id: "#{period}#{date}"}
+                                        .lesson_ellipsis_box{id: "#{period}#{date}"}
+                                            %i.fa-solid.fa-ellipsis-vertical.lesson_ellipsis.hidden{id: "#{period}#{date}"}
                                         - lesson = @this_week_lessons.find_by(date: date, period: period)
                                         - if lesson
                                             - if lesson.grade_subject_unit

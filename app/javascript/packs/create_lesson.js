@@ -22,6 +22,8 @@ export function createLesson(schoolClassId) {
             $(`#${Id}`+'.edit_lesson_box').removeClass('hidden')
             $(`#${Id}`+'.lesson_btn_box').addClass('hidden')
             $(`#${Id}`+'.new_lesson_menu').addClass('hidden')
+            $(`#${Id}.lesson_ellipsis_box`).addClass('hidden')
+
             selectSubject.addEventListener('change', function() {
                 const selectedSubject = selectSubject.value;
                 const gradeSubjectUnits = document.getElementById(`grade_subject_units${Id}`);
@@ -100,6 +102,7 @@ export function createLesson(schoolClassId) {
                         if(selectSubject.value === ""){
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_lesson_menu').removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
                             statusDisplay.innerHTML = "保存済み"
                         } else {
                             const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
@@ -108,6 +111,7 @@ export function createLesson(schoolClassId) {
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#grade_subject_units${Id}`).addClass('hidden')
                             $(`#got_lesson${Id}`).removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
                             displayLessonSubject.innerHTML = `${selectedSubjectName}`
                             displayLessonUnit.innerHTML = `${selectedUnitName}`
 
@@ -131,6 +135,7 @@ export function createLesson(schoolClassId) {
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_unit_box').addClass('hidden')
                             $(`#got_lesson${Id}`).removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
                             displayLessonSubject.innerHTML = `${selectedSubjectName}`
                             displayLessonUnit.innerHTML = `${newUnitName}`
 
@@ -168,7 +173,6 @@ export function createLesson(schoolClassId) {
             }
             document.addEventListener('click', createEndHandler);
         });
-
     });
 
     $('.add_from_temp').on('click', (event) =>{

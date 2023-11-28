@@ -36,6 +36,7 @@ export function editLesson(schoolClassId) {
             $(`#got_lesson${Id}`).addClass('hidden')
             $(`#${Id}.lesson_btn_js_box`).addClass('hidden')
             $(`#${Id}.edit_lesson_box`).removeClass('hidden')
+            $(`#${Id}.lesson_ellipsis_box`).addClass('hidden')
             statusDisplay.innerHTML = "保存中…"
             $(`#select_subject${Id} option`).each(function() {
                 const optionValue = $(this).val();
@@ -137,6 +138,7 @@ export function editLesson(schoolClassId) {
                         $(`#grade_subject_units${Id}`).addClass('hidden')
                         $(`#${Id}.edit_lesson_box`).addClass('hidden')
                         $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                        $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
         
                         displayLessonSubject.innerHTML = ""
                         displayLessonUnit.innerHTML = ""
@@ -154,6 +156,7 @@ export function editLesson(schoolClassId) {
                     $(`#${Id}.edit_lesson_box`).addClass('hidden')
                     $(`#got_lesson${Id}`).removeClass('hidden')
                     $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                    $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
                     // 中身を差し替え
                     const selectedUnitName = selectedOption.textContent;
                     displayLessonSubject.innerHTML = `${selectedSubjectName}`
@@ -184,6 +187,7 @@ export function editLesson(schoolClassId) {
                         $(`#${Id}`+'.new_unit_box').addClass('hidden')
                         $(`#got_lesson${Id}`).removeClass('hidden')
                         $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                        $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
 
                         displayLessonSubject.innerHTML = `${selectedSubjectName}`
                         displayLessonUnit.innerHTML = `${newUnitName}`
