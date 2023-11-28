@@ -44,7 +44,7 @@ document.addEventListener('turbolinks:load', () =>{
     $('.fa-share').on('click', (event)=>{
         $(".link_nav").toggleClass('hidden');
     })
-    $('.fa-ellipsis').on('click', (event)=>{
+    $('.others_nav_btn').on('click', (event)=>{
         $(".others_nav").toggleClass('hidden');
     })
     $('.period_setting').on('click', (event)=>{
@@ -71,7 +71,7 @@ document.addEventListener('turbolinks:load', () =>{
             $('.link_nav').addClass('hidden');
         }
 
-        if (!$(e.target).closest('.fa-ellipsis').length) {
+        if (!$(e.target).closest('.othres_nav_btn').length) {
             // 追加の要素が表示されている場合は非表示にする
             $('.others_nav').addClass('hidden');
         }
