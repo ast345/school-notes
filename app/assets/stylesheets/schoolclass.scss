@@ -201,7 +201,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: calc((100vh - 50px)*0.15);
+        height: calc((100vh - 50px)*0.15 - 2px);
     }
 }
 
@@ -314,6 +314,7 @@
     &_box{
         position: relative;
         text-align: center;
+        height: calc((100vh - 50px)*0.03 + 2px);
         &:hover .leaving_time_create_btn{
             display: inline-block;
         }
@@ -333,26 +334,47 @@
             background-color: #eeeeee;
         }
         &_box{
-            display: block;
             padding-top: 1px;
             display: flex;
             align-items: center; /* 上下中央に配置 */
             justify-content: center; /* 左右中央に配置 */
             height: 100%; /* 親要素の高さいっぱいに広げる */
+            width: 100%;
         }
     }
     &_delete_btn_box{
         position: absolute;
-        top: 5%;
-        left: 80%;
+        right: 0px;
     }
 
     &_display{
         display: inline-block;
         vertical-align: middle;
-        line-height: 1.5px;
+        // line-height: 1.5px;
+        height: 100%;
+        width: 100%;
     }
+    &_select_box{
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+    &_form{
+        position: relative;
+        width: 100%;
+        text-align: center;
+    
+        &::-webkit-calendar-picker-indicator {
+            color: rgb(30, 48, 80);
+            border-radius: 10px;
+        }
+    
+        &::-webkit-calendar-picker-indicator:hover {
+            background-color: #eeeeee;
+        }
+      }
 }
+
 
 .delete_leaving_time_btn{
     display: none;
@@ -369,26 +391,7 @@
     }
 }
 
-.leaving_time_select_box{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
 
-.leaving_time_form{
-    position: relative;
-    width: 100%;
-    text-align: center;
-
-    &::-webkit-calendar-picker-indicator {
-        color: rgb(30, 48, 80);
-        border-radius: 10px;
-    }
-
-    &::-webkit-calendar-picker-indicator:hover {
-        background-color: #eeeeee;
-    }
-  }
 
 
 .event{
