@@ -77,11 +77,21 @@ export function editLesson(schoolClassId) {
                             const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
                             gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-regular fa-pen-to-square unit_create_btn", id="${Id}"></i>`
 
+                            $(`#${Id}.unit_create_btn`).on('click', () =>{
+                                $(`#${Id}`+'.new_unit_box').removeClass('hidden')
+                                $(`#grade_subject_units${Id}`).addClass('hidden')
+                            });
+            
+                            $(`#${Id}`+'.cancel_btn').on('click', () => {
+                                $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                                $(`#grade_subject_units${Id}`).removeClass('hidden')
+                            });
                         })
                         .catch(error => {
                             window.alert("単元名を正しく取得できませんでした。")
                         });
                     };
+
                 });
 
                 $(`#${Id}.unit_create_btn`).on('click', () =>{
@@ -93,6 +103,7 @@ export function editLesson(schoolClassId) {
                     $(`#${Id}`+'.new_unit_box').addClass('hidden')
                     $(`#grade_subject_units${Id}`).removeClass('hidden')
                 });
+
 
                 document.addEventListener('click', editEndHandler);
             });
