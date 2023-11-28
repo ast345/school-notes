@@ -37,7 +37,7 @@ document.addEventListener('turbolinks:load', () =>{
         };
     })
 
-    $('.fa-calendar-plus').on('click',(event) => {
+    $('.temp_nav_btn').on('click',(event) => {
         $(".template_nav").toggleClass('hidden');
     });
 
@@ -61,7 +61,7 @@ document.addEventListener('turbolinks:load', () =>{
     })
 
     $(document).on("click", (e)=> {
-        if (!$(e.target).closest('.fa-calendar-plus').length) {
+        if (!$(e.target).closest('.temp_nav_btn').length) {
           // 追加の要素が表示されている場合は非表示にする
           $('.template_nav').addClass('hidden');
         }
