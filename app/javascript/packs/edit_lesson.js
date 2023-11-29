@@ -222,12 +222,27 @@ export function editLesson(schoolClassId) {
                             document.removeEventListener('click', editEndHandler);
                         })
                         .catch(error => {
-                            const errorMessage = error.response.data;
-                            if (errorMessage.includes('PG::UniqueViolation')) {
-                                window.alert(`「${newUnitName}」はすでに登録されています`)
+                            const res = error.response;
+                            if (res.status == 422) {
+                                var gradeSubjectUnitId = res.data.duplicated_unit_id
+                                axios.put(`/school_classes/${schoolClassId}/lessons/${LessonId}`, {
+                                    lesson: {grade_subject_unit_id: gradeSubjectUnitId, grade_subject_id: selectedGradeSubjectId}
+                                })
+                                .then((res) =>{
+                                    var resData= res.data
+                                    // 再変更のために定義変更
+                                    SubjectName = `${selectSubject.value}`
+                                    GotUnitId = resData.grade_subject_unit_id
+                                    GradeSubjectId = resData.grade_subject_id
+            
+                                    editDataSet(resData);
+                                    statusDisplay.innerHTML = "保存済み"
+                                });
                             } else {
-                                window.alert("単元名を新しく作成できませんでした")
+                                window.alert("変更できませんでした")
+                                location.reload()
                             };
+                            document.removeEventListener('click', editEndHandler);
                         });
 
                     }

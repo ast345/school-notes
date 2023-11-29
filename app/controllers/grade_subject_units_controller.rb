@@ -14,12 +14,21 @@ class GradeSubjectUnitsController < ApplicationController
 
         if this_subject_text_id
             @grade_subject_unit = GradeSubjectUnit.new(text_book_id: this_subject_text_id, grade_subject_id: grade_subject_id, unit_name: unit_name)
-            @grade_subject_unit.save!
         else
             @grade_subject_unit = GradeSubjectUnit.new(grade_subject_id: grade_subject_id, unit_name: unit_name)
-            @grade_subject_unit.save!
         end
-        render json: @grade_subject_unit
+        if @grade_subject_unit.save
+            # 保存成功時の処理
+            render json: @grade_subject_unit, status: :created
+          else
+            # 保存失敗時の処理
+            if this_subject_text_id
+                duplicated_grade_subject_unit = GradeSubjectUnit.find_by(text_book_id: this_subject_text_id, grade_subject_id: grade_subject_id, unit_name: unit_name)
+            else
+                duplicated_grade_subject_unit = GradeSubjectUnit.new(grade_subject_id: grade_subject_id, unit_name: unit_name)
+            end
+            render json: { duplicated_unit_id: duplicated_grade_subject_unit.id }, status: :unprocessable_entity
+          end
     end
 
     def update

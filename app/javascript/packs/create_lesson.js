@@ -159,12 +159,24 @@ export function createLesson(schoolClassId) {
                                 document.removeEventListener('click', createEndHandler);
                             })
                             .catch(error => {
-                                const errorMessage = error.response.data;
-                                if (errorMessage.includes('PG::UniqueViolation')) {
-                                    window.alert(`「${newUnitName}」はすでに登録されています`)
+                                const res = error.response;
+                                if (res.status == 422) {
+                                    var gradeSubjectUnitId = res.data.duplicated_unit_id
+                                    axios.post(`/school_classes/${schoolClassId}/lessons/`, {
+                                        lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: gradeSubjectUnitId, grade_subject_id: selectedGradeSubjectId}
+                                    })
+                                    .then((res) => {
+                                        if(res.status === 200){
+                                            lessonBtnDisplay();
+                                            createDataSet(res);
+                                            statusDisplay.innerHTML = "保存済み"
+                                        }
+                                    })
                                 } else {
-                                    window.alert("単元名を新しく作成できませんでした")
+                                    window.alert("変更できませんでした")
+                                    location.reload()
                                 };
+                                document.removeEventListener('click', createEndHandler);
                             });
 
                         }
