@@ -19,9 +19,15 @@
                         %p.add_from_temp{data: {start_of_week: @start_of_week}} テンプレートの利用
                         = link_to "テンプレートの設定", school_class_template_lessons_path(@school_class.id, start_of_week: @start_of_week), class: "temp_setting", data: {"turbolinks" => false}
                     .link_nav.hidden
-                        %p.link_opt.share_for_stu{data: {link: @share_url}} 児童・生徒向けリンク
-                        %p.link_opt.share_for_tea{data: {link: @share_teacher_url}} 先生向けリンク
-                        %p.link_opt.share_for_web{data: {code: "<iframe src='#{@share_url}' width='600' height='600' frameborder='0'></iframe>"}} 埋め込みコード
+                        .share_for_stu.link_opt{data: {link: @share_url}}
+                            %p.link_title 児童・生徒向けリンク
+                            %p.link_explaining 閲覧専用リンクです。</br>翌週の時間割は金曜日の18:00に公開されます。
+                        .share_for_tea.link_opt{data: {link: @share_teacher_url}}
+                            %p.link_title 先生向けリンク
+                            %p.link_explaining 先生間の共有用リンクです。</br>SchoolNotesユーザー間であればフォローしてもらえます。
+                        .share_for_web.link_opt{data: {code: "<iframe src='#{@share_url}' width='600' height='600' frameborder='0'></iframe>"}}
+                            %p.link_title 埋め込みコード
+                            %p.link_explaining 学校ホームページなどのhtmlに埋め込むコードです。</br>翌週の時間割は金曜日の18:00に公開されます。
                     .others_nav.hidden
                         %p.image_btn{data: {start_of_week: @start_of_week, end_of_week: @end_of_week, class_name: @school_class.grade_class}} 時間割を画像でダウンロード
                         = link_to "単元名一覧",school_class_using_texts_path(@school_class.id), class: "units_link"

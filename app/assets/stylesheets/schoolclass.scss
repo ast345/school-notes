@@ -512,6 +512,7 @@
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     background-color: #fff;
+    z-index: 50;
 }
 .wday_select_box{
     padding: 10px;
@@ -525,6 +526,13 @@
     &:hover{
         background-color: $header-grey;
     }
+}
+.link_explaining{
+    border-top: 1px ;
+    font-size: 12px;
+}
+.link_title{
+    font-weight: bold;
 }
 
 
