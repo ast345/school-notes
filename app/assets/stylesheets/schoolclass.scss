@@ -476,7 +476,11 @@
         height: 100%;
         width: 100%;
         border: 2px solid $active-grey;
+        text-align: center;
+        margin: auto;
         resize: none;
+        line-height: calc((100vh - 50px)*0.03 - 2px);
+        font-size: 16px;
         &_box{
             height: 100%;
         }
