@@ -98,7 +98,7 @@ document.addEventListener('turbolinks:load', () =>{
             $('.link_nav').addClass('hidden');
         }
 
-        if (!$(e.target).closest('.othres_nav_btn').length) {
+        if (!$(e.target).closest('.others_nav_btn').length) {
             // 追加の要素が表示されている場合は非表示にする
             $('.others_nav').addClass('hidden');
         }
