@@ -22,6 +22,7 @@
       - if @header_hidden
       - else
         %header.header
+          %i.fa-regular.fa-circle-xmark.header_close_btn.hidden
           .header_logos
             %h1 School Notes
           - if user_signed_in?

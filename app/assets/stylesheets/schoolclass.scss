@@ -547,6 +547,7 @@
         color: $main-black;
         padding: 8px;
         border-radius: 20px;
+        cursor: pointer;
         &:hover{
             background-color: $header-grey;
         }

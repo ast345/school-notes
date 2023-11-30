@@ -171,7 +171,20 @@
     &_display_name{
       display: inline-block;
     }
-}
+
+    &_close_btn{
+      display: inline-block;
+      position: absolute;
+      right: 5px;
+      top: 6px;
+      padding: 5px;
+      border-radius: 10px;
+      cursor: pointer;
+      &:hover{
+        background-color: $btn-grey;
+      }
+    }
+  }
 
 .cover{
   position: fixed;
@@ -208,7 +221,7 @@
   }
   &_edit_menu{
     position: absolute;
-    right: -35px;
+    right: 0px;
     padding: 5px;
     background-color: $main-grey;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -246,6 +259,7 @@
     }
   }
 }
+
 
 .active_class{
   background-color: $active-grey;
