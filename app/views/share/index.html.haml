@@ -1,18 +1,23 @@
-.class_page_top.iframe_class_page_top
+.iframe_class_page_top
     .iframe_class_name
-        %p.class_name_display= @school_class.grade_class
-    .navbar.iframe_navbar
-        %a{href: school_class_share_index_path(start_of_week: @start_of_week - 1.week)} 前の週
+        - if @school_class.grade_id ==1 or @school_class.grade_id ==2
+            %p.class_name_display #{@school_class.grade_class}&nbsp;じかんわり
+        - else
+            %p.class_name_display #{@school_class.grade_class}&nbsp;時間割
+    .week_nav
+        = link_to school_class_share_index_path(start_of_week: @start_of_week - 1.week) do
+            %i.fa-solid.fa-angle-left.week_btn
         - if @next_week_perm
-            %a{href: school_class_share_index_path(start_of_week: @start_of_week + 1.week)} 次の週
-.table_box.iframe_table_box
+            = link_to school_class_share_index_path(start_of_week: @start_of_week + 1.week) do
+                %i.fa-solid.fa-angle-right.week_btn
+.iframe_table_box
     %table.iframe_class_weekly
-        %tr
+        %tr.row_date
             %th
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %th.iframe_date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
-        %tr.event_row
+        %tr.row_event
             - if @school_class.grade_id ==1 or @school_class.grade_id ==2
                 %td.column_left ぎょうじ
             - else
@@ -20,11 +25,11 @@
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td.column_event
-                    .iframe_event_box
+                    .event_box
                         - event = @this_week_events.find_by(date: date)
                         - if event
-                            %p.iframe_event_display  #{event.event_name.html_safe}
-        %tr.morning_act_row
+                            %p.event_display  #{event.event_name.html_safe}
+        %tr.row_morning_act
             - if @school_class.grade_id ==1
                 %td.column_left あさ
             - else
@@ -32,12 +37,12 @@
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td.column_morning_act
-                    .iframe_morning_act_box{id: "#{date}"}
+                    .morning_act_box{id: "#{date}"}
                         - morning_act = @this_week_morning_activities.find_by(date: date)
                         - if morning_act
                             %p.morning_act_display  #{morning_act.activity_name.html_safe}
         - (1..6).each do |period|
-            %tr.iframe_lesson_row
+            %tr.row_lesson
                 %td.iframe_column_left #{period}
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
@@ -51,22 +56,22 @@
                                 - else
                                     - unit_name = "\b"
                                     - got_unit_id
-                                .iframe_got_lesson
+                                .got_lesson
                                     %p.lesson_subject #{lesson.grade_subject.subject.subject_name}
-                                    %p.iframe_lesson_unit #{unit_name}
-        %tr.iframe_item_row
+                                    %p.lesson_unit #{unit_name}
+        %tr.row_item
             - if @school_class.grade_id ==1 or @school_class.grade_id ==2
                 %td.column_left もちもの
             - else
                 %td.column_left 持ち物
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
-                %td
-                    .iframe_item_box
+                %td.column_item
+                    .item_box
                         - item = @this_week_date_items.find_by(date: date)
                         - if item
-                            %p.iframe_item_display  #{item.item_name.html_safe}
-        %tr
+                            %p.item_display  #{item.item_name.html_safe}
+        %tr.row_leaving
             - if @school_class.grade_id ==1
                 %td.column_left げこう
             - else
@@ -74,9 +79,9 @@
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
                 %td
-                    .iframe_leaving_time_box
+                    .leaving_time_box
                         - leaving_time = @this_week_class_leaving_times.find_by(date: date)
                         - if leaving_time
-                            %p.iframe_leaving_time_display  #{leaving_time.leaving_time.strftime("%H:%M")}
+                            %p.leaving_time_display  #{leaving_time.leaving_time.strftime("%H:%M")}
 
 = javascript_pack_tag 'iframe'

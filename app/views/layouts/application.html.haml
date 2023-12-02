@@ -79,10 +79,14 @@
             - if user_signed_in?
               = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header_link"
       .cover.hidden
-      .main_container
-        - if flash.present?
-          .header_flash#flash
-            .flash
-              - flash.each do |key, value|
-                %div{:class => key}= value
-        = yield
+      - if @header_hidden
+        .iframe_container
+          = yield
+      - else
+        .main_container
+          - if flash.present?
+            .header_flash#flash
+              .flash
+                - flash.each do |key, value|
+                  %div{:class => key}= value
+          = yield

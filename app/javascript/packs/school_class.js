@@ -37,17 +37,24 @@ document.addEventListener('turbolinks:load', () =>{
         };
     })
 
-    $(window).on("load resize", function() {
+    function checkWidth() {
         if (window.matchMedia("(max-width: 900px)").matches) {
-            $('.menu_btn').removeClass('hidden')
-            $('.main_container').css('margin-left', '0px');
             $('.header').css('display', 'none');
-        } 
-        else {
+            $('.main_container').css('margin-left', '0px');
+            $('.menu_btn').removeClass('hidden')
+        } else {
             $('.menu_btn').addClass('hidden')
             $('.main_container').css('margin-left', '260px');
             $('.header').css('display', 'block');
         }
+    }
+    
+    $(document).ready(function() {
+        checkWidth(); // 初回の幅チェック
+    
+        $(window).on('resize', function() {
+            checkWidth(); // ウィンドウのリサイズ時に幅チェック
+        });
     });
 
     $('.menu_btn').on('click', (event) =>{
