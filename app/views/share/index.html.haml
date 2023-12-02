@@ -16,7 +16,7 @@
             %th
             - (@start_of_week..@end_of_week).each do |date|
                 - next unless @display_wday.include?(date.wday)
-                %th.iframe_date_header  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
+                %th.column_date  #{date.strftime('%m月%d日')}<br/>#{l(date, format: :abbr_day_name)}
         %tr.row_event
             - if @school_class.grade_id ==1 or @school_class.grade_id ==2
                 %td.column_left ぎょうじ
