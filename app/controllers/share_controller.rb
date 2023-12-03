@@ -3,6 +3,7 @@ class ShareController < ApplicationController
     def index
         @header_hidden = true
         @school_class = SchoolClass.find_by(token: params[:token])
+        @grade_id = @school_class.grade.id
         date = Date.today
         @start_of_week = date.beginning_of_week
         pramas_exist =false
