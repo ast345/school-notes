@@ -43,7 +43,7 @@
                             %p.morning_act_display  #{morning_act.activity_name.html_safe}
         - (1..6).each do |period|
             %tr.row_lesson
-                %td.iframe_column_left #{period}
+                %td.column_left #{period}
                 - (@start_of_week..@end_of_week).each do |date|
                     - next unless @display_wday.include?(date.wday)
                     %td
@@ -57,7 +57,7 @@
                                     - unit_name = "\b"
                                     - got_unit_id
                                 .got_lesson
-                                    %p.lesson_subject #{lesson.grade_subject.subject.subject_name}
+                                    %p.lesson_subject #{lesson.grade_subject_name(@grade_id)}
                                     %p.lesson_unit #{unit_name}
         %tr.row_item
             - if @school_class.grade_id ==1 or @school_class.grade_id ==2
