@@ -7,21 +7,41 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 export function editLesson(schoolClassId) {
     function adjustSubjectFZ(element) {
         const $element = $(element);
-        $element.css({'font-size': "16px"});
-        const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+        $element.css({'font-size': "16px", "line-height": "30px"});
+        const rowHeight = $('.row_lesson').height()/5*2 ;  // 要素の高さを取得
         const originalHTML = $element.html(); // 元のHTMLを保持
-        let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
-    
+        let fontSize = parseInt($element.css('font-size'));
+        let lineHeight = parseInt($element.css('line-height'));
+
         while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
             fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
             $element.css({
                 'font-size': fontSize + 'px',
-                'line-height': rowHeight + 'px',
+                'line-height': lineHeight + 'px',
             });
         }
         $element.html(originalHTML);
       }
 
+    function adjustUnitFZ(element) {
+        const $element = $(element);
+        $element.css({'font-size': "16px", "line-height": "24px"});
+        const rowHeight = $('.row_lesson').height()/5*3 ; // 要素の高さを取得
+        const originalHTML = $element.html(); // 元のHTMLを保持
+        let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+        let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
+        $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
+
+        while ($element[0].scrollHeight > rowHeight  && fontSize > 1) {
+            fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+            lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
+            $element.css({
+                'font-size': fontSize + 'px',
+                'line-height': lineHeight + 'px',
+            });
+        }
+        $element.html(originalHTML);
+    }
 
     $('.got_lesson').each(function(index, element){
         const dataset = $(element).data()
@@ -191,6 +211,7 @@ export function editLesson(schoolClassId) {
                     displayLessonSubject.innerHTML = `${selectedSubjectName}`
                     displayLessonUnit.innerHTML = `${selectedUnitName}`
                     adjustSubjectFZ(displayLessonSubject);
+                    adjustUnitFZ(displayLessonUnit);
 
                     const selectedUnitId = Number(selectUnit.value)
                     axios.put(`/school_classes/${schoolClassId}/lessons/${LessonId}`, {
@@ -222,6 +243,8 @@ export function editLesson(schoolClassId) {
                         displayLessonSubject.innerHTML = `${selectedSubjectName}`
                         displayLessonUnit.innerHTML = `${newUnitName}`
                         adjustSubjectFZ(displayLessonSubject)
+                        adjustUnitFZ(displayLessonUnit);
+
                         axios.post(`/grade_subject_units`, {
                             grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId, school_class_id: schoolClassId}
                         })

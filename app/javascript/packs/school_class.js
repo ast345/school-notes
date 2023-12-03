@@ -225,24 +225,45 @@ document.addEventListener('turbolinks:load', () =>{
     // 教科名のフォントサイズ調整
     function adjustSubjectFZ(element) {
         const $element = $(element);
-        const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+        const rowHeight = $('.row_lesson').height()/5*2 ;  // 要素の高さを取得
         const originalHTML = $element.html(); // 元のHTMLを保持
         let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
-    
+        let lineHeight = parseInt($element.css('line-height'));
+        
         while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
             fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
             $element.css({
                 'font-size': fontSize + 'px',
-                'line-height': rowHeight + 'px',
+                'line-height': lineHeight + 'px',
             });
         }
         $element.html(originalHTML);
-      }
+    }
+
+    function adjustUnitFZ(element) {
+        const $element = $(element);
+        const rowHeight = $('.row_lesson').height()/5*3 ; // 要素の高さを取得
+        const originalHTML = $element.html(); // 元のHTMLを保持
+        let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+        let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
+        $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
+        while ($element[0].scrollHeight > rowHeight  && fontSize > 1) {
+            fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+            lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
+            $element.css({
+                'font-size': fontSize + 'px',
+                'line-height': lineHeight + 'px',
+            });
+        }
+        $element.html(originalHTML);
+    }
 
     $('.lesson_subject').each(function(index, element){
         adjustSubjectFZ(element);
     })
-    
+    $('.lesson_unit').each(function(index, element){
+        adjustUnitFZ(element);
+    })
 
     //lessonのdestroy機能
     $('.delete_lesson_btn').each(function(index, element){

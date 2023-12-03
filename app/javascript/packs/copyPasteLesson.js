@@ -82,32 +82,54 @@ export function copyPasteLesson (schoolClassId) {
             $(`#got_lesson${Id}`).data('lessonId', `${resData.id}`);
         };
 
+        function adjustSubjectFZ(element) {
+            const $element = $(element);
+            $element.css({'font-size': "16px"});
+            const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+            const originalHTML = $element.html(); // 元のHTMLを保持
+            let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+        
+            while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+                fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                $element.css({
+                    'font-size': fontSize + 'px',
+                    'line-height': rowHeight + 'px',
+                });
+            }
+            $element.html(originalHTML);
+          }
+    
+        
+
+        function adjustUnitFZ(element) {
+            const $element = $(element);
+            $element.css({'font-size': "16px", "line-height": "24px"});
+            const rowHeight = $('.row_lesson').height()/5*3 ; // 要素の高さを取得
+            const originalHTML = $element.html(); // 元のHTMLを保持
+            let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+            let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
+            $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
+    
+            while ($element[0].scrollHeight > rowHeight  && fontSize > 1) {
+                fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
+                $element.css({
+                    'font-size': fontSize + 'px',
+                    'line-height': lineHeight + 'px',
+                });
+            }
+            $element.html(originalHTML);
+        }
+
         const editLessonDisplay = (resData) => {
             displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
+            adjustSubjectFZ(displayLessonSubject);
             if(resData.unit_name !== undefined){
                 displayLessonUnit.innerHTML = `${resData.unit_name}`
+                adjustUnitFZ(displayLessonUnit);
             } else {
                 displayLessonUnit.innerHTML = "&nbsp;"
             }
-
-            function adjustSubjectFZ(element) {
-                const $element = $(element);
-                const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
-                const originalHTML = $element.html(); // 元のHTMLを保持
-                let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
-            
-                while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
-                    fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
-                    $element.css({
-                        'font-size': fontSize + 'px',
-                        'line-height': rowHeight + 'px',
-                    });
-                }
-                $element.html(originalHTML);
-              }
-        
-            var lesson_subject = document.getElementById(`lesson_subject${Id}`);
-            adjustSubjectFZ(lesson_subject);
         };
 
         var statusDisplay = document.getElementById('status_display')

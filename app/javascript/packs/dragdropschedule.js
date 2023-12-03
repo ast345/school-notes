@@ -73,27 +73,50 @@ export function dragDropLesson (schoolClassId) {
 
           function adjustSubjectFZ(element) {
             const $element = $(element);
-            $element.css({'font-size': "16px"});
-            const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+            $element.css({'font-size': "16px", "line-height": "30px"});
+            const rowHeight = $('.row_lesson').height()/5*2 ;  // 要素の高さを取得
             const originalHTML = $element.html(); // 元のHTMLを保持
             let fontSize = parseInt($element.css('font-size'));
-            
+            let lineHeight = parseInt($element.css('line-height'));
+
             while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
                 fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
                 $element.css({
                     'font-size': fontSize + 'px',
-                    'line-height': rowHeight + 'px',
+                    'line-height': lineHeight + 'px',
                 });
             }
             $element.html(originalHTML);
           }
+
+          function adjustUnitFZ(element) {
+            const $element = $(element);
+            $element.css({'font-size': "16px", "line-height": "24px"});
+            const rowHeight = $('.row_lesson').height()/5*3 ; // 要素の高さを取得
+            const originalHTML = $element.html(); // 元のHTMLを保持
+            let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+            let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
+            $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
+    
+            while ($element[0].scrollHeight > rowHeight  && fontSize > 1) {
+                fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
+                $element.css({
+                    'font-size': fontSize + 'px',
+                    'line-height': lineHeight + 'px',
+                });
+            }
+            $element.html(originalHTML);
+        }
 
           const changeSourceBoxContent = () => {
             // lesson_subjectのテキスト内容を交換
             sourceBox.find('.lesson_subject').text(targetLessonSubjectText);
             sourceBox.find('.lesson_unit').text(targetLessonUnitText);
             var sourceBoxSubject = sourceBox.find('.lesson_subject')[0]
+            var sourceBoxUnit = sourceBox.find('.lesson_unit')[0]
             adjustSubjectFZ(sourceBoxSubject);
+            adjustUnitFZ(sourceBoxUnit);
             //datasetの入れ替え
             sourceGotLessonDom.setAttribute('data-subject-name', targetSubjectName);
             sourceGotLessonDom.setAttribute('data-grade-subject-id', targetGradeSubjectId);
@@ -117,7 +140,9 @@ export function dragDropLesson (schoolClassId) {
             targetBox.find('.lesson_subject').text(sourceLessonSubjectText);
             targetBox.find('.lesson_unit').text(sourceLessonUnitText);
             var targetBoxSubject = targetBox.find('.lesson_subject')[0];
+            var targetBoxUnit = targetBox.find('.lesson_unit')[0];
             adjustSubjectFZ(targetBoxSubject);
+            adjustUnitFZ(targetBoxUnit)
 
             //datasetの入れ替え
             targetGotLessonDom.setAttribute('data-subject-name', sourceSubjectName);

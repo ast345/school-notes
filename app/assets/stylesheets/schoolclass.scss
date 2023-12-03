@@ -83,7 +83,8 @@
     }
     &_unit{
         text-align: center;
-        height: calc((100vh - 76px)*0.65/10);
+        // height: calc((100vh - 76px)*0.65/10);
+        width: 100%;
         &:hover{
             cursor: text;
         }

@@ -14,7 +14,6 @@ export function dateItem(schoolClassId) {
             let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
             let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
             $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
-        
             while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
                 fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
                 lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
