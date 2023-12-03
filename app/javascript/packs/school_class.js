@@ -222,7 +222,26 @@ document.addEventListener('turbolinks:load', () =>{
             $(`#${Id}.lesson_btn_box`).removeClass('hidden');
         })
     });
+    // 教科名のフォントサイズ調整
+    function adjustSubjectFZ(element) {
+        const $element = $(element);
+        const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+        const originalHTML = $element.html(); // 元のHTMLを保持
+        let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+    
+        while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+            fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+            $element.css({
+                'font-size': fontSize + 'px',
+                'line-height': rowHeight + 'px',
+            });
+        }
+        $element.html(originalHTML);
+      }
 
+    $('.lesson_subject').each(function(index, element){
+        adjustSubjectFZ(element);
+    })
     
 
     //lessonのdestroy機能

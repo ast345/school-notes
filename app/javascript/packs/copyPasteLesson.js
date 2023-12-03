@@ -89,6 +89,25 @@ export function copyPasteLesson (schoolClassId) {
             } else {
                 displayLessonUnit.innerHTML = "&nbsp;"
             }
+
+            function adjustSubjectFZ(element) {
+                const $element = $(element);
+                const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+                const originalHTML = $element.html(); // 元のHTMLを保持
+                let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+            
+                while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+                    fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                    $element.css({
+                        'font-size': fontSize + 'px',
+                        'line-height': rowHeight + 'px',
+                    });
+                }
+                $element.html(originalHTML);
+              }
+        
+            var lesson_subject = document.getElementById(`lesson_subject${Id}`);
+            adjustSubjectFZ(lesson_subject);
         };
 
         var statusDisplay = document.getElementById('status_display')

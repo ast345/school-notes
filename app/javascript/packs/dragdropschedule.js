@@ -71,11 +71,29 @@ export function dragDropLesson (schoolClassId) {
           var sourceLessonUnitText = sourceBox.find('.lesson_unit').text();
           var targetLessonUnitText = targetBox.find('.lesson_unit').text();
 
+          function adjustSubjectFZ(element) {
+            const $element = $(element);
+            $element.css({'font-size': "16px"});
+            const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+            const originalHTML = $element.html(); // 元のHTMLを保持
+            let fontSize = parseInt($element.css('font-size'));
+            
+            while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+                fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                $element.css({
+                    'font-size': fontSize + 'px',
+                    'line-height': rowHeight + 'px',
+                });
+            }
+            $element.html(originalHTML);
+          }
+
           const changeSourceBoxContent = () => {
             // lesson_subjectのテキスト内容を交換
             sourceBox.find('.lesson_subject').text(targetLessonSubjectText);
             sourceBox.find('.lesson_unit').text(targetLessonUnitText);
-
+            var sourceBoxSubject = sourceBox.find('.lesson_subject')[0]
+            adjustSubjectFZ(sourceBoxSubject);
             //datasetの入れ替え
             sourceGotLessonDom.setAttribute('data-subject-name', targetSubjectName);
             sourceGotLessonDom.setAttribute('data-grade-subject-id', targetGradeSubjectId);
@@ -98,6 +116,8 @@ export function dragDropLesson (schoolClassId) {
             // lesson_subjectのテキスト内容を交換
             targetBox.find('.lesson_subject').text(sourceLessonSubjectText);
             targetBox.find('.lesson_unit').text(sourceLessonUnitText);
+            var targetBoxSubject = targetBox.find('.lesson_subject')[0];
+            adjustSubjectFZ(targetBoxSubject);
 
             //datasetの入れ替え
             targetGotLessonDom.setAttribute('data-subject-name', sourceSubjectName);
