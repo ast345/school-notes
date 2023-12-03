@@ -18,7 +18,7 @@
 
                     .template_nav.hidden
                         %p.add_from_temp{data: {start_of_week: @start_of_week}} テンプレートの利用
-                        = link_to "テンプレートの設定", school_class_template_lessons_path(@school_class.id, start_of_week: @start_of_week), class: "temp_setting", data: {"turbolinks" => false}
+                        = link_to "テンプレートの設定", school_class_template_lessons_path(@school_class.id), class: "temp_setting", data: {"turbolinks" => false}
                     .link_nav.hidden
                         .share_for_stu.link_opt{data: {link: @share_url}}
                             %p.link_title 児童・生徒向けリンク
