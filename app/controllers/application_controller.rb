@@ -37,16 +37,22 @@ class ApplicationController < ActionController::Base
     helper_method :display_name, :current_user_classes
 
     def after_sign_in_path_for(resource)
-      school_class_teacher = SchoolClassTeacher.find_by(teachers_id: current_user.teacher)
       current_teacher = current_user.teacher
+      school_class_teacher = SchoolClassTeacher.find_by(teachers_id: current_teacher)
       if session[:follow_class_token]
         school_class = SchoolClass.find_by(token: session[:follow_class_token])
-        follow = school_class.school_class_teachers.build(teachers_id: current_teacher.id, school_classes_id: school_class.id, teacher_type: "フォロー")
-        if follow.save
-          flash[:notice] = "ログインに成功し、フォローしました"
-          school_class_share_teacher_path(token: school_class.token)
+        follow_class_teacher = SchoolClassTeacher.find_by(teachers_id: current_teacher, school_classes_id: school_class.id, teacher_type: "フォロー")
+        if !follow_class_teacher == nil
+          follow = school_class.school_class_teachers.build(teachers_id: current_teacher.id, school_classes_id: school_class.id, teacher_type: "フォロー")
+          if follow.save
+            flash[:notice] = "ログインに成功し、フォローしました"
+            school_class_share_teacher_path(token: school_class.token)
+          else
+            flash[:notice] = "ログインに成功しましたが、フォローはできませんでした"
+            school_class_share_teacher_path(token: school_class.token)
+          end
         else
-          flash[:notice] = "ログインに成功しましたが、フォローはできませんでした"
+          flash[:notice] = "すでにフォローしています"
           school_class_share_teacher_path(token: school_class.token)
         end
       else
