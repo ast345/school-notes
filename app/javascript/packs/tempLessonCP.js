@@ -73,6 +73,9 @@ export function copyPasteTemplateLesson (schoolClassId) {
 
         var statusDisplay = document.getElementById('status_display')
         $(`#paste_lesson_btn${Id}`).on('click', () =>{
+            $(`#${Id}.lesson_btn_box`).addClass('hidden');
+            $(`#${Id}.new_lesson_btn`).addClass('hidden');
+            $(`#${Id}.lesson_ellipsis`).addClass('hidden');
             // GotLessonがhiddenを持っているか持っていないか判定
             statusDisplay.innerHTML = "保存中…"
             var hasLesson = !$(`#got_lesson${Id}`).hasClass('hidden')

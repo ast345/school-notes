@@ -84,7 +84,7 @@ export function copyPasteLesson (schoolClassId) {
 
         const editLessonDisplay = (resData) => {
             displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
-            if(resData.unit_name !== null){
+            if(resData.unit_name !== undefined){
                 displayLessonUnit.innerHTML = `${resData.unit_name}`
             } else {
                 displayLessonUnit.innerHTML = "&nbsp;"
@@ -93,6 +93,9 @@ export function copyPasteLesson (schoolClassId) {
 
         var statusDisplay = document.getElementById('status_display')
         $(`#paste_lesson_btn${Id}`).on('click', () =>{
+            $(`#${Id}.lesson_btn_box`).addClass('hidden');
+            $(`#${Id}.new_lesson_btn`).addClass('hidden');
+            $(`#${Id}.lesson_ellipsis`).addClass('hidden');
             // GotLessonがhiddenを持っているか持っていないか判定
             var hasLesson = !$(`#got_lesson${Id}`).hasClass('hidden')
             if(copiedGradeSubjectId){
