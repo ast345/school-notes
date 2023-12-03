@@ -66,6 +66,9 @@
     justify-content: center;
     height: calc(100vh - 38px);
     overflow-y: auto;
+    &_fit{
+        height: fit-content;
+    }
 }
 
 .lesson{
@@ -329,7 +332,7 @@
     &_box{
         position: relative;
         text-align: center;
-        height: 100%;
+        height: calc((100vh - 50px)*0.03);
         &:hover .leaving_time_create_btn{
             display: inline-block;
         }
@@ -550,6 +553,7 @@
         color: $main-black;
         padding: 8px;
         border-radius: 20px;
+        text-decoration: none;
         cursor: pointer;
         &:hover{
             background-color: $header-grey;
@@ -577,3 +581,6 @@
     }
 }
 
+.template_header_title{
+    display: inline-block;
+}

@@ -14,16 +14,41 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 document.addEventListener('turbolinks:load', () =>{
     const schoolClassId = gon.school_class_id;
 
+    function checkWidth() {
+        if (window.matchMedia("(max-width: 900px)").matches) {
+            $('.header').css('display', 'none');
+            $('.main_container').css('margin-left', '0px');
+            $('.menu_btn').removeClass('hidden')
+        } else {
+            $('.menu_btn').addClass('hidden')
+            $('.main_container').css('margin-left', '260px');
+            $('.header').css('display', 'block');
+        }
+    }
+    
+    $(document).ready(function() {
+        checkWidth(); // 初回の幅チェック
+    
+        $(window).on('resize', function() {
+            checkWidth(); // ウィンドウのリサイズ時に幅チェック
+        });
+    });
+
     // lesson_btn_boxの表示・非表示
     $('.lesson_box').each(function(index, element){
         const Id = element.id
 
         $(`#${Id}.lesson_box`).on('mouseenter', function(){
-            $(`#${Id}.lesson_btn_box`).removeClass('hidden');
+            $(`#${Id}.lesson_ellipsis`).removeClass('hidden');
             $(`#${Id}.new_lesson_btn`).removeClass('hidden');
         }).on('mouseleave', function(){
             $(`#${Id}.lesson_btn_box`).addClass('hidden');
             $(`#${Id}.new_lesson_btn`).addClass('hidden');
+            $(`#${Id}.lesson_ellipsis`).addClass('hidden');
+        })
+
+        $(`#${Id}.lesson_ellipsis`).on('click', function(){
+            $(`#${Id}.lesson_btn_box`).removeClass('hidden');
         })
     });
     

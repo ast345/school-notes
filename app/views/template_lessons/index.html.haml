@@ -1,104 +1,107 @@
-.page_header
-    %h1.page_header_title テンプレート作成
 .container
-    .class_page_top
-        .class_name
-            %p.class_name_display= @school_class.grade_class
-        %p#status_display 保存済み
-    .nav
-        = link_to " 戻る", school_class_path(@school_class.id, start_of_week: @start_of_week), class: "fa-solid fa-caret-left temp_return_link", data: {"turbolinks" => false}
-    %table.class_weekly
-        %tr
-            %th
-            - (1..5).each do |wday|
-                %th.date_header= @japanese_weekdays[wday]
-        %tr.morning_act_row
-            %td.column_left 朝
-            - (1..5).each do |wday|
-                %td.column_morning_act
-                    .morning_act_box{id: "#{wday}"}
-                        - template_morning_act = @template_morning_acts.find_by(day_of_week: wday)
-                        - if template_morning_act
-                            .morning_act_btn_box.hidden{id: "#{wday}"}
-                                %i.fa-regular.fa-pen-to-square.morning_act_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
-                            .morning_act_text_box.hidden{id: "#{wday}"}
-                                = text_area_tag :morning_act_text, template_morning_act.activity_name.gsub("<br>", "\n"), class: 'morning_act_text', id: "morning_act_text#{wday}"
-                            %p.morning_act_display{id: "morning_act_display#{wday}", data: {id: "#{wday}", morning_activity_id: template_morning_act.id}}  #{template_morning_act.activity_name.html_safe}
-                        - else
-                            .morning_act_btn_box{id: "#{wday}"}
-                                %i.fa-regular.fa-pen-to-square.morning_act_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
-                            .morning_act_text_box.hidden{id: "#{wday}"}
-                                = text_area_tag :morning_act_text, '', class: 'morning_act_text', id: "morning_act_text#{wday}"
-                            %p.morning_act_display.hidden{id: "morning_act_display#{wday}", data: {id: "#{wday}"}}
-        - (1..6).each do |period|
-            %tr.lesson_row
-                %td.column_left #{period}
+    .schedule_container
+        .schedule_nav
+            .left_nav
+                %i.fa-solid.fa-bars.week_btn.menu_btn.hidden
+                = link_to "", school_class_path(@school_class.id, start_of_week: @start_of_week), class: "fa-solid fa-arrow-left week_btn", data: {"turbolinks" => false}
+                %p.template_header_title テンプレート作成
+            .right_nav
+                %p#status_display 保存済み
+    .table_box.table_box_fit
+        %table.class_weekly
+            %tr
+                %th
                 - (1..5).each do |wday|
-                    %td
-                        .lesson_box{id: "#{period}#{wday}"}
-                            - template_lesson = @template_lessons.find_by(day_of_week: wday, period: period)
-                            - if template_lesson
-                                .lesson_btn_js_box{id: "#{period}#{wday}"}
-                                    .lesson_btn_box.hidden{id: "#{period}#{wday}"}
-                                        %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}",grade_subject_id: template_lesson.grade_subject.id, grade_subject_name: template_lesson.subject_name}}
-                                        %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
-                                        %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}", template_lesson_id: template_lesson.id}}
-                                .got_lesson{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period, template_lesson_id: template_lesson.id, subject_name: template_lesson.subject_name, grade_subject_id: template_lesson.grade_subject.id}}
-                                    %p.lesson_subject{id: "lesson_subject#{period}#{wday}"} #{template_lesson.subject_name}
-                                .edit_lesson_box.hidden{id: "#{period}#{wday}"}
-                                    = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{wday}", include_blank: true, class: "select_subject"
-                                .new_lesson_menu.hidden{id: "#{period}#{wday}"}
-                                    %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{wday}", data: { period: period, day_of_week: wday}} &nbsp;新規
+                    %th.date_header= @japanese_weekdays[wday]
+            %tr.row_morning_act
+                %td.column_left 朝
+                - (1..5).each do |wday|
+                    %td.column_morning_act
+                        .morning_act_box{id: "#{wday}"}
+                            - template_morning_act = @template_morning_acts.find_by(day_of_week: wday)
+                            - if template_morning_act
+                                .morning_act_btn_box.hidden{id: "#{wday}"}
+                                    %i.fa-regular.fa-pen-to-square.morning_act_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
+                                .morning_act_text_box.hidden{id: "#{wday}"}
+                                    = text_area_tag :morning_act_text, template_morning_act.activity_name.gsub("<br>", "\n"), class: 'morning_act_text', id: "morning_act_text#{wday}"
+                                %p.morning_act_display{id: "morning_act_display#{wday}", data: {id: "#{wday}", morning_activity_id: template_morning_act.id}}  #{template_morning_act.activity_name.html_safe}
                             - else
-                                .lesson_btn_js_box{id: "#{period}#{wday}"}
-                                    .lesson_btn_box.hidden{id: "#{period}#{wday}"}
-                                        %i.fa-solid.fa-copy.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}"}}
-                                        %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
-                                        %i.fa-regular.fa-calendar-xmark.delete_lesson_btn.hidden{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}"}}
-                                .got_lesson.hidden{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period}}
-                                    %p.lesson_subject{id: "lesson_subject#{period}#{wday}"}
-                                .edit_lesson_box.hidden{id: "#{period}#{wday}"}
-                                    = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{wday}", include_blank: true, class: "select_subject"
-                                .new_lesson_menu{id: "#{period}#{wday}"}
-                                    %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{wday}", data: {period: period, day_of_week: wday}} &nbsp;新規
-        %tr.item_row
-            %td.column_left 持ち物
-            - (1..5).each do |wday|
-                %td
-                    .item_box{id: "#{wday}"}
-                        - template_item = @template_date_items.find_by(day_of_week: wday)
-                        - if template_item
-                            .item_btn_box.hidden{id: "#{wday}"}
-                                %i.fa-regular.fa-pen-to-square.item_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
-                            .item_text_box.hidden{id: "#{wday}"}
-                                = text_area_tag :item_text, template_item.item_name.gsub("<br>", "\n"), class: 'item_text', id: "item_text#{wday}"
-                            %p.item_display{id: "item_display#{wday}", data: {id: "#{wday}", date_item_id: template_item.id}}  #{template_item.item_name.html_safe}
-                        - else
-                            .item_btn_box{id: "#{wday}"}
-                                %i.fa-regular.fa-pen-to-square.item_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
-                            .item_text_box.hidden{id: "#{wday}"}
-                                = text_area_tag :item_text, '', class: 'item_text', id: "item_text#{wday}"
-                            %p.item_display.hidden{id: "item_display#{wday}", data: {id: "#{wday}"}}
-        %tr
-            %td.column_left 下校時刻
-            - (1..5).each do |wday|
-                %td
-                    .leaving_time_box{id: "#{wday}"}
-                        - template_leaving_time = @template_class_leaving_times.find_by(day_of_week: wday)
-                        - if template_leaving_time
-                            .leaving_time_create_btn_box.hidden{id: "#{wday}"}
-                                %i.fa-regular.fa-pen-to-square.leaving_time_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
-                            .leaving_time_delete_btn_box{id: "#{wday}"}
-                                %i.fa-regular.fa-calendar-xmark.delete_leaving_time_btn{id: "delete_leaving_time_btn#{wday}", data: {id: "#{wday}", leaving_time_id: template_leaving_time.id}}
-                            .leaving_time_select_box.hidden{id: "#{wday}", data: {day_of_week: wday}}
-                                %input{type: "time", id: "leaving_time#{wday}", value: "#{template_leaving_time.leaving_time.strftime("%H:%M")}", class: "leaving_time_form"}
-                            %p.leaving_time_display{id: "leaving_time_display#{wday}", data: {id: "#{wday}", leaving_time_id: template_leaving_time.id}}  #{template_leaving_time.leaving_time.strftime("%H:%M")}
-                        - else
-                            .leaving_time_create_btn_box{id: "#{wday}"}
-                                %i.fa-regular.fa-pen-to-square.leaving_time_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
-                            .leaving_time_delete_btn_box.hidden{id: "#{wday}"}
-                                %i.fa-regular.fa-calendar-xmark.delete_leaving_time_btn{id: "delete_leaving_time_btn#{wday}", data: {id: "#{wday}"}}
-                            .leaving_time_select_box.hidden{id: "#{wday}", data: {day_of_week: wday}}
-                                %input{type: "time", id: "leaving_time#{wday}", class: "leaving_time_form"}
-                            %p.leaving_time_display.hidden{id: "leaving_time_display#{wday}", data: {id: "#{wday}"}}
+                                .morning_act_btn_box{id: "#{wday}"}
+                                    %i.fa-regular.fa-pen-to-square.morning_act_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
+                                .morning_act_text_box.hidden{id: "#{wday}"}
+                                    = text_area_tag :morning_act_text, '', class: 'morning_act_text', id: "morning_act_text#{wday}"
+                                %p.morning_act_display.hidden{id: "morning_act_display#{wday}", data: {id: "#{wday}"}}
+            - (1..6).each do |period|
+                %tr.row_lesson
+                    %td.column_left #{period}
+                    - (1..5).each do |wday|
+                        %td.column_lesson
+                            .lesson_box{id: "#{period}#{wday}"}
+                                .lesson_ellipsis_box{id: "#{period}#{wday}"}
+                                    %i.fa-solid.fa-ellipsis-vertical.lesson_ellipsis.hidden{id: "#{period}#{wday}"}
+                                - template_lesson = @template_lessons.find_by(day_of_week: wday, period: period)
+                                - if template_lesson
+                                    .lesson_btn_js_box{id: "#{period}#{wday}"}
+                                        .lesson_btn_box.hidden{id: "#{period}#{wday}"}
+                                            %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}",grade_subject_id: template_lesson.grade_subject.id, grade_subject_name: template_lesson.subject_name}}
+                                            %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
+                                            %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}", template_lesson_id: template_lesson.id}}
+                                    .got_lesson{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period, template_lesson_id: template_lesson.id, subject_name: template_lesson.subject_name, grade_subject_id: template_lesson.grade_subject.id}}
+                                        %p.lesson_subject{id: "lesson_subject#{period}#{wday}"} #{template_lesson.subject_name}
+                                    .edit_lesson_box.hidden{id: "#{period}#{wday}"}
+                                        = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{wday}", include_blank: true, class: "select_subject"
+                                    .new_lesson_menu.hidden{id: "#{period}#{wday}"}
+                                        %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{wday}", data: { period: period, day_of_week: wday}} &nbsp;新規
+                                - else
+                                    .lesson_btn_js_box{id: "#{period}#{wday}"}
+                                        .lesson_btn_box.hidden{id: "#{period}#{wday}"}
+                                            %i.fa-solid.fa-copy.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}"}}
+                                            %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
+                                            %i.fa-regular.fa-calendar-xmark.delete_lesson_btn.hidden{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}"}}
+                                    .got_lesson.hidden{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period}}
+                                        %p.lesson_subject{id: "lesson_subject#{period}#{wday}"}
+                                    .edit_lesson_box.hidden{id: "#{period}#{wday}"}
+                                        = select_tag 'select_subject', options_for_select(@subject_names), id: "select_subject#{period}#{wday}", include_blank: true, class: "select_subject"
+                                    .new_lesson_menu{id: "#{period}#{wday}"}
+                                        %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{wday}", data: {period: period, day_of_week: wday}} &nbsp;新規
+            %tr.row_item
+                %td.column_left 持ち物
+                - (1..5).each do |wday|
+                    %td.column_item
+                        .item_box{id: "#{wday}"}
+                            - template_item = @template_date_items.find_by(day_of_week: wday)
+                            - if template_item
+                                .item_btn_box.hidden{id: "#{wday}"}
+                                    %i.fa-regular.fa-pen-to-square.item_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
+                                .item_text_box.hidden{id: "#{wday}"}
+                                    = text_area_tag :item_text, template_item.item_name.gsub("<br>", "\n"), class: 'item_text', id: "item_text#{wday}"
+                                %p.item_display{id: "item_display#{wday}", data: {id: "#{wday}", date_item_id: template_item.id}}  #{template_item.item_name.html_safe}
+                            - else
+                                .item_btn_box{id: "#{wday}"}
+                                    %i.fa-regular.fa-pen-to-square.item_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
+                                .item_text_box.hidden{id: "#{wday}"}
+                                    = text_area_tag :item_text, '', class: 'item_text', id: "item_text#{wday}"
+                                %p.item_display.hidden{id: "item_display#{wday}", data: {id: "#{wday}"}}
+            %tr.row_leaving
+                %td.column_left 下校時刻
+                - (1..5).each do |wday|
+                    %td.column_leaving
+                        .leaving_time_box{id: "#{wday}"}
+                            - template_leaving_time = @template_class_leaving_times.find_by(day_of_week: wday)
+                            - if template_leaving_time
+                                .leaving_time_create_btn_box.hidden{id: "#{wday}"}
+                                    %i.fa-regular.fa-pen-to-square.leaving_time_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
+                                .leaving_time_delete_btn_box{id: "#{wday}"}
+                                    %i.fa-regular.fa-calendar-xmark.delete_leaving_time_btn{id: "delete_leaving_time_btn#{wday}", data: {id: "#{wday}", leaving_time_id: template_leaving_time.id}}
+                                .leaving_time_select_box.hidden{id: "#{wday}", data: {day_of_week: wday}}
+                                    %input{type: "time", id: "leaving_time#{wday}", value: "#{template_leaving_time.leaving_time.strftime("%H:%M")}", class: "leaving_time_form"}
+                                %p.leaving_time_display{id: "leaving_time_display#{wday}", data: {id: "#{wday}", leaving_time_id: template_leaving_time.id}}  #{template_leaving_time.leaving_time.strftime("%H:%M")}
+                            - else
+                                .leaving_time_create_btn_box{id: "#{wday}"}
+                                    %i.fa-regular.fa-pen-to-square.leaving_time_create_btn{id: "#{wday}", data: {day_of_week: wday}} &nbsp;追加
+                                .leaving_time_delete_btn_box.hidden{id: "#{wday}"}
+                                    %i.fa-regular.fa-calendar-xmark.delete_leaving_time_btn{id: "delete_leaving_time_btn#{wday}", data: {id: "#{wday}"}}
+                                .leaving_time_select_box.hidden{id: "#{wday}", data: {day_of_week: wday}}
+                                    %input{type: "time", id: "leaving_time#{wday}", class: "leaving_time_form"}
+                                %p.leaving_time_display.hidden{id: "leaving_time_display#{wday}", data: {id: "#{wday}"}}
 = javascript_pack_tag 'template_schedule'
