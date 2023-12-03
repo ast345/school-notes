@@ -11,7 +11,7 @@
             = link_to school_class_share_index_path(start_of_week: @start_of_week + 1.week) do
                 %i.fa-solid.fa-angle-right.week_btn
 .iframe_table_box
-    %table.iframe_class_weekly
+    %table.class_weekly
         %tr.row_date
             %th
             - (@start_of_week..@end_of_week).each do |date|

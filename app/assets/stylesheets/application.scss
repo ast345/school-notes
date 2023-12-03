@@ -25,7 +25,7 @@
  @import './variables';
  @import 'text_book';
  @import 'share';
-
+ @import 'responsible';
  html {
     word-spacing: 1px;
     -ms-text-size-adjust: 100%;
@@ -272,7 +272,7 @@
     .main_container{
       margin-left: 0px;
     }
-    
+
     .header{
       display: none;
     }
