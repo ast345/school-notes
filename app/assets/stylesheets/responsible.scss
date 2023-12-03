@@ -67,6 +67,10 @@
             width: calc((100vw - 27px)/6);
             height: calc((100vw - 27px)/6/4*3*1.3);
         }
+        &_box_for_share {
+            width: calc((100vw - 27px)/6);
+            height: calc((100vw - 27px)/6/4*3*1.3);
+        }
         &_subject{
             // lesson_boxの2/5倍
             height: calc((100vw - 27px)/6/4*3/5*2*1.3);
@@ -75,7 +79,7 @@
         }
         &_unit{
             height: calc((100vw - 27px)/6/4*3/5*3*1.3);
-            font-size: 8px;
+            font-size: 10px;
         }
     
         &_btn_js_box{
