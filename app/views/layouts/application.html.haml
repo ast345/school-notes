@@ -38,7 +38,10 @@
               %i.fa-solid.fa-plus
             .header_user_classes
               - @current_user_classes.each_with_index do |current_user_class, index|
-                - link_class = current_page?(school_class_path(current_user_class[:school_class_id])) ? "header_user_class active_class" : "header_user_class"
+                - if current_page?(school_class_path(current_user_class[:school_class_id])) || current_page?(school_class_template_lessons_path(current_user_class[:school_class_id]))
+                  - link_class = "header_user_class active_class"
+                - else
+                  - link_class = "header_user_class"
                 %div{class: link_class}
                   = link_to current_user_class[:class_name], school_class_path(current_user_class[:school_class_id]), method: :get, class: "school_class_link"
                   .school_class_setting_btn_box
