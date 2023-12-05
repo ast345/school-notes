@@ -255,16 +255,11 @@ class SchoolClassesController < ApplicationController
         @share_url = school_class_share_index_url(token: @school_class.token)
         @share_teacher_url = school_class_share_teacher_url(token: @school_class.token)
 
-        respond_to do |format|
-            format.html
-            format.pdf do
-              render pdf: '時間割',
-                     layout: 'pdf.html',
-                     template: 'school_classes/show.pdf',
-                     encording: 'UTF-8',
-                     show_as_html: params.key?('debug')
-            end
-          end
+        if @grade_id == 1 || @grade_id == 2
+            @table_title = @school_class.grade_class + " じかんわり"
+        else
+            @table_title = @school_class.grade_class + " 時間割"
+        end
     end
 
     private
