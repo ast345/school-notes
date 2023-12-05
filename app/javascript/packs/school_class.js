@@ -30,12 +30,33 @@ document.addEventListener('turbolinks:load', () =>{
     classLeavingTime(schoolClassId);
 
     $(".print_btn").on('click', (event) =>{
-        const startOfWeek = $(event.currentTarget).data('startOfWeek');
-        const pdfPage = window.open(`/school_classes/${schoolClassId}.pdf?start_of_week=${startOfWeek}`)
-        pdfPage.onload = function () {
-            pdfPage.print();
-        };
+        var tableTitle = $(".print_btn").data("tableTitle")
+        var printArea = document.getElementsByClassName("table_box")
+
+        //プリント用の要素「#print」を作成し、上で取得したprintAreaをその子要素に入れる。
+        $('body').append('<div id="print" class="printBc"></div>');
+        $('#print').append(`<p class="table_title">${tableTitle}</p>`);
+        $(printArea).clone().appendTo('#print');
+
+        //プリントしたいエリア意外に、非表示のcssが付与されたclassを追加
+        $('body > :not(#print)').addClass('print-off');
+
+
+        window.print()
+
+        //window.print()を実行した後、作成した「#print」と、非表示用のclass「print-off」を削除
+        $('#print').remove();
+        $('.print-off').removeClass('print-off');
     })
+
+
+
+
+        // const startOfWeek = $(event.currentTarget).data('startOfWeek');
+        // const pdfPage = window.open(`/school_classes/${schoolClassId}.pdf?start_of_week=${startOfWeek}`)
+        // pdfPage.onload = function () {
+        //     pdfPage.print();
+        // };
 
     function checkWidth() {
         if (window.matchMedia("(max-width: 900px)").matches) {
@@ -229,7 +250,7 @@ document.addEventListener('turbolinks:load', () =>{
         const originalHTML = $element.html(); // 元のHTMLを保持
         let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
         let lineHeight = parseInt($element.css('line-height'));
-        
+
         while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
             fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
             $element.css({

@@ -26,6 +26,8 @@
  @import 'text_book';
  @import 'share';
  @import 'responsible';
+ @import 'print';
+
  html {
     word-spacing: 1px;
     -ms-text-size-adjust: 100%;
@@ -265,6 +267,10 @@
 
 .active_class{
   background-color: $active-grey;
+}
+
+.print-off{
+  display: none;
 }
 
   @media (max-width: 480px) {

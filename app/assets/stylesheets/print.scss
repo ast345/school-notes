@@ -1,0 +1,83 @@
+@import './variables';
+
+@media print {
+    .table_box{
+        height: fit-content;
+    }
+    .row{
+        &_date{
+            // 縦幅が全体の7%
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.07);
+        }
+        &_event{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.07);
+        }
+        &_morning_act{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.03);
+        }
+        &_lesson{
+            // 縦横比3:4にする計算
+            height: calc((100vw - 27px)/6/4*3);
+        }
+        &_item{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.15*1.3);
+        }
+        &_leaving{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.03);
+        }
+    }
+    .column{
+        &_date, &_event, &_morning_act, &_item, &_leaving, &_lesson{
+            width: calc((100vw - 27px)/6);
+            padding: 0;
+        }
+        &_left{
+            text-align: center;
+            width: calc((100vw - 27px)/6);
+        }
+    }
+
+    .event{
+        &_box {
+            width: calc((100vw - 27px)/6);
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.07);
+            // font-size: 10px;
+        }
+    }
+
+    .morning_act, .leaving_time{
+        &_box{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.03);;
+            // font-size: 10px;
+        }
+    }
+
+    .lesson{
+        &_box {
+            background-color: transparent;
+            width: calc((100vw - 27px)/6);
+            height: calc((100vw - 27px)/6/4*3);
+        }
+        &_subject{
+            // lesson_boxの2/5倍
+            height: calc((100vw - 27px)/6/4*3/5*2);
+            line-height: calc((100vw - 27px)/6/4*3/5*2);
+            // font-size: 10px;
+        }
+        &_unit{
+            height: calc((100vw - 27px)/6/4*3/5*3);
+            // font-size: 10px;
+        }
+    
+        &_btn_js_box{
+            display: none;
+        }
+    }
+
+    .item{
+        &_box{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.15*1.3);
+            // font-size: 10px;
+        }
+    }
+}
