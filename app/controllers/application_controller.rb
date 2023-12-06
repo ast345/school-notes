@@ -57,8 +57,14 @@ class ApplicationController < ActionController::Base
         end
       else
         if school_class_teacher
-          school_class = school_class_teacher.school_class
-          school_class_path(school_class.id)
+          teacher_type = school_class_teacher.teacher_type
+          if teacher_type == "担任"
+            school_class = school_class_teacher.school_class
+            school_class_path(school_class.id)
+          else teacher_type == "フォロー"
+            class_token = school_class_teacher.school_class.token
+            school_class_share_teacher_path(token: class_token)
+          end
         else
           new_school_class_path
         end
