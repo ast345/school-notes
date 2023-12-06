@@ -199,6 +199,7 @@ class SchoolClassesController < ApplicationController
         @school_class = SchoolClass.find(params[:id])
         @grade_id = @school_class.grade.id
         @has_class = has_class(@school_class.id)
+        @hiding_menu_btn = true
         gon.school_class_id = @school_class.id
         if params[:start_of_week]
             @start_of_week = params[:start_of_week].to_date

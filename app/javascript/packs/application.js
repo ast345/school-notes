@@ -24,21 +24,18 @@ import $ from 'jquery';
 import axios from 'axios';
 
 document.addEventListener('turbolinks:load', () =>{
-    $(".menu-btn").on('click', (event) =>{
-        $('.resp_header_overlay').removeClass('hidden');
-        $('.cover').removeClass('hidden');
-        event.stopPropagation();
+    $(".default_menu_btn").on('click', (event) =>{
+        $('.default_menu_btn').addClass('hidden');
+        $('.header').css('display', 'block');
+        $('.main_container').css('margin-left', '260px');
+        $('.header_close_btn').removeClass('hidden');
+    });
 
-    });
-    $(document).on('click', function (e) {
-        if (!$(e.target).closest('.resp_header_overlay').length) {
-            $('.resp_header_overlay').addClass('hidden');
-            $('.cover').addClass('hidden');
-        }
-    });
-    $('.close-btn').on('click', ()=> {
-        $('.resp_header_overlay').addClass('hidden');
-        $('.cover').addClass('hidden');
+    $('.header_close_btn').on('click', (event) =>{
+        $('.default_menu_btn').removeClass('hidden');
+        $('.header').css('display', 'none');
+        $('.main_container').css('margin-left', '0px');
+        $('.header_close_btn').addClass('hidden')
     });
 
     $(".header_edit_btn").on('click', ()=> {
@@ -64,18 +61,21 @@ document.addEventListener('turbolinks:load', () =>{
             $(`#edit${index}`).removeClass('hidden');
         });
 
-        $(`#edit${index}`).on('mouseleave', () => {
-            // マウスポインターが #edit${index} の外に出たときの処理
-            $(`#edit${index}`).addClass('hidden');
+        // ドキュメント全体のクリックイベントを設定し、#edit_btn${index} の外側をクリックしたときに非表示にする
+        $(document).on('click', (event) => {
+            if(!$(event.target).closest(`#edit_btn${index}`).length) {
+                $(`#edit${index}`).addClass('hidden');
+            }
         });
 
         $(`#follow_edit_btn${index}`).on('click', (event) =>{
             $(`#follow_edit${index}`).removeClass('hidden');
         });
 
-        $(`#follow_edit${index}`).on('mouseleave', () => {
-            // マウスポインターが #edit${index} の外に出たときの処理
-            $(`#follow_edit${index}`).addClass('hidden');
+        $(document).on('click', (event) => {
+            if(!$(event.target).closest(`#follow_edit_btn${index}`).length) {
+                $(`#follow_edit${index}`).addClass('hidden');
+            }
         });
     });
 });

@@ -82,7 +82,7 @@ document.addEventListener('turbolinks:load', () =>{
         $('.menu_btn').addClass('hidden');
         $('.header').css('display', 'block');
         $('.main_container').css('margin-left', '260px');
-        $('.header_close_btn').removeClass('hidden')
+        $('.header_close_btn').removeClass('hidden');
     });
 
     $('.header_close_btn').on('click', (event) =>{

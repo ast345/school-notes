@@ -4,6 +4,7 @@ class ShareTeachersController < ApplicationController
         @school_class = SchoolClass.find_by(token: params[:token])
         @token = @school_class.token
         @grade_id = @school_class.grade.id
+        @hiding_menu_btn = true
         gon.school_class_id = @school_class.id
         date = Date.today
         @start_of_week = date.beginning_of_week

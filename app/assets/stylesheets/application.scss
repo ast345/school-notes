@@ -112,11 +112,13 @@
       text-align: center;
       padding: 20px 0;
     }
+    &_link_box{
+      max-height: calc(100vh - 175px);
+      overflow-y: scroll;
+    }
     &_user_classes{
       margin-top: 5px;
       margin-bottom: 15px;
-      max-height: 210px;
-      overflow-y: auto;
     }
     &_user_class{
       display: flex;
@@ -224,11 +226,14 @@
   &_edit_menu{
     position: absolute;
     right: 0px;
+    top: 0px;
     padding: 5px;
     background-color: $main-grey;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     text-align: center;
+    background-color: white;
+    z-index: 50;
   }
 
   &_follow_edit_menu{
@@ -239,7 +244,7 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     text-align: center;
-    z-index: 100;
+    z-index: 50;
   }
 
   &_edit_btn{
@@ -251,7 +256,15 @@
       background-color: $btn-grey;
     }
   }
-
+  &_unfollow{
+    display: block;
+    text-decoration: none;
+    color: $main-black;
+    padding: 5px;
+    &:hover{
+      background-color: $btn-grey;
+    }
+  }
   &_setting_btn{
     padding: 3px;
     margin-right: 5px;
@@ -269,6 +282,9 @@
 }
 
 .print-off{
+  display: none;
+}
+.default_menu_btn{
   display: none;
 }
 
@@ -309,13 +325,12 @@
       display: block;
       margin-left: 0;
     }
-    .menu-btn{
-      cursor: pointer;
+    .default_menu_btn{
       display: inline-block;
-      color: $main-black;
-      font-size: 24px;
-      vertical-align: middle;
+      position: absolute;
+      top: 0;
     }
+
     .close-btn{
       cursor: pointer;
       display: inline-block;
