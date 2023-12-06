@@ -23,9 +23,9 @@
       - else
         %header.header
           %i.fa-regular.fa-circle-xmark.header_close_btn.hidden
-          .header_logos
-            %h1 School Notes
           - if user_signed_in?
+            .header_logos
+              %h1.header_logo_link School Notes
             .header_user_display
               %p.header_display_name #{@teacher.display_name}さん
               %i.fa-solid.fa-user-pen.header_edit_btn
@@ -61,7 +61,9 @@
                       %i.fa-solid.fa-ellipsis.school_class_setting_btn{id: "follow_edit_btn#{index}"}
                     .school_class_follow_edit_menu.hidden{id: "follow_edit#{index}"}
                       = link_to "フォローを外す", school_class_teacher_path(current_follow_class[:school_class_teacher_id]), method: :delete, class: "school_class_unfollow"
-
+          - else
+            .header_logos
+              = link_to "School Notes" , root_path, class: "header_logo_link"
           .header_bottom
             = link_to "ご意見箱", opinions_path, class: "header_link"
             - if user_signed_in?

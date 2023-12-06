@@ -89,8 +89,12 @@
     background-color: $header-grey;
     &_logos{
       text-align: center;
-      font-size: 14px;
+    }
+    &_logo_link{
       color: $main-black;
+      font-size: 28px;
+      text-decoration: none;
+      font-weight: bold;
     }
     &_flash{
       display: block;
@@ -314,14 +318,7 @@
         z-index: 100;
       }
     }
-    .header_logos{
-      font-size: 10px;
-      display: inline-block;
-      vertical-align: middle;
-      padding-left: 10px;
-    }
     .container{
-      //   padding: 40px 5px;
       display: block;
       margin-left: 0;
     }
