@@ -1,3 +1,4 @@
+@import './variables';
 .devise-box{
     display: inline-box;
     text-align: center;
@@ -58,12 +59,18 @@
         margin-top: 40px;
         border-radius: 10px;
 
-        background: #F4C57D;
+        background-color: $main-red;
         font-size: 18px;
         line-height: 18px;
         text-align: center;
         color: #ffffff;
         cursor: pointer;
+        
+        &:hover{
+            background-color: white;
+            color: $main-red;
+            border: 1px solid $main-red;
+        }
     }
 
     .devise-section-line{
