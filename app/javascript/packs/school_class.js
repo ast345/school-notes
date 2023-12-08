@@ -49,15 +49,6 @@ document.addEventListener('turbolinks:load', () =>{
         $('.print-off').removeClass('print-off');
     })
 
-
-
-
-        // const startOfWeek = $(event.currentTarget).data('startOfWeek');
-        // const pdfPage = window.open(`/school_classes/${schoolClassId}.pdf?start_of_week=${startOfWeek}`)
-        // pdfPage.onload = function () {
-        //     pdfPage.print();
-        // };
-
     function checkWidth() {
         if (window.matchMedia("(max-width: 900px)").matches) {
             $('.header').css('display', 'none');
