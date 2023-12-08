@@ -21,6 +21,7 @@ export function tempLessonCUD(schoolClassId) {
                 $(`#${Id}`+'.edit_lesson_box').removeClass('hidden')
                 $(`#${Id}`+'.lesson_btn_box').addClass('hidden')
                 $(`#${Id}`+'.new_lesson_menu').addClass('hidden')
+                $(`#${Id}.lesson_ellipsis_box`).addClass('hidden')
     
                 function createEndHandler(event) {
                     var clickedElement = event.target;
@@ -50,23 +51,18 @@ export function tempLessonCUD(schoolClassId) {
                                         $(`#got_lesson${Id}`).data('gradeSubjectId', `${res.data.grade_subject_id}`)
                                         $(`#got_lesson${Id}`).data('templateLessonId', `${res.data.id}`);
                         };
-    
-                        const lessonBtnDisplay = () => {
-                            $(`#${Id}.lesson_btn_box`).removeClass('hidden')
-                            $(`#copy_lesson_btn${Id}`).removeClass('hidden')
-                            $(`#delete_lesson_btn${Id}`).removeClass('hidden')
-                        };
-    
+
                         if(selectSubject.value === ""){
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_lesson_menu').removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
                             statusDisplay.innerHTML = "保存済み"
                         } else {
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#got_lesson${Id}`).removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
                             displayLessonSubject.innerHTML = `${selectSubject.value}`
 
-                            lessonBtnDisplay();
                             axios.post(`/school_classes/${schoolClassId}/template_lessons`, {
                                 template_lesson: {day_of_week: dayOfWeek, period: period, grade_subject_id: selectedGradeSubjectId}
                             })
@@ -115,7 +111,7 @@ export function tempLessonCUD(schoolClassId) {
                 $(`#got_lesson${Id}`).addClass('hidden')
                 $(`#${Id}.lesson_btn_js_box`).addClass('hidden')
                 $(`#${Id}.edit_lesson_box`).removeClass('hidden')
-    
+                $(`#${Id}.lesson_ellipsis_box`).addClass('hidden')
                 $(`#select_subject${Id} option`).each(function() {
                     const optionValue = $(this).val();
                     
@@ -157,6 +153,7 @@ export function tempLessonCUD(schoolClassId) {
                             $(`#delete_lesson_btn${Id}`).addClass('hidden')
                             $(`#${Id}.edit_lesson_box`).addClass('hidden')
                             $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
                             axios.delete(`/school_classes/${schoolClassId}/template_lessons/${templateLessonId}`)
                             .then((res) =>{
                                 if(res.status === 204){
@@ -169,6 +166,7 @@ export function tempLessonCUD(schoolClassId) {
                         $(`#${Id}.edit_lesson_box`).addClass('hidden')
                         $(`#got_lesson${Id}`).removeClass('hidden')
                         $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
+                        $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
                         // 中身を差し替え
                         displayLessonSubject.innerHTML = `${selectSubject.value}`
     
