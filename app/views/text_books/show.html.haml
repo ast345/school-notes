@@ -13,7 +13,7 @@
                     .unit_edit_btn_box
                         %i.fa-solid.fa-pen-to-square.unit_edit_btn{id: "edit_btn#{grade_subject_unit.id}", data: { id: grade_subject_unit.id }}
                         %i.fa-solid.fa-trash-can.unit_delete_btn{id: "delete_btn#{grade_subject_unit.id}", data: { id: grade_subject_unit.id }}
-            %hr
+            %hr{id: "unit_hr#{grade_subject_unit.id}"}
     .add_text_book_units
         %p.add_text_book_units_btn + 新しく単元名を作成する
         .new_unit_area.hidden

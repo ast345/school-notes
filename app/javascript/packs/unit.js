@@ -35,7 +35,9 @@ document.addEventListener("turbolinks:load", function() {
             .then((res) =>{
                 if(res.status === 204){
                     var unitBox = document.getElementById(`unit_box${gradeSubjectUnitId}`);
+                    var unitHr = document.getElementById(`unit_hr${gradeSubjectUnitId}`);
                     unitBox.remove();
+                    unitHr.remove();
                 }
             })
             .catch(error => {
@@ -72,7 +74,7 @@ document.addEventListener("turbolinks:load", function() {
                 grade_subject_unit: {unit_name: newUnitName, grade_subject_id: gradeSubjectId, school_class_id : schoolClassId}
             })
             .then((res) =>{
-                if(res.status === 200){
+                if(res.status === 201){
                     location.reload()
                 }
             })
