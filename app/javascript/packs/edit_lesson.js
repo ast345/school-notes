@@ -7,7 +7,7 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 export function editLesson(schoolClassId) {
     function adjustSubjectFZ(element) {
         const $element = $(element);
-        $element.css({'font-size': "16px", "line-height": "30px"});
+        $element.css({'font-size': "16px"});
         const rowHeight = $('.row_lesson').height()/5*2 ;  // 要素の高さを取得
         const originalHTML = $element.html(); // 元のHTMLを保持
         let fontSize = parseInt($element.css('font-size'));
