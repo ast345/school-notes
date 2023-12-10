@@ -1,4 +1,5 @@
 class LessonPeriodsController < ApplicationController
+    before_action :authenticate_user!
     def create
         @lesson_period = LessonPeriod.new(lesson_period_params)
         if @lesson_period.save

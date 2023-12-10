@@ -1,4 +1,5 @@
 class GradeSubjectUnitController < ApplicationController
+    before_action :authenticate_user!
     def get_grade_subject_units
         school_class = SchoolClass.find(params[:school_class_id])
         grade_subject_id = params[:grade_subject_id].to_i

@@ -1,4 +1,5 @@
 class GradeSubjectController < ApplicationController
+    before_action :authenticate_user!
     def index
         grade_id = params[:grade_id]
         grade_name = Grade.find(grade_id).grade_name
