@@ -53,7 +53,9 @@ document.addEventListener('turbolinks:load', () =>{
     flash.style.transform = 'translateY(-100%)'; // 下から上へ移動する
     }
     // 数秒後にスライドアウト関数を実行
-    setTimeout(slideOut, 2000); // 3000ミリ秒 = 3秒後
+    if( flash !== null){
+        setTimeout(slideOut, 2000); // 3000ミリ秒 = 3秒後
+    }
 
 
     $(".school_class_setting_btn").each(function(index, element){
