@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_15_005027) do
+ActiveRecord::Schema.define(version: 2023_11_28_222834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,8 +62,9 @@ ActiveRecord::Schema.define(version: 2023_10_15_005027) do
     t.bigint "grade_subject_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "text_book_id"
     t.index ["grade_subject_id"], name: "index_grade_subject_units_on_grade_subject_id"
-    t.index ["unit_name", "grade_subject_id"], name: "index_grade_subject_units_on_unit_name_and_grade_subject_id", unique: true
+    t.index ["text_book_id"], name: "index_grade_subject_units_on_text_book_id"
   end
 
   create_table "grade_subjects", force: :cascade do |t|
@@ -90,6 +91,15 @@ ActiveRecord::Schema.define(version: 2023_10_15_005027) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lesson_id"], name: "index_lesson_classes_on_lesson_id"
     t.index ["school_class_id"], name: "index_lesson_classes_on_school_class_id"
+  end
+
+  create_table "lesson_periods", force: :cascade do |t|
+    t.integer "start_of_period", null: false
+    t.integer "end_of_period", null: false
+    t.bigint "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_class_id"], name: "index_lesson_periods_on_school_class_id"
   end
 
   create_table "lesson_wdays", force: :cascade do |t|
@@ -143,10 +153,12 @@ ActiveRecord::Schema.define(version: 2023_10_15_005027) do
 
   create_table "school_classes", force: :cascade do |t|
     t.bigint "grade_id", null: false
-    t.string "class_name", null: false
+    t.string "class_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "token"
     t.index ["grade_id"], name: "index_school_classes_on_grade_id"
+    t.index ["token"], name: "index_school_classes_on_token", unique: true
   end
 
   create_table "school_types", force: :cascade do |t|
@@ -218,6 +230,24 @@ ActiveRecord::Schema.define(version: 2023_10_15_005027) do
     t.index ["school_class_id"], name: "index_template_morning_activities_on_school_class_id"
   end
 
+  create_table "text_book_comps", force: :cascade do |t|
+    t.string "comp_name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "abbreviation", null: false
+  end
+
+  create_table "text_books", force: :cascade do |t|
+    t.bigint "grade_subject_id", null: false
+    t.bigint "text_book_comp_id", null: false
+    t.string "text_book_name", null: false
+    t.integer "revision_year", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_subject_id"], name: "index_text_books_on_grade_subject_id"
+    t.index ["text_book_comp_id"], name: "index_text_books_on_text_book_comp_id"
+  end
+
   create_table "user_to_types", force: :cascade do |t|
     t.bigint "user_types_id"
     t.bigint "users_id"
@@ -248,6 +278,15 @@ ActiveRecord::Schema.define(version: 2023_10_15_005027) do
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
+  end
+
+  create_table "using_texts", force: :cascade do |t|
+    t.bigint "school_class_id", null: false
+    t.bigint "text_book_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_class_id"], name: "index_using_texts_on_school_class_id"
+    t.index ["text_book_id"], name: "index_using_texts_on_text_book_id"
   end
 
   add_foreign_key "grade_subjects", "grades", column: "grades_id"

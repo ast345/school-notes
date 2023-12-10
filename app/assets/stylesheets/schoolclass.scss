@@ -1,47 +1,156 @@
+@import './variables';
+
+.row{
+    &_date{
+        height: calc((100vh - 70px)*0.07);
+    }
+    &_event{
+        height: calc((100vh - 70px)*0.07);
+    }
+    &_morning_act{
+        height: calc((100vh - 70px)*0.03);
+    }
+    &_lesson{
+        height: calc((100vh - 70px)*0.65/6);
+    }
+    &_item{
+        height: calc((100vh - 70px)*0.15);
+    }
+    &_leaving{
+        height: calc((100vh - 70px)*0.03);
+    }
+}
+.column{
+    &_date, &_event, &_morning_act, &_item, &_leaving, &_lesson{
+        width: calc((100vh - 50px)*0.65/6/3*4);
+        padding: 0;
+    }
+    &_left{
+        text-align: center;
+        width: 88px;
+    }
+}
+.schedule{
+    &_container{
+        display: flex;
+        flex-direction: column;
+    }
+    &_nav{
+        display: flex;
+        justify-content: space-between;
+        height: fit-content;
+    }
+}
+.left_nav{
+    font-size: 16px;
+    height: fit-content;
+}
+.right_nav{
+    font-size: 16px;
+    height: fit-content;
+    display: flex;
+    justify-content: right;
+    &_btn{
+        color: $main-black;
+        padding: 8px;
+        border-radius: 20px;
+        cursor: pointer;
+        &:hover{
+            background-color: $header-grey;
+        }
+    }
+}
+
+.table_box{
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 38px);
+    overflow-y: auto;
+    &_fit{
+        height: fit-content;
+    }
+}
+
+.table_title{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 .lesson{
     &_subject{
         border-bottom: 1px solid rgb(203, 203, 203);
         text-align: center;
+        height: calc((100vh - 70px)*0.65/15);
+        line-height: calc((100vh - 70px)*0.65/15);
         &:hover{
             cursor: text;
         }
     }
     &_unit{
         text-align: center;
-        width: 117px;
+        // height: calc((100vh - 76px)*0.65/10);
+        width: 100%;
         &:hover{
             cursor: text;
         }
     }
 
     &_box{
-        background-color: white;
-        height: 98px;
-        width: 118px;
+        background-color: #fff;
+        height: calc((100vh - 70px)*0.65/6);
+        width: calc((100vh - 50px)*0.65/6/3*4);
         position: relative;
         z-index: 1;
         cursor: grab;
 
         &:hover{
-            border-radius: 10px;
             border: 1px solid rgba(0, 0, 0, 0.3);
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
         }
     }
-    &_btn_box{
-        float: right;
-        height: 20px;
+    &_box_for_share{
+        height: calc((100vh - 70px)*0.65/6);
+        width: calc((100vh - 50px)*0.65/6/3*4);
+        position: relative;
+        z-index: 1;
     }
-
-    &_row{
-        height: 101px;
+    &_ellipsis{
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 13px;
+        color: $main-black;
+        cursor: pointer;
+        &:hover{
+            background-color: $btn-grey;
+        }
+        &_box{
+            display: inline-block;
+            position: absolute;
+            right: 0;
+        }
     }
-    
+    &_btn{
+        &_js_box{
+            position: absolute;
+            right: 0;
+            background-color: $header-grey;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+        &_box{
+            height: fit-content;
+        }
+    }
 }
 
-
 .edit_lesson_box{
-    padding-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc((100vh - 76px)*0.65/15);
     border-bottom: 1px solid rgb(203, 203, 203);
     text-align: center;
     & select {
@@ -52,10 +161,15 @@
     }
 }
 .select_subject{
-    height: 25px;
+    width: 100%;
+    height: 100%;
 }
 
 .unit_select_box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: calc((100vh - 76px)*0.65/9);
     & select {
         text-align: center;
         & option {
@@ -64,14 +178,11 @@
     }
 }
 .select_unit{
-    height: 25px;
-    width:  79%;
+    height: 50%;
+    width:  100%;
 }
 
 .class{
-    &_weekly{
-        display: inline-block;
-    }
     &_page_top{
         padding-left: 10px;
     }
@@ -92,30 +203,27 @@
     }
 
     &_text{
-        height: 118px;
-        width: 118px;
-        vertical-align: middle;
-
-        border: 1px solid #cccccc;
-        border-radius: 4px;
+        width:  100%;
+        height: 100%;
+        border: 1px solid $active-grey;
         resize: none;
-    }
-
-    &_row{
-        height: 120px;
+        &_box{
+            height: 100%;
+            width: 100%;
+        }
     }
     &_display{
         height: 100%;
         width: 100%;
         word-wrap: break-word;
+        font-size: 13px;
     }
 
     &_box{
-        height: 118px;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 120px;
+        height: calc((100vh - 70px)*0.15 - 2px);
     }
 }
 
@@ -124,14 +232,14 @@
         display: inline-block;
         cursor: pointer;
 
-        color: rgb(243, 134, 134);
+        color: $main-red;
 
         padding: 5px;
         border-radius: 10px;
         font-size: 13px;
 
         &:hover{
-            background-color: #eeeeee;
+            background-color: $btn-grey;
         }
     }
 }
@@ -143,14 +251,14 @@
     cursor: pointer;
 
     // background-color: #fff;
-    color: rgb(30, 48, 80);
+    color: $main-black;
 
     padding: 5px;
     border-radius: 10px;
     font-size: 13px;
 
     &:hover{
-        background-color: #eeeeee;
+        background-color: $btn-grey;
     }
 }
 
@@ -190,22 +298,30 @@
             margin-left: 10px;
         }
 
+        &_box{
+            display: flex;
+            width: 100%;
+            height: calc((100vh - 76px)*0.65/9);
+            // justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
         &_text{
-            height: 100%;
-            width: 80%;
-            // vertical-align: middle;
-            border: 1px solid #cccccc;
+            height: 50%;
+            width: 100%;
+            border: 1px solid $active-grey;
             border-radius: 4px;
             resize: none;
+            text-align: center;
         }
     }
 }
 .unit_create_btn{
-    color: rgb(30, 48, 80);
-    padding: 5px 5px;
+    color: $main-black;
+    padding: 3px;
     border-radius: 10px;
     font-size: 12px;
-    float: right;
     &:hover{
         cursor: pointer;
         background-color: #eeeeee;
@@ -213,11 +329,9 @@
 }
 
 .cancel_btn{
-    color: rgb(30, 48, 80);
-    padding: 0px 4px;
+    color: $main-black;
     border-radius: 10px;
-    font-size: 14px;
-    float: right;
+    font-size: 12px;
     &:hover{
         cursor: pointer;
         background-color: #eeeeee;
@@ -227,8 +341,8 @@
 .leaving_time{
     &_box{
         position: relative;
-        height: 27px;
         text-align: center;
+        height: calc((100vh - 70px)*0.03);
         &:hover .leaving_time_create_btn{
             display: inline-block;
         }
@@ -248,26 +362,48 @@
             background-color: #eeeeee;
         }
         &_box{
-            display: block;
             padding-top: 1px;
             display: flex;
             align-items: center; /* 上下中央に配置 */
             justify-content: center; /* 左右中央に配置 */
             height: 100%; /* 親要素の高さいっぱいに広げる */
+            width: 100%;
         }
     }
     &_delete_btn_box{
         position: absolute;
-        top: 5%;
-        left: 80%;
+        right: 0px;
     }
 
     &_display{
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 1.5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 100%;
+        height: 100%;
+        width: 100%;
     }
+    &_select_box{
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+    &_form{
+        position: relative;
+        width: 100%;
+        text-align: center;
+    
+        &::-webkit-calendar-picker-indicator {
+            color: rgb(30, 48, 80);
+            border-radius: 10px;
+        }
+    
+        &::-webkit-calendar-picker-indicator:hover {
+            background-color: #eeeeee;
+        }
+      }
 }
+
 
 .delete_leaving_time_btn{
     display: none;
@@ -284,42 +420,17 @@
     }
 }
 
-.leaving_time_select_box{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
 
-.leaving_time_form{
-    position: relative;
-    width: 100%;
-    text-align: center;
-
-    &::-webkit-calendar-picker-indicator {
-        color: rgb(30, 48, 80);
-        border-radius: 10px;
-    }
-
-    &::-webkit-calendar-picker-indicator:hover {
-        background-color: #eeeeee;
-    }
-  }
-
-.left_column{
-    text-align: center;
-    min-width: 88px;
-}
 
 
 .event{
     &_box{
-        width: 120px;
-        height: 64px;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
+        height: calc((100vh - 70px)*0.07 - 3px);
+        width: calc((100vh - 50px)*0.65/6/3*4);
     }
-
 
     &_btn_box{
         text-align: center;
@@ -328,13 +439,14 @@
 
 
     &_text{
-        height: 64px;
-        width: 118px;
-        vertical-align: middle;
-
-        border: 1px solid #cccccc;
-        border-radius: 4px;
+        height: 100%;
+        width: 100%;
+        border: 1px solid $active-grey;
         resize: none;
+        &_box{
+            display: flex;
+            height: 100%;
+        }
     }
 
     &_btn_box{
@@ -350,38 +462,40 @@
     }
     &_display{
         width: 100%;
-        height: 100%;
         word-wrap: break-word;
+        text-align: center;
+        padding: 2px;
     }
 }
 
 .morning_act{
     &_box{
-        width: 120px;
-        height: 27px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
+        height: calc((100vh - 70px)*0.03 + 5px);
+        width: 100%;
     }
 
     &_btn_box{
+        display: block;
         text-align: center;
         height: 27px;
     }
 
     &_text{
-        height: 25px;
-        width: 118px;
-        vertical-align: middle;
-
-        border: 1px solid #cccccc;
-        border-radius: 4px;
+        height: 100%;
+        width: 100%;
+        border: 2px solid $active-grey;
+        text-align: center;
+        margin: auto;
         resize: none;
-    }
-
-    &_btn_box{
-        display: block;
+        line-height: calc((100vh - 70px)*0.03 - 2px);
+        font-size: 16px;
+        &_box{
+            height: 100%;
+        }
     }
 
     &_create_btn{
@@ -392,19 +506,11 @@
         display: inline-block;
     }
     &_display{
-        width: 100%;
-        height: 100%;
+        text-align: center;
         word-wrap: break-word;
     }
 }
 
-
-
-
-
-.got_lesson{
-    padding-top: 25px;
-}
 
 .copy_lesson_btn_explain{
     display: none;
@@ -414,112 +520,77 @@
     display: block;
 }
 
-.wday{
-    &_setting{
-        display: inline-block;
-    }
-    &_btn{
+.template_nav, .link_nav, .others_nav, .lesson_period_box, .wday_select_box{
     display: inline-block;
-    background-color: #eeeeee;
-    padding: 5px 5px;
-    border-radius: 10px;
-    &:hover{
-        cursor: pointer;
-    }
-    }
-
-    &_select_box{
-        text-align: center;
-        position: absolute;
-        display: none;
-        z-index: 10;
-        background-color: #eeeeee;
-        border-radius: 10px;
-        margin-top: 5px;
-        padding: 5px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    }
-
-    &_submit_btn{
-        background-color: #fff;
-        border-radius: 10px;
-        margin: 3px 0;
-    }
-
+    position: absolute;
+    margin-top: 32px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    z-index: 50;
 }
-.output_nav, .iframe_nav{
-    display: inline-block;
+.wday_select_box{
+    padding: 10px;
 }
-.print_btn, .image_btn, .iframe_btn{
-    display: inline-block;
-    background-color: #eeeeee;
-    padding: 5px 5px;
-    border-radius: 10px;
-    font-weight: bold;
-    &:hover{
-        cursor: pointer;
-    }
-}
-
-
-.navbar{
-    margin-bottom: 10px;
-    padding-left: 10px;
-}
-
-.template_nav{
-    display: inline-block;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    &_title{
-        display: inline;
-    }
-}
-.add_from_temp, .temp_setting, .temp_return_link{
-    background-color: #eeeeee;
-    padding: 2px 2px;
-    color: rgb(30, 48, 80);
+.add_from_temp, .temp_setting, .temp_return_link, .link_opt, .image_btn, .units_link, .other_setting{
+    display: block;
+    color: $main-black;
+    padding: 5px;
     text-decoration: none;
     cursor: pointer;
-}
-
-.date_header{
-    width: 120px;
-}
-
-.class_weekly{
-    padding: 10px;
-}
-
-.iframe_code_box{
-    position: absolute;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #eeeeee;
-    z-index: 10;
-    display: none;
-}
-
-.iframe_code{
-    width: 200px;
-    height: 100px;
-    resize: none;
-}
-
-.iframe_copy_btn{
-    display: inline-block;
-    padding: 5px;
-    border-radius: 10px;
-    background-color:  rgb(30, 48, 80);
-    color: #fff;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     &:hover{
-        cursor: pointer;
-    }
-    &_box{
-    text-align: center;
+        background-color: $header-grey;
     }
 }
-.week_nav{
-    display: inline-block;
+.link_explaining{
+    border-top: 1px ;
+    font-size: 12px;
+}
+.link_title{
+    font-weight: bold;
 }
 
+
+.week{
+    &_nav{
+        display: inline-flex;
+        justify-content: space-between;
+        min-width: 60px;
+    }
+
+    &_btn{
+        color: $main-black;
+        padding: 8px;
+        border-radius: 20px;
+        text-decoration: none;
+        cursor: pointer;
+        &:hover{
+            background-color: $header-grey;
+        }
+    }
+}
+
+#status_display{
+    color: #cccccc;
+    line-height: 32px;
+}
+
+.period_submit, .wday_submit{
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    &_btn{
+        background-color: $main-red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+
+.template_header_title{
+    display: inline-block;
+}

@@ -1,0 +1,69 @@
+@import './variables';
+.about_text_book{
+    text-align: center;
+    padding-bottom: 20px;
+
+    &_explain{
+        padding-bottom: 20px;
+    }
+}
+
+.text_book_link{
+    display: inline-block;
+}
+
+.text_subject{
+    display: inline-block;
+}
+.text_book{
+    padding-bottom: 10px;
+
+    &_header{
+        padding-bottom: 20px;
+    }
+}
+.unit{
+    &_box {
+        display: flex;
+        height: 40px;
+        align-items: center;
+    }
+    &_display {
+        flex: 1;
+    }
+    &_option {
+        margin-left: auto;
+    }
+    &_edit_btn, &_delete_btn{
+        cursor: pointer;
+    }
+}
+
+.add_text_book_units_btn{
+    display: flex;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover {
+        background-color: #fff;
+    }
+}
+.new_unit_submit_btn{
+    display: inline-block;
+    background-color: $main-red;
+    color: white;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.new_text_unit{
+    font-size: 16px;
+    width: 50%;
+}
+
+#grade_subject_unit_unit_name{
+    width: 50%;
+    font-size: 16px;
+}

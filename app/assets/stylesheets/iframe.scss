@@ -1,156 +1,38 @@
 .iframe{
-    &_navbar{
-        display: inline-block;
+    &_container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    &_table_box{
+        margin-left: 5px;
+    }
+    &_class_page_top{
+        padding-left: 5px;
+        height: 35px;
     }
 
-    &_left_column{
-        text-align: center;
-    }
-    &_event_box{
-        max-width: 100px;
-        height: 60px;
-    }
-    &_event_display{
-        width: 100%;
-        height: 100%;
-        word-wrap: break-word;
-    }
-    &_morning_act_box{
-        max-width: 100px;
+    &_column_left{
         text-align: center;
     }
 
     &_lesson_box{
-        width: 100px;
-    }
-
-    &_lesson_unit{
-        text-align: center;
-        width: 100px;
-    }
-
-    &_lesson_row{
-        height: 80px;
-    }
-
-    &_item_box{
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100px;
-    }
-    &_item_row{
-        height: 100px;
-    }
-
-    &_item_display{
-        height: 100%;
-        width: 100%;
-        word-wrap: break-word;
-    }
-    // &_leaving_time_display{
-    //     display: inline-block;
-    // }
-    &_leaving_time_box{
-        text-align: center;
+        height: calc((100vh - 76px)*0.65/6);
+        width: calc((100vh - 50px)*0.65/6/3*4);
     }
 
     &_class_name{
         display: inline-block;
-        width: 170px;
-        height: 40px;
-    
-        border-radius: 10px;
-        background: #F3F3F3;
-        margin-bottom: 20px;
-        margin-top: 30px;
+
         &_display{
-            text-align: center;
             font-size: 16px;
-            padding-top: 8px;
         }
     }
 
     @media (max-width: 480px) {
-        &_class_name{
-            display: inline-block;
-            width: 110px;
-            height: 34px;
-        
-            border-radius: 10px;
-            background: #F3F3F3;
-            margin-bottom: 12px;
-            margin-top: 18px;
-        
-            
-        
-            &_display{
-                text-align: center;
-                font-size: 10px;
-                padding-top: 5px;
-            }
-        }
-        &_navbar{
-            font-size: 10px;
-        }
-        &_date_header{
-            max-width: 60px;
-            font-size: 10px;
-        }
-        &_left_column{
-            font-size: 10px;
-        }
-        &_event_box {
-            max-width: 60px; // 例: 幅をさらに小さくする
-            height: 30px;    // 例: 高さをさらに小さくする
-            font-size: 10px;
-            line-height: 1em;
-        }
-        &_event_display{
-            width: 60px;
-            height: 30px;
-            overflow: hidden;
-        }
-        &_morning_act_box{
-            font-size: 10px;
-        }
-        &_item_display{
-            height: 100%;
-            width: 100%;
-        }
-
-        &_lesson_box {
-            width: 60px;     // 例: 幅をさらに小さくする
-            font-size: 10px;
-        }
-
-        &_lesson_unit{
-            width: 60px;
-        }
-
-        &_lesson_row{
-            height: 48px;
-        }
-        &_item_row{
-            height: 60px;
-        }
-    
-        &_item_box{
-            height: 60px;
-            width: 60px;
-            font-size: 10px;
-        }
-
-        &_item_display{
-            height: 60px;
-            width: 60px;
-            overflow: hidden;
-        }
-
-        &_leaving_time_display{
-            font-size: 10px;
-            padding-bottom: 0px;
+        &_lesson_box{
+            width: calc((100vw - 27px)/6);
+            height: calc((100vw - 27px)/6/4*3*1.3);
         }
     }
 }

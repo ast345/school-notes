@@ -5,6 +5,43 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function createLesson(schoolClassId) {
+    function adjustSubjectFZ(element) {
+        const $element = $(element);
+        $element.css({'font-size': "16px"});
+        const rowHeight = $('.row_lesson').height()/5*2 ;  // 要素の高さを取得
+        const originalHTML = $element.html(); // 元のHTMLを保持
+        let fontSize = parseInt($element.css('font-size'));
+        let lineHeight = parseInt($element.css('line-height'));
+        while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+            fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+            $element.css({
+                'font-size': fontSize + 'px',
+                'line-height': lineHeight + 'px',
+            });
+        }
+        $element.html(originalHTML);
+      }
+
+    function adjustUnitFZ(element) {
+        const $element = $(element);
+        $element.css({'font-size': "16px", "line-height": "24px"});
+        const rowHeight = $('.row_lesson').height()/5*3 ; // 要素の高さを取得
+        const originalHTML = $element.html(); // 元のHTMLを保持
+        let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+        let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
+        $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
+
+        while ($element[0].scrollHeight > rowHeight  && fontSize > 1) {
+            fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+            lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
+            $element.css({
+                'font-size': fontSize + 'px',
+                'line-height': lineHeight + 'px',
+            });
+        }
+        $element.html(originalHTML);
+    }
+
     $('.new_lesson_btn').each(function(index, element){
         const dataset = $(element).data()
         const Id = element.id
@@ -15,11 +52,16 @@ export function createLesson(schoolClassId) {
         const selectSubject = document.getElementById(`select_subject${Id}`)
         const displayLessonSubject = document.getElementById(`lesson_subject${Id}`)
         const displayLessonUnit = document.getElementById(`lesson_unit${Id}`)
+        var statusDisplay = document.getElementById('status_display')
+
+
 
         $(`#${Id}`+'.new_lesson_btn').on('click', () => {
+            statusDisplay.innerHTML = "保存中…"
             $(`#${Id}`+'.edit_lesson_box').removeClass('hidden')
             $(`#${Id}`+'.lesson_btn_box').addClass('hidden')
             $(`#${Id}`+'.new_lesson_menu').addClass('hidden')
+            $(`#${Id}.lesson_ellipsis_box`).addClass('hidden')
 
             selectSubject.addEventListener('change', function() {
                 const selectedSubject = selectSubject.value;
@@ -29,12 +71,12 @@ export function createLesson(schoolClassId) {
                 // 選択された科目に基づくアクションを追加
                 if (selectedSubject) {
                     axios.get(`/get_grade_subject_units`, {
-                        params: {grade_subject_id: selectedGradeSubjectId}
+                        params: {grade_subject_id: selectedGradeSubjectId, school_class_id: schoolClassId}
                     })
                     .then((res) => {
                         const unitSet = res.data
                         const options = unitSet.map(unit => `<option value="${unit.id}">${unit.unit_name}</option>`).join('')
-                        gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-regular fa-pen-to-square unit_create_btn", id="${Id}"></i>`
+                        gradeSubjectUnits.innerHTML = `<select id="unit${Id}", class="select_unit"><option value="">&nbsp;</option>${options}</select><i class="fa-regular fa-pen-to-square unit_create_btn", id="${Id}">新しい単元名</i>`
                         $(`#grade_subject_units${Id}`).removeClass('hidden')
 
                         $(`#${Id}.unit_create_btn`).on('click', () =>{
@@ -94,28 +136,34 @@ export function createLesson(schoolClassId) {
                     };
 
                     //$(`#${Id}`+'.new_unit_box')がhiddenクラスを持つかどうかで条件分岐
+                    var selectedSubjectName = selectSubject.value;
                     if($(`#${Id}`+'.new_unit_box').hasClass('hidden')){
                         if(selectSubject.value === ""){
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#${Id}`+'.new_lesson_menu').removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
+                            statusDisplay.innerHTML = "保存済み"
                         } else {
                             const selectedOption = selectUnit.querySelector("option:checked"); // 選択されているオプションを取得
                             const selectedUnitName = selectedOption.textContent;
                             const selectedUnitId = Number(selectUnit.value)
+                            $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
+                            $(`#grade_subject_units${Id}`).addClass('hidden')
+                            $(`#got_lesson${Id}`).removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
+                            displayLessonSubject.innerHTML = `${selectedSubjectName}`
+                            displayLessonUnit.innerHTML = `${selectedUnitName}`
+                            adjustSubjectFZ(displayLessonSubject)
+                            adjustUnitFZ(displayLessonUnit)
+
                             axios.post(`/school_classes/${schoolClassId}/lessons`, {
                                 lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: selectedUnitId, grade_subject_id: selectedGradeSubjectId}
                             })
                             .then((res) => {
                                 if(res.status === 200){
-                                    var resSubjectName = res.data.grade_subject_name
-                                    $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
-                                    $(`#grade_subject_units${Id}`).addClass('hidden')
-                                    $(`#got_lesson${Id}`).removeClass('hidden')
-                                    displayLessonSubject.innerHTML = `${resSubjectName}`
-                                    displayLessonUnit.innerHTML = `${selectedUnitName}`
-
                                     lessonBtnDisplay();
                                     createDataSet(res);
+                                    statusDisplay.innerHTML = "保存済み"
                                 };
                             })
                         }
@@ -125,8 +173,17 @@ export function createLesson(schoolClassId) {
                         if (!newUnitName) {
                             window.alert('新しい単元名を入力してください')
                         } else {
+                            $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
+                            $(`#${Id}`+'.new_unit_box').addClass('hidden')
+                            $(`#got_lesson${Id}`).removeClass('hidden')
+                            $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
+                            displayLessonSubject.innerHTML = `${selectedSubjectName}`
+                            displayLessonUnit.innerHTML = `${newUnitName}`
+                            adjustSubjectFZ(displayLessonSubject)
+                            adjustUnitFZ(displayLessonUnit)
+
                             axios.post(`/grade_subject_units`, {
-                                grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId}
+                                grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId, school_class_id : schoolClassId}
                             })
                             .then((res) => {
                                 if(res.status === 200) {
@@ -136,46 +193,54 @@ export function createLesson(schoolClassId) {
                                     })
                                     .then((res) => {
                                         if(res.status === 200){
-                                            var resSubjectName = res.data.grade_subject_name
-                                            $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
-                                            $(`#${Id}`+'.new_unit_box').addClass('hidden')
-                                            $(`#got_lesson${Id}`).removeClass('hidden')
-                                            displayLessonSubject.innerHTML = `${resSubjectName}`
-                                            displayLessonUnit.innerHTML = `${newUnitName}`
                                             lessonBtnDisplay();
                                             createDataSet(res);
+                                            statusDisplay.innerHTML = "保存済み"
                                         }
                                     })
                                 }
                                 document.removeEventListener('click', createEndHandler);
                             })
                             .catch(error => {
-                                const errorMessage = error.response.data;
-                                if (errorMessage.includes('PG::UniqueViolation')) {
-                                    window.alert(`「${newUnitName}」はすでに登録されています`)
+                                const res = error.response;
+                                if (res.status == 422) {
+                                    var gradeSubjectUnitId = res.data.duplicated_unit_id
+                                    axios.post(`/school_classes/${schoolClassId}/lessons/`, {
+                                        lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: gradeSubjectUnitId, grade_subject_id: selectedGradeSubjectId}
+                                    })
+                                    .then((res) => {
+                                        if(res.status === 200){
+                                            lessonBtnDisplay();
+                                            createDataSet(res);
+                                            statusDisplay.innerHTML = "保存済み"
+                                        }
+                                    })
                                 } else {
-                                    window.alert("単元名を新しく作成できませんでした")
+                                    window.alert("変更できませんでした")
+                                    location.reload()
                                 };
+                                document.removeEventListener('click', createEndHandler);
                             });
 
                         }
                     };
                 };
             }
-
-
             document.addEventListener('click', createEndHandler);
         });
-
     });
 
     $('.add_from_temp').on('click', (event) =>{
+        var statusDisplay = document.getElementById('status_display')
+        statusDisplay.innerHTML = "保存中…"
         const startOfWeek = $(event.currentTarget).data('startOfWeek');
         axios.get(`	/school_classes/${schoolClassId}/template_lessons/get_temp`, {
             params: {start_of_week: startOfWeek}
         })
         .then((res) =>{
             var template_lessons =res.data
+
+            const axiosRequests = [];
             template_lessons.forEach(function(template_lesson){
                 const period = template_lesson.period
                 const date = template_lesson.date
@@ -207,7 +272,7 @@ export function createLesson(schoolClassId) {
                     $(`#got_lesson${Id}`).data('lessonId', `${res.data.id}`);
                 };
 
-                axios.post(`/school_classes/${schoolClassId}/lessons`, {
+                const axiosRequest = axios.post(`/school_classes/${schoolClassId}/lessons`, {
                     lesson: {date: date, day_of_week: template_lesson.day_of_week, period: period, grade_subject_id: template_lesson.grade_subject_id}
                 })
                 .then((res) =>{
@@ -215,11 +280,23 @@ export function createLesson(schoolClassId) {
                         const subjectName = res.data.grade_subject_name
                         $(`#got_lesson${Id}`).removeClass('hidden')
                         displayLessonSubject.innerHTML = `${subjectName}`
+                        adjustSubjectFZ(displayLessonSubject)
 
                         lessonBtnDisplay();
                         createDataSet(res);
                     }
                 })
+                axiosRequests.push(axiosRequest);
+            });
+
+
+            Promise.all(axiosRequests)
+            .then(() => {
+                statusDisplay.innerHTML = "保存済み"
+            })
+            .catch((error) => {
+                // エラーハンドリングを行います
+                window.alert('エラーが発生しました');
             });
         })
     });

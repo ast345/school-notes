@@ -6,12 +6,14 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function tempLeavingTime(schoolClassId) {
+    var statusDisplay = document.getElementById('status_display');
         //下校時刻の追加
         $('.leaving_time_select_box').each(function(index, element){
             const Id = element.id
             var dayOfWeek = $(element).data().dayOfWeek
 
             $(`#${Id}.leaving_time_create_btn`).on('click', () =>{
+                statusDisplay.innerHTML = "保存中…"
                 $(`#${Id}.leaving_time_create_btn_box`).addClass('hidden')
                 $(`#${Id}.leaving_time_select_box`).removeClass('hidden')
                 function createLeavingTimeEndHandler(event) {
@@ -23,31 +25,31 @@ export function tempLeavingTime(schoolClassId) {
                             $(`#${Id}.leaving_time_create_btn_box`).removeClass('hidden')
                             $(`#${Id}.leaving_time_select_box`).addClass('hidden')
                             document.removeEventListener('click', createLeavingTimeEndHandler);
+                            statusDisplay.innerHTML = "保存済み"
                         } else {
+                            $(`#${Id}.leaving_time_delete_btn_box`).removeClass('hidden')
+                            $(`#${Id}.leaving_time_select_box`).addClass('hidden')
+                            $(`#leaving_time_display${Id}`).removeClass('hidden')
+                            const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
+                            leavingTimeDisplay.innerHTML = newTime
+
                             axios.post(`/school_classes/${schoolClassId}/template_class_leaving_times`, {
                                 temp_time: {day_of_week: dayOfWeek, leaving_time: newTime}
                             })
                             .then((res) =>{
                                 if(res.status === 200){
-                                    $(`#${Id}.leaving_time_delete_btn_box`).removeClass('hidden')
-                                    $(`#${Id}.leaving_time_select_box`).addClass('hidden')
-                                    $(`#leaving_time_display${Id}`).removeClass('hidden')
-                                    const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
-                                    const leavingTime = new Date(res.data.leaving_time).toISOString().substr(11, 5)
-                                    leavingTimeDisplay.innerHTML = leavingTime
                                     leavingTimeDisplay.setAttribute('data-leaving-time-id', `${res.data.id}`)
     
                                     const deleteLeavingTimeBtn = document.getElementById(`delete_leaving_time_btn${Id}`)
                                     deleteLeavingTimeBtn.setAttribute('data-leaving-time-id', `${res.data.id}`)
+                                    statusDisplay.innerHTML = "保存済み"
                                 }
                             });
                             document.removeEventListener('click', createLeavingTimeEndHandler);
                         }
                     };
                 };
-    
                 document.addEventListener('click', createLeavingTimeEndHandler);
-    
             });
         });
     
@@ -70,6 +72,7 @@ export function tempLeavingTime(schoolClassId) {
             observer.observe(leavingTimeDisplay, { attributes: true})
     
             $(`#leaving_time_display${Id}`).on('click', () => {
+                statusDisplay.innerHTML = "保存中…"
                 $(this).addClass('hidden')
                 $(`#${Id}.leaving_time_select_box`).removeClass('hidden')
                 $(`#${Id}.leaving_time_delete_btn_box`).addClass('hidden')
@@ -81,20 +84,22 @@ export function tempLeavingTime(schoolClassId) {
                     if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
                         var newTime = $(`#leaving_time${Id}`).val();
                         if(!newTime) {
-                            $(`#${Id}.leaving_time_btn_box`).removeClass('hidden')
+                            $(`#${Id}.leaving_time_create_btn_box`).removeClass('hidden')
                             $(`#${Id}.leaving_time_select_box`).addClass('hidden')
                             document.removeEventListener('click', editLeavingTimeEndHandler);
+                            statusDisplay.innerHTML = "保存済み"
                         } else {
+                            $(`#${Id}.leaving_time_select_box`).addClass('hidden')
+                            $(`#leaving_time_display${Id}`).removeClass('hidden')
+                            $(`#${Id}.leaving_time_delete_btn_box`).removeClass('hidden')
+                            const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
+                            leavingTimeDisplay.innerHTML = newTime
+
                             axios.put(`/school_classes/${schoolClassId}/template_class_leaving_times/${classLeavingTimeId}`, {
                                 temp_time: {leaving_time: newTime}
                             })
                             .then((res) =>{
-                                $(`#${Id}.leaving_time_select_box`).addClass('hidden')
-                                $(`#leaving_time_display${Id}`).removeClass('hidden')
-                                $(`#${Id}.leaving_time_delete_btn_box`).removeClass('hidden')
-                                const leavingTimeDisplay = document.getElementById(`leaving_time_display${Id}`)
-                                const leavingTime = new Date(res.data.leaving_time).toISOString().substr(11, 5)
-                                leavingTimeDisplay.innerHTML = leavingTime
+                                statusDisplay.innerHTML = "保存済み"
                             });
                             document.removeEventListener('click', editLeavingTimeEndHandler);
                         };
@@ -125,12 +130,15 @@ export function tempLeavingTime(schoolClassId) {
             $(`#delete_leaving_time_btn${Id}`).on('click', () =>{
                 var result =window.confirm('本当に削除しますか');
                 if(result === true){
+                    statusDisplay.innerHTML = "保存中…"
+                    $(`#${Id}.leaving_time_delete_btn_box`).addClass('hidden')
+                    $(`#leaving_time_display${Id}`).addClass('hidden')
+                    $(`#${Id}.leaving_time_create_btn_box`).removeClass('hidden')
+                    
                     axios.delete(`/school_classes/${schoolClassId}/template_class_leaving_times/${leavingTimeId}`)
                     .then((res) =>{
                         if(res.status === 204){
-                            $(`#${Id}.leaving_time_delete_btn_box`).addClass('hidden')
-                            $(`#leaving_time_display${Id}`).addClass('hidden')
-                            $(`#${Id}.leaving_time_create_btn_box`).removeClass('hidden')
+                            statusDisplay.innerHTML = "保存済み"
                         };
                     })
                 };

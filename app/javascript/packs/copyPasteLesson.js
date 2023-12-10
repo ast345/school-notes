@@ -7,11 +7,15 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 export function copyPasteLesson (schoolClassId) {
     var copiedGradeSubjectId
     var copiedGradeSubjectUnitId
+    var copiedGradeSubjectName
+    var copiedUnitName
     $('.copy_lesson_btn').each(function(index, element){
         const dataSet = $(element).data();
         const Id =dataSet.id;
         var gradeSubjectId = dataSet.gradeSubjectId
         var gotUnitId = dataSet.gotUnitId
+        var gradeSubjectName = dataSet.gradeSubjectName
+        var unitName = dataSet.unitName
 
         //datasetが追加されたことを検知して再定義
         const copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
@@ -32,7 +36,8 @@ export function copyPasteLesson (schoolClassId) {
         $(`#copy_lesson_btn${Id}`).on('click', () =>{
             copiedGradeSubjectId = gradeSubjectId
             copiedGradeSubjectUnitId = gotUnitId
-
+            copiedGradeSubjectName = gradeSubjectName
+            copiedUnitName =unitName
             $(this).removeClass('fa-copy').addClass('fa-check');
 
         // 数秒後に元のアイコンに戻す
@@ -77,46 +82,104 @@ export function copyPasteLesson (schoolClassId) {
             $(`#got_lesson${Id}`).data('lessonId', `${resData.id}`);
         };
 
+        function adjustSubjectFZ(element) {
+            const $element = $(element);
+            $element.css({'font-size': "16px"});
+            const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+            const originalHTML = $element.html(); // 元のHTMLを保持
+            let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+        
+            while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+                fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                $element.css({
+                    'font-size': fontSize + 'px',
+                    'line-height': rowHeight + 'px',
+                });
+            }
+            $element.html(originalHTML);
+          }
+    
+        
+
+        function adjustUnitFZ(element) {
+            const $element = $(element);
+            $element.css({'font-size': "16px", "line-height": "24px"});
+            const rowHeight = $('.row_lesson').height()/5*3 ; // 要素の高さを取得
+            const originalHTML = $element.html(); // 元のHTMLを保持
+            let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+            let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
+            $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
+    
+            while ($element[0].scrollHeight > rowHeight  && fontSize > 1) {
+                fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
+                $element.css({
+                    'font-size': fontSize + 'px',
+                    'line-height': lineHeight + 'px',
+                });
+            }
+            $element.html(originalHTML);
+        }
+
         const editLessonDisplay = (resData) => {
             displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
-            if(resData.unit_name !== null){
+            adjustSubjectFZ(displayLessonSubject);
+            if(resData.unit_name !== undefined){
                 displayLessonUnit.innerHTML = `${resData.unit_name}`
+                adjustUnitFZ(displayLessonUnit);
             } else {
                 displayLessonUnit.innerHTML = "&nbsp;"
             }
         };
 
+        var statusDisplay = document.getElementById('status_display')
         $(`#paste_lesson_btn${Id}`).on('click', () =>{
+            $(`#${Id}.lesson_btn_box`).addClass('hidden');
+            $(`#${Id}.new_lesson_btn`).addClass('hidden');
+            $(`#${Id}.lesson_ellipsis`).addClass('hidden');
             // GotLessonがhiddenを持っているか持っていないか判定
             var hasLesson = !$(`#got_lesson${Id}`).hasClass('hidden')
             if(copiedGradeSubjectId){
                 if (hasLesson) {
+                    statusDisplay.innerHTML = "保存中…"
                     var gotLesson = document.getElementById(`got_lesson${Id}`)
                     var lessonId = gotLesson.getAttribute('data-lesson-id')
+                    var data = {
+                        grade_subject_name: copiedGradeSubjectName,
+                        unit_name: copiedUnitName
+                    }
+                    editLessonDisplay(data)
+
                     axios.put(`/school_classes/${schoolClassId}/lessons/${lessonId}`, {
                         lesson: {grade_subject_unit_id: copiedGradeSubjectUnitId, grade_subject_id: copiedGradeSubjectId}
                     })
                     .then((res) =>{
                         if(res.status === 200){
-                            var resData = res.data
-                            editLessonDisplay(resData)
+                            var resData = res.data;
                             createDataSet(resData);
+                            statusDisplay.innerHTML = "保存済み";
                         };
                     });
                 } else {
                     // lessonがない場所にペーストする場合
+                    statusDisplay.innerHTML = "保存中…"
+                    var data = {
+                        grade_subject_name: copiedGradeSubjectName,
+                        unit_name: copiedUnitName
+                    }
+                    editLessonDisplay(data)
+                    $(`#${Id}.new_lesson_menu`).addClass('hidden')
+                    $(`#got_lesson${Id}`).removeClass('hidden')
+                    $(`#copy_lesson_btn${Id}`).removeClass('hidden')
+                    $(`#delete_lesson_btn${Id}`).removeClass('hidden')
                     axios.post(`/school_classes/${schoolClassId}/lessons`, {
                         lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: copiedGradeSubjectUnitId, grade_subject_id: copiedGradeSubjectId}
                     })
                     .then((res) =>{
                         if(res.status === 200){
                             var resData = res.data
-                            $(`#${Id}.new_lesson_menu`).addClass('hidden')
-                            $(`#got_lesson${Id}`).removeClass('hidden')
-                            $(`#copy_lesson_btn${Id}`).removeClass('hidden')
-                            $(`#delete_lesson_btn${Id}`).removeClass('hidden')
-                            editLessonDisplay(resData);
                             createDataSet(resData);
+                            statusDisplay.innerHTML = "保存済み";
                         };
                     });
                 }

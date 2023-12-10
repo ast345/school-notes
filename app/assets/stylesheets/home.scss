@@ -1,0 +1,138 @@
+@import './variables';
+.page_title{
+    &_box{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 60vh;
+        width: 100%;
+        text-align: center;
+        color: $main-black;
+    }
+    &_sub{
+        padding-top: 10px;
+    }
+}
+.page{
+    &_btn_box{
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    &_title_sentence{
+        padding-top: 20px;
+    }
+}
+
+.page_explain{
+    &_box{
+        display: flex;
+        height: 60vh;
+        padding: 0 10px;
+        align-items: center;
+    }
+    &_grey{
+        background: $header-grey;
+    }
+    &_left{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 50%;
+        height: 100%;
+        padding: 0 1%;
+    }
+    &_right{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 50%;
+        height: 100%;
+        padding: 0 1%;
+        &_box, &_btn{
+            padding: 10px;
+        }
+    }
+    &_text{
+        display: block;
+        line-height: 150%;
+        color: $main-black;
+    }
+    &_title{
+        margin-bottom: 10px;
+    }
+}
+
+.sign{
+    &_up_btn{
+        display: flex;
+        width: 30%;
+        height: 40px;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: $main-red;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover{
+            background-color: white;
+            color: $main-red;
+            border: 1px solid $main-red;
+        }
+    }
+
+    &_in_btn{
+        display: flex;
+        height: 40px;
+        margin-left: 5%;
+        width: 30%;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        background-color: $main-black;
+        border-radius: 5px;
+
+        &:hover{
+
+            color: $main-black;
+            background-color: white;
+            border: 1px solid $main-black;
+        }
+    }
+}
+
+.explain_image{
+    max-height: 90%;
+    max-width: 100%;
+}
+
+@media (max-width: 480px) {
+    .page_explain{
+        &_box{
+            flex-direction: column;
+            height: fit-content;
+            padding: 20px 10px;
+        }
+        &_left{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        &_right{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+        }
+    }
+}

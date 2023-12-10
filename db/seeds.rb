@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 # db/seeds.rb
+require 'csv'
 
 #Grade事前設定データベース
 
@@ -31,10 +32,13 @@
 # Grade.create(grade_name: '1年生', school_types_id: 3)
 # Grade.create(grade_name: '2年生', school_types_id: 3)
 # Grade.create(grade_name: '3年生', school_types_id: 3)
-
+# Grade.create(grade_name: '専科', school_types_id: 1)
+# Grade.create(grade_name: '専科', school_types_id: 2)
+# Grade.create(grade_name: '専科', school_types_id: 3)
 
 # subject読み仮名付き
 # Subject.create(subject_name: "国語", yomigana: "こくご")
+# Subject.create(subject_name: "書写", yomigana: "しょしゃ")
 # Subject.create(subject_name: "算数", yomigana: "さんすう")
 # Subject.create(subject_name: "音楽", yomigana: "おんがく")
 # Subject.create(subject_name: "体育", yomigana: "たいいく")
@@ -62,42 +66,42 @@
 ## grade_sbujectデータベース
 
 #小学1年生
-# subject_for1 =  ['国語', '算数', '音楽', '体育', '生活', '道徳', '図画工作', '特別活動']
+# subject_for1 =  ['国語', '算数', '音楽', '体育', '生活', '道徳', '図画工作', '特別活動', '書写']
 # subject_for1.each do |subject|
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 1, subjects_id: subject_id)
 # end
 
 # # 小学2年生
-# subject_for2 =  ['国語', '算数', '音楽', '体育', '生活', '道徳', '図画工作', '特別活動']
+# subject_for2 =  ['国語', '算数', '音楽', '体育', '生活', '道徳', '図画工作', '特別活動', '書写']
 # subject_for2.each do |subject|
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 2, subjects_id: subject_id)
 # end
 
 # # 小学3年生
-# subject_for3 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '体育', '道徳', '総合', '特別活動']
+# subject_for3 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '体育', '道徳', '総合', '特別活動', '書写', '保健']
 # subject_for3.each do |subject|
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 3, subjects_id: subject_id)
 # end
 
 # # 小学4年生
-# subject_for4 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '体育', '道徳', '総合', '特別活動']
+# subject_for4 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '体育', '道徳', '総合', '特別活動', '書写'、’保健]
 # subject_for4.each do |subject|
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 4, subjects_id: subject_id)
 # end
 
 # # 小学5年生
-# subject_for5 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '家庭', '体育', '道徳', '外国語活動', '総合', '特別活動']
+# subject_for5 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '家庭', '体育', '道徳', '外国語活動', '総合', '特別活動', '書写'、’保健']
 # subject_for5.each do |subject|
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 5, subjects_id: subject_id)
 # end
 
 # # 小学6年生
-# subject_for6 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '家庭', '体育', '道徳', '外国語活動', '総合', '特別活動']
+# subject_for6 =   ['国語', '社会', '算数', '理科', '音楽', '図画工作', '家庭', '体育', '道徳', '外国語活動', '総合', '特別活動', '書写', '保健']
 # subject_for6.each do |subject|
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 6, subjects_id: subject_id)
@@ -144,6 +148,31 @@
 #     subject_id = Subject.where(subject_name: subject).first.id
 #     GradeSubject.create(grades_id: 12, subjects_id: subject_id)
 # end
+
+# 教科書会社
+# CSV.foreach(Rails.root.join('db/csv/textbookscomp.csv'), headers: true) do |row|
+#     TextBookComp.create(
+#       comp_name: row['comp_name'],
+#       abbreviation: row['abbreviation']
+#     )
+#   end
+
+# 教科書
+# CSV.foreach(Rails.root.join('db/csv/elementary_text_books.csv'), headers: true) do |row|
+#     revision_year = row['revision_year']
+#     text_book_name = row['textbook_name']
+#     text_book_comp_id = TextBookComp.find_by(abbreviation: row['abbreviation']).id
+#     grade_name = row['grade_num']+"年生"
+#     grade_id = Grade.find_by(grade_name: grade_name, school_types_id: 1).id
+#     subject_id = Subject.find_by(subject_name: row['subject_name']).id
+#     grade_subject_id = GradeSubject.find_by(grades_id: grade_id, subjects_id: subject_id).id
+#     TextBook.create(
+#       text_book_comp_id: text_book_comp_id,
+#       text_book_name: text_book_name,
+#       revision_year: revision_year,
+#       grade_subject_id: grade_subject_id
+#     )
+#   end
 
 # user_type= ['教職員', '生徒', '保護者']
 # user_type.each do |user_type|

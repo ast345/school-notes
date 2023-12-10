@@ -1,0 +1,11 @@
+.container
+    .about_text_book
+        %h1 単元情報編集ページ
+        .about_text_book_explain
+            %p School Notesでは教科書の単元名一覧をユーザーの皆様と一緒に作り上げています。
+            %p 教科書名をクリックすると、現在登録されている単元名を確認でき、追加・編集・削除ができます。
+    .text_books
+        - @using_texts.each do |using_text|
+            .text_book
+                %p.text_subject #{using_text.subject_name}
+                = link_to "#{using_text.text_book_name}", school_class_text_book_path(id: using_text.text_book.id), class: "text_book_link"

@@ -16,11 +16,16 @@
 
  @import 'devise';
  @import 'setting';
- @import 'header';
  @import 'table';
  @import 'schoolclass';
- @import 'pdf';
  @import 'iframe';
+ @import 'home';
+ @import "createclass";
+ @import './variables';
+ @import 'text_book';
+ @import 'share';
+ @import 'responsible';
+ @import 'print';
 
  html {
     word-spacing: 1px;
@@ -48,36 +53,296 @@
     letter-spacing: 0.05em;
     line-height: 1.5;
   }
-  
-  .container {
-    position: relative;
-    padding: 60px 32px;
+
+  .page_container{
+    display: flex;
+    height: 100vh;
+    background-color: $main-grey;
+  }
+
+  .main_container {
+    flex: 1;
+    margin-left: 260px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    position:relative;
+  }
+
+  .container{
+    flex: 1;
+    padding: 3px 10px;
+  }
+
+  .flash{
+    display: flex;
     width: 100%;
- 
-    .title{
+    height: 100%;
+    justify-content: center;
+  }
+
+  .header {
+    position: fixed;
+    height: 100vh;
+    width: 260px;
+    padding: 20px 20px;
+    background-color: $header-grey;
+    &_logos{
+      text-align: center;
+    }
+    &_logo_link{
+      color: $main-black;
+      font-size: 28px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    &_flash{
+      display: block;
+      width: 100%;
+      position: absolute;
+      background-color: $main-black;
+      color: white;
+    }
+
+    &_bottom{
+      width: 100%;
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      text-align: center;
+    }
+
+    &_user_display{
+      text-align: center;
+      padding: 20px 0;
+    }
+    &_link_box{
+      max-height: calc(100vh - 175px);
+      overflow-y: scroll;
+    }
+    &_user_classes{
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+    &_user_class{
+      display: flex;
+      align-items: center;
       position: relative;
-      width: 183px;
-      height: 36px;
-      top: 33px;
-      margin-bottom: 80px;
- 
-      font-style: normal;
-      font-weight: 800;
-      font-size: 26px;
-      line-height: 36px;
-       /* identical to box height */
- 
- 
-      color: #000000;
+      height: 40px;
+      border-radius: 5px;
+      &:hover{
+        background-color: $hover-grey;
+      }
+      &:hover .school_class_setting_btn_box{
+        display: flex;
+      }
+    }
+    &_new_class{
+      &_link{
+        display: inline-block;
+        padding: 0 5px;
+        color: $main-black;
+        &:hover{
+          cursor: pointer;
+          background-color: $btn-grey;
+          border-radius: 5px;
+        }
+      }
+    }
+
+    &_category_name{
+      display: inline-block;
+      color: #5C431D;
+    }
+
+    &_name_edit{
+      display: flex;
+      width: fit-content;
+    }
+
+    &_submit_btn{
+      margin-left: 5px;
+    }
+    &_edit_box{
+      display: flex;
+      justify-content: center;
+    }
+    &_edit_btn{
+      cursor: pointer;
+      font-size: 14px;
+      padding: 5px;
+      border-radius: 5px;
+      &:hover{
+        background-color: $btn-grey;
+      }
+    }
+    &_display_name{
+      display: inline-block;
+    }
+
+    &_close_btn{
+      display: inline-block;
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      padding: 5px;
+      border-radius: 10px;
+      cursor: pointer;
+      &:hover{
+        background-color: $btn-grey;
+      }
     }
   }
 
+.cover{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background: rgba(3,3,3,.5);
+}
+
+.header_link{
+  display: block;
+}
+
+.opinion_gform{
+  width: 100%;
+}
+
+.school_class{
+  &_link{
+    width: 90%;
+    padding: 10px 5px;
+    color: $main-black;
+    text-decoration: none;
+  }
+  &_setting_btn_box{
+    width: 10%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: $main-black;
+    display: none;
+  }
+  &_edit_menu{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    padding: 5px;
+    background-color: $main-grey;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    text-align: center;
+    background-color: white;
+    z-index: 50;
+  }
+
+  &_follow_edit_menu{
+    position: absolute;
+    right: 0px;
+    padding: 5px;
+    background-color: $main-grey;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    text-align: center;
+    z-index: 50;
+  }
+
+  &_edit_btn{
+    display: block;
+    text-decoration: none;
+    color: $main-black;
+    padding: 5px;
+    &:hover{
+      background-color: $btn-grey;
+    }
+  }
+  &_unfollow{
+    display: block;
+    text-decoration: none;
+    color: $main-black;
+    padding: 5px;
+    &:hover{
+      background-color: $btn-grey;
+    }
+  }
+  &_setting_btn{
+    padding: 3px;
+    margin-right: 5px;
+    &:hover{
+      cursor: pointer;
+      background-color: $btn-grey;
+      border-radius: 5px;
+    }
+  }
+}
+
+
+.active_class{
+  background-color: $active-grey;
+}
+
+.print-off{
+  display: none;
+}
+.default_menu_btn{
+  display: none;
+}
+
+  @media (max-width: 480px) {
+    .page_container{
+      display: block;
+    }
+    .main_container{
+      margin-left: 0px;
+    }
+
+    .header{
+      display: none;
+    }
+    .resp_header{
+      display: block;
+      height: 60px;
+      background-color: $header-grey;
+      padding: 5px;
+      &_overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80%;
+        height: 100%;
+        background-color: $header-grey;
+        z-index: 100;
+      }
+    }
+    .container{
+      display: block;
+      margin-left: 0;
+    }
+    .default_menu_btn{
+      display: inline-block;
+      position: absolute;
+      top: 0;
+    }
+
+    .close-btn{
+      cursor: pointer;
+      display: inline-block;
+      color: $main-black;
+      font-size: 24px;
+      padding: 5px;
+      vertical-align: middle;
+    }
+
+
+  }
+
+
   .hidden {
+    flex: 1;
     display: none;
   }
 
-  @media (max-width: 480px) {
-    .container{
-      padding: 40px 5px;
-    }
-  }

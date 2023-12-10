@@ -71,11 +71,52 @@ export function dragDropLesson (schoolClassId) {
           var sourceLessonUnitText = sourceBox.find('.lesson_unit').text();
           var targetLessonUnitText = targetBox.find('.lesson_unit').text();
 
+          function adjustSubjectFZ(element) {
+            const $element = $(element);
+            $element.css({'font-size': "16px"});
+            const rowHeight = $('.row_lesson').height()/5*2 ;  // 要素の高さを取得
+            const originalHTML = $element.html(); // 元のHTMLを保持
+            let fontSize = parseInt($element.css('font-size'));
+            let lineHeight = parseInt($element.css('line-height'));
+
+            while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+                fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                $element.css({
+                    'font-size': fontSize + 'px',
+                    'line-height': lineHeight + 'px',
+                });
+            }
+            $element.html(originalHTML);
+          }
+
+          function adjustUnitFZ(element) {
+            const $element = $(element);
+            $element.css({'font-size': "16px", "line-height": "24px"});
+            const rowHeight = $('.row_lesson').height()/5*3 ; // 要素の高さを取得
+            const originalHTML = $element.html(); // 元のHTMLを保持
+            let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+            let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
+            $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
+    
+            while ($element[0].scrollHeight > rowHeight  && fontSize > 1) {
+                fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+                lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
+                $element.css({
+                    'font-size': fontSize + 'px',
+                    'line-height': lineHeight + 'px',
+                });
+            }
+            $element.html(originalHTML);
+        }
+
           const changeSourceBoxContent = () => {
             // lesson_subjectのテキスト内容を交換
             sourceBox.find('.lesson_subject').text(targetLessonSubjectText);
             sourceBox.find('.lesson_unit').text(targetLessonUnitText);
-
+            var sourceBoxSubject = sourceBox.find('.lesson_subject')[0]
+            var sourceBoxUnit = sourceBox.find('.lesson_unit')[0]
+            adjustSubjectFZ(sourceBoxSubject);
+            adjustUnitFZ(sourceBoxUnit);
             //datasetの入れ替え
             sourceGotLessonDom.setAttribute('data-subject-name', targetSubjectName);
             sourceGotLessonDom.setAttribute('data-grade-subject-id', targetGradeSubjectId);
@@ -98,6 +139,10 @@ export function dragDropLesson (schoolClassId) {
             // lesson_subjectのテキスト内容を交換
             targetBox.find('.lesson_subject').text(sourceLessonSubjectText);
             targetBox.find('.lesson_unit').text(sourceLessonUnitText);
+            var targetBoxSubject = targetBox.find('.lesson_subject')[0];
+            var targetBoxUnit = targetBox.find('.lesson_unit')[0];
+            adjustSubjectFZ(targetBoxSubject);
+            adjustUnitFZ(targetBoxUnit)
 
             //datasetの入れ替え
             targetGotLessonDom.setAttribute('data-subject-name', sourceSubjectName);
@@ -117,69 +162,77 @@ export function dragDropLesson (schoolClassId) {
             $(targetGotLesson).data('lessonId', sourceLessonId);
           };
 
-          if (targetHasLesson && sourceHasLesson) {
+          var statusDisplay = document.getElementById('status_display');
+          statusDisplay.innerHTML = "保存中…"
 
+          if (targetHasLesson && sourceHasLesson) {
+            changeTargetBoxContent();
+            changeSourceBoxContent();
             // targetLessonのEdit
-            axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
+            const targetLessonReq = axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
                 lesson: {date: sourceDataSet.date, day_of_week: sourceDataSet.dayOfWeek, period: sourceDataSet.period}
             })
-            .then((res) => {
-                if(res.status === 200){
-                    changeTargetBoxContent();
-                };
-            });
             // sourceLessonのEdit
-            axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
+            const sourceLessonReq = axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
                 lesson: {date: targetDataSet.date, day_of_week: targetDataSet.dayOfWeek, period: targetDataSet.period}
             })
-            .then((res) => {
-                if(res.status === 200){
-                    changeSourceBoxContent();
-                };
+
+            Promise.all([targetLessonReq, sourceLessonReq])
+            .then((responses) => {
+                const [targetLessonResponse, sourceLessonResponse] = responses;
+
+                if (targetLessonResponse.status === 200 && sourceLessonResponse.status === 200) {
+                  statusDisplay.innerHTML = "保存済み"
+                }
+            })
+            .catch((error) => {
+                window.alert('エラーが発生しました');
             });
           }
           else if (targetHasLesson && !sourceHasLesson) {
             // ドロップ先だけLessonを持っています
+            // drop先を新規作成ボタンに変更
+            targetBox.find('.got_lesson').addClass('hidden');
+            targetBox.find('.new_lesson_menu').removeClass('hidden');
+            targetBox.find('.copy_lesson_btn').addClass('hidden');
+            targetBox.find('.delete_lesson_btn').addClass('hidden');
+
+
+            // drag要素でlessonを表示
+            sourceBox.find('.got_lesson').removeClass('hidden');
+            sourceBox.find('.new_lesson_menu').addClass('hidden');
+            sourceBox.find('.copy_lesson_btn').removeClass('hidden');
+            sourceBox.find('.delete_lesson_btn').removeClass('hidden');
+            changeSourceBoxContent();
             axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
                 lesson: {date: sourceDataSet.date, day_of_week: sourceDataSet.dayOfWeek, period: sourceDataSet.period}
             })
             .then((res) =>{
                 if(res.status === 200){
-                    // drop先を新規作成ボタンに変更
-                    targetBox.find('.got_lesson').addClass('hidden');
-                    targetBox.find('.new_lesson_menu').removeClass('hidden');
-                    targetBox.find('.copy_lesson_btn').addClass('hidden');
-                    targetBox.find('.delete_lesson_btn').addClass('hidden');
-
-
-                    // drag要素でlessonを表示
-                    sourceBox.find('.got_lesson').removeClass('hidden');
-                    sourceBox.find('.new_lesson_menu').addClass('hidden');
-                    sourceBox.find('.copy_lesson_btn').removeClass('hidden');
-                    sourceBox.find('.delete_lesson_btn').removeClass('hidden');
-                    changeSourceBoxContent();
+                  statusDisplay.innerHTML = "保存済み"
                 };
             });
           }
           else if (!targetHasLesson && sourceHasLesson) {
             // ドラッグ元だけLesssonを持っています
+            // ドラッグ元を新規作成ボタンに変更
+            sourceBox.find('.got_lesson').addClass('hidden');
+            sourceBox.find('.new_lesson_menu').removeClass('hidden');
+            sourceBox.find('.copy_lesson_btn').addClass('hidden');
+            sourceBox.find('.delete_lesson_btn').addClass('hidden');
+            // drop先でlessonを表示
+            targetBox.find('.got_lesson').removeClass('hidden');
+            targetBox.find('.new_lesson_menu').addClass('hidden');
+            targetBox.find('.copy_lesson_btn').removeClass('hidden');
+            targetBox.find('.delete_lesson_btn').removeClass('hidden');
+
+            changeTargetBoxContent();
             axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {
                 lesson: {date: targetDataSet.date, day_of_week: targetDataSet.dayOfWeek, period: targetDataSet.period}
             })
             .then((res) =>{
                 if(res.status === 200){
-                    // ドラッグ元を新規作成ボタンに変更
-                    sourceBox.find('.got_lesson').addClass('hidden');
-                    sourceBox.find('.new_lesson_menu').removeClass('hidden');
-                    sourceBox.find('.copy_lesson_btn').addClass('hidden');
-                    sourceBox.find('.delete_lesson_btn').addClass('hidden');
-                    // drop先でlessonを表示
-                    targetBox.find('.got_lesson').removeClass('hidden');
-                    targetBox.find('.new_lesson_menu').addClass('hidden');
-                    targetBox.find('.copy_lesson_btn').removeClass('hidden');
-                    targetBox.find('.delete_lesson_btn').removeClass('hidden');
-
-                    changeTargetBoxContent();
+                  statusDisplay.innerHTML = "保存済み"
                 }});
           }
         }

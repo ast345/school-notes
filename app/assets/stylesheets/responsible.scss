@@ -1,127 +1,106 @@
 @media (max-width: 480px) {
-
-    .class_name{
-        width: 110px;
-        height: 34px;
-        &_display{
-            text-align: center;
-            font-size: 10px;
+    .table_box{
+        height: fit-content;
+        margin-top: 10px;
+    }
+    .row{
+        &_date{
+            // 縦幅が全体の7%
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.07);
+        }
+        &_event{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.07);
+        }
+        &_morning_act{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.03);
+        }
+        &_lesson{
+            // 縦横比3:4にする計算
+            height: calc((100vw - 27px)/6/4*3);
+        }
+        &_item{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.15*1.3);
+        }
+        &_leaving{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.03);
         }
     }
-    .navbar{
-        margin-bottom: 0px;
-    }
-    .week_nav{
-        margin-bottom: 5px;
-        font-size: 10px;
+    .column{
+        &_date, &_event, &_morning_act, &_item, &_leaving, &_lesson{
+            width: calc((100vw - 27px)/6);
+            padding: 0;
+        }
+        &_left{
+            text-align: center;
+            width: calc((100vw - 27px)/6);
+        }
     }
 
-    .wday_setting, .template_nav, .output_nav,.iframe_nav{
-        font-size: 8px;
-    }
 
-    .date_header{
-        max-width: 60px;
+
+
+
+    .column_date{
         font-size: 10px;
     }
-    .left_column{
+    .column_left{
         font-size: 10px;
-        min-width: 20px;
-        max-width: 50px;
     }
 
     .event{
         &_box {
-            max-width: 60px; // 例: 幅をさらに小さくする
-            height: 30px;    // 例: 高さをさらに小さくする
-            font-size: 10px;
-            line-height: 1em;
-        }
-        &_display{
-            width: 60px;
-            height: 30px;
-            overflow: hidden;
-        }
-        &_text{
-            width: 60px;
-            height: 30px;
+            width: calc((100vw - 27px)/6);
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.07);
             font-size: 10px;
         }
     }
 
     .morning_act{
-        &_box, &_text{
-            max-width: 60px;
-            height: 18px;
+        &_box{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.03);;
             font-size: 10px;
         }
     }
 
     .lesson{
         &_box {
-            width: 60px;     // 例: 幅をさらに小さくする
-            height: 48px;
+            width: calc((100vw - 27px)/6);
+            height: calc((100vw - 27px)/6/4*3);
+        }
+        &_box_for_share {
+            width: calc((100vw - 27px)/6);
+            height: calc((100vw - 27px)/6/4*3*1.3);
+        }
+        &_subject{
+            // lesson_boxの2/5倍
+            height: calc((100vw - 27px)/6/4*3/5*2);
+            line-height: calc((100vw - 27px)/6/4*3/5*2);
             font-size: 10px;
         }
         &_unit{
-            width: 60px;
+            height: calc((100vw - 27px)/6/4*3/5*3);
+            font-size: 10px;
         }
     
-        &_row{
-            height: 48px;
-        }
-        &_btn_box{
-            display: block !important;
-            height: 15px;
+        &_btn_js_box{
+            display: none;
         }
     }
 
     .item{
-        &_row{
-            height: 60px;
-        }
-        &_box, &_text{
-            height: 60px;
-            width: 60px;
+        &_box{
+            height: calc((100vw - 27px)/6/4*3*6/0.65*0.15*1.3);
             font-size: 10px;
-        }
-    
-        &_display{
-            height: 60px;
-            width: 60px;
-            overflow: hidden;
         }
     }
 
     .leaving_time{
-        &_box{
-            height: 18px;
-        }
-        &_select_box{
-            height: 18px;
-        }
         &_form{
-            height: 16px;
-            font-size: 9px;
+            font-size: 10px;
         }
         &_display{
-            font-size: 9px;
-            height: 14px;
-            width: 60px;
-            line-height: 0.5;
+            font-size: 10px;
         }
-        &_delete_btn_box{
-            width: 60px;
-        }
-        &_delete_btn_box{
-            top: 10%;
-            left: 76%;
-            width: 16px;
-        }
-    }
-
-    .iframe_nav, .output_nav{
-        display: none;
     }
 
     .new_lesson_btn, .item_create_btn, .event_create_btn, .morning_act_create_btn, .leaving_time_create_btn{
@@ -143,15 +122,6 @@
         font-size: 2px;
         padding: 1px;
         position: absolute;
-    }
-
-    .delete_leaving_time_btn{
-        padding: 1px;
-        display: block;
-    }
-
-    .got_lesson, .edit_lesson_box{
-        padding-top: 10px;
     }
 
     .select_subject{

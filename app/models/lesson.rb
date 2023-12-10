@@ -23,11 +23,17 @@ class Lesson < ApplicationRecord
     belongs_to :grade_subject
     belongs_to :grade_subject_unit, optional: true
 
-    def grade_subject_name
-        grade_id = grade_subject.grade.id
+    def grade_subject_name(grade_id)
         if grade_id == 1 or grade_id == 2
+            grade_subject = self.grade_subject
             grade_subject.subject.yomigana
+        elsif grade_id == 13 || grade_id == 14 || grade_id == 15
+            grade_subject = self.grade_subject
+            grade_name = grade_subject.grade.grade_name.gsub('生', '')
+            subject_name = grade_subject.subject.subject_name
+            grade_name + subject_name
         else
+            grade_subject = self.grade_subject
             grade_subject.subject.subject_name
         end
     end

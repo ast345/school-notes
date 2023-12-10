@@ -2,11 +2,13 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title School
+    %meta{:content => "width=device-width", :name => "viewport"}/
+    %title School Notes
     = csrf_meta_tags
     = csp_meta_tag
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = include_gon
+    = favicon_link_tag 'favicon.png'
 
     %link{:href => "https://fonts.googleapis.com", :rel => "preconnect"}/
     %link{:crossorigin => "", :href => "https://fonts.gstatic.com", :rel => "preconnect"}/
@@ -15,15 +17,70 @@
     %link{:href => "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css", :rel => "stylesheet"}/
     %script{:crossorigin => "anonymous", :src => "https://kit.fontawesome.com/7d75e66a0b.js"}
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = stylesheet_link_tag 'responsible', media: 'all', 'data-turbolinks-track': 'reload'
     
   %body
-    - if @show_header
-      %header.header
-        .header_logos
-          =image_tag 'School Notes.png', class: 'header_logo'
-    - if flash.present?
-      .flash
-        - flash.each do |key, value|
-          %div{:class => key}= value
-    = yield
+    .page_container
+      - if @header_hidden
+      - else
+        %header.header
+          %i.fa-regular.fa-circle-xmark.header_close_btn.hidden
+          - if user_signed_in?
+            .header_logos
+              %h1.header_logo_link School Notes
+            .header_user_display
+              %p.header_display_name #{@teacher.display_name}さん
+              %i.fa-solid.fa-user-pen.header_edit_btn
+              .header_edit_box.hidden
+                = form_with(model: @teacher, local: true, class: "header_name_edit") do |f|
+                  = f.text_field :display_name, class: "header_name_field"
+                  = f.submit "変更", class: "header_submit_btn"
+            .header_link_box
+              %p.header_category_name 自分のクラス
+              = link_to new_school_class_path ,method: :get, class: "header_new_class_link" do
+                %i.fa-solid.fa-plus
+              .header_user_classes
+                - @current_user_classes.each_with_index do |current_user_class, index|
+                  - if current_page?(school_class_path(current_user_class[:school_class_id])) || current_page?(school_class_template_lessons_path(current_user_class[:school_class_id]))
+                    - link_class = "header_user_class active_class"
+                  - else
+                    - link_class = "header_user_class"
+                  %div{class: link_class}
+                    = link_to current_user_class[:class_name], school_class_path(current_user_class[:school_class_id]), method: :get, class: "school_class_link"
+                    .school_class_setting_btn_box
+                      %i.fa-solid.fa-ellipsis.school_class_setting_btn{id: "edit_btn#{index}"}
+                    .school_class_edit_menu.hidden{id: "edit#{index}"}
+                      = link_to "編集", edit_school_class_path(current_user_class[:school_class_id]), method: :get, class: "school_class_edit_btn"
+                      = link_to "削除", school_class_path(current_user_class[:school_class_id]), method: :delete, data: { confirm: raw('本当にこのクラスを削除しますか？（一度削除すると復元できません）') }, class: "school_class_edit_btn"
+              - if @current_follow_classes
+                %p.header_category_name フォロークラス
+              .header_user_classes
+                - @current_follow_classes.each_with_index do |current_follow_class, index|
+                  - link_class = current_page?(school_class_share_teacher_path(token: current_follow_class[:token])) ? "header_user_class active_class" : "header_user_class"
+                  %div{class: link_class}
+                    = link_to current_follow_class[:class_name], school_class_share_teacher_path(token: current_follow_class[:token]), method: :get, class: "school_class_link"
+                    .school_class_setting_btn_box
+                      %i.fa-solid.fa-ellipsis.school_class_setting_btn{id: "follow_edit_btn#{index}"}
+                    .school_class_follow_edit_menu.hidden{id: "follow_edit#{index}"}
+                      = link_to "フォローを外す", school_class_teacher_path(current_follow_class[:school_class_teacher_id]), method: :delete, class: "school_class_unfollow"
+          - else
+            .header_logos
+              = link_to "School Notes" , root_path, class: "header_logo_link"
+          .header_bottom
+            = link_to "ご意見箱", opinions_path, class: "header_link"
+            - if user_signed_in?
+              = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header_link"
+      .cover.hidden
+      - if @header_hidden
+        .iframe_container
+          = yield
+      - else
+        .main_container
+          - if @hiding_menu_btn
+          - else
+            %i.fa-solid.fa-bars.week_btn.default_menu_btn
+          - if flash.present?
+            .header_flash#flash
+              .flash
+                - flash.each do |key, value|
+                  %div{:class => key}= value
+          = yield
