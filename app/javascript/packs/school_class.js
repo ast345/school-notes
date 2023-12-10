@@ -241,7 +241,6 @@ document.addEventListener('turbolinks:load', () =>{
         const originalHTML = $element.html(); // 元のHTMLを保持
         let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
         let lineHeight = parseInt($element.css('line-height'));
-
         while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
             fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
             $element.css({

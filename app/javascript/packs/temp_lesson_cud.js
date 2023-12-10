@@ -61,6 +61,8 @@ export function tempLessonCUD(schoolClassId) {
                             $(`#${Id}`+'.edit_lesson_box').addClass('hidden')
                             $(`#got_lesson${Id}`).removeClass('hidden')
                             $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
+                            $(`#copy_lesson_btn${Id}`).removeClass('hidden')
+                            $(`#delete_lesson_btn${Id}`).removeClass('hidden')
                             displayLessonSubject.innerHTML = `${selectSubject.value}`
 
                             axios.post(`/school_classes/${schoolClassId}/template_lessons`, {
