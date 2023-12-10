@@ -38,17 +38,24 @@
         background: $header-grey;
     }
     &_left{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         width: 50%;
+        height: 100%;
         padding: 0 1%;
     }
     &_right{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         width: 50%;
+        height: 100%;
         padding: 0 1%;
         &_box, &_btn{
             padding: 10px;
-        }
-        &_btn{
-
         }
     }
     &_text{
@@ -103,8 +110,8 @@
 }
 
 .explain_image{
-    height: 80%;
-    width: 100%;
+    max-height: 90%;
+    max-width: 100%;
 }
 
 @media (max-width: 480px) {
