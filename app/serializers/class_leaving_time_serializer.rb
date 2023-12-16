@@ -15,6 +15,6 @@
 #  index_class_leaving_times_on_date_and_school_class_id  (date,school_class_id) UNIQUE
 #  index_class_leaving_times_on_school_class_id           (school_class_id)
 #
-class ClassLeavingTimeSerialzier < ActiveModel::Serializer
+class ClassLeavingTimeSerializer < ActiveModel::Serializer
     attributes :id, :leaving_time
 end

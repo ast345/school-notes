@@ -14,6 +14,6 @@
 #  index_template_class_leaving_times_on_school_class_id  (school_class_id)
 #  temp_leav_times_validates                              (day_of_week,school_class_id) UNIQUE
 #
-class ClassLeavingTimeSerialzier < ActiveModel::Serializer
+class TemplateClassLeavingTimeSerializer < ActiveModel::Serializer
     attributes :id, :leaving_time
 end
