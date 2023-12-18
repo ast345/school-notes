@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: School_production
-  username: School
+  username: ec2-user
   password: <%= ENV['SCHOOL_DATABASE_PASSWORD'] %>
