@@ -4,11 +4,24 @@ import html2canvas from 'html2canvas'
 document.addEventListener('turbolinks:load', () =>{
     const schoolClassId = gon.school_class_id;
     $(".print_btn").on('click', (event) =>{
-        const startOfWeek = $(event.currentTarget).data('startOfWeek');
-        const pdfPage = window.open(`/school_classes/${schoolClassId}.pdf?start_of_week=${startOfWeek}`)
-        pdfPage.onload = function () {
-            pdfPage.print();
-        };
+
+        var tableTitle = $(".print_btn").data("tableTitle")
+        var printArea = document.getElementsByClassName("table_box")
+
+        //プリント用の要素「#print」を作成し、上で取得したprintAreaをその子要素に入れる。
+        $('body').append('<div id="print" class="printBc"></div>');
+        $('#print').append(`<p class="table_title">${tableTitle}</p>`);
+        $(printArea).clone().appendTo('#print');
+
+        //プリントしたいエリア意外に、非表示のcssが付与されたclassを追加
+        $('body > :not(#print)').addClass('print-off');
+
+
+        window.print()
+
+        //window.print()を実行した後、作成した「#print」と、非表示用のclass「print-off」を削除
+        $('#print').remove();
+        $('.print-off').removeClass('print-off');
     })
 
     $(".image_download_btn").on('click', (event) =>{

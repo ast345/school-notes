@@ -24,7 +24,7 @@
                     = link_to school_class_share_teacher_path(start_of_week: @start_of_week + 1.week) do
                         %i.fa-solid.fa-angle-right.week_btn
             .right_nav
-                %i.fa-solid.fa-print.right_nav_btn.print_btn{data: {start_of_week: @start_of_week}}
+                %i.fa-solid.fa-print.right_nav_btn.print_btn{data: {table_title: @table_title}}
                 %i.fa-solid.fa-file-image.right_nav_btn.image_download_btn{data: {start_of_week: @start_of_week, end_of_week: @end_of_week, class_name: @school_class.grade_class}}
         .table_box
             %table.class_weekly
