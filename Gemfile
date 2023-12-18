@@ -46,6 +46,8 @@ gem 'gon'
 
 gem 'rack-cors'
 
+gem 'unicorn'
+
 # yarnで処理するので以下は多分不要
 # gem 'jquery-rails'
 # gem 'jquery-ui-rails'
@@ -68,6 +70,11 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'erb2haml'
   gem 'annotate'
+  # gem 'capistrano'
+  # gem 'capistrano-rbenv'
+  # gem 'capistrano-bundler'
+  # gem 'capistrano-rails'
+  # gem 'capistrano3-unicorn'
 end
 
 group :test do
