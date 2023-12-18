@@ -48,6 +48,11 @@ class ShareTeachersController < ApplicationController
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
         @this_week_morning_activities = @school_class.morning_activities.where(date: @start_of_week..@end_of_week)
 
+        if @grade_id == 1 || @grade_id == 2
+            @table_title = @school_class.grade_class + " じかんわり" + "(" + @main_teacher_name + "先生)"
+        else
+            @table_title = @school_class.grade_class + " 時間割" + "(" + @main_teacher_name + "先生)"
+        end
     end
 
 end
