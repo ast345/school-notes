@@ -8,10 +8,10 @@
 - else
     .top_container
         .top_info_box
-            %p.top_info 時間割をカンタンに作成・共有できるSchool Notesを利用してみませんか。
+            %p.top_info 時間割をカンタンに作成・共有できるSchool Notesに登録しませんか。
             %p.top_info #{@main_teacher_name}先生の時間割もフォローしていつでも確認できるようになります。
         .top_btn_box
-            = link_to "登録", new_user_registration_with_follow_path(class_token: @token), class: "sign_up_btn"
+            = link_to "登録", new_user_registration_with_follow_path(class_token: @token), class: "sign_up_btn top_sign_up_btn"
             = link_to "ログイン&フォロー", new_user_session_with_follow_path(class_token: @token), class: "sign_in_btn top_sign_in_btn"
 .container
     .schedule_container

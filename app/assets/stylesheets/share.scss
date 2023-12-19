@@ -18,3 +18,19 @@
 .top_sign_in_btn{
     font-size: 12px;
 }
+.top_sign_in_btn, .top_sign_up_btn{
+    width: 40%;
+}
+
+@media (max-width: 480px) {
+    .top_container{
+        flex-direction: column;
+    }
+    .top_info_box{
+        width: 100%;
+    }
+    .top_btn_box{
+        width: 100%;
+        justify-content: center;
+    }
+}
