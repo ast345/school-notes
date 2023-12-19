@@ -186,7 +186,7 @@ export function createLesson(schoolClassId) {
                                 grade_subject_unit: {unit_name: newUnitName, grade_subject_id: selectedGradeSubjectId, school_class_id : schoolClassId}
                             })
                             .then((res) => {
-                                if(res.status === 200) {
+                                if(res.status >= 200 && res.status < 300) {
                                     const createdUnitId = res.data.id
                                     axios.post(`/school_classes/${schoolClassId}/lessons`, {
                                         lesson: {date: date, day_of_week: dayOfWeek, period: period, grade_subject_unit_id: createdUnitId, grade_subject_id: selectedGradeSubjectId}
