@@ -2,6 +2,7 @@ class TemplateLessonsController < ApplicationController
     before_action :authenticate_user!
     def index
         @school_class = SchoolClass.find(params[:school_class_id])
+        @grade_id = @school_class.grade.id
         gon.school_class_id = @school_class.id
         @template_lessons = @school_class.template_lessons
         @template_morning_acts = @school_class.template_morning_activities
