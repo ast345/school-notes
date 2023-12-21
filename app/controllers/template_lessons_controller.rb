@@ -18,7 +18,8 @@ class TemplateLessonsController < ApplicationController
         @grade_subject_ids = []
         assigned_subjects.each do |assigned_subject|
             grade_subject = assigned_subject.grade_subject
-            @subject_names << grade_subject.subject.subject_name
+            subject_display_name = assigned_subject.subject_display_name
+            @subject_names << subject_display_name
             @grade_subject_ids << grade_subject.id
         end
 
