@@ -85,22 +85,21 @@ export function copyPasteLesson (schoolClassId) {
         function adjustSubjectFZ(element) {
             const $element = $(element);
             $element.css({'font-size': "16px"});
-            const rowHeight = $('.lesson_subject').height(); // 要素の高さを取得
+            const rowHeight = $('.row_lesson').height()/5*2 ;  // 要素の高さを取得
             const originalHTML = $element.html(); // 元のHTMLを保持
-            let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
-        
+            let fontSize = parseInt($element.css('font-size'));
+            let lineHeight = parseInt($element.css('line-height'));
+    
             while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
                 fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
                 $element.css({
                     'font-size': fontSize + 'px',
-                    'line-height': rowHeight + 'px',
+                    'line-height': lineHeight + 'px',
                 });
             }
             $element.html(originalHTML);
           }
     
-        
-
         function adjustUnitFZ(element) {
             const $element = $(element);
             $element.css({'font-size': "16px", "line-height": "24px"});
@@ -109,7 +108,6 @@ export function copyPasteLesson (schoolClassId) {
             let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
             let lineHeight = parseInt($element.css('line-height')); // 行の高さを取得
             $element.css('white-space', 'normal'); // テキストを通常の折り返しに設定
-    
             while ($element[0].scrollHeight > rowHeight  && fontSize > 1) {
                 fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
                 lineHeight = Math.floor(fontSize * 1.2); // 行の高さも変更（フォントサイズに基づいて調整）
@@ -123,10 +121,15 @@ export function copyPasteLesson (schoolClassId) {
 
         const editLessonDisplay = (resData) => {
             displayLessonSubject.innerHTML = `${resData.grade_subject_name}`
-            adjustSubjectFZ(displayLessonSubject);
+            // 確実にinnerHTMLが行われた後に実行されるようにする。
+            setTimeout(() => {
+                adjustSubjectFZ(displayLessonSubject);
+            }, 0);
             if(resData.unit_name !== undefined){
                 displayLessonUnit.innerHTML = `${resData.unit_name}`
-                adjustUnitFZ(displayLessonUnit);
+                setTimeout(() => {
+                    adjustUnitFZ(displayLessonUnit);
+                }, 0);
             } else {
                 displayLessonUnit.innerHTML = "&nbsp;"
             }
