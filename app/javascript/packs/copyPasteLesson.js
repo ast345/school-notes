@@ -14,8 +14,6 @@ export function copyPasteLesson (schoolClassId) {
         const Id =dataSet.id;
         var gradeSubjectId = dataSet.gradeSubjectId
         var gotUnitId = dataSet.gotUnitId
-        var gradeSubjectName = dataSet.gradeSubjectName
-        var unitName = dataSet.unitName
 
         //datasetが追加されたことを検知して再定義
         const copyLessonBtn = document.getElementById(`copy_lesson_btn${Id}`)
@@ -36,15 +34,15 @@ export function copyPasteLesson (schoolClassId) {
         $(`#copy_lesson_btn${Id}`).on('click', () =>{
             copiedGradeSubjectId = gradeSubjectId
             copiedGradeSubjectUnitId = gotUnitId
-            copiedGradeSubjectName = gradeSubjectName
-            copiedUnitName =unitName
+            copiedGradeSubjectName = document.getElementById(`lesson_subject${Id}`).textContent
+            copiedUnitName = document.getElementById(`lesson_unit${Id}`).textContent
             $(this).removeClass('fa-copy').addClass('fa-check');
 
-        // 数秒後に元のアイコンに戻す
-        var btn = $(this);
-        setTimeout(function() {
-            btn.removeClass('fa-check').addClass('fa-copy');
-        }, 5000);
+            // 数秒後に元のアイコンに戻す
+            var btn = $(this);
+            setTimeout(function() {
+                btn.removeClass('fa-check').addClass('fa-copy');
+            }, 5000);
         });
 
     });
