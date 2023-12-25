@@ -6,11 +6,18 @@
             = link_to "登録", new_user_registration_path, class: "sign_up_btn"
             = link_to "ログイン", user_session_path, class: "sign_in_btn"
     .page_explain_box.page_explain_grey
-        .page_explain_left
-            %h3.page_explain_title 素早く直感的に時間割が作れます
-            %p コマの入れ替えはドラッグ&ドロップ１回の操作で完了。コマごとに書き換える必要はもうありません。フォントの大きさや行間も全て自動的に調整されます。テンプレート機能も搭載しており、１回だけ固定の時間割を作成すれば、あとはワンクリックで作成できます。もちろん編集が終われば自動的に保存されます。
-        .page_explain_right
-            = image_tag 'creating_schedule.gif', class: "explain_image"
+        .page_explain_child
+            %h3.page_explain_child_t 入れ替え機能
+            = image_tag 'dragdrop.gif', class: "explain_gif"
+            %p.page_explain_p ドラッグ&ドロップ１回の操作でコマの入れ替えが完了します。
+        .page_explain_child
+            %h3.page_explain_child_t テンプレート機能
+            = image_tag 'template.gif', class: "explain_gif"
+            %p.page_explain_p ワンクリックでいつもの時間割が作成できます。
+        .page_explain_child
+            %h3.page_explain_child_t 自動調整・自動保存
+            = image_tag 'auto.png', class: "explain_gif"
+            %p.page_explain_p 自動的に字の大きさや行間を調整し、自動的に保存します。
     .page_explain_box
         .page_explain_left
             = image_tag 'share_cloud.jpg', class: "explain_image"
@@ -18,7 +25,9 @@
             %h3.page_explain_title ノンステップで時間割を共有しましょう
             .page_explain-sentences
                 %p 時間割は作って終わりではありませんよね。関係の先生方に見せて調整し、子供達に配布し、ホームページに貼り付けて…。そんな煩わしい手間からはおさらばしましょう。
-                %p School Noteでは、共有用のURLを１回教えれば、あとは必要な時にアクセスしてもらうだけ。学校ホームページ等に埋め込むこともできます。共有のためにあなたが毎週すべきことは何もありません。
+                %p School Noteでは、共有用のURLを１回教えれば、あとは必要な時にアクセスしてもらうだけ。同僚や子供たち、親御さんと最新の時間割を共有できます。
+                %p 埋め込みコードを利用して学校ホームページ等に掲載することもできます。
+                %p 共有のためにあなたが毎週すべきことは何もありません。
                 %p もちろん印刷したい時は、ワンクリックで完璧なレイアウトに仕上げてくれます。
     .page_title_box.page_explain_grey
         %h2.page_title_sub さあ今すぐ無料ではじめよう
