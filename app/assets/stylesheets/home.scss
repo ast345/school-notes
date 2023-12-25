@@ -37,6 +37,18 @@
     &_grey{
         background: $header-grey;
     }
+    &_child{
+        display: flex;
+        flex-direction: column;
+        width: calc(100%/3);
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 3%;
+        &_t{
+            margin: 10px 0;
+        }
+    }
     &_left{
         display: flex;
         align-items: center;
@@ -65,6 +77,10 @@
     }
     &_title{
         margin-bottom: 10px;
+    }
+    &_p{
+        margin: 10px 0;
+        min-height: 80px;
     }
 }
 
@@ -114,6 +130,11 @@
     max-width: 100%;
 }
 
+.explain_gif{
+    max-height: 60%;
+    max-width: 100%;
+}
+
 @media (max-width: 480px) {
     .page_explain{
         &_box{
@@ -133,6 +154,9 @@
             align-items: center;
             width: 100%;
             padding: 20px 0;
+        }
+        &_child{
+            width: 100%;
         }
     }
 }

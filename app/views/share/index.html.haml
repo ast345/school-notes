@@ -54,7 +54,7 @@
                                     - unit_name = lesson.grade_subject_unit.unit_name
                                     - got_unit_id = lesson.grade_subject_unit.id
                                 - else
-                                    - unit_name = "\b"
+                                    - unit_name = "&nbsp;".html_safe
                                     - got_unit_id
                                 .got_lesson
                                     %p.lesson_subject #{lesson.grade_subject_name(@grade_id)}
