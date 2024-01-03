@@ -64,7 +64,6 @@
 .table_box{
     display: flex;
     justify-content: center;
-    height: calc(100vh - 38px);
     overflow-y: auto;
     &_fit{
         height: fit-content;
