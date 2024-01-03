@@ -151,6 +151,7 @@ export function createLesson(schoolClassId) {
                             $(`#grade_subject_units${Id}`).addClass('hidden')
                             $(`#got_lesson${Id}`).removeClass('hidden')
                             $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
+                            $(`#${Id}.lesson_box`).removeClass('print_grey')
                             displayLessonSubject.innerHTML = `${selectedSubjectName}`
                             displayLessonUnit.innerHTML = `${selectedUnitName}`
                             adjustSubjectFZ(displayLessonSubject)
@@ -177,6 +178,7 @@ export function createLesson(schoolClassId) {
                             $(`#${Id}`+'.new_unit_box').addClass('hidden')
                             $(`#got_lesson${Id}`).removeClass('hidden')
                             $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
+                            $(`#${Id}.lesson_box`).removeClass('print_grey')
                             displayLessonSubject.innerHTML = `${selectedSubjectName}`
                             displayLessonUnit.innerHTML = `${newUnitName}`
                             adjustSubjectFZ(displayLessonSubject)
@@ -279,6 +281,7 @@ export function createLesson(schoolClassId) {
                     if(res.status === 200){
                         const subjectName = res.data.grade_subject_name
                         $(`#got_lesson${Id}`).removeClass('hidden')
+                        $(`#${Id}.lesson_box`).removeClass('print_grey')
                         displayLessonSubject.innerHTML = `${subjectName}`
                         adjustSubjectFZ(displayLessonSubject)
 

@@ -125,19 +125,19 @@
                             %td.column_left #{period}
                             - (@start_of_week..@end_of_week).each do |date|
                                 - next unless @display_wday.include?(date.wday)
-                                %td.column_lesson
-                                    .lesson_box{id: "#{period}#{date}"}
-                                        .lesson_ellipsis_box{id: "#{period}#{date}"}
-                                            %i.fa-solid.fa-ellipsis-vertical.lesson_ellipsis.hidden{id: "#{period}#{date}"}
-                                        - lesson = @this_week_lessons.find_by(date: date, period: period)
-                                        - if lesson
-                                            - if lesson.grade_subject_unit
-                                                - unit_name = lesson.grade_subject_unit.unit_name
-                                                - unit_name_data = lesson.grade_subject_unit.unit_name
-                                                - got_unit_id = lesson.grade_subject_unit.id
-                                            - else
-                                                - unit_name = "&nbsp;".html_safe
-                                                - got_unit_id
+                                - lesson = @this_week_lessons.find_by(date: date, period: period)
+                                - if lesson
+                                    - if lesson.grade_subject_unit
+                                        - unit_name = lesson.grade_subject_unit.unit_name
+                                        - unit_name_data = lesson.grade_subject_unit.unit_name
+                                        - got_unit_id = lesson.grade_subject_unit.id
+                                    - else
+                                        - unit_name = "&nbsp;".html_safe
+                                        - got_unit_id
+                                    %td.column_lesson
+                                        .lesson_box{id: "#{period}#{date}"}
+                                            .lesson_ellipsis_box{id: "#{period}#{date}"}
+                                                %i.fa-solid.fa-ellipsis-vertical.lesson_ellipsis.hidden{id: "#{period}#{date}"}
                                             .lesson_btn_js_box{id: "#{period}#{date}"}
                                                 .lesson_btn_box.hidden{id: "#{period}#{date}"}
                                                     %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}",grade_subject_id: lesson.grade_subject.id, got_unit_id: got_unit_id}}
@@ -154,7 +154,11 @@
                                                 %i.bi.bi-card-list.cancel_btn{id: "#{period}#{date}"} &nbsp;一覧に戻る
                                             .new_lesson_menu.hidden{id: "#{period}#{date}"}
                                                 %i.fa-regular.fa-calendar-plus.new_lesson_btn.hidden{id: "#{period}#{date}", data: {date: date, period: period, day_of_week: date.wday}} &nbsp;新規
-                                        - else
+                                - else
+                                    %td.column_lesson
+                                        .lesson_box.print_grey{id: "#{period}#{date}"}
+                                            .lesson_ellipsis_box{id: "#{period}#{date}"}
+                                                %i.fa-solid.fa-ellipsis-vertical.lesson_ellipsis.hidden{id: "#{period}#{date}"}
                                             .lesson_btn_js_box{id: "#{period}#{date}"}
                                                 .lesson_btn_box.hidden{id: "#{period}#{date}"}
                                                     %i.fa-solid.fa-copy.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{date}", data: {id: "#{period}#{date}"}}

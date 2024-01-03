@@ -302,12 +302,11 @@ document.addEventListener('turbolinks:load', () =>{
 
         var statusDisplay = document.getElementById('status_display')
         $(`#delete_lesson_btn${Id}`).on('click', () =>{
-            var result =window.confirm('本当に削除しますか');
-            if(result === true){
                 $(`#got_lesson${Id}`).addClass('hidden')
                 $(`#${Id}.new_lesson_menu`).removeClass('hidden')
                 $(`#copy_lesson_btn${Id}`).addClass('hidden')
                 $(`#delete_lesson_btn${Id}`).addClass('hidden')
+                $(`#${Id}.lesson_box`).addClass('print_grey')
 
                 displayLessonSubject.innerHTML = ""
                 displayLessonUnit.innerHTML = ""
@@ -318,10 +317,6 @@ document.addEventListener('turbolinks:load', () =>{
                         statusDisplay.innerHTML = "保存済み"
                     };
                 });
-            }
-        })
-
+        });
     });
-
-
 });
