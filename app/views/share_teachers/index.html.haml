@@ -62,19 +62,21 @@
                         %td.column_left #{period}
                         - (@start_of_week..@end_of_week).each do |date|
                             - next unless @display_wday.include?(date.wday)
-                            %td.column_lesson
-                                .lesson_box_for_share
-                                    - lesson = @this_week_lessons.find_by(date: date, period: period)
-                                    - if lesson
-                                        - if lesson.grade_subject_unit
-                                            - unit_name = lesson.grade_subject_unit.unit_name
-                                            - got_unit_id = lesson.grade_subject_unit.id
-                                        - else
-                                            - unit_name = "&nbsp;".html_safe
-                                            - got_unit_id
+                            - lesson = @this_week_lessons.find_by(date: date, period: period)
+                            - if lesson
+                                - if lesson.grade_subject_unit
+                                    - unit_name = lesson.grade_subject_unit.unit_name
+                                    - got_unit_id = lesson.grade_subject_unit.id
+                                - else
+                                    - unit_name = "&nbsp;".html_safe
+                                    - got_unit_id
+                                %td.column_lesson
+                                    .lesson_box_for_share
                                         .got_lesson
                                             %p.lesson_subject #{lesson.grade_subject_name(@grade_id)}
                                             %p.lesson_unit #{unit_name}
+                            - else
+                                %td.share_grey
                 %tr.row_item
                     - if @school_class.grade_id ==1 or @school_class.grade_id ==2
                         %td.column_left もちもの
