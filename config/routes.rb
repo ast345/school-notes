@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :break_activities, only: [:create, :update, :destroy]
     resources :lesson_wdays, only: [:create, :update]
     resources :lesson_periods, only: [:create, :update]
+    resources :break_act_displays, only: [:create, :update]
     resources :grade_subject_units, only: [:index]
     resources :using_texts, only: [:index]
     resources :text_books, only: [:show]

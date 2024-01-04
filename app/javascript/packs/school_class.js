@@ -96,12 +96,21 @@ document.addEventListener('turbolinks:load', () =>{
     $('.others_nav_btn').on('click', (event)=>{
         $(".others_nav").toggleClass('hidden');
     })
+
     $('.period_setting').on('click', (event)=>{
         $(".lesson_period_box").toggleClass('hidden')
     })
     $('.lesson_period_box').on('click', (e)=>{
         e.stopPropagation();
     })
+
+    $('.break_act_setting').on('click', (event)=>{
+        $(".break_act_setting_box").toggleClass('hidden')
+    })
+    $('.break_act_setting_box').on('click', (e)=>{
+        e.stopPropagation();
+    })
+
     $('.wday_setting').on('click', (event)=>{
         $(".wday_select_box").toggleClass('hidden')
     })
@@ -129,7 +138,10 @@ document.addEventListener('turbolinks:load', () =>{
             // 追加の要素が表示されている場合は非表示にする
             $('.lesson_period_box').addClass('hidden');
         }
-
+        if (!$(e.target).closest('.break_act_setting').length) {
+            // 追加の要素が表示されている場合は非表示にする
+            $('.break_act_setting_box').addClass('hidden');
+        }
         if (!$(e.target).closest('.wday_setting').length) {
             // 追加の要素が表示されている場合は非表示にする
             $('.wday_select_box').addClass('hidden');

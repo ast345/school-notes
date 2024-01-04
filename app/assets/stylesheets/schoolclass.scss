@@ -525,7 +525,7 @@
     display: block;
 }
 
-.template_nav, .link_nav, .others_nav, .lesson_period_box, .wday_select_box{
+.template_nav, .link_nav, .others_nav, .lesson_period_box, .wday_select_box, .break_act_setting_box{
     display: inline-block;
     position: absolute;
     margin-top: 32px;
@@ -581,7 +581,7 @@
     line-height: 32px;
 }
 
-.period_submit, .wday_submit{
+.period_submit, .wday_submit, .break_act_submit{
     margin-top: 5px;
     display: flex;
     justify-content: center;

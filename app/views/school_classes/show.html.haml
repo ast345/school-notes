@@ -33,6 +33,7 @@
                         %p.image_btn{data: {start_of_week: @start_of_week, end_of_week: @end_of_week, class_name: @school_class.grade_class}} 時間割を画像でダウンロード
                         = link_to "単元名一覧",school_class_using_texts_path(@school_class.id), class: "units_link"
                         %p.other_setting.period_setting ○〜○時間目の設定
+                        %p.other_setting.break_act_setting 業間（昼）の表示設定
                         %p.other_setting.wday_setting 表示する曜日の設定
                     .lesson_period_box.hidden
                         = form_with(model: [@school_class, @lesson_period], local: true) do |form|
@@ -43,6 +44,13 @@
                                 =form.label "終了時限"
                                 =form.number_field:end_of_period
                             .period_submit
+                                =form.submit "設定する", class: "break_act_submit_btn"
+                    .break_act_setting_box.hidden
+                        = form_with(model: [@school_class, @break_act_display], local: true) do |form|
+                            .break_act_check_box
+                                = form.check_box :display
+                                = form.label "業間（昼）を表示する"
+                            .break_act_submit
                                 =form.submit "設定する", class: "period_submit_btn"
                     .wday_select_box.hidden
                         %form#weekday-form
@@ -122,7 +130,7 @@
                                         %p.morning_act_display.hidden{id: "morning_act_display#{date}", data: {id: "#{date}"}}
                     - (@start_of_period..4).each do |period|
                         = render partial: 'lesson_column', locals: { period: period }
-                    - if @break_act_display
+                    - if @has_break_act
                         %tr.row_break_act
                             - if @school_class.grade_id ==1
                                 %td.column_left ひる

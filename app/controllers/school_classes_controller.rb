@@ -200,13 +200,14 @@ class SchoolClassesController < ApplicationController
         @grade_id = @school_class.grade.id
         @has_class = has_class(@school_class.id)
         @hiding_menu_btn = true
-
-        if @school_class.break_act_display
-            @break_act_display = @school_class.break_act_display.display
+        @break_act_display = @school_class.break_act_display
+        if @break_act_display
+            @has_break_act = @school_class.break_act_display.display
         else
-            @break_act_display = false
+            @break_act_display = BreakActDisplay.new
+            @has_break_act = false
         end
-        
+
         gon.school_class_id = @school_class.id
         if params[:start_of_week]
             @start_of_week = params[:start_of_week].to_date
