@@ -57,26 +57,23 @@
                                 - morning_act = @this_week_morning_activities.find_by(date: date)
                                 - if morning_act
                                     %p.morning_act_display  #{morning_act.activity_name.html_safe}
-                - (@start_of_period..@end_of_period).each do |period|
-                    %tr.row_lesson
-                        %td.column_left #{period}
+                - (@start_of_period..4).each do |period|
+                    = render partial: 'lesson_column', locals: { period: period }
+                - if @has_break_act
+                    %tr.row_break_act
+                        - if @school_class.grade_id ==1
+                            %td.column_left ひる
+                        - else
+                            %td.column_left 昼
                         - (@start_of_week..@end_of_week).each do |date|
                             - next unless @display_wday.include?(date.wday)
-                            - lesson = @this_week_lessons.find_by(date: date, period: period)
-                            - if lesson
-                                - if lesson.grade_subject_unit
-                                    - unit_name = lesson.grade_subject_unit.unit_name
-                                    - got_unit_id = lesson.grade_subject_unit.id
-                                - else
-                                    - unit_name = "&nbsp;".html_safe
-                                    - got_unit_id
-                                %td.column_lesson
-                                    .lesson_box_for_share
-                                        .got_lesson
-                                            %p.lesson_subject #{lesson.grade_subject_name(@grade_id)}
-                                            %p.lesson_unit #{unit_name}
-                            - else
-                                %td.share_grey
+                            %td.column_break_act
+                                .break_act_box{id: "#{date}"}
+                                    - break_act = @this_week_break_activities.find_by(date: date)
+                                    - if break_act
+                                        %p.break_act_display  #{break_act.activity_name.html_safe}
+                - (5..@end_of_period).each do |period|
+                    = render partial: 'lesson_column', locals: { period: period }
                 %tr.row_item
                     - if @school_class.grade_id ==1 or @school_class.grade_id ==2
                         %td.column_left もちもの
