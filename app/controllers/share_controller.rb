@@ -12,6 +12,14 @@ class ShareController < ApplicationController
             params_exist = true
         end
 
+        @break_act_display = @school_class.break_act_display
+        if @break_act_display
+            @has_break_act = @school_class.break_act_display.display
+        else
+            @break_act_display = BreakActDisplay.new
+            @has_break_act = false
+        end
+
 
         next_week_permission(@start_of_week, params_exist)
         @end_of_week = @start_of_week.end_of_week
@@ -31,11 +39,22 @@ class ShareController < ApplicationController
             @display_wday = [1,2,3,4,5]
         end
 
+        @lesson_period = @school_class.lesson_period
+        if @lesson_period
+            @start_of_period = @lesson_period.start_of_period
+            @end_of_period = @lesson_period.end_of_period
+        else
+            @lesson_period = LessonPeriod.new
+            @start_of_period = 1
+            @end_of_period = 6
+        end
+
         @this_week_events = @school_class.events.where(date: @start_of_week..@end_of_week)
         @this_week_lessons = @school_class.lessons.where(date: @start_of_week..@end_of_week)
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
         @this_week_morning_activities = @school_class.morning_activities.where(date: @start_of_week..@end_of_week)
+        @this_week_break_activities = @school_class.break_activities.where(date: @start_of_week..@end_of_week)
 
     end
 

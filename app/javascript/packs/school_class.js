@@ -9,6 +9,7 @@ import { event } from './event.js'
 import { dateItem } from './date_item.js'
 import { classLeavingTime } from './class_leaving_time.js'
 import { morningActivity} from './morning_activity.js'
+import { breakActivity } from './break_activity.js';
 import html2canvas from 'html2canvas'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
@@ -24,10 +25,12 @@ document.addEventListener('turbolinks:load', () =>{
     editLesson(schoolClassId);
     copyPasteLesson(schoolClassId);
     morningActivity(schoolClassId);
+    breakActivity(schoolClassId);
     
     event(schoolClassId);
     dateItem(schoolClassId);
     classLeavingTime(schoolClassId);
+    
 
     $(".print_btn").on('click', (event) =>{
         var tableTitle = $(".print_btn").data("tableTitle")
@@ -93,12 +96,21 @@ document.addEventListener('turbolinks:load', () =>{
     $('.others_nav_btn').on('click', (event)=>{
         $(".others_nav").toggleClass('hidden');
     })
+
     $('.period_setting').on('click', (event)=>{
         $(".lesson_period_box").toggleClass('hidden')
     })
     $('.lesson_period_box').on('click', (e)=>{
         e.stopPropagation();
     })
+
+    $('.break_act_setting').on('click', (event)=>{
+        $(".break_act_setting_box").toggleClass('hidden')
+    })
+    $('.break_act_setting_box').on('click', (e)=>{
+        e.stopPropagation();
+    })
+
     $('.wday_setting').on('click', (event)=>{
         $(".wday_select_box").toggleClass('hidden')
     })
@@ -126,7 +138,10 @@ document.addEventListener('turbolinks:load', () =>{
             // 追加の要素が表示されている場合は非表示にする
             $('.lesson_period_box').addClass('hidden');
         }
-
+        if (!$(e.target).closest('.break_act_setting').length) {
+            // 追加の要素が表示されている場合は非表示にする
+            $('.break_act_setting_box').addClass('hidden');
+        }
         if (!$(e.target).closest('.wday_setting').length) {
             // 追加の要素が表示されている場合は非表示にする
             $('.wday_select_box').addClass('hidden');
@@ -302,12 +317,11 @@ document.addEventListener('turbolinks:load', () =>{
 
         var statusDisplay = document.getElementById('status_display')
         $(`#delete_lesson_btn${Id}`).on('click', () =>{
-            var result =window.confirm('本当に削除しますか');
-            if(result === true){
                 $(`#got_lesson${Id}`).addClass('hidden')
                 $(`#${Id}.new_lesson_menu`).removeClass('hidden')
                 $(`#copy_lesson_btn${Id}`).addClass('hidden')
                 $(`#delete_lesson_btn${Id}`).addClass('hidden')
+                $(`#${Id}.lesson_box`).addClass('print_grey')
 
                 displayLessonSubject.innerHTML = ""
                 displayLessonUnit.innerHTML = ""
@@ -318,10 +332,6 @@ document.addEventListener('turbolinks:load', () =>{
                         statusDisplay.innerHTML = "保存済み"
                     };
                 });
-            }
-        })
-
+        });
     });
-
-
 });

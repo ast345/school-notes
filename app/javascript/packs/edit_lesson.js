@@ -188,6 +188,7 @@ export function editLesson(schoolClassId) {
                         $(`#${Id}.edit_lesson_box`).addClass('hidden')
                         $(`#${Id}.lesson_btn_js_box`).removeClass('hidden')
                         $(`#${Id}.lesson_ellipsis_box`).removeClass('hidden')
+                        $(`#${Id}.lesson_box`).addClass('print_grey')
         
                         displayLessonSubject.innerHTML = ""
                         displayLessonUnit.innerHTML = ""

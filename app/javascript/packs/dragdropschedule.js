@@ -196,6 +196,7 @@ export function dragDropLesson (schoolClassId) {
             targetBox.find('.new_lesson_menu').removeClass('hidden');
             targetBox.find('.copy_lesson_btn').addClass('hidden');
             targetBox.find('.delete_lesson_btn').addClass('hidden');
+            targetBox.addClass('print_grey');
 
 
             // drag要素でlessonを表示
@@ -203,6 +204,7 @@ export function dragDropLesson (schoolClassId) {
             sourceBox.find('.new_lesson_menu').addClass('hidden');
             sourceBox.find('.copy_lesson_btn').removeClass('hidden');
             sourceBox.find('.delete_lesson_btn').removeClass('hidden');
+            sourceBox.removeClass('print_grey');
             changeSourceBoxContent();
             axios.put(`/school_classes/${schoolClassId}/lessons/${targetLessonId}`, {
                 lesson: {date: sourceDataSet.date, day_of_week: sourceDataSet.dayOfWeek, period: sourceDataSet.period}
@@ -220,11 +222,13 @@ export function dragDropLesson (schoolClassId) {
             sourceBox.find('.new_lesson_menu').removeClass('hidden');
             sourceBox.find('.copy_lesson_btn').addClass('hidden');
             sourceBox.find('.delete_lesson_btn').addClass('hidden');
+            sourceBox.addClass('print_grey')
             // drop先でlessonを表示
             targetBox.find('.got_lesson').removeClass('hidden');
             targetBox.find('.new_lesson_menu').addClass('hidden');
             targetBox.find('.copy_lesson_btn').removeClass('hidden');
             targetBox.find('.delete_lesson_btn').removeClass('hidden');
+            targetBox.removeClass('print_grey')
 
             changeTargetBoxContent();
             axios.put(`/school_classes/${schoolClassId}/lessons/${sourceLessonId}`, {

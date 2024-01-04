@@ -64,7 +64,6 @@
 .table_box{
     display: flex;
     justify-content: center;
-    height: calc(100vh - 38px);
     overflow-y: auto;
     &_fit{
         height: fit-content;
@@ -262,9 +261,9 @@
     }
 }
 
-.new_lesson_btn, .item_create_btn, .event_create_btn, .morning_act_create_btn{
+.new_lesson_btn, .item_create_btn, .event_create_btn, .morning_act_create_btn, .break_act_create_btn{
     color: rgb(30, 48, 80);
-    padding: 5px 5px;
+    padding: 5px;
     border-radius: 10px;
     font-size: 15px;
 
@@ -468,7 +467,7 @@
     }
 }
 
-.morning_act{
+.morning_act, .break_act{
     &_box{
         display: flex;
         align-items: center;
@@ -479,8 +478,9 @@
     }
 
     &_btn_box{
-        display: block;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         height: 27px;
     }
 
@@ -505,6 +505,11 @@
     &_box:hover .morning_act_create_btn{
         display: inline-block;
     }
+
+    &_box:hover .break_act_create_btn{
+        display: inline-block;
+    }
+
     &_display{
         text-align: center;
         word-wrap: break-word;
@@ -520,7 +525,7 @@
     display: block;
 }
 
-.template_nav, .link_nav, .others_nav, .lesson_period_box, .wday_select_box{
+.template_nav, .link_nav, .others_nav, .lesson_period_box, .wday_select_box, .break_act_setting_box{
     display: inline-block;
     position: absolute;
     margin-top: 32px;
@@ -576,7 +581,7 @@
     line-height: 32px;
 }
 
-.period_submit, .wday_submit{
+.period_submit, .wday_submit, .break_act_submit{
     margin-top: 5px;
     display: flex;
     justify-content: center;
@@ -593,4 +598,8 @@
 
 .template_header_title{
     display: inline-block;
+}
+
+.share_grey{
+    background-color: rgb(160, 160, 160);
 }

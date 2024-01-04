@@ -14,6 +14,15 @@ class ShareTeachersController < ApplicationController
             params_exist = true
         end
         @end_of_week = @start_of_week.end_of_week
+
+        @break_act_display = @school_class.break_act_display
+        if @break_act_display
+            @has_break_act = @school_class.break_act_display.display
+        else
+            @break_act_display = BreakActDisplay.new
+            @has_break_act = false
+        end
+
         @main_teacher_name = SchoolClassTeacher.find_by(school_classes_id: @school_class.id).teacher.display_name
         if user_signed_in?
             @class_teacher = SchoolClassTeacher.find_by(school_classes_id: @school_class.id, teachers_id: current_user.teacher.id)
@@ -47,6 +56,7 @@ class ShareTeachersController < ApplicationController
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
         @this_week_morning_activities = @school_class.morning_activities.where(date: @start_of_week..@end_of_week)
+        @this_week_break_activities = @school_class.break_activities.where(date: @start_of_week..@end_of_week)
 
         if @grade_id == 1 || @grade_id == 2
             @table_title = @school_class.grade_class + " じかんわり" + "(" + @main_teacher_name + "先生)"

@@ -14,8 +14,10 @@ Rails.application.routes.draw do
     resources :date_items, only: [:new, :create, :edit, :update, :destroy]
     resources :class_leaving_time, only: [:create, :update, :destroy]
     resources :morning_activities, only: [:create, :update, :destroy]
+    resources :break_activities, only: [:create, :update, :destroy]
     resources :lesson_wdays, only: [:create, :update]
     resources :lesson_periods, only: [:create, :update]
+    resources :break_act_displays, only: [:create, :update]
     resources :grade_subject_units, only: [:index]
     resources :using_texts, only: [:index]
     resources :text_books, only: [:show]
@@ -25,6 +27,11 @@ Rails.application.routes.draw do
       end
     end
     resources :template_morning_activities, only: [:create, :update, :destroy] do
+      collection do
+        get 'get_temp'
+       end
+    end
+    resources :template_break_activities, only: [:create, :update, :destroy] do
       collection do
         get 'get_temp'
        end

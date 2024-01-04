@@ -138,6 +138,7 @@ export function copyPasteLesson (schoolClassId) {
             $(`#${Id}.lesson_btn_box`).addClass('hidden');
             $(`#${Id}.new_lesson_btn`).addClass('hidden');
             $(`#${Id}.lesson_ellipsis`).addClass('hidden');
+            $(`#${Id}.lesson_box`).removeClass('print_grey')
             // GotLessonがhiddenを持っているか持っていないか判定
             var hasLesson = !$(`#got_lesson${Id}`).hasClass('hidden')
             if(copiedGradeSubjectId){

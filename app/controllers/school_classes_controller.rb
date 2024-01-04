@@ -200,6 +200,14 @@ class SchoolClassesController < ApplicationController
         @grade_id = @school_class.grade.id
         @has_class = has_class(@school_class.id)
         @hiding_menu_btn = true
+        @break_act_display = @school_class.break_act_display
+        if @break_act_display
+            @has_break_act = @school_class.break_act_display.display
+        else
+            @break_act_display = BreakActDisplay.new
+            @has_break_act = false
+        end
+
         gon.school_class_id = @school_class.id
         if params[:start_of_week]
             @start_of_week = params[:start_of_week].to_date
@@ -239,6 +247,7 @@ class SchoolClassesController < ApplicationController
         @this_week_date_items = @school_class.date_items.where(date: @start_of_week..@end_of_week)
         @this_week_class_leaving_times = @school_class.class_leaving_times.where(date: @start_of_week..@end_of_week)
         @this_week_morning_activities = @school_class.morning_activities.where(date: @start_of_week..@end_of_week)
+        @this_week_break_activities = @school_class.break_activities.where(date: @start_of_week..@end_of_week)
         current_teacher = current_user.teacher
         current_class_teacher = SchoolClassTeacher.where(teachers_id: current_teacher.id, school_classes_id: @school_class.id).first
         assigned_subjects = current_class_teacher.assigned_subjects

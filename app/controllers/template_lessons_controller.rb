@@ -8,6 +8,14 @@ class TemplateLessonsController < ApplicationController
         @template_morning_acts = @school_class.template_morning_activities
         @template_date_items = @school_class.template_date_items
         @template_class_leaving_times = @school_class.template_class_leaving_times
+        @template_break_acts = @school_class.template_break_activities
+        break_act_display = @school_class.break_act_display
+        if break_act_display
+            @has_break_act = @school_class.break_act_display.display
+        else
+            @has_break_act = false
+        end
+
         @start_of_week = params[:start_of_week]
 
         @japanese_weekdays = ["日", "月", "火", "水", "木", "金", "土"]
