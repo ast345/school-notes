@@ -33,6 +33,7 @@ class SchoolClass < ApplicationRecord
     has_many :template_morning_activities, dependent: :destroy
     has_many :template_date_items, dependent: :destroy
     has_many :template_class_leaving_times, dependent: :destroy
+    has_many :template_break_activities, dependent: :destroy
     has_one :lesson_period, dependent: :destroy
     has_one :break_act_display, dependent: :destroy
 
