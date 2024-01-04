@@ -41,7 +41,7 @@
                         - morning_act = @this_week_morning_activities.find_by(date: date)
                         - if morning_act
                             %p.morning_act_display  #{morning_act.activity_name.html_safe}
-        - (1..4).each do |period|
+        - (@start_of_period..4).each do |period|
             = render partial: 'lesson_column', locals: { period: period }
         - if @has_break_act
             %tr.row_break_act
@@ -56,7 +56,7 @@
                             - break_act = @this_week_break_activities.find_by(date: date)
                             - if break_act
                                 %p.break_act_display  #{break_act.activity_name.html_safe}
-        - (5..6).each do |period|
+        - (5..@end_of_period).each do |period|
             = render partial: 'lesson_column', locals: { period: period }
         %tr.row_item
             - if @school_class.grade_id ==1 or @school_class.grade_id ==2
