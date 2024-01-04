@@ -127,36 +127,36 @@ export function breakActivity(schoolClassId) {
         });
     });
 
-    // $('.add_from_temp').on('click', (event) =>{
-    //     const startOfWeek = $(event.currentTarget).data('startOfWeek');
-    //     axios.get(`	/school_classes/${schoolClassId}/template_morning_activities/get_temp`, {
-    //         params: {start_of_week: startOfWeek}
-    //     })
-    //     .then((res) =>{
-    //         var template_morning_acts = res.data
-    //         template_morning_acts.forEach(function(template_morning_act){
-    //             const date = template_morning_act.date
-    //             const Id = `${date}`
-    //             const dayOfWeek = template_morning_act.day_of_week
-    //             const newMorningAct = template_morning_act.activity_name
-    //             const morningActText = document.getElementById(`morning_act_text${Id}`)
-    //             axios.post(`/school_classes/${schoolClassId}/morning_activities`, {
-    //                 morning_act: {date: date, day_of_week: dayOfWeek, activity_name: newMorningAct}
-    //             })
-    //             .then((res) =>{
-    //                 if(res.status === 200){
-    //                     $(`#morning_act_display${Id}`).removeClass('hidden')
-    //                     $(`#${Id}.morning_act_btn_box`).addClass('hidden')
+    $('.add_from_temp').on('click', (event) =>{
+        const startOfWeek = $(event.currentTarget).data('startOfWeek');
+        axios.get(`	/school_classes/${schoolClassId}/template_break_activities/get_temp`, {
+            params: {start_of_week: startOfWeek}
+        })
+        .then((res) =>{
+            var template_break_acts = res.data
+            template_break_acts.forEach(function(template_break_act){
+                const date = template_break_act.date
+                const Id = `${date}`
+                const dayOfWeek = template_break_act.day_of_week
+                const newBreakAct = template_break_act.activity_name
+                const breakActText = document.getElementById(`break_act_text${Id}`)
+                axios.post(`/school_classes/${schoolClassId}/break_activities`, {
+                    break_act: {date: date, day_of_week: dayOfWeek, activity_name: newBreakAct}
+                })
+                .then((res) =>{
+                    if(res.status === 200){
+                        $(`#break_act_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.break_act_btn_box`).addClass('hidden')
 
-    //                     const morningActDisplay = document.getElementById(`morning_act_display${Id}`)
-    //                     morningActDisplay.innerHTML = `${res.data.activity_name}`
-    //                     morningActDisplay.setAttribute('data-morning-activity-id', `${res.data.id}`)
-    //                     morningActText.value = res.data.activity_name
-    //                     adjustFontSize(morningActDisplay);
-    //                 }
-    //             });
-    //         })
-    //     })
-    // });
+                        const breakActDisplay = document.getElementById(`break_act_display${Id}`)
+                        breakActDisplay.innerHTML = `${res.data.activity_name}`
+                        breakActDisplay.setAttribute('data-break-activity-id', `${res.data.id}`)
+                        breakActText.value = res.data.activity_name
+                        adjustFontSize(breakActDisplay);
+                    }
+                });
+            })
+        })
+    });
 
 }
