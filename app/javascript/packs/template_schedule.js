@@ -7,6 +7,7 @@ import {dragDropTempLesson} from './temp_lesson_dd.js'
 import {tempMorningActivity} from './temp_morning_act.js'
 import {tempItem} from './temp_item.js'
 import {tempLeavingTime} from './temp_leav_t.js'
+import {tempBreakActivity} from './temp_break_act.js'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
@@ -72,6 +73,7 @@ document.addEventListener('turbolinks:load', () =>{
     tempMorningActivity(schoolClassId)
     tempItem(schoolClassId)
     tempLeavingTime(schoolClassId)
+    tempBreakActivity(schoolClassId)
 
 });
 

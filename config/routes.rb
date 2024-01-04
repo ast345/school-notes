@@ -31,6 +31,11 @@ Rails.application.routes.draw do
         get 'get_temp'
        end
     end
+    resources :template_break_activities, only: [:create, :update, :destroy] do
+      collection do
+        get 'get_temp'
+       end
+    end
     resources :template_date_items, only: [:create, :update, :destroy] do
       collection do
         get 'get_temp'
