@@ -122,28 +122,29 @@
                                         %p.morning_act_display.hidden{id: "morning_act_display#{date}", data: {id: "#{date}"}}
                     - (@start_of_period..4).each do |period|
                         = render partial: 'lesson_column', locals: { period: period }
-                    %tr.row_break_act
-                        - if @school_class.grade_id ==1
-                            %td.column_left ひる
-                        - else
-                            %td.column_left 昼
-                        - (@start_of_week..@end_of_week).each do |date|
-                            - next unless @display_wday.include?(date.wday)
-                            %td.column_break_act
-                                .break_act_box{id: "#{date}"}
-                                    - break_act = @this_week_break_activities.find_by(date: date)
-                                    - if break_act
-                                        .break_act_btn_box.hidden{id: "#{date}"}
-                                            %i.fa-regular.fa-pen-to-square.break_act_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} &nbsp;追加
-                                        .break_act_text_box.hidden{id: "#{date}"}
-                                            = text_area_tag :break_act_text, break_act.activity_name.gsub("<br>", "\n"), class: 'break_act_text', id: "break_act_text#{date}"
-                                        %p.break_act_display{id: "break_act_display#{date}", data: {id: "#{date}", break_activity_id: break_act.id}}  #{break_act.activity_name.html_safe}
-                                    - else
-                                        .break_act_btn_box{id: "#{date}"}
-                                            %i.fa-regular.fa-pen-to-square.break_act_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} &nbsp;追加
-                                        .break_act_text_box.hidden{id: "#{date}"}
-                                            = text_area_tag :break_act_text, '', class: 'break_act_text', id: "break_act_text#{date}"
-                                        %p.break_act_display.hidden{id: "break_act_display#{date}", data: {id: "#{date}"}}
+                    - if @break_act_display
+                        %tr.row_break_act
+                            - if @school_class.grade_id ==1
+                                %td.column_left ひる
+                            - else
+                                %td.column_left 昼
+                            - (@start_of_week..@end_of_week).each do |date|
+                                - next unless @display_wday.include?(date.wday)
+                                %td.column_break_act
+                                    .break_act_box{id: "#{date}"}
+                                        - break_act = @this_week_break_activities.find_by(date: date)
+                                        - if break_act
+                                            .break_act_btn_box.hidden{id: "#{date}"}
+                                                %i.fa-regular.fa-pen-to-square.break_act_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} &nbsp;追加
+                                            .break_act_text_box.hidden{id: "#{date}"}
+                                                = text_area_tag :break_act_text, break_act.activity_name.gsub("<br>", "\n"), class: 'break_act_text', id: "break_act_text#{date}"
+                                            %p.break_act_display{id: "break_act_display#{date}", data: {id: "#{date}", break_activity_id: break_act.id}}  #{break_act.activity_name.html_safe}
+                                        - else
+                                            .break_act_btn_box{id: "#{date}"}
+                                                %i.fa-regular.fa-pen-to-square.break_act_create_btn{id: "#{date}", data: {date: date, day_of_week: date.wday}} &nbsp;追加
+                                            .break_act_text_box.hidden{id: "#{date}"}
+                                                = text_area_tag :break_act_text, '', class: 'break_act_text', id: "break_act_text#{date}"
+                                            %p.break_act_display.hidden{id: "break_act_display#{date}", data: {id: "#{date}"}}
                     - (5..@end_of_period).each do |period|
                         = render partial: 'lesson_column', locals: { period: period }
                     %tr.row_item

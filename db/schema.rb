@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_03_115958) do
+ActiveRecord::Schema.define(version: 2024_01_04_030419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 2024_01_03_115958) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grade_subjects_id"], name: "index_assigned_subjects_on_grade_subjects_id"
     t.index ["school_class_teachers_id"], name: "index_assigned_subjects_on_school_class_teachers_id"
+  end
+
+  create_table "break_act_displays", force: :cascade do |t|
+    t.bigint "school_class_id", null: false
+    t.boolean "display", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_class_id"], name: "index_break_act_displays_on_school_class_id"
   end
 
   create_table "break_activities", force: :cascade do |t|
