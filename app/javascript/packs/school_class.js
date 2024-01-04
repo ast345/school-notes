@@ -9,6 +9,7 @@ import { event } from './event.js'
 import { dateItem } from './date_item.js'
 import { classLeavingTime } from './class_leaving_time.js'
 import { morningActivity} from './morning_activity.js'
+import { breakActivity } from './break_activity.js';
 import html2canvas from 'html2canvas'
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
@@ -24,10 +25,12 @@ document.addEventListener('turbolinks:load', () =>{
     editLesson(schoolClassId);
     copyPasteLesson(schoolClassId);
     morningActivity(schoolClassId);
+    breakActivity(schoolClassId);
     
     event(schoolClassId);
     dateItem(schoolClassId);
     classLeavingTime(schoolClassId);
+    
 
     $(".print_btn").on('click', (event) =>{
         var tableTitle = $(".print_btn").data("tableTitle")
