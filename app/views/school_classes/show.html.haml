@@ -5,9 +5,9 @@
                 .left_nav
                     %i.fa-solid.fa-bars.week_btn.menu_btn.hidden
                     .week_nav
-                        = link_to school_class_path(start_of_week: @start_of_week - 1.week) do
+                        = link_to school_class_path(start_of_week: @start_of_week - 1.week), data: { "turbolinks" => false } do
                             %i.fa-solid.fa-angle-left.week_btn
-                        = link_to school_class_path(start_of_week: @start_of_week + 1.week) do
+                        = link_to school_class_path(start_of_week: @start_of_week + 1.week), data: { "turbolinks" => false } do
                             %i.fa-solid.fa-angle-right.week_btn
                 .right_nav
                     %p#status_display 保存済み

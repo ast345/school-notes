@@ -18,7 +18,7 @@ axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 
 
-document.addEventListener('turbolinks:load', () =>{
+document.addEventListener('DOMContentLoaded', () =>{
     const schoolClassId = gon.school_class_id;
     dragDropLesson(schoolClassId);
     createLesson(schoolClassId);
