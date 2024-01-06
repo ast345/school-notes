@@ -5,9 +5,9 @@
                 .left_nav
                     %i.fa-solid.fa-bars.week_btn.menu_btn.hidden
                     .week_nav
-                        = link_to school_class_path(start_of_week: @start_of_week - 1.week) do
+                        = link_to school_class_path(start_of_week: @start_of_week - 1.week), data: { "turbolinks" => false } do
                             %i.fa-solid.fa-angle-left.week_btn
-                        = link_to school_class_path(start_of_week: @start_of_week + 1.week) do
+                        = link_to school_class_path(start_of_week: @start_of_week + 1.week), data: { "turbolinks" => false } do
                             %i.fa-solid.fa-angle-right.week_btn
                 .right_nav
                     %p#status_display 保存済み
@@ -31,7 +31,7 @@
                             %p.link_explaining 学校ホームページなどのhtmlに埋め込むコードです。</br>翌週の時間割は金曜日の18:00に公開されます。
                     .others_nav.hidden
                         %p.image_btn{data: {start_of_week: @start_of_week, end_of_week: @end_of_week, class_name: @school_class.grade_class}} 時間割を画像でダウンロード
-                        = link_to "単元名一覧",school_class_using_texts_path(@school_class.id), class: "units_link"
+                        = link_to "単元名一覧",school_class_using_texts_path(@school_class.id), class: "units_link", data: { "turbolinks" => false }
                         %p.other_setting.period_setting ○〜○時間目の設定
                         %p.other_setting.break_act_setting 業間（昼）の表示設定
                         %p.other_setting.wday_setting 表示する曜日の設定

@@ -5,7 +5,7 @@ import { csrfToken } from 'rails-ujs'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 // app/assets/javascripts/grade_subject_units.js
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("DOMContentLoaded", function() {
     $('[data-remote="true"]').submit(function(e) {
       e.preventDefault();
       $.ajax({

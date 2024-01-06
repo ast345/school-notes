@@ -8,4 +8,4 @@
         - @using_texts.each do |using_text|
             .text_book
                 %p.text_subject #{using_text.subject_name}
-                = link_to "#{using_text.text_book_name}", school_class_text_book_path(id: using_text.text_book.id), class: "text_book_link"
+                = link_to "#{using_text.text_book_name}", school_class_text_book_path(id: using_text.text_book.id), class: "text_book_link", data: { "turbolinks" => false }
