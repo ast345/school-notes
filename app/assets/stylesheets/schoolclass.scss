@@ -132,6 +132,7 @@
     }
     &_btn{
         &_js_box{
+            width: 50%;
             position: absolute;
             right: 0;
             background-color: $header-grey;
@@ -228,14 +229,13 @@
 
 .delete{
     &_lesson_btn{
-        display: inline-block;
+        display: block;
         cursor: pointer;
 
         color: $main-red;
 
-        padding: 5px;
-        border-radius: 10px;
-        font-size: 13px;
+        padding: 2px;
+        font-size: 11px;
 
         &:hover{
             background-color: $btn-grey;
@@ -246,15 +246,14 @@
 
 
 .copy_lesson_btn, .paste_lesson_btn{
-    display:inline-block;
+    display: block;
     cursor: pointer;
 
     // background-color: #fff;
     color: $main-black;
 
-    padding: 5px;
-    border-radius: 10px;
-    font-size: 13px;
+    padding: 2px;
+    font-size: 11px;
 
     &:hover{
         background-color: $btn-grey;
@@ -516,14 +515,6 @@
     }
 }
 
-
-.copy_lesson_btn_explain{
-    display: none;
-}
-
-.copy_lesson_btn:hover + .copy_lesson_btn_explain{
-    display: block;
-}
 
 .template_nav, .link_nav, .others_nav, .lesson_period_box, .wday_select_box, .break_act_setting_box{
     display: inline-block;
