@@ -104,17 +104,21 @@
         }
     }
 
+    &_in_btn_box{
+        width: 30%;
+    }
     &_in_btn{
         display: flex;
         height: 40px;
         margin-left: 5%;
-        width: 30%;
         justify-content: center;
         align-items: center;
         text-decoration: none;
         color: white;
         background-color: $main-black;
         border-radius: 5px;
+        margin-bottom: 10px;
+        cursor: pointer;
 
         &:hover{
 
@@ -122,6 +126,12 @@
             background-color: white;
             border: 1px solid $main-black;
         }
+    }
+
+    &_in_guest{
+        cursor: pointer;
+        color: $main-black;
+        text-decoration: none;
     }
 }
 
