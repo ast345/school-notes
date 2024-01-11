@@ -1,8 +1,11 @@
+
 import $ from 'jquery'
 import axios from 'axios'
 import { csrfToken } from 'rails-ujs'
 import 'jquery-ui/ui/widgets/draggable';
 import 'jquery-ui/ui/widgets/droppable';
+import 'jquery-ui-touch-punch';
+
 
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 

@@ -81,10 +81,6 @@
             height: calc((100vw - 27px)/6/4*3/5*3);
             font-size: 10px;
         }
-    
-        &_btn_js_box{
-            display: none;
-        }
     }
 
     .item{
@@ -107,7 +103,6 @@
         padding: 3px 3px;
         border-radius: 5px;
         font-size: 6px;
-        display: inline-block !important;
     }
     .new_lesson_menu, .event_btn_box, .morning_act_btn_box, .leaving_time_create_btn_box{
         width: 60px;
