@@ -1,7 +1,6 @@
-# README
+# 制作背景
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+このアプリケーションは、主に小学校の時間割をクラウド上で作成し共有できるアプリです。このアプリを作ろうとおもった背景には、大多数の教員が「週案」と呼ばれる大きな手帳でスケジュールを管理しており、デジタル管理する手段がほぼないことがあります。
 
 Things you may want to cover:
 
