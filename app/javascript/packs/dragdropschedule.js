@@ -10,17 +10,25 @@ import 'jquery-ui-touch-punch';
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 export function dragDropLesson (schoolClassId) {
-    $('.lesson_box').draggable({
+      $('.lesson_box').draggable({
         revert: 'invalid',
-        helper: function() {
-          // ドラッグ中のヘルパー要素を作成
-          var clone = $(this).clone();
-          // カーソルスタイルを設定
-          clone.css('cursor', 'grabbing');
-          return clone;
+        helper: function (event) {
+            // ドラッグ中のヘルパー要素を作成
+            var clone = $(this).clone();
+            
+            // カーソルスタイルを設定
+            clone.css('cursor', 'grabbing');
+            
+            // クローン元のlesson_boxを非表示にする
+            $(this).css('visibility', 'hidden');
+            return clone;
         },
         zIndex: 2,
-      });
+        stop: function( event, ui ) {
+          $(this).css('visibility', 'visible');
+        }
+    });
+    
     
       $('.lesson_box').droppable({
         accept: '.lesson_box',
