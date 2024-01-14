@@ -1,4 +1,3 @@
-import 'jquery';
 import $ from 'jquery'
 import axios from 'axios'
 import { csrfToken } from 'rails-ujs'
