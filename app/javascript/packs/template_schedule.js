@@ -12,7 +12,7 @@ import {tempBreakActivity} from './temp_break_act.js'
 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken()
 
 
-document.addEventListener('turbolinks:load', () =>{
+document.addEventListener('DOMContentLoaded', () =>{
     const schoolClassId = gon.school_class_id;
 
     function checkWidth() {
