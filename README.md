@@ -7,12 +7,13 @@ https://qiita.com/ast345/items/0ab3347a8442554613c0
 
 ![share_cloud](https://github.com/ast345/school-notes/assets/96422491/a7725bfc-7705-40c8-89a6-0813b5bd27ee)
 
-## URL
+## サイトURL
 ・　URL: https://schoolnotes.net/
 
 ゲストログインを利用できます。
 
  ![スクリーンショット 2024-01-18 19 32 24](https://github.com/ast345/school-notes/assets/96422491/e1ccfc66-f787-44ff-9e48-a0e217021001)
+
 
 
 
