@@ -8,7 +8,7 @@ https://qiita.com/ast345/items/0ab3347a8442554613c0
 ![share_cloud](https://github.com/ast345/school-notes/assets/96422491/a7725bfc-7705-40c8-89a6-0813b5bd27ee)
 
 ## サイトURL
-・　URL: https://schoolnotes.net/
+https://schoolnotes.net/
 
 ゲストログインを利用できます。
 
