@@ -32,7 +32,6 @@ https://schoolnotes.net/
 ・　JQuery  
 ・　JQuery UI  
 ・　Postgresql  
-・　AWS(EC2, Route53)  
-※ コスト削減のため、SSL証明書はLet's Encryptを利用しました。  
+・　AWS(EC2, Route53) ※ コスト削減のため、SSL証明書はLet's Encryptを利用しました。  
 ・　nginx  
 ・　Unicorn  
