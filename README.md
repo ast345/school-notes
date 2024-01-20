@@ -24,26 +24,15 @@ https://schoolnotes.net/
 ![school-notesインフラ構成図 drawio](https://github.com/ast345/school-notes/assets/96422491/73dd1d2a-8f03-4d34-a1a7-56f3d336a089)
 
 ## 使用技術
-・　Ruby
-
-・　Ruby On Rails
-
-・　HTML
-
-・　SCSS
-
-・　JavaScript
-
-・　JQuery
-
-・　JQuery UI
-
-・　Postgresql
-
-・　AWS(EC2, Route53)
-
-※ コスト削減のため、SSL証明書はLet's Encryptを利用しました。
-
-・　nginx
-
-・　Unicorn
+・　Ruby　　
+・　Ruby on Rails　　
+・　HTML　　
+・　SCSS　　
+・　JavaScript　　
+・　JQuery　　
+・　JQuery UI　　
+・　Postgresql　　
+・　AWS(EC2, Route53)　　
+※ コスト削減のため、SSL証明書はLet's Encryptを利用しました。　　
+・　nginx　　
+・　Unicorn　　
