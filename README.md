@@ -57,10 +57,25 @@ https://schoolnotes.net/
 　deviseを利用して認証機能を実装しました。
 ###　登録
 　直接アプリに登録する方法と、Microsoft、GoogleのSSOを持ちる方法の２種類を用意しました。  
- <img width="1418" alt="スクリーンショット 2024-01-20 16 38 52" src="https://github.com/ast345/school-notes/assets/96422491/f5b49eb4-656f-485f-bb13-4fc701ba4757">
- // ssoのコード
-　また、登録時に、ユーザタイプをteacherとして自動的に登録。将来的に学校の先生以外にも、保護者や児童生徒などが登録できる機能も実装できるようにuser_typeを登録できるようにしている。  
- // コード
+<img width="593" alt="スクリーンショット 2024-01-20 16 39 55" src="https://github.com/ast345/school-notes/assets/96422491/d5e76a91-70d3-47d2-9eb5-8d7e2d38e8b1">
+
+　また、登録時に、ユーザタイプをteacherとして自動的に登録。将来的に学校の先生以外にも、保護者や児童生徒などが登録できる機能を実装することを想定し、user_typeを登録できるようにしている。  
+```
+class User < ApplicationRecord
+  after_create :create_user_rel
+
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:azure_activedirectory_v2, :google_oauth2]
+
+  private
+  def create_user_rel
+    self.user_to_types.create(users_id: self.id, user_types_id: 1)
+    @teacher = self.build_teacher(user_id: self.id, display_name: self.name)
+    @teacher.save
+  end
+end
+```
    
 ## クラスの作成
  登録すると、クラス（学級）の作成を促すページに遷移する。このページではクラス情報として学年・学級を登録するだけでなく、担当教科も同時に登録されるようにした。
