@@ -59,7 +59,8 @@ https://schoolnotes.net/
 　直接アプリに登録する方法と、Microsoft、GoogleのSSOを持ちる方法の２種類を用意しました。  
 <img width="593" alt="スクリーンショット 2024-01-20 16 39 55" src="https://github.com/ast345/school-notes/assets/96422491/d5e76a91-70d3-47d2-9eb5-8d7e2d38e8b1">
 
-　また、登録時に、ユーザタイプをteacherとして自動的に登録。将来的に学校の先生以外にも、保護者や児童生徒などが登録できる機能を実装することを想定し、user_typeを登録できるようにしました。  
+　また、登録時に、ユーザタイプをteacherとして自動的に登録。将来的に学校の先生以外にも、保護者や児童生徒などが登録できる機能を実装することを想定し、user_typeを登録できるように暫定的にしています。  
+　同時にTeacherモデルにも、新しく登録しています。将来的にアバターなどTeacherとしてのプロフィールを細かく登録できるようにするためです。
 ```ruby
 # user.rb
 class User < ApplicationRecord
@@ -78,6 +79,10 @@ class User < ApplicationRecord
   end
 end
 ```
+
+　ちなみにTeacherのdisplay_nameは自動的にuser.nameで登録されるようになっていますが、メニューバーから変更できるようにしています。ユーザーがTeacherを作成する手間を省くためにこのように実装しました。
+![ユーザ名変更](https://github.com/ast345/school-notes/assets/96422491/fc3cf607-0afd-46c9-bad8-8ff0c8040bc5)
+
    
 ## クラスの作成
  登録すると、クラス（学級）の作成を促すページに遷移する。このページではクラス情報として学年・学級を登録するだけでなく、担当教科も同時に登録されるようにした。
