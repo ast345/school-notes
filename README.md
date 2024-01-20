@@ -25,14 +25,25 @@ https://schoolnotes.net/
 
 ## 使用技術
 ・　Ruby
+
 ・　Ruby On Rails
+
 ・　HTML
+
 ・　SCSS
+
 ・　JavaScript
+
 ・　JQuery
+
 ・　JQuery UI
+
 ・　Postgresql
+
 ・　AWS(EC2, Route53)
+
 ※ コスト削減のため、SSL証明書はLet's Encryptを利用しました。
+
 ・　nginx
+
 ・　Unicorn
