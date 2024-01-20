@@ -86,8 +86,167 @@ end
 
    
 ## クラスの作成
- 登録すると、クラス（学級）の作成を促すページに遷移する。このページではクラス情報として学年・学級を登録するだけでなく、担当教科も同時に登録されるようにした。
- 
+ 登録すると、クラス（学級）の作成を促すページに遷移します。このページではクラス情報として学年・学級を登録するだけでなく、担当教科も同時に登録されるようにしました。  
+ 学年を選択すると、ajaxでその学年の教科と教科書の情報を取得し、選択できるようにしました。
+ また、登録ボタンを押した時のリクエストもajaxで送信しています。
+ ![クラス登録の様子](https://github.com/ast345/school-notes/assets/96422491/edfa3e69-2109-4b9a-bf15-b6d679b65977)
+
+```jacascript
+document.addEventListener('turbolinks:load', () =>{
+    const selectGrade = document.getElementById('class_setting_grade')
+    const classNameBox = document.getElementById('class_setting_name')
+
+    // 学年が選択された時の処理
+    selectGrade.addEventListener('change', function(){
+        const selectedGrade = selectGrade.value;
+        $('.class_subjects').empty();
+        $('.class_setting_submit_btn_box').addClass('hidden');
+        $('.class_setting_name_box').removeClass('hidden')
+
+        axios.get(`/grade_subject`, {
+            params: {grade_id: selectedGrade}
+        })
+        .then((res) =>{
+            const subjectsDataSets = res.data
+            const gradeCount = subjectsDataSets.length
+            $('.class_subjects').append($('<h3>', {
+                'text' : "担当教科と教科書を選択してください。"
+            }))
+            var index = 0
+            subjectsDataSets.forEach(function(subjectsDataSet){
+                var grade = subjectsDataSet.grade_name
+                const subjectsData = subjectsDataSet.grade_subjects
+                subjectsData.forEach(function(subjectData){
+                    var classSettingSubject = $('<div>', {
+                        'class': 'class_setting_subject',
+                    })
+    
+                    var subjectBox = $('<div>', {
+                        'class': 'subject_box',
+                    })
+                    if(gradeCount != 1){
+                        subjectBox.append($('<input>', {
+                            'type': 'checkbox',
+                            'checked': false,
+                            'value': subjectData.grade_subject_id,
+                            'id': `subject_check_box${index}`
+                        }));
+                    } else {
+                        subjectBox.append($('<input>', {
+                            'type': 'checkbox',
+                            'checked': true,
+                            'value': subjectData.grade_subject_id,
+                            'id': `subject_check_box${index}`
+                        }));
+                    }
+                    subjectBox.append($('<label>', {
+                        text: ` ${subjectData.subject_name}`
+                    }));
+    
+                    
+                    var textBooks = subjectData.text_books
+                    if(!textBooks.length == 0){
+                        var textBookBox = $('<div>', {
+                            'class': 'text_book_box',
+                        })
+                        var textBookSelectBox = ($('<select>', {
+                            'class': 'text_book_select',
+                        }))
+                        textBookSelectBox.append($('<option>', {
+                            'value' : ""
+                        }))
+                        textBooks.forEach(function(textBook){
+                            textBookSelectBox.append($('<option>', {
+                                'value': textBook.text_book_id,
+                                'text': `${textBook.text_book_name}(${textBook.text_book_comp})`
+                            }))
+                        });
+                        textBookBox.append(textBookSelectBox);
+                        classSettingSubject.append(subjectBox, textBookBox)
+                        $('.class_subjects').append(classSettingSubject);
+                    } else {
+                        classSettingSubject.append(subjectBox)
+                        
+                        $('.class_subjects').append(classSettingSubject);
+                    }
+                    index = index+1
+                });
+            })
+            $('.class_setting_submit_btn_box').removeClass('hidden');
+
+        })
+    })
+
+    //　登録ボタンが押された時の処理
+    $('.class_setting_submit_btn').on('click', () =>{
+        var gradeClass = selectGrade.value;
+        var className = classNameBox.value;
+
+        var subjectsDataBox = []
+        let emptyTextBookCount = 0;
+
+        $('.class_setting_subject').each(function(index) {
+            var subjectCheckBox = document.getElementById(`subject_check_box${index}`)
+            var select = $(this).find('select');
+            var textbook = select.val();
+            var checkbox = $(this).find('input[type="checkbox"]');
+            var subject = checkbox.val();
+
+            // チェックボックスの状態を確認
+            var isChecked = subjectCheckBox.checked;
+
+            if(isChecked) {
+                var subjectData = {
+                    grade_subject_id: subject,
+                    text_book_id: textbook
+                };
+
+                subjectsDataBox.push(subjectData)
+                if(textbook === ''){
+                    emptyTextBookCount++;
+                }
+            }
+        });
+
+        if(className === ''){
+            // 専科（gradeClassが13,14,15)の場合の登録処理
+            if( gradeClass == 13 || gradeClass == 14 || gradeClass == 15){
+                if(!emptyTextBookCount == 0){
+                    window.alert("登録する教科の教科書をすべて選択してください")
+                } else {
+                    axios.post(`/school_classes`, {
+                        school_class: {grade_id: gradeClass},
+                        subjects: {subjects_data_set: subjectsDataBox}
+                    })
+                    .then((res) =>{
+                        if(res.status === 200){
+                            var schoolClassId = res.data.id
+                            window.location.href = `/school_classes/${schoolClassId}`
+                        }
+                    })
+                }
+            } else {
+                window.alert("クラス名を入力してください")
+            }
+        } else {
+            if(!emptyTextBookCount == 0){
+                window.alert("登録する教科の教科書をすべて選択してください")
+            } else {
+                axios.post(`/school_classes`, {
+                    school_class: {grade_id: gradeClass, class_name: className},
+                    subjects: {subjects_data_set: subjectsDataBox}
+                })
+                .then((res) =>{
+                    if(res.status === 200){
+                        var schoolClassId = res.data.id
+                        window.location.href = `/school_classes/${schoolClassId}`
+                    }
+                })
+            }
+        };
+    })
+})
+```
 
  //　　登録を押した時の挙動について解説
  // teacher_typeの登録も同時に処理していること
