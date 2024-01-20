@@ -80,7 +80,8 @@ class User < ApplicationRecord
 end
 ```
 
-　ちなみにTeacherのdisplay_nameは自動的にuser.nameで登録されるようになっていますが、メニューバーから変更できるようにしています。ユーザーがTeacherを作成する手間を省くためにこのように実装しました。
+　ちなみにTeacherのdisplay_nameは自動的にuser.nameで登録されるようになっていますが、左のメニューバーから変更できるようにしています。ユーザーがTeacherを作成する手間を省くためにこのように実装しました。
+
 ![ユーザ名変更](https://github.com/ast345/school-notes/assets/96422491/fc3cf607-0afd-46c9-bad8-8ff0c8040bc5)
 
    
