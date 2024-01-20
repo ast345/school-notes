@@ -26,8 +26,8 @@ https://schoolnotes.net/
 ## 使用技術
 ・　Ruby  
 ・　Ruby on Rails  
-・　HTML  
-・　SCSS  
+・　HTML（haml)
+・　css(SCSS)  
 ・　JavaScript  
 ・　JQuery  
 ・　JQuery UI  
@@ -35,3 +35,18 @@ https://schoolnotes.net/
 ・　AWS(EC2, Route53) ※ コスト削減のため、SSL証明書はLet's Encryptを利用しました。  
 ・　nginx  
 ・　Unicorn  
+
+##　機能一覧
+・ ユーザ認証機能（devise、　AzureとgoogleのSSO認証、　ゲストログイン機能)
+・ クラス作成機能(CRUD)  
+・ 教科書別に単元名を共同管理する機能（CRUD）
+・ 時間割作成機能（CRUD、Ajax）
+ ・　行事予定、各コマの教科・単元、持ち物、業間（朝、昼）の活動、下校時刻の作成
+ ・　ドラッグ&ドロップによるコマの入れ替え編集（jQuery UI、Ajax)
+ ・　テンプレート機能
+ ・　フォントサイズの自動調整
+・　　時間割の枠設定機能（曜日、開始時限と終了時限、業間表示の設定）  
+・ 共有URL発行機能
+・ フォロー機能
+・ 印刷レイアウト自動調整機能  
+・ 時間割画像ダウンロード機能
