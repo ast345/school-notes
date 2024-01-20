@@ -36,7 +36,7 @@ https://schoolnotes.net/
 ・　nginx  
 ・　Unicorn  
 
-##　機能一覧
+## 機能一覧
 ・ ユーザ認証機能（devise、　AzureとgoogleのSSO認証、　ゲストログイン機能)
 ・ クラス作成機能(CRUD)  
 ・ 教科書別に単元名を共同管理する機能（CRUD）
