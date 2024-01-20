@@ -60,7 +60,7 @@ https://schoolnotes.net/
 <img width="593" alt="スクリーンショット 2024-01-20 16 39 55" src="https://github.com/ast345/school-notes/assets/96422491/d5e76a91-70d3-47d2-9eb5-8d7e2d38e8b1">
 
 　また、登録時に、ユーザタイプをteacherとして自動的に登録。将来的に学校の先生以外にも、保護者や児童生徒などが登録できる機能を実装することを想定し、user_typeを登録できるようにしました。  
-```ruby tytle="user.rb"
+```ruby title="user.rb"
 class User < ApplicationRecord
   after_create :create_user_rel
 
