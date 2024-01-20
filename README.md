@@ -53,6 +53,7 @@ https://schoolnotes.net/
 1. 時間割画像ダウンロード機能
 
 # 工夫して実装したこと
+## ユーザ認証
 ## クラスの作成
    作成時に、using_text, teacher_typeの登録も同時に処理していること
 ## follow機能
