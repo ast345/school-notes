@@ -312,7 +312,63 @@ end
 ```
 ## テンプレート機能  
    裏側の処理、登録されている場合など
-## URL発行  
+## URL発行
+
    ランダムのidを生成していること 
 ## follow機能
+　教員向けリンクから時間割にアクセスするとフォローボタンが表示されます。フォローすると、左側のメニューバーからアクセスできるようになります。
+
+ ![image](https://github.com/ast345/school-notes/assets/96422491/68bea8c3-a4db-40a2-b0e0-a0359366e98c)
+
+ ![image](https://github.com/ast345/school-notes/assets/96422491/90b1b00d-4317-4d0a-acb3-2fe1d4b2ec2c)
+
+この、「ログイン&フォロー」ボタンからログインするとフォローできるようになっています。以下のようにclass_tokenを「new_user_session_with_follow_path」に渡し、リンクを貼っています。
+```haml
+= link_to "ログイン&フォロー", new_user_session_with_follow_path(class_token: @token), class: "sign_in_btn top_sign_in_btn"
+```
+その後、sessionのparamsにclass_tokenを渡し、通常のログイン先であるuser_session_pathにリダイレクトします。
+```ruby
+# get_session_controller.rb
+class GetSessionController < ApplicationController
+    def sign_in
+        session[:follow_class_token] = params[:class_token]
+        redirect_to user_session_path
+    end
+   // sign_upは「登録」ボタン用
+    def sign_up
+        session[:follow_class_token] = params[:class_token]
+        redirect_to new_user_registration_path
+    end
+end
+```
+そして、follow_class_tokenがあれば、school_classとteacherの中間テーブルschool_class_teacherに登録し、元のurlにリダイレクトするようにしています。
+```ruby
+# application_controller.rb
+    def after_sign_in_path_for(resource)
+      current_teacher = current_user.teacher
+      school_class_teacher = SchoolClassTeacher.find_by(teachers_id: current_teacher)
+      if session[:follow_class_token]
+        school_class = SchoolClass.find_by(token: session[:follow_class_token])
+        follow_class_teacher = SchoolClassTeacher.find_by(teachers_id: current_teacher, school_classes_id: school_class.id, teacher_type: "フォロー")
+        if !follow_class_teacher == nil
+          follow = school_class.school_class_teachers.build(teachers_id: current_teacher.id, school_classes_id: school_class.id, teacher_type: "フォロー")
+          if follow.save
+            flash[:notice] = "ログインに成功し、フォローしました"
+            school_class_share_teacher_path(token: school_class.token)
+          else
+            flash[:notice] = "ログインに成功しましたが、フォローはできませんでした"
+            school_class_share_teacher_path(token: school_class.token)
+          end
+        else
+          flash[:notice] = "すでにフォローしています"
+          school_class_share_teacher_path(token: school_class.token)
+        end
+      else
+       #省略
+      end
+    end
+```
+
    先生の役割の登録
+## 印刷レイアウト調整機能
+
