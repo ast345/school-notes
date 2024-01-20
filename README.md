@@ -313,8 +313,45 @@ end
 ## テンプレート機能  
    裏側の処理、登録されている場合など
 ## URL発行
+　右上のメニューバーから2種類の共有URLと埋め込みコードを作成しています。  
+　埋め込みコードは児童・生徒向け共有URLをiframeにあてはめたものです。
+　![image](https://github.com/ast345/school-notes/assets/96422491/a7285974-b47b-4c84-b90e-21f08b6bb42b)
 
-   ランダムのidを生成していること 
+　このURLのpathは以下のようになっており、school_classのidではなく、tokenをurlに利用しています。このtokenを使って、controllerでschool_classを特定するように実装しました。発行順に生成されるidを利用すると、ユーザが簡単に書き換えることができてしまい、セキュリティ上の問題があるとおもい、このような形にしました。
+```ruby
+# 児童・生徒向け
+/school_classes/:token/share(.:format)
+# 教員向け
+/school_classes/:token/share_teachers(.:format)
+```
+
+このtokenは、school_classの作成時に、以下のコードでランダムで生成し、保存しているものです。
+```ruby
+# school_classes_controller.rb
+    def create
+        # school_class_paramsから必要なパラメータを取得
+        permitted_params = school_class_params
+        # トークンを生成してパラメータに追加
+        permitted_params[:token] = SecureRandom.hex(20)
+        # 新しいschool_classを作成
+        @school_class = SchoolClass.new(permitted_params)
+        subjects = subjects_params[:subjects_data_set]
+        if @school_class.save
+            school_class_teacher = @school_class.school_class_teachers.build(teacher: current_user.teacher, teacher_type: "担任")
+            if school_class_teacher.save
+                subjects.each do |subject|
+                    AssignedSubject.create(school_class_teachers_id: school_class_teacher.id, grade_subjects_id: subject[:grade_subject_id])
+                    if subject[:text_book_id]
+                        UsingText.create(school_class_id: @school_class.id, text_book_id: subject[:text_book_id])
+                    end
+                end
+            end
+            render json: @school_class
+        else
+          render :new
+        end
+    end
+```
 ## follow機能
 　教員向けリンクから時間割にアクセスするとフォローボタンが表示されます。フォローすると、左側のメニューバーからアクセスできるようになります。
 
@@ -368,5 +405,3 @@ end
       end
     end
 ```
-## 印刷レイアウト調整機能
-
