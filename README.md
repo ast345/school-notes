@@ -290,7 +290,26 @@ end
 ```
 
 ### フォントサイズの自動調整
-
+教科名や単元名など、長くなった場合に枠をはみ出ないように枠の高さを取得しそこに収まるように調整しています。
+```javascript
+//school_class.js
+    // 教科名のフォントサイズ調整
+    function adjustSubjectFZ(element) {
+        const $element = $(element);
+        const rowHeight = $('.row_lesson').height()/5*2 ;  // 要素の高さを取得
+        const originalHTML = $element.html(); // 元のHTMLを保持
+        let fontSize = parseInt($element.css('font-size')); // デフォルトのフォントサイズを取得
+        let lineHeight = parseInt($element.css('line-height'));
+        while (($element[0].scrollHeight > rowHeight || $element[0].getClientRects().length > 1) && fontSize > 1) {
+            fontSize -= 1; // フォントサイズを1ずつ減らす（必要に応じて調整可能）
+            $element.css({
+                'font-size': fontSize + 'px',
+                'line-height': lineHeight + 'px',
+            });
+        }
+        $element.html(originalHTML);
+    }
+```
 ## テンプレート機能  
    裏側の処理、登録されている場合など
 ## URL発行  
