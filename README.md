@@ -261,22 +261,26 @@ jQuery UIとajaxを組み合わせて、直感的に教科の入れ替えがで�
 担任か専科か、担任でも低学年なのか否かによって、表示する文字を制御しています。modelsでgrade_subject_nameを細かく定義し、それを表示させています。
 
 低学年でひらがな表示
-![image](https://github.com/ast345/school-notes/assets/96422491/ac0a8bb7-dc2f-461d-b9e8-941516a81684)
+![統合　１・５](https://github.com/ast345/school-notes/assets/96422491/f5649bdf-d2aa-4e6b-b0cf-4465c9cd02e7)
+
 専科は（学年＋教科名）
-![printgif](https://github.com/ast345/school-notes/assets/96422491/1936fc09-f719-4970-88ec-339c9f070c60)
+![image](https://github.com/ast345/school-notes/assets/96422491/ac0a8bb7-dc2f-461d-b9e8-941516a81684)
 
 ```ruby
 #lesson.rb
 class Lesson < ApplicationRecord
     def grade_subject_name(grade_id)
+        # 小学校１、２年生
         if grade_id == 1 or grade_id == 2
             grade_subject = self.grade_subject
             grade_subject.subject.yomigana
+        # 専科（小学校13、中学校14、高校15)
         elsif grade_id == 13 || grade_id == 14 || grade_id == 15
             grade_subject = self.grade_subject
             grade_name = grade_subject.grade.grade_name.gsub('生', '')
             subject_name = grade_subject.subject.subject_name
             grade_name + subject_name
+        #　それ以外
         else
             grade_subject = self.grade_subject
             grade_subject.subject.subject_name
