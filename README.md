@@ -61,7 +61,7 @@ https://schoolnotes.net/
 
 　また、登録時に、ユーザタイプをteacherとして自動的に登録。将来的に学校の先生以外にも、保護者や児童生徒などが登録できる機能を実装することを想定し、user_typeを登録できるようにしました。  
 ```ruby
-# usr.rb
+# user.rb
 class User < ApplicationRecord
   after_create :create_user_rel
 
@@ -71,6 +71,7 @@ class User < ApplicationRecord
 
   private
   def create_user_rel
+    # user_types_idの１は"教員"
     self.user_to_types.create(users_id: self.id, user_types_id: 1)
     @teacher = self.build_teacher(user_id: self.id, display_name: self.name)
     @teacher.save
