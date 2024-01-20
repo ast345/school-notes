@@ -322,7 +322,7 @@ end
 
  ![image](https://github.com/ast345/school-notes/assets/96422491/90b1b00d-4317-4d0a-acb3-2fe1d4b2ec2c)
 
-「ログイン&フォロー」ボタン、もしくは「登録」ボタンからログインするとフォローできるようになっています。以下のようにclass_tokenを「new_user_session_with_follow_path」に渡し、リンクを貼っています。
+「ログイン&フォロー」ボタンからログインするとフォローできるようになっています。以下のようにclass_tokenを「new_user_session_with_follow_path」に渡し、リンクを貼っています。
 ```haml
 = link_to "ログイン&フォロー", new_user_session_with_follow_path(class_token: @token), class: "sign_in_btn top_sign_in_btn"
 ```
