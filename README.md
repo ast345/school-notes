@@ -91,7 +91,7 @@ end
  また、登録ボタンを押した時のリクエストもajaxで送信しています。
  ![クラス登録の様子](https://github.com/ast345/school-notes/assets/96422491/edfa3e69-2109-4b9a-bf15-b6d679b65977)
 
-```jacascript
+```javascript
 document.addEventListener('turbolinks:load', () =>{
     const selectGrade = document.getElementById('class_setting_grade')
     const classNameBox = document.getElementById('class_setting_name')
