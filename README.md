@@ -250,17 +250,46 @@ document.addEventListener('turbolinks:load', () =>{
 })
 ```
 
-## 単元名の基本的な処理
-## 基本的なajaxを利用したcrud処理
-## ユーザー別に単元名の表示を切り替えている点
-## ドラッグ&ドロップによる入れ替え  
-   Ajax, jquery uiについて説明
-## フォントサイズの自動調整
+## 時間割の作成
+### 基本的なcrud処理
+時間割の作成は全ての項目を一画面で画面遷移なく行えるようajaxにてcreate、edit、destroyに関するリクエストを行い、表示を切り替えています。
+
+### ドラッグ&ドロップによるコマの入れ替え
+jQuery UIとajaxを組み合わせて、直感的に教科の入れ替えができるようにしました。
+
+### ユーザー別に単元名の表示を切り替えている点
+担任か専科か、担任でも低学年なのか否かによって、表示する文字を制御しています。modelsでgrade_subject_nameを細かく定義し、それを表示させています。
+
+低学年でひらがな表示
+![image](https://github.com/ast345/school-notes/assets/96422491/ac0a8bb7-dc2f-461d-b9e8-941516a81684)
+専科は（学年＋教科名）
+![printgif](https://github.com/ast345/school-notes/assets/96422491/1936fc09-f719-4970-88ec-339c9f070c60)
+
+```ruby
+#lesson.rb
+class Lesson < ApplicationRecord
+    def grade_subject_name(grade_id)
+        if grade_id == 1 or grade_id == 2
+            grade_subject = self.grade_subject
+            grade_subject.subject.yomigana
+        elsif grade_id == 13 || grade_id == 14 || grade_id == 15
+            grade_subject = self.grade_subject
+            grade_name = grade_subject.grade.grade_name.gsub('生', '')
+            subject_name = grade_subject.subject.subject_name
+            grade_name + subject_name
+        else
+            grade_subject = self.grade_subject
+            grade_subject.subject.subject_name
+        end
+    end
+end
+```
+
+### フォントサイズの自動調整
+
 ## テンプレート機能  
    裏側の処理、登録されている場合など
-## 枠の調整　　
 ## URL発行  
    ランダムのidを生成していること 
 ## follow機能
    先生の役割の登録
-## 印刷ボタンを押した時の挙動について  
