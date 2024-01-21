@@ -382,7 +382,7 @@ export function event(schoolClassId) {
 }
 ```
 ### ドラッグ&ドロップによるコマの入れ替え
-現場でよくあるコマの入れ替えはjQuery UIとajaxを組み合わせて、直感的に教科の入れ替えができるようにしました。
+現場でよくあるコマの入れ替えはjQuery UIとajaxを組み合わせて、直感的に行えるようにしました。
 
 ![dragdrop](https://github.com/ast345/school-notes/assets/96422491/4f91a2e0-0cfd-488c-a68f-2d96bdd6c8d1)
 
