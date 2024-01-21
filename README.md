@@ -653,13 +653,13 @@ end
         $element.html(originalHTML);
     }
 ```
-## テンプレート機能  
+### テンプレート機能  
 教科や持ち物、下校時刻など、毎週変わらない予定は予め設定しておくことで、ワンクリックで作成することができます。
 
 ![template](https://github.com/ast345/school-notes/assets/96422491/5cf93bd6-e3bd-4e7d-b071-9509f7e19ebc)
 
 テンプレートの設定自体は、上記の時間割の作成機能と同様の方法で実装しました。  
-テンプレートのデータを用いて時間割を作成する機能の実装については以下の通りです。朝活動の作成を例に説明します。
+テンプレートのデータを用いて時間割を作成する機能の実装については以下の通りです。朝活動の作成を例に説明します。　　
 ① 「テンプレートの利用」ボタンを押した時に、ajaxでリクエストを送ります。どの週の時間割かについてparamsで渡しています。
 ```javascript
     //morning_activity.js
@@ -716,6 +716,7 @@ end
 　③ クライアントは受け取ったデータを元にpostリクエストを送り、表示や他のajax処理に利用するdatasetを書き換えています。
  ```javascript
  // morning_activity.js
+        // 省略
         axios.get(`	/school_classes/${schoolClassId}/template_morning_activities/get_temp`, {
             params: {start_of_week: startOfWeek}
         })
