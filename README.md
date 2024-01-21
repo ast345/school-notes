@@ -382,7 +382,9 @@ export function event(schoolClassId) {
 }
 ```
 ### ドラッグ&ドロップによるコマの入れ替え
-jQuery UIとajaxを組み合わせて、直感的に教科の入れ替えができるようにしました。
+現場でよくあるコマの入れ替えはjQuery UIとajaxを組み合わせて、直感的に教科の入れ替えができるようにしました。
+![image](https://github.com/ast345/school-notes/assets/96422491/96416a98-9cd6-4618-b20b-fc0712fb0401)
+
 
 ### ユーザー別に単元名の表示を切り替えている点
 担任か専科か、担任でも低学年なのか否かによって、表示する文字を制御しています。modelsでgrade_subject_nameを細かく定義し、それを表示させています。
