@@ -252,15 +252,16 @@ document.addEventListener('turbolinks:load', () =>{
 
 ## 時間割の作成
 ### 基本的な作成、編集、削除
-時間割の作成、編集、削除は全てajaxにてリクエストを行い、表示を切り替えています。リクエストがサーバから帰ってきた時に、右上のステータスが「保存済み」になります。
+時間割の各項目の追加、編集、削除は全てajaxにてリクエストを行い、表示を切り替えています。リクエストがサーバから帰ってきた時に、右上のステータスが「保存済み」になります。
 
-作成の様子
-![create](https://github.com/ast345/school-notes/assets/96422491/d3d43510-d35d-4c66-8c0d-a26d5a36dbf0)
+追加の様子
+![create2](https://github.com/ast345/school-notes/assets/96422491/efae65b3-6edd-4e9c-b94f-aefd7d7799cc)
+
 
 編集、コピペ、削除
 ![editdestroy](https://github.com/ast345/school-notes/assets/96422491/8fe406f4-fa80-47c2-bec6-fb4e17107904)
 
-例えば、一番上の行事予定は以下のようなコードで実装しています。繰り返し編集が行えるよう、リクエストに使うdatasetの書き換えを行い、observerでその変更を検知できるようにしています。
+例えば、一番上の行事予定は以下のようなコードで実装しています。createの際には繰り返し編集が行えるよう、リクエストに使うdatasetの書き換えを行い、observerでその変更を検知できるようにしています。
 ```javascript
 //event.js
 export function event(schoolClassId) {
