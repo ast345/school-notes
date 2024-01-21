@@ -654,7 +654,97 @@ end
     }
 ```
 ## テンプレート機能  
-   裏側の処理、登録されている場合など
+教科や持ち物、下校時刻など、毎週変わらない予定は予め設定しておくことで、ワンクリックで作成することができます。
+
+![template](https://github.com/ast345/school-notes/assets/96422491/5cf93bd6-e3bd-4e7d-b071-9509f7e19ebc)
+
+テンプレートの設定自体は、上記の時間割の作成機能と同様の方法で実装しました。  
+テンプレートのデータを用いて時間割を作成する機能の実装については以下の通りです。朝活動の作成を例に説明します。
+① 「テンプレートの利用」ボタンを押した時に、ajaxでリクエストを送ります。どの週の時間割かについてparamsで渡しています。
+```javascript
+    //morning_activity.js
+    $('.add_from_temp').on('click', (event) =>{
+        const startOfWeek = $(event.currentTarget).data('startOfWeek');
+        axios.get(`	/school_classes/${schoolClassId}/template_morning_activities/get_temp`, {
+            params: {start_of_week: startOfWeek}
+        });
+    // 以下省略
+```
+ ② サーバ側でテンプレートのデータを取得しリクエストを返します。コントローラにget_tempメソッドを定義しそこで処理をかけます。もしテンプレートの利用をクリックする前に作成しているデータがあれば、それを残すために、privateに定義したremove_duplicate_template_morning_actで重複するテンプレのデータを取り除き、曜日も数値として表現し直します。
+```ruby
+# template_morning_activities_controller.rb
+class TemplateMorningActivitiesController < ApplicationController
+    before_action :authenticate_user!
+    def get_temp
+        school_class = SchoolClass.find(params[:school_class_id])
+        template_morning_acts = school_class.template_morning_activities
+        start_of_week = params[:start_of_week].to_date
+        end_of_week = start_of_week.end_of_week
+        this_week_morning_acts = school_class.morning_activities.where(date: start_of_week..end_of_week)
+        filtered_template_morning_acts = remove_duplicate_template_morning_act(template_morning_acts, this_week_morning_acts)
+        dates = (start_of_week..end_of_week).map { |date| [date, date.wday]}
+        add_dates_to_template_morning_acts(filtered_template_morning_acts, dates)
+        render json: @morning_acts_from_template
+    end
+
+    private
+    def remove_duplicate_template_morning_act(template_morning_acts, this_week_morning_acts)
+        this_week_morning_act_wdays = this_week_morning_acts.map { |lesson| [lesson.day_of_week] }
+        template_morning_acts.reject do |template_morning_act|
+            this_week_morning_act_wdays.include?([template_morning_act.day_of_week])
+        end
+    end
+
+    def add_dates_to_template_morning_acts(filtered_template_morning_acts, dates)
+        day_mapping = {
+            "sunday" => 0,
+            "monday" => 1,
+            "tuesday" => 2,
+            "wednesday" => 3,
+            "thursday" => 4,
+            "friday" => 5,
+            "saturday" => 6
+        }
+        @morning_acts_from_template = []
+        filtered_template_morning_acts.each do |template_morning_act|
+          matching_date = dates.find { |date| date[1] == day_mapping[template_morning_act.day_of_week] }
+          @morning_acts_from_template << {date: matching_date[0], day_of_week: template_morning_act.day_of_week, activity_name: template_morning_act.activity_name}
+        end
+    end
+end
+```
+　③ クライアントは受け取ったデータを元にpostリクエストを送り、表示や他のajax処理に利用するdatasetを書き換えています。
+ ```javascript
+ // morning_activity.js
+        axios.get(`	/school_classes/${schoolClassId}/template_morning_activities/get_temp`, {
+            params: {start_of_week: startOfWeek}
+        })
+        .then((res) =>{
+            var template_morning_acts = res.data
+            template_morning_acts.forEach(function(template_morning_act){
+                const date = template_morning_act.date
+                const Id = `${date}`
+                const dayOfWeek = template_morning_act.day_of_week
+                const newMorningAct = template_morning_act.activity_name
+                const morningActText = document.getElementById(`morning_act_text${Id}`)
+                axios.post(`/school_classes/${schoolClassId}/morning_activities`, {
+                    morning_act: {date: date, day_of_week: dayOfWeek, activity_name: newMorningAct}
+                })
+                .then((res) =>{
+                    if(res.status === 200){
+                        $(`#morning_act_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.morning_act_btn_box`).addClass('hidden')
+
+                        const morningActDisplay = document.getElementById(`morning_act_display${Id}`)
+                        morningActDisplay.innerHTML = `${res.data.activity_name}`
+                        morningActDisplay.setAttribute('data-morning-activity-id', `${res.data.id}`)
+                        morningActText.value = res.data.activity_name
+                        adjustFontSize(morningActDisplay);
+                    }
+                });
+            })
+        })
+ ```
 ## URL発行
 　右上のメニューバーから2種類の共有URLと埋め込みコードを取得できます。埋め込みコードは児童・生徒向け共有URLをiframeにあてはめたものです。
 
