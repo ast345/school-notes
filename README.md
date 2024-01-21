@@ -251,9 +251,135 @@ document.addEventListener('turbolinks:load', () =>{
 ```
 
 ## 時間割の作成
-### 基本的なcrud処理
-時間割の作成は全ての項目を一画面で画面遷移なく行えるようajaxにてcreate、edit、destroyに関するリクエストを行い、表示を切り替えています。
+### 基本的な作成、編集、削除
+時間割の作成、編集、削除は全てajaxにてリクエストを行い、表示を切り替えています。リクエストがサーバから帰ってきた時に、右上のステータスが「保存済み」になります。
 
+作成の様子
+![create](https://github.com/ast345/school-notes/assets/96422491/d3d43510-d35d-4c66-8c0d-a26d5a36dbf0)
+
+編集、コピペ、削除
+![editdestroy](https://github.com/ast345/school-notes/assets/96422491/8fe406f4-fa80-47c2-bec6-fb4e17107904)
+
+例えば、一番上の行事予定は以下のようなコードで実装しています。繰り返し編集が行えるよう、リクエストに使うdatasetの書き換えを行い、observerでその変更を検知できるようにしています。
+```javascript
+//event.js
+export function event(schoolClassId) {
+    var statusDisplay = document.getElementById('status_display')
+
+    //行事予定の追加
+    $('.event_create_btn').each(function(index, element){
+        const Id = element.id
+        const dataSet = $(element).data()
+        var date = dataSet.date
+        var dayOfWeek = dataSet.dayOfWeek
+        $(`#${Id}.event_create_btn`).on('click', () =>{
+            statusDisplay.innerHTML = "保存中…"
+            $(`#${Id}.event_btn_box`).addClass('hidden')
+            $(`#${Id}.event_text_box`).removeClass('hidden')
+
+            function createEventEndHandler(event) {
+                var clickedElement = event.target;
+                var creatingElement = $(`#${Id}.event_box`);
+                if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
+                    var newEvent = $(`#event_text${Id}`).val();
+                    var replacedText = newEvent.replace(/\n/g, "<br>");
+                    if (!newEvent) {
+                        $(`#${Id}.event_btn_box`).removeClass('hidden')
+                        $(`#${Id}.event_text_box`).addClass('hidden')
+                        document.removeEventListener('click', createEventEndHandler);
+                        statusDisplay.innerHTML = "保存済み";
+                    } else {
+                        $(`#event_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.event_text_box`).addClass('hidden')
+                        const eventDisplay = document.getElementById(`event_display${Id}`)
+                        eventDisplay.innerHTML = `${replacedText}`
+                        adjustFontSize(eventDisplay);
+                        axios.post(`/school_classes/${schoolClassId}/events`, {
+                            event: {date: date, day_of_week: dayOfWeek, event_name: newEvent}
+                        })
+                        .then((res) =>{
+                            if(res.status === 200){
+                                eventDisplay.setAttribute('data-event-id', `${res.data.id}`)
+                                statusDisplay.innerHTML = "保存済み"
+                            }
+                        });
+                        document.removeEventListener('click', createEventEndHandler);
+                    };
+                };
+            };
+
+            document.addEventListener('click', createEventEndHandler);
+        })
+    })
+
+    //行事予定の編集
+    $(`.event_display`).each(function(index, element){
+        const dataSet = $(element).data()
+        const Id = dataSet.id
+        var eventId = dataSet.eventId
+        const eventDisplay = document.getElementById(`event_display${Id}`)
+
+        //datasetが追加されたことを検知して再定義
+        var observer = new MutationObserver(function(mutationsList) {
+            for (var mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-event-id') {
+                    eventId = Number(eventDisplay.getAttribute('data-event-id'))
+                }
+            }
+        });
+
+        observer.observe(eventDisplay, { attributes: true})
+        
+        $(`#event_display${Id}`).on('click', () => {
+            statusDisplay.innerHTML = "保存中…"
+            $(this).addClass('hidden')
+            $(`#${Id}.event_text_box`).removeClass('hidden')
+
+            function editEventEndHandler(event) {
+                var clickedElement = event.target;
+                var creatingElement = $(`#${Id}.event_box`);
+                if(!creatingElement.is(clickedElement) && creatingElement.has(clickedElement).length === 0){
+                    var editEvent = $(`#event_text${Id}`).val();
+                    var replacedText = editEvent.replace(/\n/g, "<br>");
+                    var event = $(`#event_text${Id}`)
+                    if (!editEvent) {
+                        $(`#${Id}.event_btn_box`).removeClass('hidden')
+                        $(`#${Id}.event_text_box`).addClass('hidden')
+                        document.removeEventListener('click', editEventEndHandler);
+                        axios.delete(`/school_classes/${schoolClassId}/events/${eventId}`)
+                        .then((res) =>{
+                            if(res.status === 204){
+                                statusDisplay.innerHTML = "保存済み"
+                            };
+                        });
+                    } else {
+                        $(`#event_display${Id}`).removeClass('hidden')
+                        $(`#${Id}.event_text_box`).addClass('hidden')
+
+                        eventDisplay.innerHTML = `${replacedText}`
+                        adjustFontSize(eventDisplay);
+                        axios.patch(`/school_classes/${schoolClassId}/events/${eventId}`, {
+                            event: {event_name: editEvent}
+                        })
+                        .then((res) =>{
+                            if(res.status === 200){
+                                statusDisplay.innerHTML = "保存済み"
+                            };
+                        });
+                        document.removeEventListener('click', editEventEndHandler);
+                    };
+
+                };
+
+            };
+
+            document.addEventListener('click', editEventEndHandler);
+        });
+    });
+
+
+}
+```
 ### ドラッグ&ドロップによるコマの入れ替え
 jQuery UIとajaxを組み合わせて、直感的に教科の入れ替えができるようにしました。
 
