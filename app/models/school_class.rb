@@ -40,6 +40,7 @@ class SchoolClass < ApplicationRecord
     accepts_nested_attributes_for :school_class_teachers
 
     validates :grade_id, presence: true
+    validates :class_name, presence: true
 
     def grade_class
         grade_id = self.grade_id
