@@ -9,9 +9,9 @@
                 - if template_lesson
                     .lesson_btn_js_box{id: "#{period}#{wday}"}
                         .lesson_btn_box.hidden{id: "#{period}#{wday}"}
-                            %i.fa-solid.fa-copy.copy_lesson_btn{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}",grade_subject_id: template_lesson.grade_subject.id, grade_subject_name: template_lesson.subject_name}}
-                            %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
-                            %i.fa-regular.fa-calendar-xmark.delete_lesson_btn{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}", template_lesson_id: template_lesson.id}}
+                            %p.copy_lesson_btn{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}",grade_subject_id: template_lesson.grade_subject.id, grade_subject_name: template_lesson.subject_name}} コピー
+                            %p.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}} ペースト
+                            %p.delete_lesson_btn{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}", template_lesson_id: template_lesson.id}} 削除
                     .got_lesson{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period, template_lesson_id: template_lesson.id, subject_name: template_lesson.subject_name, grade_subject_id: template_lesson.grade_subject.id}}
                         %p.lesson_subject{id: "lesson_subject#{period}#{wday}"} #{template_lesson.grade_subject_name(@grade_id)}
                     .edit_lesson_box.hidden{id: "#{period}#{wday}"}
@@ -21,9 +21,9 @@
                 - else
                     .lesson_btn_js_box{id: "#{period}#{wday}"}
                         .lesson_btn_box.hidden{id: "#{period}#{wday}"}
-                            %i.fa-solid.fa-copy.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}"}}
-                            %i.fa-regular.fa-paste.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}}
-                            %i.fa-regular.fa-calendar-xmark.delete_lesson_btn.hidden{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}"}}
+                            %p.copy_lesson_btn.hidden{id: "copy_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}"}} コピー
+                            %p.paste_lesson_btn{id: "paste_lesson_btn#{period}#{wday}", data: {id: "#{period}#{wday}", period: period, day_of_week: wday}} ペースト
+                            %p.delete_lesson_btn.hidden{id: "delete_lesson_btn#{period}#{wday}",data: {id:"#{period}#{wday}"}} 削除
                     .got_lesson.hidden{id: "got_lesson#{period}#{wday}", data: {id: "#{period}#{wday}", day_of_week: wday, period: period}}
                         %p.lesson_subject{id: "lesson_subject#{period}#{wday}"}
                     .edit_lesson_box.hidden{id: "#{period}#{wday}"}
