@@ -26,7 +26,7 @@ https://schoolnotes.net/
 ## 使用技術
 ・　Ruby  
 ・　Ruby on Rails  
-・　HTML（haml)
+・　HTML（haml)  
 ・　css(SCSS)  
 ・　JavaScript  
 ・　JQuery  
