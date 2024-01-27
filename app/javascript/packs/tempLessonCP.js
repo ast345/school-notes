@@ -30,15 +30,9 @@ export function copyPasteTemplateLesson (schoolClassId) {
 
         $(`#copy_lesson_btn${Id}`).on('click', () =>{
             copiedGradeSubjectId = gradeSubjectId;
-            copiedGradeSubjectName = gradeSubjectName;
-
-            $(this).removeClass('fa-copy').addClass('fa-check');
-
-            // 数秒後に元のアイコンに戻す
-            var btn = $(this);
-            setTimeout(function() {
-                btn.removeClass('fa-check').addClass('fa-copy');
-            }, 5000);
+            copiedGradeSubjectName = document.getElementById(`lesson_subject${Id}`).textContent
+            $(`#${Id}.lesson_btn_box`).addClass('hidden');
+            $(`#${Id}.lesson_ellipsis`).addClass('hidden');
         });
 
     });
