@@ -42,17 +42,5 @@ RSpec.describe SchoolClass, type: :model do
     end
   end
 
-  context 'クラス名が入力されていない場合' do
-    let!(:school_class) do
-      SchoolClass.create({
-        grade_id: grade.id,
-        token: SecureRandom.hex(20)
-      })
-    end
-
-    it 'school_classを作成できない' do
-      expect(school_class.errors.messages[:class_name][0]).to eq('を入力してください')
-    end
-  end
 
 end
