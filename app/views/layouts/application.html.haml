@@ -52,7 +52,7 @@
                       = link_to "編集", edit_school_class_path(current_user_class[:school_class_id]), method: :get, class: "school_class_edit_btn"
                       = link_to "削除", school_class_path(current_user_class[:school_class_id]), method: :delete, data: { confirm: raw('本当にこのクラスを削除しますか？（一度削除すると復元できません）') }, class: "school_class_edit_btn"
               - if @current_follow_classes
-                %p.header_category_name フォロークラス
+                %p.header_category_name 他の先生の時間割
               .header_user_classes
                 - @current_follow_classes.each_with_index do |current_follow_class, index|
                   - link_class = current_page?(school_class_share_teacher_path(token: current_follow_class[:token])) ? "header_user_class active_class" : "header_user_class"
