@@ -59,6 +59,7 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'rspec-rails'
 end
 
 group :development do
