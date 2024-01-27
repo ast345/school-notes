@@ -148,9 +148,11 @@ class SchoolClassesController < ApplicationController
                 else
                     using_text_id = subject[:using_text_id]
                     selected_text_id = subject[:text_book_id].to_i
-                    if using_text_id != selected_text_id
-                        usingtext = UsingText.find_by(school_class_id: params[:id], text_book_id: using_text_id)
-                        usingtext.update(text_book_id: selected_text_id)
+                    if selected_text_id != 0
+                        if using_text_id != selected_text_id
+                            usingtext = UsingText.find_by(school_class_id: params[:id], text_book_id: using_text_id)
+                            usingtext.update(text_book_id: selected_text_id)
+                        end
                     end
                 end
             end

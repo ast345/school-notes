@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () =>{
         $(".template_nav").toggleClass('hidden');
     });
 
-    $('.fa-share').on('click', (event)=>{
+    $('.share_nav_btn').on('click', (event)=>{
         $(".link_nav").toggleClass('hidden');
     })
     $('.others_nav_btn').on('click', (event)=>{
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () =>{
           $('.template_nav').addClass('hidden');
         }
 
-        if (!$(e.target).closest('.fa-share').length) {
+        if (!$(e.target).closest('.share_nav_btn').length) {
             // 追加の要素が表示されている場合は非表示にする
             $('.link_nav').addClass('hidden');
         }
