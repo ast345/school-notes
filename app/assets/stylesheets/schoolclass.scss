@@ -44,6 +44,8 @@
 .left_nav{
     font-size: 16px;
     height: fit-content;
+
+
 }
 .right_nav{
     font-size: 16px;
@@ -52,11 +54,15 @@
     justify-content: right;
     &_btn{
         color: $main-black;
-        padding: 8px;
+        padding: 6px;
         border-radius: 20px;
+        margin-left: 5px;
+        height: fit-content;
         cursor: pointer;
-        &:hover{
-            background-color: $header-grey;
+        background-color: $header-grey;
+        border: 1px solid #000;
+        &:active{
+            background-color: $btn-grey;
         }
     }
 }
@@ -557,16 +563,24 @@
         display: inline-flex;
         justify-content: space-between;
         min-width: 60px;
+        height: fit-content;
     }
 
     &_btn{
         color: $main-black;
         padding: 8px;
         border-radius: 20px;
+        height: 32px;
+        margin-right: 5px;
         text-decoration: none;
         cursor: pointer;
-        &:hover{
-            background-color: $header-grey;
+        // &:hover{
+        //     background-color: $header-grey;
+        // }
+        border: 1px solid #000;
+        background-color: $header-grey;
+        &:active{
+            background-color: $btn-grey;
         }
     }
 }
@@ -585,6 +599,7 @@
         color: white;
         border: none;
         border-radius: 5px;
+
         &:hover{
             cursor: pointer;
         }
